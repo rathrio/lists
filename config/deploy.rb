@@ -12,13 +12,13 @@ require 'mina/git'
 set :application_name, 'lists'
 set :domain, '192.168.0.18'
 set :deploy_to, '/var/www/lists'
-set :repository, 'git://...'
+set :repository, 'git@github.com:rathrio/lists.git'
 set :branch, 'master'
 
 # Optional settings:
-#   set :user, 'foobar'          # Username in the server to SSH to.
+set :user, 'pi'          # Username in the server to SSH to.
 #   set :port, '30000'           # SSH port number.
-#   set :forward_agent, true     # SSH forward_agent.
+set :forward_agent, true     # SSH forward_agent.
 
 # shared dirs and files will be symlinked into the app-folder by the 'deploy:link_shared_paths' step.
 # set :shared_dirs, fetch(:shared_dirs, []).push('somedir')
