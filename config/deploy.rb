@@ -61,6 +61,7 @@ task :deploy do
       in_path(fetch(:current_path)) do
         command %{mkdir -p tmp/}
         command %{touch tmp/restart.txt}
+        command %{bundle exec rails restart}
       end
     end
   end
