@@ -43,7 +43,7 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 #   ActiveRecord::Base.establish_connection if defined?(ActiveRecord)
 # end
 
-bind 'unix:///var/run/lists.sock?umask=0777'
+bind 'unix:///var/run/lists.sock'
 
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
