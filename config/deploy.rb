@@ -33,6 +33,8 @@ task :environment do
 
   # For those using RVM, use this to load an RVM version@gemset.
   # invoke :'rvm:use', 'ruby-1.9.3-p125@default'
+  command %{source /usr/local/share/chruby/chruby.sh}
+  command %{chruby 2.4.0}
 end
 
 # Put any custom commands you need to run at setup
