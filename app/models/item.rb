@@ -2,6 +2,8 @@ class Item < ApplicationRecord
   has_many :links
   has_many :notes
 
+  has_and_belongs_to_many :labels
+
   mount_uploader :image, ImageUploader
 
   validates :name, presence: true
