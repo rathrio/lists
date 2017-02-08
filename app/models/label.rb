@@ -6,4 +6,8 @@ class Label < ApplicationRecord
   def default_scraper
     scraper&.constantize
   end
+
+  def to_s
+    name
+  end
 end
