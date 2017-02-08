@@ -43,6 +43,8 @@ gem 'httparty'
 gem 'mina'
 gem 'mina-puma', require: false
 
+# Frontend
+gem 'font-awesome-rails'
 gem 'bulma-rails'
 
 group :development, :test do
