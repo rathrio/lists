@@ -14,38 +14,42 @@
 
   <body>
     <div class="columns">
-      <div class="column is-2 hero is-fullheight is-hidden-mobile">
+      <div class="column is-2 hero is-dark is-fullheight is-hidden-mobile">
         <aside class="menu side-nav">
           <ul class="menu-list">
             <li>
 
-              <div class="level-right">
-                <div class="level-item">
-                  <h1 class="title"><strong>Lists</strong></h1>
-                </div>
+              <%= link_to root_path do %>
+                <div class="level-right">
+                  <div class="level-item">
+                    <h1 class="title"><strong>Lists</strong></h1>
+                  </div>
 
-                <div class="level-item">
-                  <span class="icon">
-                    <%= fa_icon :home %>
-                  </span>
+                  <div class="level-item">
+                    <span class="icon is-medium">
+                      <%= fa_icon :home %>
+                    </span>
+                  </div>
                 </div>
-              </div>
+              <% end %>
 
             </li>
 
             <% Label.all.each do |label| %>
               <li>
-                <div class="level-right">
-                  <div class="level-item">
-                    <h2 class="title is-4"><%= label.name %></h2>
-                  </div>
+                <%= link_to items_path(label_ids: label.id) do %>
+                  <div class="level-right">
+                    <div class="level-item">
+                      <h2 class="title is-4"><%= label.name %></h2>
+                    </div>
 
-                  <div class="level-item">
-                    <span class="icon">
-                      <%= fa_icon label.fa_icon %>
-                    </span>
+                    <div class="level-item">
+                      <span class="icon">
+                        <%= fa_icon label.fa_icon %>
+                      </span>
+                    </div>
                   </div>
-                </div>
+                <% end %>
               </li>
             <% end %>
           </ul>

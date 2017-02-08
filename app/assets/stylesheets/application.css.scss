@@ -23,4 +23,9 @@
   li {
     padding: 10px;
   }
+
+  .menu-list a:hover {
+    background-color: inherit;
+    color: $primary;
+  }
 }
