@@ -5,11 +5,14 @@ class LabelsController < ApplicationController
 
   def create
     @label = Label.new
+
     if @label.update_attributes(label_params)
       flash[:notice] = 'Label successfully created'
-      redirect_to action: :index
     else
+      flash[:alert] = 'Could not create label'
     end
+
+    redirect_to action: :index
   end
 
   def destroy
@@ -31,6 +34,8 @@ class LabelsController < ApplicationController
       flash[:notice] = 'Label successfully updated'
       redirect_to edit_label_path(@label)
     else
+      flash[:alert] = 'Could not update label'
+      render 'form'
     end
   end
 

@@ -13,9 +13,24 @@
   </head>
 
   <body>
+
+    <%# <aside class='menu'> %>
+    <%#   <ul class="menu-list"> %>
+    <%#     <p class="menu-label"> %>
+    <%#       Labels %>
+    <%#     </p> %>
+
+    <%#     <% Label.all.each do |label| %1> %>
+    <%#       <li><%= link_to label, items_path(label_ids: label.id) %1></li> %>
+    <%#     <% end %1> %>
+    <%#   </ul> %>
+
+    <%# </aside> %>
+
     <% flash.each do |name, msg| %>
-      <%= content_tag :div, msg, class: "notification is-info" %>
+      <%= content_tag :div, msg, class: "notification is-#{name == 'notice' ? 'success' : 'danger'}" %>
     <% end %>
+
 
     <%= yield %>
   </body>

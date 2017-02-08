@@ -9,7 +9,7 @@
       <%= f.label 'Icon', class: 'label' %>
       <p class="control has-addons">
         <%= f.text_field :fa_icon, class: 'input' %>
-        <a class="button" href="#">
+        <a class="button" href="http://fontawesome.io/icons/" target="_blank">
           <span class="icon">
             <%= fa_icon f.object.fa_icon %>
           </span>
@@ -19,7 +19,7 @@
       <%= f.label 'Scraper', class: 'label' %>
       <p class="control">
         <span class="select">
-          <%= f.select :scraper, options_for_select(Scraper.all.map { |e| [e, e] }) , include_blank: 'Select Scraper' %>
+          <%= f.select :scraper, options_for_select(Scraper.all.map { |e| [e, e] }, @label.scraper) , include_blank: 'Select Scraper' %>
         </span>
       </p>
 
