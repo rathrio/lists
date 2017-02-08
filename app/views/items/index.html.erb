@@ -1,11 +1,15 @@
-<section class="section new-item">
-  <%= form_for :item do |f| %>
-    <%= f.text_field :name, class: 'input is-large', placeholder: 'Add item', autocomplete: :off %>
-  <% end %>
+<section class="section">
+  <div class="container new-item">
+    <%= form_for :item do |f| %>
+      <%= f.text_field :name, class: 'input is-large filter', placeholder: '', autocomplete: :off, data: { 'filter-container' => '.items-list', 'filter-attribute' => 'name' } %>
+    <% end %>
+  </div>
 </section>
 
-<section class='section items-list'>
-  <% @items.each do |item| %>
-    <%= render 'item', item: item %>
-  <% end %>
+<section class='section'>
+  <div class="container items-list">
+    <% @items.each do |item| %>
+      <%= render 'item', item: item %>
+    <% end %>
+  </div>
 </section>
