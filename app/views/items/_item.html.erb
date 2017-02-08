@@ -7,7 +7,7 @@
     </div>
 
     <div class="media-content">
-      <div class="title is-4"><%= item %></div>
+      <div class="title is-4"><%= link_to item, item %></div>
 
       <div class="is-hidden-mobile">
         <%= truncate(item.description, length: 300) %>
