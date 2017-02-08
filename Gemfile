@@ -36,6 +36,9 @@ gem 'jbuilder', '~> 2.5'
 # For attachments
 gem 'carrierwave'
 
+# Imagemagick interface
+gem 'mini_magick'
+
 # HTTP client
 gem 'httparty'
 

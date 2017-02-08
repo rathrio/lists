@@ -1,6 +1,6 @@
 class Item < ApplicationRecord
-  has_many :links
-  has_many :notes
+  has_many :links, dependent: :delete_all
+  has_many :notes, dependent: :delete_all
 
   has_and_belongs_to_many :labels
 

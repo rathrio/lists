@@ -88,6 +88,7 @@ GEM
     mina-puma (1.0.1)
       mina (~> 1.0.0)
       puma (>= 2.13)
+    mini_magick (4.6.0)
     mini_portile2 (2.1.0)
     minitest (5.10.1)
     multi_json (1.12.1)
@@ -190,6 +191,7 @@ DEPENDENCIES
   listen (~> 3.0.5)
   mina
   mina-puma
+  mini_magick
   pry-byebug
   pry-rails
   puma
