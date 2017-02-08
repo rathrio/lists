@@ -4,7 +4,7 @@ class Label < ApplicationRecord
   validates :name, uniqueness: true, presence: true
 
   def default_scraper
-    scraper&.constantize
+    scraper.constantize if scraper.present?
   end
 
   def to_s

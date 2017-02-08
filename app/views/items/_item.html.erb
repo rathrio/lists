@@ -32,9 +32,17 @@
 
     <div class="level-right">
       <div class="level-item">
+        <span class="icon is-medium" data-balloon="Lucky scrape">
+          <%= link_to scrape_item_path(item), method: :put do %>
+            <%= fa_icon :magic %>
+          <% end %>
+        </span>
+      </div>
+
+      <div class="level-item">
         <span class="icon is-medium">
           <%= link_to item, method: :delete, data: { confirm: 'Are you sure?' } do %>
-            <%= fa_icon "trash" %>
+            <%= fa_icon :trash %>
           <% end %>
         </span>
       </div>
