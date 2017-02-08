@@ -1,0 +1,22 @@
+<section class="section">
+  <div class="container item-form">
+    <%= form_for @item do |f| %>
+      <%= f.label 'Name', class: 'label' %>
+      <p class="control">
+        <%= f.text_field :name, class: 'input' %>
+      </p>
+
+      <%= f.label 'Release Date', class: 'label' %>
+      <p class="control">
+        <%= f.text_field :release_date, class: 'input' %>
+      </p>
+
+      <%= f.label 'Description', class: 'label' %>
+      <p class="control">
+        <%= f.text_area :description, class: 'textarea' %>
+      </p>
+
+      <%= f.submit 'Update', class: 'button is-success' %>
+    <% end %>
+  </div>
+</section>

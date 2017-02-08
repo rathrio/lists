@@ -5,6 +5,7 @@ class ItemsController < ApplicationController
 
   def show
     @item = Item.find(params[:id])
+    render 'form'
   end
 
   def create
@@ -12,6 +13,16 @@ class ItemsController < ApplicationController
     result = MovieScraper.new(query: item.name).scrape.first
     item.update_from(result)
     redirect_to action: :index
+  end
+
+  def update
+    @item = Item.find(params[:id])
+
+    if @item.update_attributes(item_params)
+      flash[:notice] = 'Item successfully updated'
+      redirect_to @item
+    else
+    end
   end
 
   private
