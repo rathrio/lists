@@ -16,6 +16,7 @@
     <% flash.each do |name, msg| %>
       <%= content_tag :div, msg, class: "notification is-info" %>
     <% end %>
+
     <%= yield %>
   </body>
 </html>

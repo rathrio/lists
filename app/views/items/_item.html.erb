@@ -3,7 +3,7 @@
     <div class="level-left">
       <div class="level-item">
         <figure class="image is-64x64">
-          <%= image_tag item.image.thumb.url %>
+          <%= image_tag item.image.thumb.url if item.image.present? %>
         </figure>
       </div>
 
@@ -16,7 +16,7 @@
       <div class="level-item">
         <span class="icon is-medium">
 
-          <%= link_to item, method: :delete do %>
+          <%= link_to item, method: :delete, data: { confirm: 'Are you sure?' } do %>
             <%= fa_icon "trash" %>
           <% end %>
         </span>
