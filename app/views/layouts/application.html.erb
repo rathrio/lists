@@ -13,25 +13,53 @@
   </head>
 
   <body>
+    <div class="columns">
+      <div class="column is-2 hero is-fullheight is-hidden-mobile">
+        <aside class="menu side-nav">
+          <ul class="menu-list">
+            <li>
 
-    <%# <aside class='menu'> %>
-    <%#   <ul class="menu-list"> %>
-    <%#     <p class="menu-label"> %>
-    <%#       Labels %>
-    <%#     </p> %>
+              <div class="level-right">
+                <div class="level-item">
+                  <h1 class="title"><strong>Lists</strong></h1>
+                </div>
 
-    <%#     <% Label.all.each do |label| %1> %>
-    <%#       <li><%= link_to label, items_path(label_ids: label.id) %1></li> %>
-    <%#     <% end %1> %>
-    <%#   </ul> %>
+                <div class="level-item">
+                  <span class="icon">
+                    <%= fa_icon :home %>
+                  </span>
+                </div>
+              </div>
 
-    <%# </aside> %>
+            </li>
 
-    <% flash.each do |name, msg| %>
-      <%= content_tag :div, msg, class: "notification is-#{name == 'notice' ? 'success' : 'danger'}" %>
-    <% end %>
+            <% Label.all.each do |label| %>
+              <li>
+                <div class="level-right">
+                  <div class="level-item">
+                    <h2 class="title is-4"><%= label.name %></h2>
+                  </div>
+
+                  <div class="level-item">
+                    <span class="icon">
+                      <%= fa_icon label.fa_icon %>
+                    </span>
+                  </div>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        </aside>
+      </div>
 
 
-    <%= yield %>
+      <div class="column is-10">
+        <% flash.each do |name, msg| %>
+          <%= content_tag :div, msg, class: "notification is-#{name == 'notice' ? 'success' : 'danger'}" %>
+        <% end %>
+
+        <%= yield %>
+      </div>
+    </div>
   </body>
 </html>

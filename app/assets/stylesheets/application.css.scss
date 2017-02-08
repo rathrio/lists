@@ -16,3 +16,11 @@
 
 @import 'font-awesome';
 @import 'bulma';
+
+.side-nav {
+  padding-top: 50%;
+
+  li {
+    padding: 10px;
+  }
+}
