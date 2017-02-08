@@ -46,18 +46,14 @@ class ItemsController < ApplicationController
 
   def scrape
     @item = Item.find(params[:id])
-    scraper = @item.labels.first&.default_scraper
-
-    if scraper.nil?
+    unless @item.lucky_scrape
       flash[:alert] = 'Could not scrape item'
-    else
-      result = scraper.new(query: @item.name).scrape.first
-      if result
-        @item.update_from(result)
-        # flash[:notice] = 'Scrape complete'
-      end
     end
+    redirect_to action: :index, label_ids: current_label_id_params
+  end
 
+  def scrape_all
+    Item.lucky_scrape(current_label_ids)
     redirect_to action: :index, label_ids: current_label_id_params
   end
 

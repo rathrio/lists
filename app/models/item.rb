@@ -12,8 +12,20 @@ class Item < ApplicationRecord
     joins(:items_labels).where('items_labels.label_id in (?)', label_ids)
   end
 
+  def self.scraped
+    where(scraped: true)
+  end
+
+  def self.unscraped
+    where(scraped: false)
+  end
+
   def self.create_from(scraper_result)
     create!(scraper_result.merge(scraped: true))
+  end
+
+  def self.lucky_scrape(label_ids)
+    with_labels(label_ids).unscraped.includes(:labels).each(&:lucky_scrape)
   end
 
   def update_from(scraper_result)
@@ -26,5 +38,16 @@ class Item < ApplicationRecord
 
   def release_year
     release_date&.year
+  end
+
+  def lucky_scrape
+    scraper = labels.first&.default_scraper
+
+    if scraper.nil?
+      return false
+    else
+      result = scraper.new(query: name).scrape.first
+      update_from(result) if result
+    end
   end
 end
