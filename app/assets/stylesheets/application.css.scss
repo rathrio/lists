@@ -24,8 +24,10 @@
     padding: 10px;
   }
 
-  .menu-list a:hover {
-    background-color: inherit;
-    color: $primary;
+  .menu-list a {
+    &:hover, &.is-active {
+      background-color: inherit;
+      color: $primary; 
+    }
   }
 }

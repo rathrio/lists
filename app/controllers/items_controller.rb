@@ -1,8 +1,10 @@
 class ItemsController < ApplicationController
   def index
     @items = if (label_ids = params[:label_ids])
-               Item.with_labels(label_ids)
+               set_label_ids(label_ids)
+               Item.with_labels(current_label_ids)
              else
+               reset_label_ids
                Item.all
              end
 
@@ -15,10 +17,14 @@ class ItemsController < ApplicationController
   end
 
   def create
-    item = Item.new item_params
-    result = GameScraper.new(query: item.name).scrape.first
-    item.update_from(result)
-    redirect_to action: :index
+    item = Item.new item_params.merge(label_ids: current_label_ids)
+
+    if item.save
+      flash[:notice] = 'Item successfully created'
+    else
+      flash[:alert] = 'Could not create item'
+    end
+    redirect_to action: :index, label_ids: current_label_id_params
   end
 
   def update
@@ -35,7 +41,7 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     @item.destroy!
     flash[:notice] = 'Item successfully deleted'
-    redirect_to action: :index
+    redirect_to action: :index, label_ids: current_label_id_params
   end
 
   private

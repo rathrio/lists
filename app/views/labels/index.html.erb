@@ -1,4 +1,6 @@
 <section class="section">
+  <h1 class="title">Manage Labels</h1>
+
   <div class="container new-label">
     <%= form_for :label do |f| %>
       <div class="control is-horizontal">
@@ -24,10 +26,8 @@
   </div>
 </section>
 
-<section class='section'>
-  <div class="container labels-list">
-    <% @labels.each do |label| %>
-      <%= render 'label', label: label %>
-    <% end %>
-  </div>
-</section>
+<div class="container labels-list">
+  <% @labels.each do |label| %>
+    <%= render 'label', label: label %>
+  <% end %>
+</div>

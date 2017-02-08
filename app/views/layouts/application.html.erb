@@ -18,7 +18,6 @@
         <aside class="menu side-nav">
           <ul class="menu-list">
             <li>
-
               <%= link_to root_path do %>
                 <div class="level-right">
                   <div class="level-item">
@@ -32,12 +31,12 @@
                   </div>
                 </div>
               <% end %>
-
             </li>
 
             <% Label.all.each do |label| %>
               <li>
-                <%= link_to items_path(label_ids: label.id) do %>
+                <% css_class = current_label_ids.include?(label.id) ? 'is-active' : '' %>
+                <%= link_to items_path(label_ids: label.id), class: css_class do %>
                   <div class="level-right">
                     <div class="level-item">
                       <h2 class="title is-4"><%= label.name %></h2>
@@ -52,6 +51,22 @@
                 <% end %>
               </li>
             <% end %>
+
+            <li>
+              <%= link_to labels_path do %>
+                <div class="level-right">
+                  <div class="level-item">
+                    <h2 class="title is-4">Settings</h1>
+                  </div>
+
+                  <div class="level-item">
+                    <span class="icon">
+                      <%= fa_icon :cog %>
+                    </span>
+                  </div>
+                </div>
+              <% end %>
+            </li>
           </ul>
         </aside>
       </div>
@@ -59,7 +74,9 @@
 
       <div class="column is-10">
         <% flash.each do |name, msg| %>
-          <%= content_tag :div, msg, class: "notification is-#{name == 'notice' ? 'success' : 'danger'}" %>
+          <div class="container">
+            <%= content_tag :div, msg, class: "notification is-#{name == 'notice' ? 'success' : 'danger'}" %>
+          </div>
         <% end %>
 
         <%= yield %>
