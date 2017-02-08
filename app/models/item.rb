@@ -23,4 +23,8 @@ class Item < ApplicationRecord
   def to_s
     name
   end
+
+  def release_year
+    release_date&.year
+  end
 end
