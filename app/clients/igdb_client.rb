@@ -9,6 +9,6 @@ class IgdbClient
   end
 
   def search
-    self.class.get("/games/?search=#{@query}")
+    self.class.get("/games/", query: { 'search' => @query })
   end
 end

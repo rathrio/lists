@@ -5,6 +5,7 @@ class CreateItems < ActiveRecord::Migration[5.0]
       t.string :description
       t.integer :quantity, default: 0
       t.boolean :scraped, default: false
+      t.date :release_date
 
       t.timestamps
     end
