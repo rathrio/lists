@@ -18,7 +18,6 @@
   }
 
   function ready() {
-    console.log('foobar');
     $('.filter').on('keyup', filter);
   }
 

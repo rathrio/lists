@@ -1,13 +1,27 @@
 <div class="box" data-filter-name="<%= item.name %>">
-  <div class="level-left is-mobile">
-    <div class="level-item has-text-centered">
-      <figure class="image is-64x64">
-        <%= image_tag item.image.thumb.url %>
-      </figure>
+  <div class="level is-mobile">
+    <div class="level-left">
+      <div class="level-item">
+        <figure class="image is-64x64">
+          <%= image_tag item.image.thumb.url %>
+        </figure>
+      </div>
+
+      <div class="level-item">
+        <div class="title is-4"><%= link_to item, item %></div>
+      </div>
     </div>
 
-    <div class="level-item has-text-centered">
-      <div class="title is-4"><%= link_to item, item %></div>
+    <div class="level-right">
+      <div class="level-item">
+        <span class="icon is-medium">
+
+          <%= link_to item, method: :delete do %>
+            <%= fa_icon "trash" %>
+          <% end %>
+        </span>
+      </div>
     </div>
+
   </div>
 </div>

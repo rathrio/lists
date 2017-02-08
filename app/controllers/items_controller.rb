@@ -25,6 +25,13 @@ class ItemsController < ApplicationController
     end
   end
 
+  def destroy
+    @item = Item.find(params[:id])
+    @item.destroy!
+    flash[:notice] = 'Item successfully destroyed'
+    redirect_to action: :index
+  end
+
   private
 
   def item_params
