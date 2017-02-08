@@ -15,4 +15,8 @@ class Item < ApplicationRecord
   def update_from(scraper_result)
     update_attributes!(scraper_result.merge(scraped: true))
   end
+
+  def to_s
+    name
+  end
 end

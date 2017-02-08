@@ -43,7 +43,5 @@ workers ENV.fetch("WEB_CONCURRENCY") { 4 }
 #   ActiveRecord::Base.establish_connection if defined?(ActiveRecord)
 # end
 
-bind 'unix:///var/run/puma/lists.sock' if ENV['RAILS_ENV'] == 'production'
-
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
