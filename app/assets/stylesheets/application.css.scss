@@ -31,3 +31,15 @@
     }
   }
 }
+
+.items-list {
+  .box {
+    padding: 0;
+    padding-right: 1.25rem;
+
+    img {
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+  }
+}
