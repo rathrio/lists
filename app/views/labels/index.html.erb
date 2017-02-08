@@ -16,6 +16,8 @@
               <%= f.select :scraper, options_for_select(Scraper.all.map { |e| [e, e] }) , include_blank: 'Select Scraper' %>
             </span>
           </div>
+
+          <%= f.submit 'Create', class: 'button is-primary is-large' %>
         </div>
       </div>
     <% end %>

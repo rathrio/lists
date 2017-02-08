@@ -1,6 +1,12 @@
 class ItemsController < ApplicationController
   def index
-    @items = Item.includes(:labels).all.reverse_order
+    @items = if (label_ids = params[:label_ids])
+               Item.with_labels(label_ids)
+             else
+               Item.all
+             end
+
+    @items = @items.includes(:labels).all.reverse_order
   end
 
   def show

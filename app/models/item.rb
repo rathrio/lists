@@ -8,8 +8,8 @@ class Item < ApplicationRecord
 
   validates :name, presence: true
 
-  def self.with_labels(labels)
-    joins(:items_labels).where('items_labels.label_id in (?)', labels.pluck(:id))
+  def self.with_labels(label_ids)
+    joins(:items_labels).where('items_labels.label_id in (?)', label_ids)
   end
 
   def self.create_from(scraper_result)

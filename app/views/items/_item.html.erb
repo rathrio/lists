@@ -1,6 +1,6 @@
 <div class="box" data-filter-name="<%= item.name %>">
   <div class="level is-mobile">
-    <div class="level-left">
+    <div class="level-left is-mobile">
       <div class="level-item">
         <figure class="image is-64x64">
           <%= image_tag item.image.thumb.url if item.image.present? %>
@@ -19,11 +19,15 @@
         </div>
       <% end %>
 
-      <div class="level-item">
-        <% item.labels.each do |label| %>
-          <span class="icon"><%= fa_icon label.fa_icon %></span>
-        <% end %>
-      </div>
+      <% item.labels.each do |label| %>
+        <div class="level-item">
+          <%= link_to items_path(label_ids: label.id) do %>
+            <span class="tag is-dark">
+              <%= label.name %>
+            </span>
+          <% end %>
+        </div>
+      <% end %>
     </div>
 
     <div class="level-right">
