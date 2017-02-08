@@ -3,7 +3,8 @@ class Scraper
   def self.all
     [
       GameScraper,
-      MovieScraper
+      MovieScraper,
+      TvScraper
     ]
   end
 end
