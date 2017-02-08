@@ -1,0 +1,17 @@
+<div class="box">
+  <article class="media">
+    <div class="media-left">
+      <figure class="image is-64x64">
+        <%= image_tag item.image.thumb.url %>
+      </figure>
+    </div>
+
+    <div class="media-content">
+      <div class="title is-4"><%= item %></div>
+
+      <div class="is-hidden-mobile">
+        <%= truncate(item.description, length: 300) %>
+      </div>
+    </div>
+  </article>
+</div>

@@ -1,17 +1,11 @@
-<h1 class="title">Items</h1>
+<section class="section new-item">
+  <%= form_for :item do |f| %>
+    <%= f.text_field :name, class: 'input is-large', placeholder: 'Add item', autocomplete: :off %>
+  <% end %>
+</section>
 
-<% @items.each do |item| %>
-  <div class="box">
-    <article class="media">
-      <div class="media-left">
-        <figure class="image is-64x64">
-          <%= image_tag item.image.thumb.url %>
-        </figure>
-      </div>
-
-      <div class="media-content">
-        <%= item %>
-      </div>
-    </article>
-  </div>
-<% end %>
+<section class='section items-list'>
+  <% @items.each do |item| %>
+    <%= render 'item', item: item %>
+  <% end %>
+</section>
