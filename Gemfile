@@ -42,10 +42,6 @@ gem 'mini_magick'
 # HTTP client
 gem 'httparty'
 
-# For deployment
-gem 'mina'
-gem 'mina-puma', require: false
-
 # Frontend
 gem 'font-awesome-rails'
 gem 'bulma-rails'
