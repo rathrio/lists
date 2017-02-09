@@ -13,17 +13,17 @@ class MovieScraper
               ''
             end
 
-      release_date = if movie['release_date'].present?
-                       Date.parse(movie['release_date'])
-                     else
-                       nil
-                     end
+      date = if movie['release_date'].present?
+               Date.parse(movie['release_date'])
+             else
+               nil
+             end
 
       {
         name: movie['title'],
         description: movie['overview'],
         remote_image_url: url,
-        release_date: release_date
+        date: date
       }
     end
   end

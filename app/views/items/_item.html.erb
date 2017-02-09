@@ -11,10 +11,10 @@
         <div class="title is-4"><%= link_to item, item %></div>
       </div>
 
-      <% if item.release_year %>
+      <% if item.year %>
         <div class="level-item">
-          <span class="tag is-primary">
-            <%= item.release_year %>
+          <span class="tag is-light is-medium">
+            <%= item.year %>
           </span>
         </div>
       <% end %>
@@ -22,7 +22,7 @@
       <% item.labels.each do |label| %>
         <div class="level-item">
           <%= link_to items_path(label_ids: label.id) do %>
-            <span class="tag is-dark">
+            <span class="tag is-dark is-medium">
               <%= label.name %>
             </span>
           <% end %>

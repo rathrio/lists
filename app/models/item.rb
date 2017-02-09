@@ -36,8 +36,8 @@ class Item < ApplicationRecord
     name
   end
 
-  def release_year
-    release_date&.year
+  def year
+    date&.year
   end
 
   def lucky_scrape
