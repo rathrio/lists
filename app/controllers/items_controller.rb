@@ -32,7 +32,7 @@ class ItemsController < ApplicationController
 
     if @item.update_attributes(item_params)
       flash[:notice] = 'Item successfully updated'
-      redirect_to @item
+      redirect_to action: :index, label_ids: current_label_id_params
     else
     end
   end
