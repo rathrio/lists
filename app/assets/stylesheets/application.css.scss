@@ -17,6 +17,10 @@
 @import 'font-awesome';
 @import 'bulma';
 
+.has-no-bottom-padding {
+  padding-bottom: 0;
+}
+
 .columns.is-gapless > .column.main-content {
   padding-bottom: 40px;
 }
