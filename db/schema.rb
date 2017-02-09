@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170209072941) do
+ActiveRecord::Schema.define(version: 20170209180016) do
 
   create_table "items", force: :cascade do |t|
     t.string   "name"
@@ -31,6 +31,13 @@ ActiveRecord::Schema.define(version: 20170209072941) do
     t.integer "label_id"
     t.index ["item_id"], name: "index_items_labels_on_item_id"
     t.index ["label_id"], name: "index_items_labels_on_label_id"
+  end
+
+  create_table "items_tags", id: false, force: :cascade do |t|
+    t.integer "item_id"
+    t.integer "tag_id"
+    t.index ["item_id"], name: "index_items_tags_on_item_id"
+    t.index ["tag_id"], name: "index_items_tags_on_tag_id"
   end
 
   create_table "labels", force: :cascade do |t|
@@ -55,6 +62,10 @@ ActiveRecord::Schema.define(version: 20170209072941) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["item_id"], name: "index_notes_on_item_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
   end
 
 end

@@ -5,6 +5,7 @@ class Item < ApplicationRecord
   has_many :notes, dependent: :delete_all
 
   has_and_belongs_to_many :labels
+  has_and_belongs_to_many :tags
 
   mount_uploader :image, ImageUploader
 
@@ -12,6 +13,10 @@ class Item < ApplicationRecord
 
   def self.with_labels(label_ids)
     joins(:items_labels).where('items_labels.label_id in (?)', label_ids)
+  end
+
+  def self.with_tags(tag_ids)
+    joins(:items_tags).where('items_tags.tag_id in (?)', tag_ids)
   end
 
   def self.scraped
