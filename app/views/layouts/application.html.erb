@@ -64,7 +64,7 @@
       </div>
 
 
-      <div class="column is-10 main-content">
+      <div class="column is-auto main-content">
         <% flash.each do |name, msg| %>
           <div class="container">
             <%= content_tag :div, msg, class: "notification is-#{name == 'notice' ? 'success' : 'danger'}" %>
