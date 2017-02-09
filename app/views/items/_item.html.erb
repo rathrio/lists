@@ -19,17 +19,25 @@
         </div>
       <% end %>
 
-      <%# <% unless current_label_ids.count == 1 %1> %>
-        <% item.labels.each do |label| %>
-          <div class="level-item">
-            <%= link_to items_path(label_ids: label.id) do %>
-              <span class="tag is-dark is-medium">
-                <%= label.name %>
-              </span>
-            <% end %>
-          </div>
-        <% end %>
-      <%# <% end %1> %>
+      <% item.labels.each do |label| %>
+        <div class="level-item">
+          <%= link_to items_path(label_ids: label.id) do %>
+            <span class="tag is-dark is-medium">
+              <%= label.name %>
+            </span>
+          <% end %>
+        </div>
+      <% end %>
+
+      <% item.tags.each do |tag| %>
+        <div class="level-item">
+          <%= link_to items_path(tag_ids: tag.id) do %>
+            <span class="tag is-info is-medium">
+              <%= tag.name %>
+            </span>
+          <% end %>
+        </div>
+      <% end %>
     </div>
 
     <div class="level-right">

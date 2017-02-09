@@ -8,7 +8,7 @@ class ItemsController < ApplicationController
                Item.all
              end
 
-    @items = @items.includes(:labels).all.reverse_order
+    @items = @items.includes(:labels, :tags).all.reverse_order
   end
 
   def show
