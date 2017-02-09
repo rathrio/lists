@@ -26,8 +26,10 @@
   </div>
 </section>
 
-<div class="container labels-list">
-  <% @labels.each do |label| %>
-    <%= render 'label', label: label %>
-  <% end %>
-</div>
+<section class="section">
+  <div class="container labels-list">
+    <% @labels.each do |label| %>
+      <%= render 'label', label: label %>
+    <% end %>
+  </div>
+</section>
