@@ -17,8 +17,12 @@
 @import 'font-awesome';
 @import 'bulma';
 
+.columns.is-gapless > .column.main-content {
+  padding-bottom: 40px;
+}
+
 .side-nav {
-  padding-top: 50%;
+  padding-top: 40%;
 
   li {
     padding: 5px;
