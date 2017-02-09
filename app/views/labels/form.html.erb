@@ -1,5 +1,7 @@
 <section class="section">
   <div class="container label-form">
+    <h1 class="title">Edit Label "<%= @label.name %>"</h1>
+
     <%= form_for @label do |f| %>
       <%= f.label 'Name', class: 'label' %>
       <p class="control">
