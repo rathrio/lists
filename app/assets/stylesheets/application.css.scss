@@ -21,7 +21,7 @@
   padding-top: 50%;
 
   li {
-    padding: 10px;
+    padding: 5px;
   }
 
   .menu-list a {
@@ -29,6 +29,11 @@
       background-color: inherit;
       color: $primary;
     }
+  }
+
+  .label-nav {
+    padding-top: 50px;
+    padding-bottom: 50px;
   }
 }
 

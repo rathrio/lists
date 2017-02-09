@@ -19,7 +19,7 @@
       <%= f.label 'Scraper', class: 'label' %>
       <p class="control">
         <span class="select">
-          <%= f.select :scraper, options_for_select(Scraper.all.map { |e| [e, e] }, @label.scraper) , include_blank: 'Select Scraper' %>
+          <%= f.select :scraper, options_for_select(Scraper.all.map { |e| [e, e] }, @label.scraper) , include_blank: 'Select default Scraper' %>
         </span>
       </p>
 

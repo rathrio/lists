@@ -15,7 +15,7 @@
 
           <div class="control is-expanded">
             <span class="select is-large">
-              <%= f.select :scraper, options_for_select(Scraper.all.map { |e| [e, e] }) , include_blank: 'Select Scraper' %>
+              <%= f.select :scraper, options_for_select(Scraper.all.map { |e| [e, e] }) , include_blank: 'Select default Scraper' %>
             </span>
           </div>
 
