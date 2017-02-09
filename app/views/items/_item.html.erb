@@ -39,11 +39,25 @@
         <% end %>
       </div>
 
-      <div class="level-item">
-        <%= link_to item, method: :delete do %>
-          <%= icon :archive, size: :medium, tip: 'Archive' %>
-        <% end %>
-      </div>
+      <% if item.deleted? %>
+        <div class="level-item">
+          <%= link_to restore_item_path(item), method: :put do %>
+            <%= icon :recycle, size: :medium, tip: 'Restore' %>
+          <% end %>
+        </div>
+
+        <div class="level-item">
+          <%= link_to really_destroy_item_path(item), method: :delete, data: { confirm: 'Are you sure?' } do %>
+            <%= icon :trash, size: :medium, tip: 'Delete for good' %>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="level-item">
+          <%= link_to item, method: :delete do %>
+            <%= icon :archive, size: :medium, tip: 'Archive' %>
+          <% end %>
+        </div>
+      <% end %>
     </div>
 
   </div>

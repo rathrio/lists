@@ -42,6 +42,9 @@ gem 'mini_magick'
 # HTTP client
 gem 'httparty'
 
+# Archive instead of delete
+gem 'paranoia'
+
 # Frontend
 gem 'font-awesome-rails'
 gem 'bulma-rails'

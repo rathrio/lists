@@ -40,8 +40,22 @@ class ItemsController < ApplicationController
   def destroy
     @item = Item.find(params[:id])
     @item.destroy!
+    flash[:notice] = 'Item successfully archived'
+    redirect_to action: :index, label_ids: current_label_id_params
+  end
+
+  def really_destroy
+    @item = Item.with_deleted.find(params[:id])
+    @item.really_destroy!
     flash[:notice] = 'Item successfully deleted'
     redirect_to action: :index, label_ids: current_label_id_params
+  end
+
+  def restore
+    @item = Item.with_deleted.find(params[:id])
+    @item.restore
+    flash[:notice] = 'Item successfully restored'
+    redirect_to @item
   end
 
   def scrape

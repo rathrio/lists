@@ -1,4 +1,6 @@
 class Item < ApplicationRecord
+  acts_as_paranoid
+
   has_many :links, dependent: :delete_all
   has_many :notes, dependent: :delete_all
 
