@@ -10,9 +10,7 @@
       <p class="control has-addons">
         <%= f.text_field :fa_icon, class: 'input' %>
         <a class="button" href="http://fontawesome.io/icons/" target="_blank">
-          <span class="icon">
-            <%= fa_icon f.object.fa_icon %>
-          </span>
+          <%= icon @label.fa_icon %>
         </a>
       </p>
 

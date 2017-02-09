@@ -26,11 +26,7 @@
                     <h1 class="title"><strong>Lists</strong></h1>
                   </div>
 
-                  <div class="level-item">
-                    <span class="icon is-medium">
-                      <%= fa_icon :home %>
-                    </span>
-                  </div>
+                  <%= icon :home, size: :medium %>
                 </div>
               <% end %>
             </li>
@@ -45,11 +41,7 @@
                         <h2 class="title is-4"><%= label.name %></h2>
                       </div>
 
-                      <div class="level-item">
-                        <span class="icon">
-                          <%= fa_icon label.fa_icon %>
-                        </span>
-                      </div>
+                      <%= icon label.fa_icon %>
                     </div>
                   <% end %>
                 </li>
@@ -63,11 +55,7 @@
                     <h2 class="title is-4">Settings</h1>
                   </div>
 
-                  <div class="level-item">
-                    <span class="icon">
-                      <%= fa_icon :cog %>
-                    </span>
-                  </div>
+                  <%= icon :cog %>
                 </div>
               <% end %>
             </li>

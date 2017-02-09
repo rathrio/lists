@@ -2,9 +2,7 @@
   <div class="level is-mobile">
     <div class="level-left">
       <div class="level-item">
-        <span class="icon">
-          <%= fa_icon label.fa_icon %>
-        </span>
+        <%= icon label.fa_icon %>
       </div>
 
       <div class="level-item">
@@ -22,12 +20,9 @@
 
     <div class="level-right">
       <div class="level-item">
-        <span class="icon is-medium">
-
-          <%= link_to label, method: :delete, data: { confirm: 'Are you sure?' } do %>
-            <%= fa_icon "trash" %>
-          <% end %>
-        </span>
+        <%= link_to label, method: :delete, data: { confirm: 'Are you sure?' } do %>
+          <%= icon :trash, size: :medium %>
+        <% end %>
       </div>
     </div>
   </div>
