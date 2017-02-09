@@ -8,11 +8,15 @@ class ItemsController < ApplicationController
                Item.all
              end
 
-    @items = @items.includes(:labels, :tags).all.reverse_order
+    @items = if params[:archived]
+               @items.only_deleted.order('deleted_at DESC')
+             else
+               @items.includes(:labels, :tags).all.reverse_order
+             end
   end
 
   def show
-    @item = Item.find(params[:id])
+    @item = Item.with_deleted.find(params[:id])
     render 'form'
   end
 
@@ -48,7 +52,7 @@ class ItemsController < ApplicationController
     @item = Item.with_deleted.find(params[:id])
     @item.really_destroy!
     flash[:notice] = 'Item successfully deleted'
-    redirect_to action: :index, label_ids: current_label_id_params
+    redirect_to action: :index, archived: true
   end
 
   def restore

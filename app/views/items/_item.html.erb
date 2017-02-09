@@ -41,12 +41,6 @@
     </div>
 
     <div class="level-right">
-      <div class="level-item">
-        <%= link_to scrape_item_path(item), method: :put do %>
-          <%= icon :magic, size: :medium, tip: 'Lucky scrape' %>
-        <% end %>
-      </div>
-
       <% if item.deleted? %>
         <div class="level-item">
           <%= link_to restore_item_path(item), method: :put do %>
@@ -60,6 +54,12 @@
           <% end %>
         </div>
       <% else %>
+        <div class="level-item">
+          <%= link_to scrape_item_path(item), method: :put do %>
+            <%= icon :magic, size: :medium, tip: 'Lucky scrape' %>
+          <% end %>
+        </div>
+
         <div class="level-item">
           <%= link_to item, method: :delete do %>
             <%= icon :archive, size: :medium, tip: 'Archive' %>
