@@ -12,9 +12,11 @@
       </div>
 
       <div class="level-item">
-        <span class="tag is-dark">
-          <%= label.items.count %>
-        </span>
+        <%= link_to items_path(label_ids: label.id) do %>
+          <span class="tag is-dark">
+            <%= label.items.count %>
+          </span>
+        <% end %>
       </div>
     </div>
 
