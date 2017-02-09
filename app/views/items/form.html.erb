@@ -1,21 +1,21 @@
 <section class="section">
-  <div class="level">
-    <div class="level-left">
-      <% if @item.image.present? %>
-        <div class="level-item">
-          <figure class="image is-64x64">
-            <%= image_tag @item.image.thumb.url %>
-          </figure>
-        </div>
-      <% end %>
+  <div class="container item-form">
+    <div class="level">
+      <div class="level-left">
+        <% if @item.image.present? %>
+          <div class="level-item">
+            <figure class="image is-64x64">
+              <%= image_tag @item.image.thumb.url %>
+            </figure>
+          </div>
+        <% end %>
 
-      <div class="level-item">
-        <h1 class="title">Edit "<%= @item.name %>"</h1>
+        <div class="level-item">
+          <h1 class="title">Edit "<%= @item.name %>"</h1>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="container item-form">
     <%= form_for @item do |f| %>
       <%= f.label 'Name', class: 'label' %>
       <p class="control">
