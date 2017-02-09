@@ -1,10 +1,8 @@
 class MovieScraper
-  def initialize(query:)
-    @query = query
-  end
+  include Scraper
 
   def scrape
-    movies = MoviedbClient.new(query: @query).search(type: :movie)['results'].to_a
+    movies = MoviedbClient.new(query: query).search(type: :movie)['results'].to_a
 
     movies.map do |movie|
       url = if movie['poster_path']

@@ -1,10 +1,8 @@
 class GameScraper
-  def initialize(query:)
-    @query = query
-  end
+  include Scraper
 
   def scrape
-    games = IgdbClient.new(query: @query).search
+    games = IgdbClient.new(query: query).search
 
     games.map do |game|
       url = game.dig('cover', 'url')

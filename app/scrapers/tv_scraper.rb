@@ -1,10 +1,8 @@
 class TvScraper
-  def initialize(query:)
-    @query = query
-  end
+  include Scraper
 
   def scrape
-    shows = MoviedbClient.new(query: @query).search(type: :tv)['results'].to_a
+    shows = MoviedbClient.new(query: query).search(type: :tv)['results'].to_a
 
     shows.map do |show|
       url = if show['poster_path']
