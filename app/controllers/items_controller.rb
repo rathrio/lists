@@ -60,14 +60,25 @@ class ItemsController < ApplicationController
 
   def scrape
     @item = Item.find(params[:id])
-    unless @item.lucky_scrape
-      flash[:alert] = 'Could not scrape item'
+
+    begin
+      unless @item.lucky_scrape
+        flash[:alert] = 'Could not scrape item'
+      end
+    rescue SocketError
+      flash[:alert] = 'No internet connection'
     end
+
     redirect_to action: :index, label_ids: current_label_id_params
   end
 
   def scrape_all
-    Item.lucky_scrape(current_label_ids)
+
+    begin
+      Item.lucky_scrape(current_label_ids)
+    rescue SocketError
+      flash[:alert] = 'No internet connection'
+    end
     redirect_to action: :index, label_ids: current_label_id_params
   end
 
