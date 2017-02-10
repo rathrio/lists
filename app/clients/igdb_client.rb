@@ -8,7 +8,8 @@ class IgdbClient
     self.class.get("/games/", query: { search: query })
   end
 
-  def genre(id)
-    self.class.get("/genres/#{id}", query: { fields: 'name' })
+  def genre(ids)
+    return [] if ids.blank?
+    self.class.get("/genres/#{ids.join(',')}", query: { fields: 'name' })
   end
 end
