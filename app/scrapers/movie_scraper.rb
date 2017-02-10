@@ -1,28 +1,23 @@
 class MovieScraper
   include Scraper
 
-  def scrape
-    movies = MoviedbClient.new(query: query).search(type: :movie)['results'].to_a
+  def search_results
+    MoviedbClient.new(query: query).search(type: :movie)['results'].to_a
+  end
 
-    movies.map do |movie|
-      url = if movie['poster_path']
-              MoviedbClient::IMAGE_BASE_URI + movie['poster_path']
-            else
-              ''
-            end
+  def scrape_name(result)
+    result['title']
+  end
 
-      date = if movie['release_date'].present?
-               Date.parse(movie['release_date'])
-             else
-               nil
-             end
+  def scrape_description(result)
+    result['overview']
+  end
 
-      {
-        name: movie['title'],
-        description: movie['overview'],
-        remote_image_url: url,
-        date: date
-      }
-    end
+  def scrape_image(result)
+    MoviedbClient::IMAGE_BASE_URI + result['poster_path'] if result['poster_path']
+  end
+
+  def scrape_date(result)
+    Date.parse(result['release_date']) if result['release_date'].present?
   end
 end

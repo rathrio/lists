@@ -27,30 +27,26 @@ module Scraper
   end
 
   def search_results
-    raise NotImplementedError
+    []
   end
 
   def scrape_name(result)
-    raise NotImplementedError
   end
 
   def scrape_description(result)
-    raise NotImplementedError
   end
 
   def scrape_image(result)
-    raise NotImplementedError
   end
 
   def scrape_date(result)
-    raise NotImplementedError
   end
 
   def scrape_links(result)
-    raise NotImplementedError
+    []
   end
 
   def scrape_tags(result)
-    raise NotImplementedError
+    []
   end
 end

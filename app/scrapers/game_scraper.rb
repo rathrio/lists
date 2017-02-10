@@ -1,31 +1,37 @@
 class GameScraper
   include Scraper
 
-  def scrape
-    games = IgdbClient.new(query: query).search
+  def search_results
+    IgdbClient.new(query: query).search
+  end
 
-    games.map do |game|
-      url = game.dig('cover', 'url')
-      url = url.sub("//", "https://") if url.present?
+  def scrape_name(result)
+    result['name']
+  end
 
-      release_date_unix = game['first_release_date'].to_s[0..9]
-      date  = if release_date_unix.present?
-                DateTime.strptime(release_date_unix,'%s')
-              else
-                nil
-              end
+  def scrape_description(result)
+    result['description']
+  end
 
-      links = [
-        Link.new(url: game['url'])
-      ]
+  def scrape_image(result)
+    url = result.dig('cover', 'url')
 
-      {
-        name: game['name'],
-        description: game['summary'],
-        remote_image_url: url,
-        date: date,
-        links: links
-      }
+    if url.present?
+      url = url.sub("//", "https://")
+      url = url.sub("t_thumb", "t_cover_big")
     end
+  end
+
+  def scrape_date(result)
+    release_date_unix = result['first_release_date'].to_s
+    return nil unless release_date_unix.present?
+
+    DateTime.strptime(release_date_unix,'%Q')
+  end
+
+  def scrape_links(result)
+    [
+      Link.new(url: result['url'])
+    ]
   end
 end
