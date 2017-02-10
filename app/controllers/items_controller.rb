@@ -8,11 +8,17 @@ class ItemsController < ApplicationController
                Item.all
              end
 
+    if (tag_ids = params[:tag_ids]).present?
+      @items = @items.with_tags(tag_ids)
+    end
+
     @items = if params[:archived]
                @items.only_deleted.order('deleted_at DESC')
              else
-               @items.includes(:labels, :tags).all.reverse_order
+               @items.reverse_order
              end
+
+    @items = @items.includes(:labels, :tags)
   end
 
   def show

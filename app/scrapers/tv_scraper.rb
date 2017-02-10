@@ -2,7 +2,7 @@ class TvScraper
   include Scraper
 
   def search_results
-    MoviedbClient.new(query: query).search(type: :tv)['results'].to_a
+    moviedb_client.search(query, type: :tv)['results'].to_a
   end
 
   def scrape_name(result)
@@ -23,5 +23,11 @@ class TvScraper
 
   def scrape_tags(result)
     result['genre_ids'].map { |id| MoviedbClient::GENRES[id] }.compact
+  end
+
+  private
+
+  def moviedb_client
+    @moviedb_client ||= MoviedbClient.new
   end
 end

@@ -22,7 +22,7 @@
       <% item.labels.each do |label| %>
         <div class="level-item">
           <%= link_to items_path(label_ids: label.id) do %>
-            <span class="tag is-dark is-medium">
+            <span class="tag is-light is-medium">
               <%= label.name %>
             </span>
           <% end %>
@@ -31,8 +31,8 @@
 
       <% item.tags.each do |tag| %>
         <div class="level-item">
-          <%= link_to items_path(tag_ids: tag.id) do %>
-            <span class="tag is-info is-medium">
+          <%= link_to items_path(label_ids: current_label_id_params, tag_ids: tag.id) do %>
+            <span class="tag is-light is-medium">
               <%= tag.name %>
             </span>
           <% end %>
@@ -40,7 +40,7 @@
       <% end %>
     </div>
 
-    <div class="level-right">
+    <div class="level-right item-actions">
       <% if item.deleted? %>
         <div class="level-item">
           <%= link_to restore_item_path(item), method: :put do %>
@@ -55,7 +55,7 @@
         </div>
       <% else %>
         <div class="level-item">
-          <%= link_to scrape_item_path(item), method: :put do %>
+          <%= link_to scrape_item_path(item), method: :put, data: { disable_with: spinner } do %>
             <%= icon :magic, size: :medium, tip: 'Lucky scrape' %>
           <% end %>
         </div>

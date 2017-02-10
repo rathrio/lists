@@ -4,11 +4,11 @@ class IgdbClient
   base_uri 'https://igdbcom-internet-game-database-v1.p.mashape.com'
   default_params fields: '*'
 
-  def initialize(query: '')
-    @query = query
+  def search(query)
+    self.class.get("/games/", query: { search: query })
   end
 
-  def search
-    self.class.get("/games/", query: { 'search' => @query })
+  def genre(id)
+    self.class.get("/genres/#{id}", query: { fields: 'name' })
   end
 end

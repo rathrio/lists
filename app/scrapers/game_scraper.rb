@@ -2,7 +2,7 @@ class GameScraper
   include Scraper
 
   def search_results
-    IgdbClient.new(query: query).search
+    igdb_client.search(query)
   end
 
   def scrape_name(result)
@@ -37,5 +37,11 @@ class GameScraper
 
   def scrape_tags(result)
     []
+  end
+
+  private
+
+  def igdb_client
+    @igdb_client ||= IgdbClient.new
   end
 end

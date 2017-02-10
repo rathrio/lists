@@ -3,8 +3,8 @@
     <%= form_for :item do |f| %>
       <p class="control has-addons">
         <%= f.text_field :name, class: 'input is-large is-expanded filter', placeholder: 'Search', autocomplete: :off, autofocus: :true, data: { 'filter-container' => '.items-list', 'filter-attribute' => 'name' } %>
-        <%= link_to scrape_items_path, class: 'button is-large', method: :put, data: { balloon: 'Multiscrape', 'balloon-pos' => 'down' } do %>
-          <%= icon :magic, size: :medium %>
+        <%= link_to scrape_items_path, class: 'button is-large', method: :put, data: { disable_with: spinner } do %>
+          <%= icon :magic, size: :medium, tip: 'Multiscrape', tip_pos: 'down' %>
         <% end %>
       </p>
     <% end %>
