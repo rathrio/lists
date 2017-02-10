@@ -45,6 +45,19 @@
                   <% end %>
                 </li>
               <% end %>
+
+              <li>
+                <% css_class = params[:archived] ? 'is-active' : '' %>
+                <%= link_to items_path(archived: true), class: css_class do %>
+                  <div class="level-right">
+                    <div class="level-item">
+                      <h2 class="title is-4">Archive</h1>
+                    </div>
+
+                    <%= icon :archive %>
+                  </div>
+                <% end %>
+              </li>
             </div>
 
             <li>
@@ -58,19 +71,6 @@
                 </div>
               <% end %>
             </li>
-
-            <li>
-              <% css_class = params[:archived] ? 'is-active' : '' %>
-              <%= link_to items_path(archived: true), class: css_class do %>
-                <div class="level-right">
-                  <div class="level-item">
-                    <h2 class="title is-4">Archive</h1>
-                  </div>
-
-                  <%= icon :archive %>
-                </div>
-              <% end %>
-            </li>
           </ul>
         </aside>
       </div>
@@ -79,7 +79,7 @@
       <div class="column is-auto main-content">
         <% flash.each do |name, msg| %>
           <div class="container">
-            <%= content_tag :div, msg, class: "notification is-#{name == 'notice' ? 'success' : 'danger'}" %>
+            <%= content_tag :div, msg, class: "notification flash-notification is-#{name == 'notice' ? 'success' : 'danger'}" %>
           </div>
         <% end %>
 

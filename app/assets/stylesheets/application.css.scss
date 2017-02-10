@@ -14,11 +14,18 @@
  *= require_self
  */
 
-@import 'font-awesome';
+$tablet: 600px;
+// $primary: hsl(271, 100%, 71%);
+
 @import 'bulma';
+@import 'font-awesome';
 
 .has-no-bottom-padding {
   padding-bottom: 0;
+}
+
+.notification.flash-notification {
+  border-radius: 0;
 }
 
 .columns.is-gapless > .column.main-content {
@@ -46,14 +53,12 @@
   }
 }
 
-.items-list {
-  .box {
-    padding: 0;
-    padding-right: 1.25rem;
+.item-box {
+  padding: 0;
+  padding-right: 1.25rem;
 
-    img {
-      border-top-left-radius: 5px;
-      border-bottom-left-radius: 5px;
-    }
+  img {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
   }
 }
