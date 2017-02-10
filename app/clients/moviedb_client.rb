@@ -27,7 +27,7 @@ class MoviedbClient
     878 =>   "SciFi & Fantasy",
     10765 => "SciFi & Fantasy",
     10766 => "Soap",
-    10767 => "Talk",
+    # 10767 => "Talk",
     53 =>    "Thriller",
     10770 => "TV Movie",
     10767 => "War & Politics",
