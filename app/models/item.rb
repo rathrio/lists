@@ -39,6 +39,13 @@ class Item < ApplicationRecord
     update_attributes!(scraper_result.merge(scraped: true))
   end
 
+  def tags=(names)
+    names.each do |name|
+      tag = Tag.find_or_create_by(name: name)
+      self.tags << tag unless tags.include?(tag)
+    end
+  end
+
   def to_s
     name
   end

@@ -34,4 +34,8 @@ class GameScraper
       Link.new(url: result['url'])
     ]
   end
+
+  def scrape_tags(result)
+    []
+  end
 end

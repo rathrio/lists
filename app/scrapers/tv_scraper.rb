@@ -20,4 +20,8 @@ class TvScraper
   def scrape_date(result)
     Date.parse(result['first_air_date']) if result['first_air_date'].present?
   end
+
+  def scrape_tags(result)
+    result['genre_ids'].map { |id| MoviedbClient::GENRES[id] }.compact
+  end
 end

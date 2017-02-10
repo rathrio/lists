@@ -20,4 +20,8 @@ class MovieScraper
   def scrape_date(result)
     Date.parse(result['release_date']) if result['release_date'].present?
   end
+
+  def scrape_tags(result)
+    result['genre_ids'].map { |id| MoviedbClient::GENRES[id] }.uniq.compact
+  end
 end
