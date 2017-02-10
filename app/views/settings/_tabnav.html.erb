@@ -1,0 +1,24 @@
+<div class="tabs is-large">
+  <ul>
+    <li class='<%= 'is-active' if active_tab == :labels %>'>
+      <%= link_to labels_path do %>
+        <%= icon :tag %>
+        <span>Labels</span>
+      <% end %>
+    </li>
+
+    <li class='<%= 'is-active' if active_tab == :tags %>'>
+      <%= link_to tags_path do %>
+        <%= icon :tags %>
+        <span>Tags</span>
+      <% end %>
+    </li>
+
+    <li class='<%= 'is-active' if active_tab == :profile %>'>
+      <%= link_to labels_path do %>
+        <%= icon 'user-o' %>
+        <span>Profile</span>
+      <% end %>
+    </li>
+  </ul>
+</div>

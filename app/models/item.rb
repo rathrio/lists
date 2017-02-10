@@ -12,11 +12,11 @@ class Item < ApplicationRecord
   validates :name, presence: true
 
   def self.with_labels(label_ids)
-    joins(:items_labels).where('items_labels.label_id in (?)', label_ids)
+    joins(:items_labels).where('items_labels.label_id IN (?)', label_ids)
   end
 
   def self.with_tags(tag_ids)
-    joins(:items_tags).where('items_tags.tag_id in (?)', tag_ids)
+    joins(:items_tags).where('items_tags.tag_id IN (?)', tag_ids)
   end
 
   def self.scraped
