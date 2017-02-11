@@ -15,65 +15,68 @@
 
   <body>
     <div class="columns is-gapless">
-      <div class="column is-2 hero is-dark is-fullheight is-hidden-touch">
-        <aside class="menu side-nav">
-          <ul class="menu-list">
-            <li>
-              <%= link_to root_path do %>
-                <div class="level-right">
-                  <div class="level-item">
-                    <h1 class="title"><strong>Lists</strong></h1>
-                  </div>
 
-                  <%= icon :home, size: :medium %>
-                </div>
-              <% end %>
-            </li>
-
-            <div class="label-nav">
-              <% Label.all.each do |label| %>
-                <li>
-                  <% css_class = current_label_ids.include?(label.id) ? 'is-active' : '' %>
-                  <%= link_to items_path(label_ids: label.id), class: css_class do %>
-                    <div class="level-right">
-                      <div class="level-item">
-                        <h2 class="title is-4"><%= label.name %></h2>
-                      </div>
-
-                      <%= icon label.fa_icon %>
-                    </div>
-                  <% end %>
-                </li>
-              <% end %>
-
+      <% cache ['side-nav', Label.all, current_label_id_params] do %>
+        <div class="column is-2 hero is-dark is-fullheight is-hidden-touch">
+          <aside class="menu side-nav">
+            <ul class="menu-list">
               <li>
-                <% css_class = params[:archived] ? 'is-active' : '' %>
-                <%= link_to items_path(archived: true), class: css_class do %>
+                <%= link_to root_path do %>
                   <div class="level-right">
                     <div class="level-item">
-                      <h2 class="title is-4">Archive</h1>
+                      <h1 class="title"><strong>Lists</strong></h1>
                     </div>
 
-                    <%= icon :archive %>
+                    <%= icon :home, size: :medium %>
                   </div>
                 <% end %>
               </li>
-            </div>
 
-            <li>
-              <%= link_to labels_path do %>
-                <div class="level-right">
-                  <div class="level-item">
-                    <h2 class="title is-4">Settings</h1>
+              <div class="label-nav">
+                <% Label.all.each do |label| %>
+                  <li>
+                    <% css_class = current_label_ids.include?(label.id) ? 'is-active' : '' %>
+                    <%= link_to items_path(label_ids: label.id), class: css_class do %>
+                      <div class="level-right">
+                        <div class="level-item">
+                          <h2 class="title is-4"><%= label.name %></h2>
+                        </div>
+
+                        <%= icon label.fa_icon %>
+                      </div>
+                    <% end %>
+                  </li>
+                <% end %>
+
+                <li>
+                  <% css_class = params[:archived] ? 'is-active' : '' %>
+                  <%= link_to items_path(archived: true), class: css_class do %>
+                    <div class="level-right">
+                      <div class="level-item">
+                        <h2 class="title is-4">Archive</h1>
+                      </div>
+
+                      <%= icon :archive %>
+                    </div>
+                  <% end %>
+                </li>
+              </div>
+
+              <li>
+                <%= link_to labels_path do %>
+                  <div class="level-right">
+                    <div class="level-item">
+                      <h2 class="title is-4">Settings</h1>
+                    </div>
+
+                    <%= icon :cog %>
                   </div>
-
-                  <%= icon :cog %>
-                </div>
-              <% end %>
-            </li>
-          </ul>
-        </aside>
-      </div>
+                <% end %>
+              </li>
+            </ul>
+          </aside>
+        </div>
+      <% end %>
 
 
       <div class="column is-auto main-content">
