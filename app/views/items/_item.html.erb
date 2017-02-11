@@ -1,72 +1,74 @@
-<div class="box item-box" data-filter-name="<%= item.name %>">
-  <div class="level is-mobile">
-    <div class="level-left is-mobile">
-      <div class="level-item">
-        <figure class="image is-64x64">
-          <%= image_tag item.image.thumb.url if item.image.present? %>
-        </figure>
+<% cache item do %>
+  <div class="box item-box" data-filter-name="<%= item.name %>">
+    <div class="level is-mobile">
+      <div class="level-left is-mobile">
+        <div class="level-item">
+          <figure class="image is-64x64">
+            <%= image_tag item.image.thumb.url if item.image.present? %>
+          </figure>
+        </div>
+
+        <div class="level-item">
+          <div class="title is-4"><%= link_to item, item %></div>
+        </div>
+
+        <% if item.year %>
+          <div class="level-item">
+            <span class="tag is-light is-medium">
+              <%= item.year %>
+            </span>
+          </div>
+        <% end %>
+
+        <% item.labels.each do |label| %>
+          <div class="level-item">
+            <%= link_to items_path(label_ids: label.id) do %>
+              <span class="tag is-light is-medium">
+                <%= label.name %>
+              </span>
+            <% end %>
+          </div>
+        <% end %>
+
+        <% item.tags.each do |tag| %>
+          <div class="level-item">
+            <%= link_to items_path(label_ids: current_label_id_params, tag_ids: tag.id) do %>
+              <span class="tag is-light is-medium">
+                <%= tag.name %>
+              </span>
+            <% end %>
+          </div>
+        <% end %>
       </div>
 
-      <div class="level-item">
-        <div class="title is-4"><%= link_to item, item %></div>
+      <div class="level-right item-actions">
+        <% if item.deleted? %>
+          <div class="level-item">
+            <%= link_to restore_item_path(item), method: :put do %>
+              <%= icon :recycle, size: :medium, tip: 'Restore' %>
+            <% end %>
+          </div>
+
+          <div class="level-item">
+            <%= link_to really_destroy_item_path(item), method: :delete, data: { confirm: 'Are you sure?' } do %>
+              <%= icon :trash, size: :medium, tip: 'Delete for good' %>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="level-item">
+            <%= link_to scrape_item_path(item), method: :put, data: { disable_with: spinner } do %>
+              <%= icon :magic, size: :medium, tip: 'Lucky scrape' %>
+            <% end %>
+          </div>
+
+          <div class="level-item">
+            <%= link_to item, method: :delete do %>
+              <%= icon :archive, size: :medium, tip: 'Archive' %>
+            <% end %>
+          </div>
+        <% end %>
       </div>
 
-      <% if item.year %>
-        <div class="level-item">
-          <span class="tag is-light is-medium">
-            <%= item.year %>
-          </span>
-        </div>
-      <% end %>
-
-      <% item.labels.each do |label| %>
-        <div class="level-item">
-          <%= link_to items_path(label_ids: label.id) do %>
-            <span class="tag is-light is-medium">
-              <%= label.name %>
-            </span>
-          <% end %>
-        </div>
-      <% end %>
-
-      <% item.tags.each do |tag| %>
-        <div class="level-item">
-          <%= link_to items_path(label_ids: current_label_id_params, tag_ids: tag.id) do %>
-            <span class="tag is-light is-medium">
-              <%= tag.name %>
-            </span>
-          <% end %>
-        </div>
-      <% end %>
     </div>
-
-    <div class="level-right item-actions">
-      <% if item.deleted? %>
-        <div class="level-item">
-          <%= link_to restore_item_path(item), method: :put do %>
-            <%= icon :recycle, size: :medium, tip: 'Restore' %>
-          <% end %>
-        </div>
-
-        <div class="level-item">
-          <%= link_to really_destroy_item_path(item), method: :delete, data: { confirm: 'Are you sure?' } do %>
-            <%= icon :trash, size: :medium, tip: 'Delete for good' %>
-          <% end %>
-        </div>
-      <% else %>
-        <div class="level-item">
-          <%= link_to scrape_item_path(item), method: :put, data: { disable_with: spinner } do %>
-            <%= icon :magic, size: :medium, tip: 'Lucky scrape' %>
-          <% end %>
-        </div>
-
-        <div class="level-item">
-          <%= link_to item, method: :delete do %>
-            <%= icon :archive, size: :medium, tip: 'Archive' %>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
-
   </div>
-</div>
+<% end %>
