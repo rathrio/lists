@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20170211114525) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "items", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
@@ -22,22 +25,22 @@ ActiveRecord::Schema.define(version: 20170211114525) do
     t.datetime "updated_at",                  null: false
     t.string   "image"
     t.datetime "deleted_at"
-    t.index ["deleted_at"], name: "index_items_on_deleted_at"
-    t.index ["name"], name: "index_items_on_name"
+    t.index ["deleted_at"], name: "index_items_on_deleted_at", using: :btree
+    t.index ["name"], name: "index_items_on_name", using: :btree
   end
 
   create_table "items_labels", id: false, force: :cascade do |t|
     t.integer "item_id"
     t.integer "label_id"
-    t.index ["item_id"], name: "index_items_labels_on_item_id"
-    t.index ["label_id"], name: "index_items_labels_on_label_id"
+    t.index ["item_id"], name: "index_items_labels_on_item_id", using: :btree
+    t.index ["label_id"], name: "index_items_labels_on_label_id", using: :btree
   end
 
   create_table "items_tags", id: false, force: :cascade do |t|
     t.integer "item_id"
     t.integer "tag_id"
-    t.index ["item_id"], name: "index_items_tags_on_item_id"
-    t.index ["tag_id"], name: "index_items_tags_on_tag_id"
+    t.index ["item_id"], name: "index_items_tags_on_item_id", using: :btree
+    t.index ["tag_id"], name: "index_items_tags_on_tag_id", using: :btree
   end
 
   create_table "labels", force: :cascade do |t|
@@ -55,7 +58,7 @@ ActiveRecord::Schema.define(version: 20170211114525) do
     t.integer  "item_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["item_id"], name: "index_links_on_item_id"
+    t.index ["item_id"], name: "index_links_on_item_id", using: :btree
   end
 
   create_table "notes", force: :cascade do |t|
@@ -63,14 +66,16 @@ ActiveRecord::Schema.define(version: 20170211114525) do
     t.integer  "item_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["item_id"], name: "index_notes_on_item_id"
+    t.index ["item_id"], name: "index_notes_on_item_id", using: :btree
   end
 
   create_table "tags", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["name"], name: "index_tags_on_name"
+    t.index ["name"], name: "index_tags_on_name", using: :btree
   end
 
+  add_foreign_key "links", "items"
+  add_foreign_key "notes", "items"
 end
