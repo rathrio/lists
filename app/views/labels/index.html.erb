@@ -28,8 +28,10 @@
 
 <section class="section">
   <div class="container labels-list">
-    <% @labels.each do |label| %>
-      <%= render 'label', label: label %>
+    <% cache @labels do %>
+      <% @labels.each do |label| %>
+        <%= render 'label', label: label %>
+      <% end %>
     <% end %>
   </div>
 </section>
