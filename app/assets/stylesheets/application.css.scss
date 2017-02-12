@@ -62,3 +62,11 @@ $tablet: 600px;
     border-bottom-left-radius: 5px;
   }
 }
+
+.image {
+  .scraper-result-image {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+  }
+}

@@ -1,0 +1,38 @@
+<div class="section">
+  <div class="container">
+    <% results.each do |result| %>
+      <div class="box item-box">
+        <div class="level is-mobile">
+          <div class="level-left is-mobile">
+            <div class="level-item">
+              <figure class="image is-64x64">
+                <%= image_tag(result.remote_image_url, class: 'scraper-result-image') if result.remote_image_url.present? %>
+              </figure>
+            </div>
+
+            <div class="level-item">
+              <div class="title is-4"><%= result.name %></div>
+            </div>
+
+            <% if result.date %>
+              <div class="level-item">
+                <span class="tag is-light is-small">
+                  <%= result.date.year %>
+                </span>
+              </div>
+            <% end %>
+
+            <% result.tags.each do |tag| %>
+              <div class="level-item">
+                <span class="tag is-light is-small">
+                  <%= tag %>
+                </span>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+

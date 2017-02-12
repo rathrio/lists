@@ -45,3 +45,6 @@ workers ENV.fetch("WEB_CONCURRENCY") { 2 }
 
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
+
+# For dev mode
+# worker_timeout 3600

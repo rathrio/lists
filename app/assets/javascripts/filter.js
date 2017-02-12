@@ -8,6 +8,7 @@
 
     if (text.length === 0) {
       elements.show();
+      $('.scraper-results').html('');
     } else {
       elements.hide();
 

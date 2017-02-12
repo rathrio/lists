@@ -14,7 +14,7 @@
 
         <% if item.year %>
           <div class="level-item">
-            <span class="tag is-light is-medium">
+            <span class="tag is-light is-small">
               <%= item.year %>
             </span>
           </div>
@@ -23,7 +23,7 @@
         <% item.labels.each do |label| %>
           <div class="level-item">
             <%= link_to items_path(label_ids: label.id) do %>
-              <span class="tag is-light is-medium">
+              <span class="tag is-light is-small">
                 <%= label.name %>
               </span>
             <% end %>
@@ -33,7 +33,7 @@
         <% item.tags.each do |tag| %>
           <div class="level-item">
             <%= link_to items_path(label_ids: current_label_id_params, tag_ids: tag.id) do %>
-              <span class="tag is-light is-medium">
+              <span class="tag is-light is-small">
                 <%= tag.name %>
               </span>
             <% end %>
