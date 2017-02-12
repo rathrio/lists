@@ -1,0 +1,15 @@
+<% cache ['settings', @tags] do %>
+  <section class="section has-no-bottom-padding">
+    <%= render 'settings/tabnav', active_tab: :tags %>
+  </section>
+
+  <% cache @tags do %>
+    <section class="section">
+      <div class="container tags-list">
+        <% @tags.each do |tag| %>
+          <%= render 'tag', tag: tag %>
+        <% end %>
+      </div>
+    </section>
+  <% end %>
+<% end %>

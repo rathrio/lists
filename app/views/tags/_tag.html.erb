@@ -1,0 +1,27 @@
+<% cache tag do %>
+  <div class="box">
+    <div class="level is-mobile">
+      <div class="level-left">
+        <div class="level-item">
+          <div class="title is-4"><%= link_to tag, edit_tag_path(tag) %></div>
+        </div>
+
+        <div class="level-item">
+          <%= link_to items_path(tag_ids: tag.id) do %>
+            <span class="tag is-dark">
+              <%= tag.items.count %>
+            </span>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="level-right">
+        <div class="level-item">
+          <%= link_to tag, method: :delete, data: { confirm: 'Are you sure?' } do %>
+            <%= icon :trash, size: :medium %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
