@@ -44,8 +44,8 @@ on_worker_boot do
 end
 
 daemonize true
-
 bind ENV.fetch('LISTS_SOCKET')
+pidfile ENV.fetch('LISTS_PIDFILE')
 
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
