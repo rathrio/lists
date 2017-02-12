@@ -10,7 +10,7 @@ class GameScraper
   end
 
   def scrape_description(result)
-    result['description']
+    result['summary']
   end
 
   def scrape_image(result)
