@@ -40,9 +40,9 @@ class GameScraper
 
     # Sometimes the first time just fails for whatever reason. Retry one more
     # time.
-    if genres.empty?
-      genres = igdb_client.genre(result['genres'])
-    end
+    # if genres.empty?
+    #   genres = igdb_client.genre(result['genres'])
+    # end
 
     genres.map { |g| g['name'] }.uniq.compact
   end

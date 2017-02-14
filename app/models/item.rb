@@ -54,6 +54,10 @@ class Item < ApplicationRecord
     date&.year
   end
 
+  def default_scraper
+    labels.map(&:default_scraper).compact.first
+  end
+
   def lucky_scrape
     scraper = labels.first&.default_scraper
 
