@@ -42,6 +42,12 @@
       </div>
 
       <div class="level-right item-actions">
+        <div class="level-item">
+          <%= link_to youtube_search_url(item.name), target: :blank do %>
+            <%= icon 'youtube-play', size: :medium %>
+          <% end %>
+        </div>
+
         <% if item.deleted? %>
           <div class="level-item">
             <%= link_to restore_item_path(item), method: :put do %>
