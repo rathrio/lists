@@ -64,7 +64,10 @@ class Item < ApplicationRecord
     if scraper.nil?
       return false
     else
-      result = scraper.new(query: name).scrape.first
+      results = scraper.new(query: name).scrape
+      result = results.find { |r| r[:remote_image_url].present? }
+      result = results.first if result.nil?
+
       update_from(result) if result
     end
   end
