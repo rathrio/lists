@@ -32,6 +32,8 @@
 .side-nav {
   padding-top: 3rem;
   padding-bottom: 3rem;
+  position: fixed;
+  width: inherit;
 
   li {
     padding: 5px;

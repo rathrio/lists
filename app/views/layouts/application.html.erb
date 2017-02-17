@@ -73,6 +73,16 @@
                       <%= icon :cog %>
                     </div>
                   <% end %>
+
+                  <%= link_to sign_out_path, method: :delete do %>
+                    <div class="level-right">
+                      <div class="level-item">
+                        <h2 class="title is-4">Sign out</h1>
+                      </div>
+
+                      <%= icon 'sign-out' %>
+                    </div>
+                  <% end %>
                 </li>
               </ul>
             </aside>
