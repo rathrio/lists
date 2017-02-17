@@ -9,6 +9,12 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_label_ids
 
+  def current_label
+    return unless current_label_ids.count == 1
+    Label.find_by(id: current_label_ids.first)
+  end
+  helper_method :current_label
+
   def current_label_id_params
     current_label_ids.join(',')
   end

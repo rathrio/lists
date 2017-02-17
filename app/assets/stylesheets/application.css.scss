@@ -14,9 +14,6 @@
  *= require_self
  */
 
-// $tablet: 600px;
-// $primary: hsl(271, 100%, 71%);
-
 @import 'bulma';
 @import 'font-awesome';
 
@@ -71,10 +68,10 @@
   }
 }
 
-
 .level-left, .level-right {
   &.is-mobile {
     display: flex;
+    margin-top: 0;
 
     & > .level-item {
       &:not(:last-child) {
