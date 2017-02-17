@@ -14,7 +14,7 @@
  *= require_self
  */
 
-$tablet: 600px;
+// $tablet: 600px;
 // $primary: hsl(271, 100%, 71%);
 
 @import 'bulma';
@@ -68,5 +68,22 @@ $tablet: 600px;
     width: 64px;
     height: 64px;
     object-fit: cover;
+  }
+}
+
+
+.level-left, .level-right {
+  &.is-mobile {
+    display: flex;
+
+    & > .level-item {
+      &:not(:last-child) {
+        margin-bottom: 0;
+      }
+
+      &:not(.is-narrow) {
+        flex-grow: 1;
+      }
+    }
   }
 }

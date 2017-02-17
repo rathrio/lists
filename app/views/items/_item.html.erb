@@ -21,7 +21,7 @@
         <% end %>
 
         <% item.labels.each do |label| %>
-          <div class="level-item">
+          <div class="level-item is-hidden-touch">
             <%= link_to items_path(label_ids: label.id) do %>
               <span class="tag is-light is-small">
                 <%= label.name %>
@@ -31,7 +31,7 @@
         <% end %>
 
         <% item.tags.each do |tag| %>
-          <div class="level-item">
+          <div class="level-item is-hidden-touch">
             <%= link_to items_path(label_ids: current_label_id_params, tag_ids: tag.id) do %>
               <span class="tag is-light is-small">
                 <%= tag.name %>
@@ -41,7 +41,7 @@
         <% end %>
       </div>
 
-      <div class="level-right item-actions">
+      <div class="level-right is-mobile item-actions">
         <div class="level-item">
           <%= link_to youtube_search_url(item.name), target: :blank do %>
             <%= icon 'youtube-play', size: :medium %>
