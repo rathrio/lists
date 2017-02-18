@@ -34,7 +34,7 @@ class ItemsController < ApplicationController
     else
       flash[:alert] = 'Could not create item'
     end
-    redirect_to action: :index, label_ids: current_label_id_params
+    redirect_to action: :index, label_ids: current_label_id_params, focus_search: true
   end
 
   def update

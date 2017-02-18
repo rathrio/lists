@@ -34,4 +34,9 @@ class ApplicationController < ActionController::Base
     params[:archived].present?
   end
   helper_method :display_archived?
+
+  def focus_search?
+    params[:focus_search].present?
+  end
+  helper_method :focus_search?
 end

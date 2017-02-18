@@ -15,7 +15,7 @@
           <% end %>
         </label>
 
-        <%= f.text_field :name, class: 'input is-large is-expanded filter scraper-query', placeholder: 'Search', autocomplete: :off, autofocus: :true, data: { 'filter-container' => '.items-list', 'filter-attribute' => 'name' } %>
+        <%= f.text_field :name, class: 'input is-large is-expanded filter scraper-query', placeholder: 'Search', autocomplete: :off, autofocus: focus_search?, data: { 'filter-container' => '.items-list', 'filter-attribute' => 'name' } %>
 
         <%= link_to scraper_results_path, class: 'button is-large scraper-link' do %>
           <%= icon :search, size: :medium %>

@@ -5,7 +5,7 @@
   }
 
   function visit(url) {
-    window.location.replace(url);
+    Turbolinks.visit(url);
   }
 
   function gotoHome() {
