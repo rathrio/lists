@@ -18,7 +18,7 @@
       <%= check_box_tag 'menu-trigger', nil, false, class: 'is-hidden' %>
 
       <% if signed_in? %>
-        <% cache ['side-nav', Label.all, current_label_id_params] do %>
+        <% cache ['side-nav', Label.all, current_label_id_params, display_archived?] do %>
           <div class="column is-2 hero is-dark is-fullheight is-hidden-touch side-bar is-mobile">
             <aside class="menu side-nav">
               <ul class="menu-list">
@@ -51,7 +51,7 @@
                   <% end %>
 
                   <li>
-                    <% css_class = params[:archived] ? 'is-active' : '' %>
+                    <% css_class = display_archived? ? 'is-active' : '' %>
                     <%= link_to items_path(archived: true), class: css_class do %>
                       <div class="level-right">
                         <div class="level-item">

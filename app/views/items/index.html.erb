@@ -7,7 +7,11 @@
           <% if current_label && current_label.fa_icon.present? %>
             <%= icon current_label.fa_icon, size: :medium %>
           <% else %>
-            <%= icon :bars, size: :medium %>
+            <% if display_archived? %>
+              <%= icon :archive, size: :medium %>
+            <% else %>
+              <%= icon :bars, size: :medium %>
+            <% end %>
           <% end %>
         </label>
 

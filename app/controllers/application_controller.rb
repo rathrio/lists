@@ -29,4 +29,9 @@ class ApplicationController < ActionController::Base
     session[:label_ids] = nil
   end
   helper_method :reset_label_ids
+
+  def display_archived?
+    params[:archived].present?
+  end
+  helper_method :display_archived?
 end
