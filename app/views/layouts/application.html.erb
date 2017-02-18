@@ -15,10 +15,11 @@
 
   <body>
     <div class="columns is-gapless">
+      <%= check_box_tag 'menu-trigger', nil, false, class: 'is-hidden' %>
 
       <% if signed_in? %>
         <% cache ['side-nav', Label.all, current_label_id_params] do %>
-          <div class="column is-2 hero is-dark is-fullheight is-hidden-touch">
+          <div class="column is-2 hero is-dark is-fullheight is-hidden-touch side-bar is-mobile">
             <aside class="menu side-nav">
               <ul class="menu-list">
                 <li>
@@ -93,9 +94,7 @@
 
       <div class="column is-auto main-content">
         <% flash.each do |name, msg| %>
-          <div class="container">
             <%= content_tag :div, msg, class: "notification flash-notification is-#{name == 'notice' ? 'success' : 'danger'}" %>
-          </div>
         <% end %>
 
         <%= yield %>

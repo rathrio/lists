@@ -1,39 +1,37 @@
-<% cache ['settings', @labels] do %>
-  <section class="section has-no-bottom-padding">
-    <%= render 'settings/tabnav', active_tab: :labels %>
+<section class="section has-no-bottom-padding">
+  <%= render 'settings/tabnav', active_tab: :labels %>
 
-    <div class="container new-label">
-      <%= form_for :label do |f| %>
-        <div class="control is-horizontal">
-          <div class="control is-grouped">
-            <div class="control is-expanded">
-              <%= f.text_field :name, class: 'input is-large', placeholder: 'Name', autocomplete: :off %>
-            </div>
-
-            <div class="control is-expanded">
-              <%= f.text_field :fa_icon, class: 'input is-large', placeholder: 'Icon', autocomplete: :off %>
-            </div>
-
-            <div class="control is-expanded">
-              <span class="select is-large">
-                <%= f.select :scraper, options_for_select(Scraper.all.map { |e| [e, e] }) , include_blank: 'Select default Scraper' %>
-              </span>
-            </div>
-
-            <%= f.submit 'Create', class: 'button is-primary is-large' %>
+  <div class="container new-label">
+    <%= form_for :label do |f| %>
+      <div class="control is-horizontal">
+        <div class="control is-grouped">
+          <div class="control is-expanded">
+            <%= f.text_field :name, class: 'input is-large', placeholder: 'Name', autocomplete: :off %>
           </div>
+
+          <div class="control is-expanded">
+            <%= f.text_field :fa_icon, class: 'input is-large', placeholder: 'Icon', autocomplete: :off %>
+          </div>
+
+          <div class="control is-expanded">
+            <span class="select is-large">
+              <%= f.select :scraper, options_for_select(Scraper.all.map { |e| [e, e] }) , include_blank: 'Select default Scraper' %>
+            </span>
+          </div>
+
+          <%= f.submit 'Create', class: 'button is-primary is-large' %>
         </div>
+      </div>
+    <% end %>
+  </div>
+</section>
+
+<% cache @labels do %>
+  <section class="section">
+    <div class="container labels-list">
+      <% @labels.each do |label| %>
+        <%= render 'label', label: label %>
       <% end %>
     </div>
   </section>
-
-  <% cache @labels do %>
-    <section class="section">
-      <div class="container labels-list">
-        <% @labels.each do |label| %>
-          <%= render 'label', label: label %>
-        <% end %>
-      </div>
-    </section>
-  <% end %>
 <% end %>

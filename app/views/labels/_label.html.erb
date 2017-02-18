@@ -1,7 +1,7 @@
 <% cache label do %>
   <div class="box">
     <div class="level is-mobile">
-      <div class="level-left">
+      <div class="level-left is-mobile">
         <div class="level-item">
           <%= icon label.fa_icon %>
         </div>
@@ -19,7 +19,7 @@
         </div>
       </div>
 
-      <div class="level-right">
+      <div class="level-right is-mobile">
         <div class="level-item">
           <%= link_to label, method: :delete, data: { confirm: 'Are you sure?' } do %>
             <%= icon :trash, size: :medium %>
