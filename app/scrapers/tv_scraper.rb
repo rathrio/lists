@@ -2,7 +2,8 @@ class TvScraper
   include Scraper
 
   def search_results
-    moviedb_client.search(query, type: :tv)['results'].to_a
+    title = query.gsub(/\((\d{2,4})\)/, '').strip
+    moviedb_client.search(title, type: :tv, year: $1)['results'].to_a
   end
 
   def scrape_name(result)

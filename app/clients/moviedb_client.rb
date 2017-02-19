@@ -35,7 +35,8 @@ class MoviedbClient
     37 =>    "Western"
   }
 
-  def search(query, type: 'movie')
-    self.class.get("/search/#{type}", query: { 'query' => query })
+  def search(query, type: 'movie', year: nil)
+    params = { query: query, year: year, first_air_date_year: year }
+    self.class.get("/search/#{type}", query: params)
   end
 end
