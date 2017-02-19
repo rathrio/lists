@@ -6,20 +6,24 @@
       <div class="control is-horizontal">
         <div class="control is-grouped">
           <div class="control is-expanded">
-            <%= f.text_field :name, class: 'input is-large', placeholder: 'Name', autocomplete: :off %>
+            <%= f.text_field :name, class: 'input is-medium', placeholder: 'Name', autocomplete: :off %>
           </div>
 
           <div class="control is-expanded">
-            <%= f.text_field :fa_icon, class: 'input is-large', placeholder: 'Icon', autocomplete: :off %>
+            <%= f.text_field :fa_icon, class: 'input is-medium', placeholder: 'Icon', autocomplete: :off %>
           </div>
+        </div>
+      </div>
 
+      <div class="control is-horizontal">
+        <div class="control is-grouped">
           <div class="control is-expanded">
-            <span class="select is-large">
+            <span class="select is-medium">
               <%= f.select :scraper, options_for_select(Scraper.all.map { |e| [e, e] }) , include_blank: 'Select default Scraper' %>
             </span>
           </div>
 
-          <%= f.submit 'Create', class: 'button is-primary is-large' %>
+          <%= f.submit 'Create', class: 'button is-primary is-medium' %>
         </div>
       </div>
     <% end %>
