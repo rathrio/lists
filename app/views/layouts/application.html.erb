@@ -97,7 +97,9 @@
             <%= content_tag :div, msg, class: "notification flash-notification is-#{name == 'notice' ? 'success' : 'danger'}" %>
         <% end %>
 
-        <%= yield %>
+        <div class="section main-content-section">
+          <%= yield %>
+        </div>
       </div>
     </div>
   </body>

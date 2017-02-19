@@ -1,38 +1,34 @@
-<section class="section has-no-bottom-padding">
-  <div class="container new-item">
-    <%= form_for :item do |f| %>
-      <p class="control has-addons">
+<div class="container new-item has-bottom-padding">
+  <%= form_for :item do |f| %>
+    <p class="control has-addons">
 
-        <label for="menu-trigger" class="menu-trigger button is-medium is-hidden-desktop">
-          <% if current_label && current_label.fa_icon.present? %>
-            <%= icon current_label.fa_icon, size: :medium %>
+      <label for="menu-trigger" class="menu-trigger button is-medium is-hidden-desktop">
+        <% if current_label && current_label.fa_icon.present? %>
+          <%= icon current_label.fa_icon, size: :medium %>
+        <% else %>
+          <% if display_archived? %>
+            <%= icon :archive, size: :medium %>
           <% else %>
-            <% if display_archived? %>
-              <%= icon :archive, size: :medium %>
-            <% else %>
-              <%= icon :bars, size: :medium %>
-            <% end %>
+            <%= icon :bars, size: :medium %>
           <% end %>
-        </label>
-
-        <%= f.text_field :name, class: 'input is-expanded is-medium filter scraper-query', placeholder: 'Search', autocomplete: :off, autofocus: focus_search?, data: { 'filter-container' => '.items-list', 'filter-attribute' => 'name' } %>
-
-        <%= link_to scraper_results_path, class: 'button is-medium scraper-link' do %>
-          <%= icon :search, size: :medium %>
         <% end %>
-      </p>
-    <% end %>
-  </div>
-</section>
+      </label>
+
+      <%= f.text_field :name, class: 'input is-expanded is-medium filter scraper-query', placeholder: 'Search', autocomplete: :off, autofocus: focus_search?, data: { 'filter-container' => '.items-list', 'filter-attribute' => 'name' } %>
+
+      <%= link_to scraper_results_path, class: 'button is-medium scraper-link' do %>
+        <%= icon :search, size: :medium %>
+      <% end %>
+    </p>
+  <% end %>
+</div>
 
 <% cache cache_key_for_items(@items) do %>
-  <section class="section">
-    <div class="container items-list">
-      <% @items.each do |item| %>
-        <%= render 'item', item: item %>
-      <% end %>
-    </div>
-  </section>
+  <div class="container items-list">
+    <% @items.each do |item| %>
+      <%= render 'item', item: item %>
+    <% end %>
+  </div>
 <% end %>
 
 <div class="scraper-results">

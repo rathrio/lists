@@ -1,29 +1,27 @@
-<section class="section">
-  <div class="container label-form">
-    <h1 class="title">Edit Label "<%= @label.name %>"</h1>
+<div class="container label-form">
+  <h1 class="title">Edit Label "<%= @label.name %>"</h1>
 
-    <%= form_for @label do |f| %>
-      <%= f.label 'Name', class: 'label' %>
-      <p class="control">
-        <%= f.text_field :name, class: 'input' %>
-      </p>
+  <%= form_for @label do |f| %>
+    <%= f.label 'Name', class: 'label' %>
+    <p class="control">
+      <%= f.text_field :name, class: 'input' %>
+    </p>
 
-      <%= f.label 'Icon', class: 'label' %>
-      <p class="control has-addons">
-        <%= f.text_field :fa_icon, class: 'input' %>
-        <a class="button" href="http://fontawesome.io/icons/" target="_blank">
-          <%= icon @label.fa_icon %>
-        </a>
-      </p>
+    <%= f.label 'Icon', class: 'label' %>
+    <p class="control has-addons">
+      <%= f.text_field :fa_icon, class: 'input' %>
+      <a class="button" href="http://fontawesome.io/icons/" target="_blank">
+        <%= icon @label.fa_icon %>
+      </a>
+    </p>
 
-      <%= f.label 'Scraper', class: 'label' %>
-      <p class="control">
-        <span class="select">
-          <%= f.select :scraper, options_for_select(Scraper.all.map { |e| [e, e] }, @label.scraper) , include_blank: 'Select default Scraper' %>
-        </span>
-      </p>
+    <%= f.label 'Scraper', class: 'label' %>
+    <p class="control">
+      <span class="select">
+        <%= f.select :scraper, options_for_select(Scraper.all.map { |e| [e, e] }, @label.scraper) , include_blank: 'Select default Scraper' %>
+      </span>
+    </p>
 
-      <%= f.submit 'Update', class: 'button is-success' %>
-    <% end %>
-  </div>
-</section>
+    <%= f.submit 'Update', class: 'button is-success' %>
+  <% end %>
+</div>

@@ -1,48 +1,46 @@
-<section class="section">
-  <div class="container item-form">
-    <div class="level">
-      <div class="level-left">
-        <% if @item.image.present? %>
-          <div class="level-item">
-            <figure class="image is-64x64">
-              <%= image_tag @item.image.thumb.url %>
-            </figure>
-          </div>
-        <% end %>
-
+<div class="container item-form">
+  <div class="level">
+    <div class="level-left">
+      <% if @item.image.present? %>
         <div class="level-item">
-          <h1 class="title">Edit "<%= @item.name %>"</h1>
+          <figure class="image is-64x64">
+            <%= image_tag @item.image.thumb.url %>
+          </figure>
         </div>
+      <% end %>
+
+      <div class="level-item">
+        <h1 class="title">Edit "<%= @item.name %>"</h1>
       </div>
     </div>
-
-    <%= form_for @item do |f| %>
-      <%= f.label 'Name', class: 'label' %>
-      <p class="control">
-        <%= f.text_field :name, class: 'input' %>
-      </p>
-
-      <%= f.label 'Description', class: 'label' %>
-      <p class="control">
-        <%= f.text_area :description, class: 'textarea' %>
-      </p>
-
-      <%= f.label 'Release Date', class: 'label' %>
-      <p class="control">
-        <%= f.text_field :date, class: 'input' %>
-      </p>
-
-      <%= f.label 'Image', class: 'label' %>
-      <p class="control">
-        <%= f.text_field :remote_image_url, class: 'input' %>
-      </p>
-
-      <%= f.label 'Date added', class: 'label' %>
-      <p class="control">
-        <%= f.text_field :created_at, class: 'input is-disabled' %>
-      </p>
-
-      <%= f.submit 'Update', class: 'button is-success' %>
-    <% end %>
   </div>
-</section>
+
+  <%= form_for @item do |f| %>
+    <%= f.label 'Name', class: 'label' %>
+    <p class="control">
+      <%= f.text_field :name, class: 'input' %>
+    </p>
+
+    <%= f.label 'Description', class: 'label' %>
+    <p class="control">
+      <%= f.text_area :description, class: 'textarea' %>
+    </p>
+
+    <%= f.label 'Release Date', class: 'label' %>
+    <p class="control">
+      <%= f.text_field :date, class: 'input' %>
+    </p>
+
+    <%= f.label 'Image', class: 'label' %>
+    <p class="control">
+      <%= f.text_field :remote_image_url, class: 'input' %>
+    </p>
+
+    <%= f.label 'Date added', class: 'label' %>
+    <p class="control">
+      <%= f.text_field :created_at, class: 'input is-disabled' %>
+    </p>
+
+    <%= f.submit 'Update', class: 'button is-success' %>
+  <% end %>
+</div>

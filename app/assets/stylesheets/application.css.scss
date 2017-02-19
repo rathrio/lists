@@ -14,11 +14,19 @@
  *= require_self
  */
 
+@media (max-width: 768px) {
+  $radius: 0px;
+}
+
 @import 'bulma';
 @import 'font-awesome';
 
 .has-no-bottom-padding {
   padding-bottom: 0;
+}
+
+.has-bottom-padding {
+  padding-bottom: 1.5rem;
 }
 
 .notification.flash-notification {
@@ -27,6 +35,16 @@
 
 .columns.is-gapless > .column.main-content {
   padding-bottom: 40px;
+}
+
+@media (max-width: 768px) {
+  .main-content-section {
+    padding: 0.4rem;
+  }
+
+  .box:not(:last-child) {
+    margin-bottom: 1rem;
+  }
 }
 
 #menu-trigger:checked + .side-bar {
@@ -94,7 +112,6 @@
     }
   }
 }
-
 
 .image {
   .scraper-result-image {
