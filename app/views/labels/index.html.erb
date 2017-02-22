@@ -11,11 +11,7 @@
         <div class="control is-expanded">
           <%= f.text_field :fa_icon, class: 'input is-medium', placeholder: 'Icon', autocomplete: :off %>
         </div>
-      </div>
-    </div>
 
-    <div class="control is-horizontal">
-      <div class="control is-grouped">
         <div class="control is-expanded">
           <span class="select is-medium">
             <%= f.select :scraper, options_for_select(Scraper.all.map { |e| [e, e] }) , include_blank: 'Select default Scraper' %>
