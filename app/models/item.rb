@@ -11,6 +11,8 @@ class Item < ApplicationRecord
 
   validates :name, presence: true
 
+  after_create :scrape_in_background
+
   def self.with_labels(label_ids)
     joins(:items_labels).where('items_labels.label_id IN (?)', label_ids).distinct
   end
@@ -70,5 +72,11 @@ class Item < ApplicationRecord
 
       update_from(result) if result
     end
+  end
+
+  private
+
+  def scrape_in_background
+    ScrapeJob.perform_later(self)
   end
 end
