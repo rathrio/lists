@@ -62,12 +62,6 @@
           </div>
         <% else %>
           <div class="level-item">
-            <%= link_to scrape_item_path(item), method: :put, data: { disable_with: spinner } do %>
-              <%= icon :magic, size: :medium, tip: 'Lucky scrape' %>
-            <% end %>
-          </div>
-
-          <div class="level-item">
             <%= link_to item, method: :delete do %>
               <%= icon :archive, size: :medium, tip: 'Archive' %>
             <% end %>
