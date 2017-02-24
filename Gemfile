@@ -58,6 +58,9 @@ group :development, :test do
   gem 'dotenv-rails'
   gem 'pry-rails'
   gem 'pry-byebug'
+
+  gem 'factory_girl_rails'
+  gem 'ffaker'
 end
 
 group :development do
