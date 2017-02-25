@@ -45,8 +45,11 @@ gem 'mini_magick'
 # HTTP client
 gem 'httparty'
 
-# Archive instead of delete
+# Softdelete
 gem 'paranoia'
+
+# Background jobs
+gem 'sidekiq'
 
 # Frontend
 gem 'font-awesome-rails'
