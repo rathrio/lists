@@ -17,18 +17,20 @@ class ItemTest < ActiveSupport::TestCase
   end
 
   test ".with_tags(tag_ids) returns items that are associated with one of tag_ids" do
-    tag1 = create(:tag, name: 'Low Fi')
-    tag2 = create(:tag, name: 'Space Rock')
+    user = create(:user)
 
-    i1 = create(:item, name: 'item1', tags: ['Low Fi'])
-    i2 = create(:item, name: 'item2', tags: ['Low Fi', 'Space Rock'])
-    i3 = create(:item, name: 'item3', tags: ['Space Rock'])
+    tag1 = create(:tag, name: 'Low Fi', user: user)
+    tag2 = create(:tag, name: 'Space Rock', user: user)
 
-    assert_equal [i1, i2], Item.with_tags([tag1.id]).order(:id)
-    assert_equal [i1, i2, i3], Item.with_tags([tag1.id, tag2.id]).order(:id)
-    assert_equal [i2, i3], Item.with_tags([tag2.id]).order(:id)
+    i1 = create(:item, name: 'item1', tags: ['Low Fi'], user: user)
+    i2 = create(:item, name: 'item2', tags: ['Low Fi', 'Space Rock'], user: user)
+    i3 = create(:item, name: 'item3', tags: ['Space Rock'], user: user)
 
-    assert_empty Item.with_tags([43123])
+    assert_equal [i1, i2], user.items.with_tags([tag1.id]).order(:id)
+    assert_equal [i1, i2, i3], user.items.with_tags([tag1.id, tag2.id]).order(:id)
+    assert_equal [i2, i3], user.items.with_tags([tag2.id]).order(:id)
+
+    assert_empty user.items.with_tags([43123])
   end
 
   test '.create_from(scraper_result) sets the user and scraped to true' do

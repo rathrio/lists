@@ -8,7 +8,7 @@ class User < ApplicationRecord
   validates :email, :encrypted_password, presence: true
   validates :email, uniqueness: true
 
-  after_create :create_default_labels
+  after_create :create_default_labels, unless: -> { Rails.env.test? }
 
   private
 
