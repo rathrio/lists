@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
 
   def current_label
     return unless current_label_ids.count == 1
-    Label.find_by(id: current_label_ids.first)
+    current_user.labels.find_by(id: current_label_ids.first)
   end
   helper_method :current_label
 

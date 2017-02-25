@@ -1,10 +1,10 @@
 class LabelsController < ApplicationController
   def index
-    @labels = Label.all
+    @labels = current_user.labels
   end
 
   def create
-    @label = Label.new
+    @label = current_user.labels.new
 
     if @label.update_attributes(label_params)
       flash[:notice] = 'Label successfully created'
@@ -16,19 +16,19 @@ class LabelsController < ApplicationController
   end
 
   def destroy
-    @label = Label.find(params[:id])
+    @label = current_user.labels.find(params[:id])
     @label.destroy!
     flash[:notice] = 'Label successfully deleted'
     redirect_to action: :index
   end
 
   def edit
-    @label = Label.find(params[:id])
+    @label = current_user.labels.find(params[:id])
     render 'form'
   end
 
   def update
-    @label = Label.find(params[:id])
+    @label = current_user.labels.find(params[:id])
 
     if @label.update_attributes(label_params)
       flash[:notice] = 'Label successfully updated'

@@ -7,6 +7,8 @@ class Item < ApplicationRecord
   has_and_belongs_to_many :labels
   has_and_belongs_to_many :tags
 
+  belongs_to :user
+
   mount_uploader :image, ImageUploader
 
   validates :name, presence: true
@@ -29,12 +31,8 @@ class Item < ApplicationRecord
     where(scraped: false)
   end
 
-  def self.create_from(scraper_result)
-    create!(scraper_result.merge(scraped: true))
-  end
-
-  def self.lucky_scrape(label_ids)
-    with_labels(label_ids).unscraped.includes(:labels).each(&:lucky_scrape)
+  def self.create_from(scraper_result, user:)
+    create!(scraper_result.merge(scraped: true, user: user))
   end
 
   def update_from(scraper_result)

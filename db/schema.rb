@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170211224729) do
+ActiveRecord::Schema.define(version: 20170225184413) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,8 +25,10 @@ ActiveRecord::Schema.define(version: 20170211224729) do
     t.datetime "updated_at",                  null: false
     t.string   "image"
     t.datetime "deleted_at"
+    t.integer  "user_id"
     t.index ["deleted_at"], name: "index_items_on_deleted_at", using: :btree
     t.index ["name"], name: "index_items_on_name", using: :btree
+    t.index ["user_id"], name: "index_items_on_user_id", using: :btree
   end
 
   create_table "items_labels", id: false, force: :cascade do |t|
@@ -50,6 +52,8 @@ ActiveRecord::Schema.define(version: 20170211224729) do
     t.string   "fa_icon"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
+    t.index ["user_id"], name: "index_labels_on_user_id", using: :btree
   end
 
   create_table "links", force: :cascade do |t|
@@ -73,7 +77,9 @@ ActiveRecord::Schema.define(version: 20170211224729) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
     t.index ["name"], name: "index_tags_on_name", using: :btree
+    t.index ["user_id"], name: "index_tags_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -87,6 +93,9 @@ ActiveRecord::Schema.define(version: 20170211224729) do
     t.index ["remember_token"], name: "index_users_on_remember_token", using: :btree
   end
 
+  add_foreign_key "items", "users"
+  add_foreign_key "labels", "users"
   add_foreign_key "links", "items"
   add_foreign_key "notes", "items"
+  add_foreign_key "tags", "users"
 end

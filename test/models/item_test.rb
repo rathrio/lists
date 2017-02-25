@@ -2,12 +2,12 @@ require 'test_helper'
 
 class ItemTest < ActiveSupport::TestCase
   test ".with_labels(label_ids) returns items that are associated with one of label_ids" do
-    label1 = Label.create!(name: 'Music')
-    label2 = Label.create!(name: 'TV')
+    label1 = create(:label, name: 'Music')
+    label2 = create(:label, name: 'TV')
 
-    i1 = Item.create!(name: 'item1', labels: [label1])
-    i2 = Item.create!(name: 'item2', labels: [label1, label2])
-    i3 = Item.create!(name: 'item3', labels: [label2])
+    i1 = create(:item, name: 'item1', labels: [label1])
+    i2 = create(:item, name: 'item2', labels: [label1, label2])
+    i3 = create(:item, name: 'item3', labels: [label2])
 
     assert_equal [i1, i2], Item.with_labels([label1.id]).order(:id)
     assert_equal [i1, i2, i3], Item.with_labels([label1.id, label2.id]).order(:id)
@@ -17,12 +17,12 @@ class ItemTest < ActiveSupport::TestCase
   end
 
   test ".with_tags(tag_ids) returns items that are associated with one of tag_ids" do
-    tag1 = Tag.create!(name: 'Low Fi')
-    tag2 = Tag.create!(name: 'Space Rock')
+    tag1 = create(:tag, name: 'Low Fi')
+    tag2 = create(:tag, name: 'Space Rock')
 
-    i1 = Item.create!(name: 'item1', tags: ['Low Fi'])
-    i2 = Item.create!(name: 'item2', tags: ['Low Fi', 'Space Rock'])
-    i3 = Item.create!(name: 'item3', tags: ['Space Rock'])
+    i1 = create(:item, name: 'item1', tags: ['Low Fi'])
+    i2 = create(:item, name: 'item2', tags: ['Low Fi', 'Space Rock'])
+    i3 = create(:item, name: 'item3', tags: ['Space Rock'])
 
     assert_equal [i1, i2], Item.with_tags([tag1.id]).order(:id)
     assert_equal [i1, i2, i3], Item.with_tags([tag1.id, tag2.id]).order(:id)
@@ -31,15 +31,17 @@ class ItemTest < ActiveSupport::TestCase
     assert_empty Item.with_tags([43123])
   end
 
-  test '.create_from(scraper_result) sets scraped to true' do
+  test '.create_from(scraper_result) sets the user and scraped to true' do
     result = { name: 'Some Item' }
-    item = Item.create_from(result)
+    user = create(:user)
+    item = Item.create_from(result, user: user)
     assert item.scraped
     assert_equal 'Some Item', item.name
+    assert_equal user, item.user
   end
 
   test '#update_from(scraper_result) sets scraped to true' do
-    item = Item.create(name: 'Hello')
+    item = create(:item, name: 'Hello')
     refute item.scraped
 
     result = { name: 'Foobar' }

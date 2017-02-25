@@ -24,7 +24,7 @@
   <% end %>
 </div>
 
-<% cache @labels do %>
+<% cache [current_user.id, @labels] do %>
   <div class="container labels-list">
     <% @labels.each do |label| %>
       <%= render 'label', label: label %>

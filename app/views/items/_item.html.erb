@@ -1,4 +1,4 @@
-<% cache item do %>
+<% cache [current_user.id, item] do %>
   <div class="box item-box" data-filter-name="<%= item.name %>" data-item-id="<%= item.id %>">
     <div class="level is-mobile">
       <div class="level-left is-mobile">

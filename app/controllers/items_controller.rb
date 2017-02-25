@@ -1,11 +1,14 @@
 class ItemsController < ApplicationController
+  before_action :set_item,
+    only: %i(show update destroy scrape really_destroy restore)
+
   def index
     @items = if (label_ids = params[:label_ids]).present?
                set_label_ids(label_ids)
-               Item.with_labels(current_label_ids)
+               current_user.items.with_labels(current_label_ids)
              else
                reset_label_ids
-               Item.all
+               current_user.items
              end
 
     if (tag_ids = params[:tag_ids]).present?
@@ -22,12 +25,11 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.with_deleted.find(params[:id])
     render 'form'
   end
 
   def create
-    item = Item.new item_params.merge(label_ids: current_label_ids)
+    item = current_user.items.new item_params.merge(label_ids: current_label_ids)
 
     if item.save
       # flash[:notice] = 'Item successfully created'
@@ -38,8 +40,6 @@ class ItemsController < ApplicationController
   end
 
   def update
-    @item = Item.find(params[:id])
-
     if @item.update_attributes(item_params)
       flash[:notice] = 'Item successfully updated'
       redirect_to action: :index, label_ids: current_label_id_params
@@ -48,29 +48,24 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    @item = Item.find(params[:id])
     @item.destroy!
     flash[:notice] = 'Item successfully archived'
     redirect_to action: :index, label_ids: current_label_id_params
   end
 
   def really_destroy
-    @item = Item.with_deleted.find(params[:id])
     @item.really_destroy!
     flash[:notice] = 'Item successfully deleted'
     redirect_to action: :index, archived: true
   end
 
   def restore
-    @item = Item.with_deleted.find(params[:id])
     @item.restore
     flash[:notice] = 'Item successfully restored'
     redirect_to @item
   end
 
   def scrape
-    @item = Item.find(params[:id])
-
     begin
       unless @item.lucky_scrape
         flash[:alert] = 'Could not scrape item'
@@ -82,17 +77,11 @@ class ItemsController < ApplicationController
     redirect_to action: :index, label_ids: current_label_id_params
   end
 
-  def scrape_all
-
-    begin
-      Item.lucky_scrape(current_label_ids)
-    rescue SocketError
-      flash[:alert] = 'No internet connection'
-    end
-    redirect_to action: :index, label_ids: current_label_id_params
-  end
-
   private
+
+  def set_item
+    @item = current_user.items.with_deleted.find(params[:id])
+  end
 
   def item_params
     params.require(:item).permit(:name, :description, :date, :remote_image_url)
