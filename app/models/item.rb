@@ -41,7 +41,7 @@ class Item < ApplicationRecord
 
   def tags=(names)
     names.each do |name|
-      tag = Tag.find_or_create_by(name: name)
+      tag = user.tags.find_or_create_by(name: name)
       self.tags << tag unless tags.include?(tag)
     end
   end
