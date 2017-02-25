@@ -8,5 +8,6 @@ script:
 cache: bundler
 services:
   - postgresql
+  - redis-server
 addons:
   postgresql: "9.4"
