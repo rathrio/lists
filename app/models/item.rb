@@ -75,6 +75,6 @@ class Item < ApplicationRecord
   private
 
   def scrape_in_background
-    ScrapeJob.perform_later(self)
+    ScrapeJob.perform_later(id)
   end
 end

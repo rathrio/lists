@@ -1,7 +1,9 @@
 class ScrapeJob < ApplicationJob
   queue_as :default
 
-  def perform(*items)
-    items.each(&:lucky_scrape)
+  def perform(*item_ids)
+    item_ids.each do |id|
+      Item.find(id).lucky_scrape
+    end
   end
 end
