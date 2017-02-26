@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   # resources :users, controller: "clearance/users", only: [:create] do
   #   resource :password,
   #     controller: "clearance/passwords",
-  #     only: [:create, :edit, :update]
+  #     only: [:update]
   # end
 
   resources :labels
@@ -19,6 +19,8 @@ Rails.application.routes.draw do
     put :restore, on: :member
     delete :really_destroy, on: :member
   end
+
+  get '/profile' => 'profiles#show'
 
   root 'items#index'
 end
