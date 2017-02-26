@@ -1,6 +1,6 @@
 <%= form_for :session, url: session_path do |form| %>
   <p class="control has-icon">
-    <%= form.text_field :email, type: 'email', class: 'input is-medium', placeholder: 'Email' %>
+    <%= form.text_field :email, type: 'email', class: 'input is-medium', placeholder: 'Email', autofocus: true %>
     <%= icon :envelope %>
   </p>
 
