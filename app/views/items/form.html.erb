@@ -18,7 +18,7 @@
   <%= form_for @item do |f| %>
     <%= f.label 'Name', class: 'label' %>
     <p class="control">
-      <%= f.text_field :name, class: 'input' %>
+      <%= f.text_field :name, class: 'input', required: true %>
     </p>
 
     <%= f.label 'Description', class: 'label' %>

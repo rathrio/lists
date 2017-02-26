@@ -1,1 +1,29 @@
 <%= render 'settings/tabnav', active_tab: :profile %>
+
+<div class="container password-form">
+  <h2 class="title is-4">Change Password</h1>
+
+  <%= form_for @profile, url: profiles_path, method: :put do |f| %>
+    <%= f.label 'Email', class: 'label' %>
+    <p class="control">
+      <%= f.text_field :email, value: @profile.email, class: 'input is-disabled', required: true %>
+    </p>
+
+    <%= f.label 'Current password', class: 'label' %>
+    <p class="control">
+      <%= f.password_field :current_password, class: 'input', required: true %>
+    </p>
+
+    <%= f.label 'New password', class: 'label' %>
+    <p class="control">
+      <%= f.password_field :new_password, class: 'input', required: true %>
+    </p>
+
+    <%= f.label 'Confirm new password', class: 'label' %>
+    <p class="control">
+      <%= f.password_field :new_password_confirmation, class: 'input', required: true %>
+    </p>
+
+    <%= f.submit 'Update', class: 'button is-success' %>
+  <% end %>
+</div>
