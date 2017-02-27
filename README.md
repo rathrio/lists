@@ -53,4 +53,12 @@ bundle exec rake test
 2. Create your feature branch `git checkout -b my-new-feature`
 3. Commit your changes `git commit -am "Add some feature"`
 4. Push to the branch `git push origin my-new-feature`
+5. Run tests
+    ```
+    bundle exec rake
+    ```
+6. Review changes and fix style
+    ```
+    bundle exec rake review
+    ```
 5. Create new Pull Request (in your forked repository)
