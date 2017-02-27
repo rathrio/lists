@@ -2,7 +2,7 @@
 # a given query word.
 #
 # This filter is used to reduce the number of false positive results provided
-# by our scappers and is used within the ScraperResultsController class.
+# by our scapers and is used within the ScraperResultsController class.
 class FuzzySubstringMatchFilter
 
   attr_reader :matches
@@ -79,11 +79,11 @@ class FuzzySubstringMatchFilter
   # @param word [String] unnormalized word
   # @return [String] downcased, delimiter-less word.
   def normalized_word(word)
-    tmp = word.downcase
+    downcased_word = word.downcase
     DELIMITERS.each do |delimiter|
-      tmp = tmp.gsub(delimiter, '')
+      downcased_word = downcased_word.gsub(delimiter, '')
     end
-    tmp
+    downcased_word
   end
 
   # Obtain all substring combinations of a given word.
@@ -92,7 +92,7 @@ class FuzzySubstringMatchFilter
   #   substrings_for("abc")
   #   #=> ["a", "ab", "abc", "b", "bc", "c"]
   #
-  # @param s [String] word to split
+  # @param word [String] word to split
   # @return [Array<String>] collection of substrings of a given word.
   def substrings_for(word)
     indices = (0...word.length).to_a

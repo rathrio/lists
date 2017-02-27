@@ -10,31 +10,31 @@ class FuzzySubstringMatchFilterTest < ActiveSupport::TestCase
       { name: "Simpons - He is the real man" }
     ]
 
-    gt = [
+    ground_truth = [
       "He Man: Vol 1",
       "The He Man: Vol 1"
     ]
 
     matches = FuzzySubstringMatchFilter.new(results, "He-Man").matches
     matches.each do |match|
-      assert gt.include?(match[:name])
+      assert ground_truth.include?(match[:name])
     end
   end
 
   test 'Filter is case insensitive' do
     fm = FuzzySubstringMatchFilter
-    gt = "He Man: Vol 1"
+    ground_truth = "He Man: Vol 1"
     results = [
-      { name: gt },
+      { name: ground_truth },
       { name: "Simpons - He is the real man" }
     ]
 
-    assert_equal(gt, fm.new(results, "He-Man").matches[0][:name])
-    assert_equal(gt, fm.new(results, "he-man").matches[0][:name])
-    assert_equal(gt, fm.new(results, "He-man").matches[0][:name])
-    assert_equal(gt, fm.new(results, "he-Man").matches[0][:name])
-    assert_equal(gt, fm.new(results, "hE-MaN").matches[0][:name])
-    assert_equal(gt, fm.new(results, "He-mAn").matches[0][:name])
+    assert_equal(ground_truth, fm.new(results, "He-Man").matches[0][:name])
+    assert_equal(ground_truth, fm.new(results, "he-man").matches[0][:name])
+    assert_equal(ground_truth, fm.new(results, "He-man").matches[0][:name])
+    assert_equal(ground_truth, fm.new(results, "he-Man").matches[0][:name])
+    assert_equal(ground_truth, fm.new(results, "hE-MaN").matches[0][:name])
+    assert_equal(ground_truth, fm.new(results, "He-mAn").matches[0][:name])
   end
 
   test '#word_are_similar_enough?' do
@@ -61,15 +61,15 @@ class FuzzySubstringMatchFilterTest < ActiveSupport::TestCase
 
   test 'Filter does not consider DELIMITERS' do
     fm = FuzzySubstringMatchFilter
-    gt = "He Man: Vol 1"
+    ground_truth = "He Man: Vol 1"
     results = [
-      { name: gt },
+      { name: ground_truth },
       { name: "Simpons - He is the real man" }
     ]
 
     fm::DELIMITERS.each do |delimiter|
       query = "He#{delimiter}Man"
-      assert_equal(gt, fm.new(results, query).matches[0][:name])
+      assert_equal(ground_truth, fm.new(results, query).matches[0][:name])
     end
   end
 
@@ -83,14 +83,14 @@ class FuzzySubstringMatchFilterTest < ActiveSupport::TestCase
 
   test "#substrings_for" do
     fm = FuzzySubstringMatchFilter.new([], '')
-    gt_splits = %w(a ab abc b bc c)
+    ground_truth_splits = %w(a ab abc b bc c)
 
     substrings = fm.substrings_for("abc")
     substrings.each do |split|
-      assert gt_splits.include?(split)
+      assert ground_truth_splits.include?(split)
     end
 
-    gt_splits.each do |split|
+    ground_truth_splits.each do |split|
       assert substrings.include?(split)
     end
   end
