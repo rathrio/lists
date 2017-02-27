@@ -57,8 +57,10 @@ bundle exec rake test
     ```
     bundle exec rake
     ```
+
 6. Review changes and fix style
     ```
     bundle exec rake review
     ```
+
 5. Create new Pull Request (in your forked repository)
