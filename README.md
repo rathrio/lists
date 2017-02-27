@@ -1,8 +1,56 @@
-# Lists
-
-![Build status](https://travis-ci.org/rathrio/lists.svg?branch=master)
+# Lists ![Build status](https://travis-ci.org/rathrio/lists.svg?branch=master)
 
 ![Screenshot](https://i.imgur.com/L0kJMyc.png)
 
-Smart lists to keep track of stuff I want to consume. Scrapes metadata from the
-interwebs so I don't have to.
+Smart lists to keep track of media to consume.
+
+## Prerequisites
+
++ Ruby 2.4.0
++ PostgresSQL
++ redis
+
+Make sure postgres and redis servers are running.
+
+## Installation
+
+1. Install dependencies:
+    ```
+    bundle install
+    ```
+
+2. Setup database:
+    ```
+    bundle exec rake db:setup
+    ```
+
+3. Apply migrations:
+    ```
+    bundle exec rake db:migrate
+    ```
+
+## Running
+
+1. Run sidekiq for background jobs:
+    ```
+    bundle exec sidekiq -C config/sidekiq.yml
+    ```
+
+2. Run the application server:
+    ```
+    bundle exec rails server
+    ```
+
+## Running tests
+
+```
+bundle exec rake test
+```
+
+## Contributing
+
+1. Fork this repository
+2. Create your feature branch `git checkout -b my-new-feature`
+3. Commit your changes `git commit -am "Add some feature"`
+4. Push to the branch `git push origin my-new-feature`
+5. Create new Pull Request (in your forked repository)
