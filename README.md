@@ -2,19 +2,50 @@
 
 ![Screenshot](https://i.imgur.com/L0kJMyc.png)
 
-Smart lists to keep track of stuff I want to consume. Scrapes metadata from the
-interwebs so I don't have to.
+Smart lists to keep track of media to consume.
 
-## Requirements
+## Prerequisites
 
 + Ruby 2.4.0
 + PostgresSQL
++ redis
+
+Make sure postgres and redis servers are running.
 
 ## Installation
 
-1. Install dependencies: `bundle`
-2. Setup database: `rake db:setup`
-3. Apply migrations: `rake db:migrate`
+1. Install dependencies:
+    ```
+    bundle install
+    ```
+
+2. Setup database:
+    ```
+    bundle exec rake db:setup
+    ```
+
+3. Apply migrations:
+    ```
+    bundle exec rake db:migrate
+    ```
+
+## Running
+
+1. Run sidekiq for background jobs:
+    ```
+    bundle exec sidekiq -C config/sidekiq.yml
+    ```
+
+2. Run the application server:
+    ```
+    bundle exec rails server
+    ```
+
+## Running tests
+
+```
+bundle exec rake test
+```
 
 ## Contributing
 
