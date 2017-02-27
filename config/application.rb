@@ -14,4 +14,8 @@ module Lists
 
     config.active_job.queue_adapter = :sidekiq
   end
+
+  def self.version
+    @version ||= `git rev-parse --short HEAD`.chomp
+  end
 end

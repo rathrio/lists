@@ -1,0 +1,15 @@
+<%= render 'settings/tabnav', active_tab: :tags %>
+
+<div class="container tag-form">
+  <h1 class="title is-4">Edit Tag "<%= @tag.name %>"</h1>
+
+  <%= form_for @tag do |f| %>
+    <%= f.label 'Name', class: 'label' %>
+    <p class="control">
+      <%= f.text_field :name, class: 'input', required: true %>
+    </p>
+
+    <%= f.submit 'Update', class: 'button is-success' %>
+    <%= link_to 'Back', tags_path, class: 'button' %>
+  <% end %>
+</div>
