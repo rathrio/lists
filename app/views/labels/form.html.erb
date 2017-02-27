@@ -1,5 +1,7 @@
+<%= render 'settings/tabnav', active_tab: :labels %>
+
 <div class="container label-form">
-  <h1 class="title">Edit Label "<%= @label.name %>"</h1>
+  <h1 class="title is-4">Edit Label "<%= @label.name %>"</h1>
 
   <%= form_for @label do |f| %>
     <%= f.label 'Name', class: 'label' %>
@@ -23,5 +25,6 @@
     </p>
 
     <%= f.submit 'Update', class: 'button is-success' %>
+    <%= link_to 'Back', labels_path, class: 'button' %>
   <% end %>
 </div>
