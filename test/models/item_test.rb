@@ -3,21 +3,28 @@ require 'test_helper'
 class ItemTest < ActiveSupport::TestCase
 
   test "Items must have unique names" do
-    user = create(:user)
     label = create(:label, name: 'Music')
     item1 = create(:item, name: 'pigeon', labels: [label])
-    item2 = Item.new(name: 'pigeon', labels: [label], user: user)
-    item3 = Item.new(name: 'Pigeon', labels: [label], user: user)
+    item2 = build(:item, name: 'pigeon', labels: [label], user: item1.user)
+    item3 = build(:item, name: 'Pigeon', labels: [label], user: item1.user)
     assert item1.valid?
-    assert_not item2.valid?
     assert item3.valid?
+    assert_not item2.valid?
+  end
+
+  test "Name has not to be unique when assigned to different users" do
+    label = create(:label, name: 'Music')
+    item1 = create(:item, name: 'pigeon', labels: [label])
+    item2 = create(:item, name: 'pigeon', labels: [label])
+    assert item1.valid?
+    assert item2.valid?
   end
 
   test "Items require a non-empty name" do
     user = create(:user)
     label = create(:label, name: 'Music')
-    item1 = Item.new(name: '', labels: [label], user: user)
-    item2 = Item.new(name: 'singstar adventures', labels: [label], user: user)
+    item1 = build(:item, name: '', labels: [label], user: user)
+    item2 = build(:item, name: 'singstar adventures', labels: [label], user: user)
     assert_not item1.valid?
     assert item2.valid?
   end
