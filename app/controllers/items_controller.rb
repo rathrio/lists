@@ -32,9 +32,10 @@ class ItemsController < ApplicationController
     item = current_user.items.new item_params.merge(label_ids: current_label_ids)
 
     if item.save
-      # flash[:notice] = 'Item successfully created'
+      flash[:notice] = 'Item successfully created'
     else
-      flash[:alert] = 'Could not create item'
+      error_message = item.errors.full_messages.to_sentence
+      flash[:alert] = error_message
     end
     redirect_to action: :index, label_ids: current_label_id_params, focus_search: true
   end

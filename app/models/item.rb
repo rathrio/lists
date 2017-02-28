@@ -11,7 +11,7 @@ class Item < ApplicationRecord
 
   mount_uploader :image, ImageUploader
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: { scope: [:user_id] }
 
   after_create :scrape_in_background, unless: -> { Rails.env.test? }
 
