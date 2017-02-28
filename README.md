@@ -49,6 +49,12 @@ Make sure postgres and redis servers are running.
 bundle exec rake test
 ```
 
+## Generate Documentation
+
+```
+bundle exec rake docs
+```
+
 ## Contributing
 
 1. Fork this repository

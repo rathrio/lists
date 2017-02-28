@@ -22,3 +22,8 @@
 
 .env
 /public/uploads/*
+
+# Do not push generated doc files
+.yardoc/
+doc/
+erd.pdf
