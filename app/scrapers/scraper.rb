@@ -1,4 +1,7 @@
+# Include this module to a class to make it behave like a scraper.
 module Scraper
+
+  # @return [Array<Scraper>] list of classes that include this module.
   def self.all
     @scrapers ||= []
   end
@@ -13,6 +16,11 @@ module Scraper
     @query = query
   end
 
+  # Method called to perform actual scraping. No need to override this one.
+  # Override the scrape_<attribute> template methods.
+  #
+  # @return [Array<Hash>] list of result Hashes that can be passed as an
+  #   argument to Item.create_from(result) or Item#update_from(result).
   def scrape
     search_results.map do |result|
       {
@@ -26,6 +34,9 @@ module Scraper
     end
   end
 
+  # @return [Array] an Array of objects most likely retrieved via an API call.
+  #   Each element will get passed to the scraper template methods in order to
+  #   extract the desired data.
   def search_results
     []
   end
