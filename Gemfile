@@ -79,6 +79,12 @@ group :development do
   # For style reviews
   gem 'pronto'
   gem 'pronto-rubocop', require: false
+
+  # A documentation generation tool
+  gem 'yard'
+
+  # Generate Entity-Relationship Diagrams
+  gem "rails-erd"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
