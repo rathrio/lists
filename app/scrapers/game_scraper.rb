@@ -25,14 +25,14 @@ class GameScraper
   scrape_attribute :date do |result|
     release_date_unix = result['first_release_date'].to_s
     if release_date_unix.present?
-      DateTime.strptime(release_date_unix,'%Q')
+      DateTime.strptime(release_date_unix, '%Q')
     else
       nil
     end
   end
 
   scrape_attribute :links do |result|
-    [ Link.new(url: result['url']) ]
+    [Link.new(url: result['url'])]
   end
 
   scrape_attribute :tags do |result|

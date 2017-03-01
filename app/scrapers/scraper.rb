@@ -58,7 +58,7 @@ module Scraper
   def initialize(query:)
     @query = query
     @alias_names = {
-      :image => :remote_image_url
+      image: :remote_image_url
     }
   end
 

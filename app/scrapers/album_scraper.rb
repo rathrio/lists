@@ -21,7 +21,7 @@ class AlbumScraper
   end
 
   scrape_attribute :links do |result|
-    [ Link.new(url: result['resource_url']) ]
+    [Link.new(url: result['resource_url'])]
   end
 
   scrape_attribute :tags do |result|
