@@ -18,7 +18,17 @@
 #       res[:name]
 #     end
 #   end
+ 
+# What are the default members?
 module Scraper
+
+  DEFAULT_ATTRIBUTES = [
+    :name,
+    :description,
+    :image,
+    :date,
+    :tags
+  ].freeze
 
   # @return [Array<Scraper>] list of classes that include this module.
   def self.all
@@ -73,6 +83,24 @@ module Scraper
 
   def self.included(scraper)
     scraper.extend Makros
+    DEFAULT_ATTRIBUTES.each do |default_attribute|
+      method_name = "scrape_#{default_attribute.to_s}".to_sym
+      define_method(method_name) do
+        raise NotImplementedError, <<~EOS
+               Implement #scrape_name(result) and extract the value from result that
+               correspond with the name of an item.
+
+               result is one element of whatever #search_results returns.
+
+               Example:
+
+               # Assuming #search_results returns an array of hashes with key :title
+               def scrape_name(result)
+                 result[:title]
+               end
+        EOS
+      end
+    end
     all << scraper
   end
 
