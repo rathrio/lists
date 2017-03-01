@@ -50,6 +50,15 @@ module Scraper
 
   def initialize(query:)
     @query = query
+    @alias_names = {
+      :image => :remote_image_url
+    }
+  end
+
+  # @param name [Symbol]
+  # @param alias_name [Symbol]
+  def append_alias(name, alias_name)
+    @alias_names[name] = alias_name
   end
  
   module Makros
@@ -86,7 +95,8 @@ module Scraper
       end
     end
 
-    def scrape_attribute(attribute_name, &block)
+    def scrape_attribute(attribute_name, alias_name=nil, &block)
+      append_alias(attribute_name, alias_name) unless alias_name.nil?
       self.class_eval do
         method_name = "scrape_#{attribute_name.to_s}".to_sym
         define_method(method_name) do |arg|
@@ -129,6 +139,8 @@ module Scraper
     search_results.map do |result|
       result = scraper_methods.map do |m|
         key = m.to_s.gsub("scrape_", "").to_sym
+        alias_key = @alias_names[key]
+        key = alias_key.nil? ? key : alias_key
         [key, send(m, result)]
       end
       result.to_h
