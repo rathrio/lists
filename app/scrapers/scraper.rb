@@ -1,25 +1,36 @@
-# @example
-#   class Foobar
-#     def name
-#       "c_name"
+# Including this module makes a class behave like a scraper.
+#
+# In order to define a new scraper, the following 3 steps would be required:
+#   1. Write a new class that includes the Scraper module.
+#   2. Define on which client(s) the Scraper _relies on_ and how it processes that _resource_.
+#   3. Define which attributes- and how they should be scraped. 
+#
+# @example Example scraper definition
+#
+#   # in app/scrapers/action_movie_scraper.rb
+#
+#   class ActionMovieScraper
+#     include Scraper
+#
+#     rely_on :action_movie_api do |query|
+#       action_movie_api.search(query) # => e.g. [{ title: 'foo' }, { title: 'bar' }]
 #     end
+#
+#     scrape_attribute :name do |result|
+#       result[:title]
+#     end
+#
 #   end
-#  
-#   class B
-#     include NewScraper
-#  
-#     rely_on :foobar do
-#       val = "fetched name: " + foobar.name
-#       puts val
-#       [{name: "foobar"}]
-#     end
-#  
-#     scrape_attribute :foo do |res|
-#       res[:name]
-#     end
-#   end
- 
-# What are the default members?
+#
+# @example Update an item with the first result of ActionMovieScraper results
+#
+#   scraper = ActionMovieScraper.new(query: 'lethal weapon')
+#   result = scraper.scrape.first # => { name: 'lethal weapon 2: reloaded' }
+#
+#   item = Item.create # ...
+#   item.update_from(result)
+#   item.name # => 'lethal weapon 2: reloaded'
+#
 module Scraper
 
   DEFAULT_ATTRIBUTES = [
@@ -43,6 +54,10 @@ module Scraper
  
   module Makros
 
+    # Fetch the results provided by the target client type. The result
+    # Is built by applying the given block on the client's output.
+    # Moreover, it defines an accessor to an instance of type client. 
+    # This can be used by the scraper instance
     # builds resuls object
     # @param client [Class] class name of target client.
     # @param block [Proc] defines how result object should be processed

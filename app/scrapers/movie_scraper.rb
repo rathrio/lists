@@ -1,34 +1,29 @@
 class MovieScraper
   include Scraper
 
-  def search_results
+  rely_on :moviedb_client do |query|
     title = query.gsub(/\((\d{2,4})\)/, '').strip
     moviedb_client.search(title, type: :movie, year: $1)['results'].to_a
   end
 
-  def scrape_name(result)
+  scrape_attribute :name do |result|
     result['title']
   end
 
-  def scrape_description(result)
+  scrape_attribute :description do |result|
     result['overview']
   end
 
-  def scrape_image(result)
+  scrape_attribute :image do |result|
     MoviedbClient::IMAGE_BASE_URI + result['poster_path'] if result['poster_path']
   end
 
-  def scrape_date(result)
+  scrape_attribute :date do |result|
     Date.parse(result['release_date']) if result['release_date'].present?
   end
 
-  def scrape_tags(result)
+  scrape_attribute :tags do |result|
     result['genre_ids'].map { |id| MoviedbClient::GENRES[id] }.uniq.compact
   end
 
-  private
-
-  def moviedb_client
-    @moviedb_client ||= MoviedbClient.new
-  end
 end

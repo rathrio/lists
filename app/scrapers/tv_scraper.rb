@@ -26,9 +26,4 @@ class TvScraper
     result['genre_ids'].map { |id| MoviedbClient::GENRES[id] }.compact
   end
 
-  private
-
-  def moviedb_client
-    @moviedb_client ||= MoviedbClient.new
-  end
 end

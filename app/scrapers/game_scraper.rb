@@ -1,19 +1,19 @@
 class GameScraper
   include Scraper
 
-  def search_results
+  rely_on :igdb_client do |query|
     igdb_client.search(query)
   end
 
-  def scrape_name(result)
+  scrape_attribute :name do |result|
     result['name']
   end
 
-  def scrape_description(result)
+  scrape_attribute :description do |result|
     result['summary']
   end
 
-  def scrape_image(result)
+  scrape_attribute :image do |result|
     url = result.dig('cover', 'url')
 
     if url.present?
@@ -22,27 +22,22 @@ class GameScraper
     end
   end
 
-  def scrape_date(result)
+  scrape_attribute :date do |result|
     release_date_unix = result['first_release_date'].to_s
-    return nil unless release_date_unix.present?
-
-    DateTime.strptime(release_date_unix,'%Q')
+    if release_date_unix.present?
+      DateTime.strptime(release_date_unix,'%Q')
+    else
+      nil
+    end
   end
 
-  def scrape_links(result)
-    [
-      Link.new(url: result['url'])
-    ]
+  scrape_attribute :links do |result|
+    [ Link.new(url: result['url']) ]
   end
 
-  def scrape_tags(result)
+  scrape_attribute :tags do |result|
     genres = igdb_client.genre(result['genres'])
     genres.map { |g| g['name'] }.uniq.compact
   end
 
-  private
-
-  def igdb_client
-    @igdb_client ||= IgdbClient.new
-  end
 end
