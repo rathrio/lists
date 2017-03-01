@@ -12,4 +12,24 @@ class ScraperTest < ActiveSupport::TestCase
     assert("nude", result[:tags].first)
   end
 
+  test 'Can put arbitrary content in result' do
+
+    # Add two custom result attributes
+    dummy_class_definition = Class.new(DummyScraper) do
+      scrape_attribute :foo do |result|
+        "foo"
+      end
+
+      scrape_attribute :bar do |result|
+        "bar"
+      end
+
+    end
+    Object.const_set("FoobarScraper", dummy_class_definition)
+    results = FoobarScraper.new(query: "30").scrape
+    result = results.first
+    assert("foo", result[:foo])
+    assert("bar", result[:bar])
+  end
+
 end
