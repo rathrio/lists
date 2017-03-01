@@ -1,38 +1,31 @@
 class AlbumScraper
   include Scraper
 
-  def search_results
+  rely_on :discogs_client do |query|
     discogs_client.search(query, type: 'release')['results'].to_a
   end
 
-  def scrape_name(result)
+  scrape_attribute :name do |result|
     result['title']
   end
 
-  def scrape_description(result)
+  scrape_attribute :description do |result|
   end
 
-  def scrape_image(result)
+  scrape_attribute :image do |result|
     result['thumb']
   end
 
-  def scrape_date(result)
+  scrape_attribute :date do |result|
     Date.new(result['year'].to_i) if result['year'].present?
   end
 
-  def scrape_links(result)
-    [
-      Link.new(url: result['resource_url'])
-    ]
+  scrape_attribute :links do |result|
+    [Link.new(url: result['resource_url'])]
   end
 
-  def scrape_tags(result)
+  scrape_attribute :tags do |result|
     result['style'].uniq.compact
   end
 
-  private
-
-  def discogs_client
-    @discogs_client ||= DiscogsClient.new
-  end
 end
