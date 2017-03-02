@@ -9,6 +9,7 @@ class Label < ApplicationRecord
     user.labels.find_or_create_by(name: 'TV', scraper: 'TvScraper', fa_icon: 'television')
     user.labels.find_or_create_by(name: 'Music', scraper: 'AlbumScraper', fa_icon: 'music')
     user.labels.find_or_create_by(name: 'Games', scraper: 'GameScraper', fa_icon: 'gamepad')
+    user.labels.find_or_create_by(name: 'Recipes', scraper: 'RecipeScraper', fa_icon: 'cutlery')
   end
 
   def default_scraper
