@@ -99,6 +99,7 @@ module Scraper
   def scrape_date(result)
   end
 
+  # @retun [Array<Link>] list of links extracted from result.
   def scrape_links(result)
     []
   end

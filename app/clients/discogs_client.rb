@@ -1,7 +1,7 @@
 class DiscogsClient
   include HTTParty
   base_uri 'https://api.discogs.com'
-  default_params key: ENV['DISCOGS_KEY'], secret: ENV['DISCOGS_SECRET']
+  default_params key: ENV['DISCOGS_API_KEY'], secret: ENV['DISCOGS_API_SECRET']
   headers('User-Agent' => 'lists.rathr.io')
 
   def search(query, type: 'release')
