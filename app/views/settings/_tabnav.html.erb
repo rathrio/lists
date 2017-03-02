@@ -1,38 +1,40 @@
-<div class="tabs is-large">
-  <ul>
-    <li class='<%= 'is-active' if active_tab == :labels %>'>
-      <%= link_to labels_path do %>
-        <%= icon :tag %>
-        <span>Labels</span>
-      <% end %>
-    </li>
+<div class="container has-bottom-padding">
+  <div class="tabs is-large">
+    <ul>
+      <li class='<%= 'is-active' if active_tab == :labels %>'>
+        <%= link_to labels_path do %>
+          <%= icon :tag %>
+          <span>Labels</span>
+        <% end %>
+      </li>
 
-    <li class='<%= 'is-active' if active_tab == :tags %>'>
-      <%= link_to tags_path do %>
-        <%= icon :tags %>
-        <span>Tags</span>
-      <% end %>
-    </li>
+      <li class='<%= 'is-active' if active_tab == :tags %>'>
+        <%= link_to tags_path do %>
+          <%= icon :tags %>
+          <span>Tags</span>
+        <% end %>
+      </li>
 
-    <li class='<%= 'is-active' if active_tab == :profile %>'>
-      <%= link_to profile_path do %>
-        <%= icon 'user-o' %>
-        <span>Profile</span>
-      <% end %>
-    </li>
+      <li class='<%= 'is-active' if active_tab == :profile %>'>
+        <%= link_to profile_path do %>
+          <%= icon 'user-o' %>
+          <span>Profile</span>
+        <% end %>
+      </li>
 
-    <li class='<%= 'is-active' if active_tab == :about %>'>
-      <%= link_to '' do %>
-        <%= icon :question %>
-        <span>About</span>
-      <% end %>
-    </li>
+      <li class='<%= 'is-active' if active_tab == :about %>'>
+        <%= link_to '' do %>
+          <%= icon :question %>
+          <span>About</span>
+        <% end %>
+      </li>
 
-    <li>
-      <%= link_to sign_out_path, method: :delete do %>
-        <%= icon 'sign-out' %>
-        <span>Sign out</span>
-      <% end %>
-    </li>
-  </ul>
+      <li>
+        <%= link_to sign_out_path, method: :delete do %>
+          <%= icon 'sign-out' %>
+          <span>Sign out</span>
+        <% end %>
+      </li>
+    </ul>
+  </div>
 </div>
