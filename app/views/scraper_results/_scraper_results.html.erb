@@ -21,7 +21,7 @@
             </div>
           <% end %>
 
-          <% result.tags.each do |tag| %>
+          <% result.tags.first(4).each do |tag| %>
             <div class="level-item">
               <span class="tag is-light is-small">
                 <%= tag %>
