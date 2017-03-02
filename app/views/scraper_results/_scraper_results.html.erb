@@ -1,5 +1,5 @@
 <div class="container">
-  <% results.each do |result| %>
+  <% results.each_with_index do |result, index| %>
     <div class="box item-box">
       <div class="level is-mobile">
         <div class="level-left is-mobile">
@@ -10,7 +10,22 @@
           </div>
 
           <div class="level-item">
-            <div class="title is-4"><%= result.name %></div>
+            <%= form_tag :import_scraper_results, class: "scraper-result-#{index}" do %>
+              <%= hidden_field_tag 'scraper_results[name]', result.name %>
+              <%= hidden_field_tag 'scraper_results[description]', result.description %>
+              <%= hidden_field_tag 'scraper_results[date]', result.date %>
+              <%= hidden_field_tag 'scraper_results[remote_image_url]', result.remote_image_url %>
+              <%= hidden_field_tag 'scraper_results[scraped]', true %>
+
+              <% result.tags.each do |tag| %>
+                <%= hidden_field_tag 'scraper_results[tags][]', tag %>
+              <% end %>
+
+
+              <div class="title is-4">
+                <%= link_to result.name, nil, class: 'scraper-result-name', onclick: "$('.scraper-result-#{index}').submit();return false;", data: { balloon: %{Add to list}} %>
+              </div>
+            <% end %>
           </div>
 
           <% if result.date %>

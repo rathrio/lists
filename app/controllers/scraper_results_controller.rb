@@ -9,7 +9,9 @@ class ScraperResultsController < ApplicationController
   end
 
   def import
-    Item.create_from(result_params, user: current_user)
+    item = Item.new(user: current_user)
+    item.update_from(result_params.merge(labels: [current_label]))
+    flash[:notice] = 'Item successfully added'
     redirect_to items_path(label_ids: current_label_id_params)
   end
 
@@ -22,7 +24,8 @@ class ScraperResultsController < ApplicationController
       :remote_image_url,
       :date,
       :links,
-      :tags
+      :scraped,
+      tags: []
     )
   end
 end
