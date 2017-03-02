@@ -30,7 +30,7 @@
           </div>
         <% end %>
 
-        <% item.tags.each do |tag| %>
+        <% item.tags.first(4).each do |tag| %>
           <div class="level-item is-hidden-touch">
             <%= link_to items_path(label_ids: current_label_id_params, tag_ids: tag.id) do %>
               <span class="tag is-light is-small">
