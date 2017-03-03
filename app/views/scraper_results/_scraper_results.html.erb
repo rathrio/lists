@@ -1,50 +1,53 @@
 <div class="container">
   <% results.each_with_index do |result, index| %>
-    <div class="box item-box">
-      <div class="level is-mobile">
-        <div class="level-left is-mobile">
-          <div class="level-item">
-            <figure class="image is-64x64">
-              <%= image_tag(result.remote_image_url, class: 'scraper-result-image') if result.remote_image_url.present? %>
-            </figure>
-          </div>
+    <div class="box item-box" data-balloon="Add to list">
+      <%= link_to nil, class: 'scraper-result-name', onclick: "$('.scraper-result-#{index}').submit();return false;" do %>
+        <div class="level is-mobile">
+          <div class="level-left is-mobile">
+            <div class="level-item">
+              <figure class="image is-64x64">
+                <%= image_tag(result.remote_image_url, class: 'scraper-result-image') if result.remote_image_url.present? %>
+              </figure>
+            </div>
 
-          <div class="level-item">
-            <%= form_tag :import_scraper_results, class: "scraper-result-#{index}" do %>
-              <%= hidden_field_tag 'scraper_results[name]', result.name %>
-              <%= hidden_field_tag 'scraper_results[description]', result.description %>
-              <%= hidden_field_tag 'scraper_results[date]', result.date %>
-              <%= hidden_field_tag 'scraper_results[remote_image_url]', result.remote_image_url %>
-              <%= hidden_field_tag 'scraper_results[scraped]', true %>
+            <div class="level-item">
+              <%= form_tag :import_scraper_results, class: "scraper-result-#{index}" do %>
+                <%= hidden_field_tag 'scraper_results[name]', result.name %>
+                <%= hidden_field_tag 'scraper_results[description]', result.description %>
+                <%= hidden_field_tag 'scraper_results[date]', result.date %>
+                <%= hidden_field_tag 'scraper_results[remote_image_url]', result.remote_image_url %>
+                <%= hidden_field_tag 'scraper_results[scraped]', true %>
 
-              <% result.tags.each do |tag| %>
-                <%= hidden_field_tag 'scraper_results[tags][]', tag %>
+                <% result.tags.each do |tag| %>
+                  <%= hidden_field_tag 'scraper_results[tags][]', tag %>
+                <% end %>
+
+
+                <div class="title is-4">
+                  <%= result.name %>
+                  <%# <%= link_to result.name, nil, class: 'scraper-result-name', onclick: "$('.scraper-result-#{index}').submit();return false;", data: { balloon: %{Add to list}} %1> %>
+                </div>
               <% end %>
+            </div>
 
+            <% if result.date %>
+              <div class="level-item">
+                <span class="tag is-light is-small">
+                  <%= result.date.year %>
+                </span>
+              </div>
+            <% end %>
 
-              <div class="title is-4">
-                <%= link_to result.name, nil, class: 'scraper-result-name', onclick: "$('.scraper-result-#{index}').submit();return false;", data: { balloon: %{Add to list}} %>
+            <% result.tags.first(4).each do |tag| %>
+              <div class="level-item">
+                <span class="tag is-light is-small">
+                  <%= tag %>
+                </span>
               </div>
             <% end %>
           </div>
-
-          <% if result.date %>
-            <div class="level-item">
-              <span class="tag is-light is-small">
-                <%= result.date.year %>
-              </span>
-            </div>
-          <% end %>
-
-          <% result.tags.first(4).each do |tag| %>
-            <div class="level-item">
-              <span class="tag is-light is-small">
-                <%= tag %>
-              </span>
-            </div>
-          <% end %>
         </div>
-      </div>
+      <% end %>
     </div>
   <% end %>
 </div>

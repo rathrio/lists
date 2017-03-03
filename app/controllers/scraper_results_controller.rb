@@ -5,7 +5,7 @@ class ScraperResultsController < ApplicationController
     results = scraper.new(query: query).scrape
     results = FuzzySubstringMatchFilter.new(results, query).matches
     results = results.map { |r| OpenStruct.new(r) }
-    render partial: 'scraper_results', locals: { results: results }
+    render partial: 'scraper_results', locals: { results: results }, layout: false
   end
 
   def import
