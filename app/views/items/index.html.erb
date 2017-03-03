@@ -14,11 +14,7 @@
         <% end %>
       </label>
 
-      <%= f.text_field :name, class: 'input is-expanded is-medium filter scraper-query', placeholder: 'Search', autocomplete: :off, autofocus: focus_search?, data: { 'filter-container' => '.items-list', 'filter-attribute' => 'name' } %>
-
-      <%= link_to scraper_results_path, class: 'button is-medium scraper-link' do %>
-        <%= icon :search, size: :medium %>
-      <% end %>
+      <%= f.text_field :name, class: 'input is-expanded is-medium filter scraper-query', placeholder: 'Search', autocomplete: :off, autofocus: focus_search?, data: { 'filter-container' => '.items-list', 'filter-attribute' => 'name', 'scrape-path' => scraper_results_path, 'scrape' => current_label.present? } %>
     </p>
   <% end %>
 </div>

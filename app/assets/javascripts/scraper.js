@@ -1,13 +1,24 @@
 (function() {
   function scrape(e) {
-    var query = $('.scraper-query').val();
-    var url = $(this).attr('href') + '?query=' + encodeURIComponent(query);
-    $('.scraper-results').load(url);
-    e.preventDefault();
+    var that = $(this);
+    if (!that.data('scrape')) {
+      return false;
+    }
+
+    delay(function() {
+      var query = that.val();
+      if (query.length < 3) {
+        return false;
+      }
+
+      var url = that.data('scrape-path') + '?query=' + encodeURIComponent(query);
+      Spinner.show('.scraper-results');
+      $('.scraper-results').load(url);
+    }, 500);
   }
 
   function ready() {
-    $('.scraper-link').on('click', scrape);
+    $('.scraper-query').on('keyup', scrape);
   }
 
   $(document).on('turbolinks:load', ready);
