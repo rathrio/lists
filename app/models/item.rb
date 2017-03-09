@@ -13,7 +13,7 @@ class Item < ApplicationRecord
 
   validates :name, presence: true, uniqueness: { scope: [:user_id] }
 
-  after_create :scrape_in_background, unless: -> { Rails.env.test? }
+  after_create :scrape_in_background, unless: -> { Rails.env.test? || scraped? }
 
   def self.with_labels(label_ids)
     joins(:items_labels).where('items_labels.label_id IN (?)', label_ids).distinct

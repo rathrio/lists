@@ -5,7 +5,11 @@ Rails.application.routes.draw do
 
   resources :labels
   resources :tags
-  resources :scraper_results
+  resources :scraper_results do
+    collection do
+      post :import
+    end
+  end
 
   resource :profiles, only: [:update]
   get '/profile' => 'profiles#show'
