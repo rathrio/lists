@@ -17,9 +17,9 @@
     }, 500);
   }
 
-  function ready() {
+  $(document).on('turbolinks:load', function() {
+    // Start scraping interwebs for items after user has typed a certain number
+    // of characters.
     $('.scraper-query').on('keyup', scrape);
-  }
-
-  $(document).on('turbolinks:load', ready);
+  });
 })();
