@@ -10,7 +10,7 @@ Smart lists to keep track of media to consume.
 + [Bundler](https://bundler.io/)
 + [PostgreSQL](https://www.postgresql.org/)
 + [Redis](https://redis.io/)
-+ [Imagemagick](https://www.imagemagick.org/script/index.php)
++ [Imagemagick >= 7](https://www.imagemagick.org/script/index.php)
 
 Make sure postgres and redis servers are running.
 
