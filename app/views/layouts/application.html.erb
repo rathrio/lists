@@ -18,7 +18,7 @@
       <%= check_box_tag 'menu-trigger', nil, false, class: 'is-hidden' %>
 
       <% if signed_in? %>
-        <% cache ['side-nav', current_user.id, current_user.labels, current_label_id_params, display_archived?] do %>
+        <% cache ['side-nav', current_user.id, current_user.lists, current_list_id_params, display_archived?] do %>
           <div class="column is-2 hero is-dark is-fullheight is-hidden-touch side-bar is-mobile">
             <aside class="menu side-nav">
               <ul class="menu-list">
@@ -34,17 +34,17 @@
                   <% end %>
                 </li>
 
-                <div class="label-nav">
-                  <% current_user.labels.each do |label| %>
+                <div class="list-nav">
+                  <% current_user.lists.each do |list| %>
                     <li>
-                      <% css_class = current_label_ids.include?(label.id) ? 'is-active' : '' %>
-                      <%= link_to items_path(label_ids: label.id), class: css_class do %>
+                      <% css_class = current_list_ids.include?(list.id) ? 'is-active' : '' %>
+                      <%= link_to items_path(list_ids: list.id), class: css_class do %>
                         <div class="level-right">
                           <div class="level-item">
-                            <h2 class="title is-4"><%= label.name %></h2>
+                            <h2 class="title is-4"><%= list.name %></h2>
                           </div>
 
-                          <%= icon label.fa_icon %>
+                          <%= icon list.fa_icon %>
                         </div>
                       <% end %>
                     </li>
@@ -65,7 +65,7 @@
                 </div>
 
                 <li>
-                  <%= link_to labels_path do %>
+                  <%= link_to lists_path do %>
                     <div class="level-right">
                       <div class="level-item">
                         <h2 class="title is-4">Settings</h1>

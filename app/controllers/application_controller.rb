@@ -4,31 +4,31 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception
 
-  def current_label_ids
-    session[:label_ids] ||= []
+  def current_list_ids
+    session[:list_ids] ||= []
   end
-  helper_method :current_label_ids
+  helper_method :current_list_ids
 
-  def current_label
-    return unless current_label_ids.count == 1
-    current_user.labels.find_by(id: current_label_ids.first)
+  def current_list
+    return unless current_list_ids.count == 1
+    current_user.lists.find_by(id: current_list_ids.first)
   end
-  helper_method :current_label
+  helper_method :current_list
 
-  def current_label_id_params
-    current_label_ids.join(',')
+  def current_list_id_params
+    current_list_ids.join(',')
   end
-  helper_method :current_label_id_params
+  helper_method :current_list_id_params
 
-  def set_label_ids(ids)
-    session[:label_ids] = ids.split(',').map(&:to_i)
+  def set_list_ids(ids)
+    session[:list_ids] = ids.split(',').map(&:to_i)
   end
-  helper_method :set_label_ids
+  helper_method :set_list_ids
 
-  def reset_label_ids
-    session[:label_ids] = nil
+  def reset_list_ids
+    session[:list_ids] = nil
   end
-  helper_method :reset_label_ids
+  helper_method :reset_list_ids
 
   def display_archived?
     params[:archived].present?

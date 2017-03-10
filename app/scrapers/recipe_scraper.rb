@@ -6,7 +6,7 @@ class RecipeScraper
   end
 
   def scrape_name(result)
-    result['recipe']['label']
+    result['recipe']['list']
   end
 
   def scrape_description(result)
@@ -18,7 +18,7 @@ class RecipeScraper
   end
 
   def scrape_tags(result)
-    result['recipe']['healthLabels']
+    result['recipe']['healthLists']
   end
 
   def scrape_links(result)

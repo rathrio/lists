@@ -1,9 +1,9 @@
-<%= render 'settings/tabnav', active_tab: :labels %>
+<%= render 'settings/tabnav', active_tab: :lists %>
 
-<div class="container label-form">
-  <h1 class="title is-4">Edit Label "<%= @label.name %>"</h1>
+<div class="container list-form">
+  <h1 class="title is-4">Edit List "<%= @list.name %>"</h1>
 
-  <%= form_for @label do |f| %>
+  <%= form_for @list do |f| %>
     <%= f.label 'Name', class: 'label' %>
     <p class="control">
       <%= f.text_field :name, class: 'input', required: true %>
@@ -13,18 +13,18 @@
     <p class="control has-addons">
       <%= f.text_field :fa_icon, class: 'input' %>
       <a class="button" href="http://fontawesome.io/icons/" target="_blank">
-        <%= icon @label.fa_icon %>
+        <%= icon @list.fa_icon %>
       </a>
     </p>
 
     <%= f.label 'Scraper', class: 'label' %>
     <p class="control">
       <span class="select">
-        <%= f.select :scraper, options_for_select(Scraper.all.map { |e| [e, e] }, @label.scraper) , include_blank: 'Select default Scraper' %>
+        <%= f.select :scraper, options_for_select(Scraper.all.map { |e| [e, e] }, @list.scraper) , include_blank: 'Select default Scraper' %>
       </span>
     </p>
 
     <%= f.submit 'Update', class: 'button is-success' %>
-    <%= link_to 'Back', labels_path, class: 'button' %>
+    <%= link_to 'Back', lists_path, class: 'button' %>
   <% end %>
 </div>

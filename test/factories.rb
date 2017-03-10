@@ -2,9 +2,10 @@ FactoryGirl.define do
   factory :item do
     name FFaker::Movie.title
     user
+    list
   end
 
-  factory :label do
+  factory :list do
     name 'Movies'
     user
   end

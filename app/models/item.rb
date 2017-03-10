@@ -1,26 +1,31 @@
 class Item < ApplicationRecord
   acts_as_paranoid
 
+  belongs_to :user
+  belongs_to :list
+
   has_many :links, dependent: :delete_all
   has_many :notes, dependent: :delete_all
 
-  has_and_belongs_to_many :labels
   has_and_belongs_to_many :tags
 
-  belongs_to :user
+  # Deprecated. This statement and the items_lists table will be removed after
+  # the next deployment.
+  has_and_belongs_to_many :lists
 
   mount_uploader :image, ImageUploader
 
+  validates :list, presence: true
   validates :name, presence: true, uniqueness: { scope: [:user_id] }
 
   after_create :scrape_in_background, unless: -> { Rails.env.test? || scraped? }
 
-  def self.with_labels(label_ids)
-    joins(:items_labels).where('items_labels.label_id IN (?)', label_ids).distinct
+  def self.in_lists(list_ids)
+    where(list_id: list_ids)
   end
 
   def self.with_tags(tag_ids)
-    joins(:items_tags).where('items_tags.tag_id IN (?)', tag_ids).distinct
+    joins(:items_tags).where(items_tags: { tag_id: tag_ids }).distinct
   end
 
   def self.scraped
@@ -31,8 +36,8 @@ class Item < ApplicationRecord
     where(scraped: false)
   end
 
-  def self.create_from(scraper_result, user:)
-    create!(scraper_result.merge(scraped: true, user: user))
+  def list_name
+    list&.name
   end
 
   def update_from(scraper_result)
@@ -55,21 +60,18 @@ class Item < ApplicationRecord
   end
 
   def default_scraper
-    labels.map(&:default_scraper).compact.first
+    list&.default_scraper
   end
 
   def lucky_scrape
-    scraper = labels.first&.default_scraper
+    scraper = default_scraper
+    return false if scraper.nil?
 
-    if scraper.nil?
-      return false
-    else
-      results = scraper.new(query: name).scrape
-      result = results.find { |r| r[:remote_image_url].present? }
-      result = results.first if result.nil?
+    results = scraper.new(query: name).scrape
+    result = results.find { |r| r[:remote_image_url].present? }
+    result = results.first if result.nil?
 
-      update_from(result) if result
-    end
+    update_from(result) if result
   end
 
   private

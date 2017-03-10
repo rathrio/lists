@@ -3,11 +3,11 @@ class ItemsController < ApplicationController
     only: %i(show update destroy scrape really_destroy restore)
 
   def index
-    @items = if (label_ids = params[:label_ids]).present?
-               set_label_ids(label_ids)
-               current_user.items.with_labels(current_label_ids)
+    @items = if (list_ids = params[:list_ids]).present?
+               set_list_ids(list_ids)
+               current_user.items.in_lists(current_list_ids)
              else
-               reset_label_ids
+               reset_list_ids
                current_user.items
              end
 
@@ -21,7 +21,7 @@ class ItemsController < ApplicationController
                @items.reverse_order
              end
 
-    @items = @items.includes(:labels, :tags)
+    @items = @items.includes(:list, :tags)
   end
 
   def show
@@ -29,7 +29,7 @@ class ItemsController < ApplicationController
   end
 
   def create
-    item = current_user.items.new item_params.merge(label_ids: current_label_ids)
+    item = current_user.items.new item_params.merge(list_ids: current_list_ids)
 
     if item.save
       flash[:notice] = 'Item successfully created'
@@ -37,13 +37,13 @@ class ItemsController < ApplicationController
       error_message = item.errors.full_messages.to_sentence
       flash[:alert] = error_message
     end
-    redirect_to action: :index, label_ids: current_label_id_params, focus_search: true
+    redirect_to action: :index, list_ids: current_list_id_params, focus_search: true
   end
 
   def update
     if @item.update_attributes(item_params)
       flash[:notice] = 'Item successfully updated'
-      redirect_to action: :index, label_ids: current_label_id_params
+      redirect_to action: :index, list_ids: current_list_id_params
     else
     end
   end
@@ -51,7 +51,7 @@ class ItemsController < ApplicationController
   def destroy
     @item.destroy!
     flash[:notice] = 'Item successfully archived'
-    redirect_to action: :index, label_ids: current_label_id_params
+    redirect_to action: :index, list_ids: current_list_id_params
   end
 
   def really_destroy
@@ -75,7 +75,7 @@ class ItemsController < ApplicationController
       flash[:alert] = 'No internet connection'
     end
 
-    redirect_to action: :index, label_ids: current_label_id_params
+    redirect_to action: :index, list_ids: current_list_id_params
   end
 
   private
