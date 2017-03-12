@@ -60,7 +60,8 @@ module Scraper
         remote_image_url: scrape_image(result),
         date: scrape_date(result),
         links: scrape_links(result),
-        tags: scrape_tags(result)
+        tags: scrape_tags(result),
+        is_reliable: reliable?(result)
       }
     end
   end
@@ -106,5 +107,15 @@ module Scraper
 
   def scrape_tags(result)
     []
+  end
+
+  # Indicates whether this scraper result reliable and thus can be shown.
+  # 
+  # @param result [Hash] client response
+  # @info: Can be used to filter irrelevant / unpopular results, such as b-movies.
+  # @return [Boolean] indicates whether this scraper result is reliable.
+  #   By default every scraped result is reliable.
+  def reliable?(result)
+    true
   end
 end

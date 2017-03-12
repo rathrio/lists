@@ -26,6 +26,10 @@ class MovieScraper
     result['genre_ids'].map { |id| MoviedbClient::GENRES[id] }.uniq.compact
   end
 
+  def reliable?(result)
+    result['popularity'] > 4
+  end
+
   private
 
   def moviedb_client
