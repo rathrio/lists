@@ -20,6 +20,7 @@ class Item < ApplicationRecord
 
   after_create :scrape_in_background, unless: -> { Rails.env.test? || scraped? }
 
+  # @param list_ids [Array<Integer>]
   def self.in_lists(list_ids)
     where(list_id: list_ids)
   end
