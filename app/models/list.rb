@@ -4,6 +4,7 @@ class List < ApplicationRecord
 
   validates :name, presence: true
 
+  # @param user [User] for whom the default lists will be created.
   def self.create_defaults(user)
     user.lists.find_or_create_by(name: 'Movies', scraper: 'MovieScraper', fa_icon: 'film')
     user.lists.find_or_create_by(name: 'TV', scraper: 'TvScraper', fa_icon: 'television')

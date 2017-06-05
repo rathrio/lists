@@ -29,7 +29,7 @@ class ItemsController < ApplicationController
   end
 
   def create
-    item = current_user.items.new item_params.merge(list_ids: current_list_ids)
+    item = current_user.items.new item_params.merge(list_id: current_list_id)
 
     if item.save
       flash[:notice] = 'Item successfully created'
@@ -37,6 +37,7 @@ class ItemsController < ApplicationController
       error_message = item.errors.full_messages.to_sentence
       flash[:alert] = error_message
     end
+
     redirect_to action: :index, list_ids: current_list_id_params, focus_search: true
   end
 
