@@ -1,0 +1,11 @@
+<%= render 'settings/tabnav', active_tab: :about %>
+
+<% cache "about_#{Lists.version}" do %>
+  <div class="container about">
+    <h2 class="title is-4">About Lists</h1>
+
+    <div class="content">
+      <p>Version: <%= Lists.version %></p>
+    </div>
+  </div>
+<% end %>

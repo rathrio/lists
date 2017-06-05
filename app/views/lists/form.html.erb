@@ -4,27 +4,52 @@
   <h1 class="title is-4">Edit List "<%= @list.name %>"</h1>
 
   <%= form_for @list do |f| %>
-    <%= f.label 'Name', class: 'label' %>
     <p class="control">
-      <%= f.text_field :name, class: 'input', required: true %>
+      <%= f.label 'Name', class: 'label' %>
     </p>
 
-    <%= f.label 'Icon', class: 'label' %>
-    <p class="control has-addons">
-      <%= f.text_field :fa_icon, class: 'input' %>
-      <a class="button" href="http://fontawesome.io/icons/" target="_blank">
-        <%= icon @list.fa_icon %>
-      </a>
-    </p>
+    <div class="field">
+      <p class="control">
+        <%= f.text_field :name, class: 'input', required: true %>
+      </p>
+    </div>
 
-    <%= f.label 'Scraper', class: 'label' %>
     <p class="control">
-      <span class="select">
-        <%= f.select :scraper, options_for_select(Scraper.all.map { |e| [e, e] }, @list.scraper) , include_blank: 'Select default Scraper' %>
-      </span>
+      <%= f.label 'Icon', class: 'label' %>
     </p>
 
-    <%= f.submit 'Update', class: 'button is-success' %>
-    <%= link_to 'Back', lists_path, class: 'button' %>
+    <div class="field has-addons">
+      <p class="control">
+        <%= f.text_field :fa_icon, class: 'input' %>
+      </p>
+
+      <p class="control">
+        <a class="button" href="http://fontawesome.io/icons/" target="_blank">
+          <%= icon @list.fa_icon %>
+        </a>
+      </p>
+    </div>
+
+    <p class="control">
+      <%= f.label 'Scraper', class: 'label' %>
+    </p>
+
+    <div class="field">
+      <p class="control">
+        <span class="select">
+          <%= f.select :scraper, options_for_select(Scraper.all.map { |e| [e, e] }, @list.scraper) , include_blank: 'Select default Scraper' %>
+        </span>
+      </p>
+    </div>
+
+    <div class="field is-grouped">
+      <p class="control">
+        <%= f.submit 'Update', class: 'button is-success' %>
+      </p>
+
+      <p class="control">
+        <%= link_to 'Back', lists_path, class: 'button' %>
+      </p>
+    </div>
   <% end %>
 </div>

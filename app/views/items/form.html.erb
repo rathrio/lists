@@ -16,31 +16,49 @@
   </div>
 
   <%= form_for @item do |f| %>
-    <%= f.label 'Name', class: 'label' %>
-    <p class="control">
-      <%= f.text_field :name, class: 'input', required: true %>
-    </p>
+    <div class="field">
+      <p class="control">
+        <%= f.label 'Name', class: 'label' %>
+        <%= f.text_field :name, class: 'input', required: true %>
+      </p>
+    </div>
 
-    <%= f.label 'Description', class: 'label' %>
-    <p class="control">
-      <%= f.text_area :description, class: 'textarea' %>
-    </p>
+    <div class="field">
+      <p class="control">
+        <%= f.label 'Description', class: 'label' %>
+        <%= f.text_area :description, class: 'textarea' %>
+      </p>
+    </div>
 
-    <%= f.label 'Release Date', class: 'label' %>
-    <p class="control">
-      <%= f.text_field :date, class: 'input' %>
-    </p>
+    <div class="field">
+      <p class="control">
+        <%= f.label 'Release Date', class: 'label' %>
+        <%= f.text_field :date, class: 'input' %>
+      </p>
+    </div>
 
-    <%= f.label 'Image', class: 'label' %>
-    <p class="control">
-      <%= f.text_field :remote_image_url, class: 'input' %>
-    </p>
+    <div class="field">
+      <p class="control">
+        <%= f.label 'Image', class: 'label' %>
+        <%= f.text_field :remote_image_url, class: 'input' %>
+      </p>
+    </div>
 
-    <%= f.label 'Date added', class: 'label' %>
-    <p class="control">
-      <%= f.text_field :created_at, class: 'input is-disabled' %>
-    </p>
+    <div class="field">
+      <p class="control">
+        <%= f.label 'Date added', class: 'label' %>
+        <%= f.text_field :created_at, class: 'input is-disabled' %>
+      </p>
+    </div>
 
-    <%= f.submit 'Update', class: 'button is-success' %>
+    <div class="field is-grouped">
+      <p class="control">
+        <%= f.submit 'Update', class: 'button is-success' %>
+      </p>
+
+      <p class="control">
+        <%= link_to "Cancel", :back, class: 'button' %>
+      </p>
+    </div>
   <% end %>
 </div>

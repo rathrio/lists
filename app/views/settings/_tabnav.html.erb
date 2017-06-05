@@ -23,8 +23,8 @@
       </li>
 
       <li class='<%= 'is-active' if active_tab == :about %>'>
-        <%= link_to '' do %>
-          <%= icon :question %>
+        <%= link_to about_path do %>
+          <%= icon 'info-circle' %>
           <span>About</span>
         <% end %>
       </li>
