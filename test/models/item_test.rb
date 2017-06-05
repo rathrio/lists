@@ -3,45 +3,45 @@ require 'test_helper'
 class ItemTest < ActiveSupport::TestCase
 
   test "Items must have unique names" do
-    label = create(:label, name: 'Music')
-    item1 = create(:item, name: 'pigeon', labels: [label])
-    item2 = build(:item, name: 'pigeon', labels: [label], user: item1.user)
-    item3 = build(:item, name: 'Pigeon', labels: [label], user: item1.user)
+    list = create(:list, name: 'Music')
+    item1 = create(:item, name: 'pigeon', list: list)
+    item2 = build(:item, name: 'pigeon', list: list, user: item1.user)
+    item3 = build(:item, name: 'Pigeon', list: list, user: item1.user)
     assert item1.valid?
     assert item3.valid?
     assert_not item2.valid?
   end
 
   test "Name has not to be unique when assigned to different users" do
-    label = create(:label, name: 'Music')
-    item1 = create(:item, name: 'pigeon', labels: [label])
-    item2 = create(:item, name: 'pigeon', labels: [label])
+    list = create(:list, name: 'Music')
+    item1 = create(:item, name: 'pigeon', list: list)
+    item2 = create(:item, name: 'pigeon', list: list)
     assert item1.valid?
     assert item2.valid?
   end
 
   test "Items require a non-empty name" do
     user = create(:user)
-    label = create(:label, name: 'Music')
-    item1 = build(:item, name: '', labels: [label], user: user)
-    item2 = build(:item, name: 'singstar adventures', labels: [label], user: user)
+    list = create(:list, name: 'Music')
+    item1 = build(:item, name: '', list: list, user: user)
+    item2 = build(:item, name: 'singstar adventures', list: list, user: user)
     assert_not item1.valid?
     assert item2.valid?
   end
 
-  test ".with_labels(label_ids) returns items that are associated with one of label_ids" do
-    label1 = create(:label, name: 'Music')
-    label2 = create(:label, name: 'TV')
+  test ".in_lists(list_ids) returns items that are associated with one of list_ids" do
+    list1 = create(:list, name: 'Music')
+    list2 = create(:list, name: 'TV')
 
-    i1 = create(:item, name: 'item1', labels: [label1])
-    i2 = create(:item, name: 'item2', labels: [label1, label2])
-    i3 = create(:item, name: 'item3', labels: [label2])
+    i1 = create(:item, name: 'item1', list: list1)
+    i2 = create(:item, name: 'item3', list: list2)
+    i3 = create(:item, name: 'item3', list: list1)
 
-    assert_equal [i1, i2], Item.with_labels([label1.id]).order(:id)
-    assert_equal [i1, i2, i3], Item.with_labels([label1.id, label2.id]).order(:id)
-    assert_equal [i2, i3], Item.with_labels([label2.id]).order(:id)
+    assert_equal [i1, i3], Item.in_lists([list1.id]).order(:id)
+    assert_equal [i1, i2, i3], Item.in_lists([list1.id, list2.id]).order(:id)
+    assert_equal [i2], Item.in_lists([list2.id]).order(:id)
 
-    assert_empty Item.with_labels([43123])
+    assert_empty Item.in_lists([43123])
   end
 
   test ".with_tags(tag_ids) returns items that are associated with one of tag_ids" do
@@ -59,15 +59,6 @@ class ItemTest < ActiveSupport::TestCase
     assert_equal [i2, i3], user.items.with_tags([tag2.id]).order(:id)
 
     assert_empty user.items.with_tags([43123])
-  end
-
-  test '.create_from(scraper_result) sets the user and scraped to true' do
-    result = { name: 'Some Item' }
-    user = create(:user)
-    item = Item.create_from(result, user: user)
-    assert item.scraped
-    assert_equal 'Some Item', item.name
-    assert_equal user, item.user
   end
 
   test '#update_from(scraper_result) sets scraped to true' do

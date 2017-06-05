@@ -90,7 +90,7 @@
     }
   }
 
-  .label-nav {
+  .list-nav {
     padding-top: 20px;
     padding-bottom: 20px;
   }
@@ -103,6 +103,12 @@
   img {
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
+  }
+
+  &:hover {
+    .level > .item-actions {
+      display: flex !important;
+    }
   }
 
   @media (max-width: 500px) {

@@ -51,7 +51,7 @@ module Scraper
   # Override the scrape_<attribute> template methods.
   #
   # @return [Array<Hash>] list of result Hashes that can be passed as an
-  #   argument to Item.create_from(result) or Item#update_from(result).
+  #   argument to Item#update_from(result).
   def scrape
     search_results.map do |result|
       {

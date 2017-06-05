@@ -2,9 +2,9 @@
   <%= form_for :item do |f| %>
     <p class="control has-addons">
 
-      <label for="menu-trigger" class="menu-trigger button is-medium is-hidden-desktop">
-        <% if current_label && current_label.fa_icon.present? %>
-          <%= icon current_label.fa_icon, size: :medium %>
+      <list for="menu-trigger" class="menu-trigger button is-medium is-hidden-desktop">
+        <% if current_list && current_list.fa_icon.present? %>
+          <%= icon current_list.fa_icon, size: :medium %>
         <% else %>
           <% if display_archived? %>
             <%= icon :archive, size: :medium %>
@@ -12,9 +12,9 @@
             <%= icon :bars, size: :medium %>
           <% end %>
         <% end %>
-      </label>
+      </list>
 
-      <%= f.text_field :name, class: 'input is-expanded is-medium filter scraper-query', placeholder: 'Search', autocomplete: :off, autofocus: focus_search?, data: { 'filter-container' => '.items-list', 'filter-attribute' => 'name', 'scrape-path' => scraper_results_path, 'scrape' => current_label.present? } %>
+      <%= f.text_field :name, class: 'input is-expanded is-medium filter scraper-query', placeholder: 'Search', autocomplete: :off, autofocus: focus_search?, data: { 'filter-container' => '.items-list', 'filter-attribute' => 'name', 'scrape-path' => scraper_results_path, 'scrape' => current_list.present? } %>
     </p>
   <% end %>
 </div>
