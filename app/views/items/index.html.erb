@@ -1,18 +1,18 @@
-<div class="container new-item has-bottom-padding">
+<div class="new-item has-bottom-padding">
   <%= form_for :item do |f| %>
     <p class="control has-addons">
 
-      <list for="menu-trigger" class="menu-trigger button is-medium is-hidden-desktop">
-        <% if current_list && current_list.fa_icon.present? %>
-          <%= icon current_list.fa_icon, size: :medium %>
-        <% else %>
-          <% if display_archived? %>
-            <%= icon :archive, size: :medium %>
-          <% else %>
-            <%= icon :bars, size: :medium %>
-          <% end %>
-        <% end %>
-      </list>
+      <%# <list for="menu-trigger" class="menu-trigger button is-medium is-hidden-desktop"> %>
+      <%#   <% if current_list && current_list.fa_icon.present? %1> %>
+      <%#     <%= icon current_list.fa_icon, size: :medium %1> %>
+      <%#   <% else %1> %>
+      <%#     <% if display_archived? %1> %>
+      <%#       <%= icon :archive, size: :medium %1> %>
+      <%#     <% else %1> %>
+      <%#       <%= icon :bars, size: :medium %1> %>
+      <%#     <% end %1> %>
+      <%#   <% end %1> %>
+      <%# </list> %>
 
       <%= f.text_field :name, class: 'input is-expanded is-medium filter scraper-query', placeholder: 'Search', autocomplete: :off, autofocus: focus_search?, data: { 'filter-container' => '.items-list', 'filter-attribute' => 'name', 'scrape-path' => scraper_results_path, 'scrape' => current_list.present? } %>
     </p>
@@ -20,7 +20,7 @@
 </div>
 
 <% cache cache_key_for_items(@items) do %>
-  <div class="container items-list">
+  <div class="items-list">
     <% @items.each do |item| %>
       <%= render 'item', item: item %>
     <% end %>

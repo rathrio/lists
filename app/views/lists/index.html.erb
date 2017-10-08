@@ -1,6 +1,6 @@
 <%= render 'settings/tabnav', active_tab: :lists %>
 
-<div class="container new-list has-bottom-padding">
+<div class="new-list has-bottom-padding">
   <%= form_for :list do |f| %>
     <div class="field is-horizontal">
       <div class="field-body">
@@ -26,7 +26,7 @@
 </div>
 
 <% cache [current_user.id, @lists, current_user.items.count] do %>
-  <div class="container lists-list">
+  <div class="lists-list">
     <% @lists.each do |list| %>
       <%= render 'list', list: list %>
     <% end %>

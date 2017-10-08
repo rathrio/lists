@@ -15,7 +15,7 @@
 
   <body>
     <div class="columns is-gapless">
-      <%= check_box_tag 'menu-trigger', nil, false, class: 'is-hidden' %>
+      <%# <%= check_box_tag 'menu-trigger', nil, false, class: 'is-hidden' %1> %>
 
       <% if signed_in? %>
         <% cache ['side-nav', current_user.id, current_user.lists, current_list_id_params, display_archived?] do %>
@@ -82,7 +82,7 @@
       <% end %>
 
 
-      <div class="column is-auto main-content">
+      <div class="column main-content">
         <% flash.each do |name, msg| %>
             <%= content_tag :div, msg, class: "notification flash-notification is-#{name == 'notice' ? 'success' : 'danger'}" %>
         <% end %>

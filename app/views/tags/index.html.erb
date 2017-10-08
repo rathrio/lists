@@ -2,7 +2,7 @@
   <%= render 'settings/tabnav', active_tab: :tags %>
 
   <% cache [current_user.id, @tags] do %>
-    <div class="container tags-list">
+    <div class="tags-list">
       <% @tags.each do |tag| %>
         <%= render 'tag', tag: tag %>
       <% end %>
