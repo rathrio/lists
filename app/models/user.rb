@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   include Clearance::User
+  has_secure_token :api_token
 
   has_many :items, dependent: :destroy
   has_many :lists, dependent: :destroy

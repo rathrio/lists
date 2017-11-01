@@ -24,4 +24,11 @@ Rails.application.routes.draw do
   end
 
   root 'items#index'
+
+  # API
+  post "graphql" => "graphqls#create"
+
+  if Rails.env.development?
+    mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
+  end
 end

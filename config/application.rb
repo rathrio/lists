@@ -13,6 +13,9 @@ module Lists
     # -- all .rb files in that directory are automatically loaded.
 
     config.active_job.queue_adapter = :sidekiq
+
+    # Autoload graphql types.
+    config.autoload_paths << Rails.root.join('app', 'graphql', 'types')
   end
 
   def self.version
