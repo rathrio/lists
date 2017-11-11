@@ -1,4 +1,6 @@
-# Lists ![Build status](https://travis-ci.org/rathrio/lists.svg?branch=master)
+# Lists
+
+![Build status](https://travis-ci.org/rathrio/lists.svg?branch=master)
 
 ![Screenshot](https://i.imgur.com/L0kJMyc.png)
 

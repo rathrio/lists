@@ -1,5 +1,7 @@
+<h1 class="title is-4">Found on the interwebs</h1>
+
 <% results.each_with_index do |result, index| %>
-  <div class="box item-box" data-balloon="Add to list">
+  <div class="box item-box" data-balloon="Add to <%= current_list %>">
     <%= link_to nil, class: 'scraper-result-name', onclick: "$('.scraper-result-#{index}').submit();return false;" do %>
       <div class="level is-mobile">
         <div class="level-left is-mobile">
