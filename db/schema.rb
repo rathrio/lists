@@ -10,89 +10,83 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170310170136) do
+ActiveRecord::Schema.define(version: 20171111210848) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "items", force: :cascade do |t|
-    t.string   "name"
-    t.string   "description"
-    t.integer  "quantity",    default: 0
-    t.boolean  "scraped",     default: false
-    t.date     "date"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-    t.string   "image"
+  create_table "items", id: :serial, force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.integer "quantity", default: 0
+    t.boolean "scraped", default: false
+    t.date "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "image"
     t.datetime "deleted_at"
-    t.integer  "user_id"
-    t.integer  "list_id"
-    t.index ["deleted_at"], name: "index_items_on_deleted_at", using: :btree
-    t.index ["list_id"], name: "index_items_on_list_id", using: :btree
-    t.index ["name"], name: "index_items_on_name", using: :btree
-    t.index ["user_id"], name: "index_items_on_user_id", using: :btree
-  end
-
-  create_table "items_lists", id: false, force: :cascade do |t|
-    t.integer "item_id"
+    t.integer "user_id"
     t.integer "list_id"
-    t.index ["item_id"], name: "index_items_lists_on_item_id", using: :btree
-    t.index ["list_id"], name: "index_items_lists_on_list_id", using: :btree
+    t.index ["deleted_at"], name: "index_items_on_deleted_at"
+    t.index ["list_id"], name: "index_items_on_list_id"
+    t.index ["name"], name: "index_items_on_name"
+    t.index ["user_id"], name: "index_items_on_user_id"
   end
 
   create_table "items_tags", id: false, force: :cascade do |t|
     t.integer "item_id"
     t.integer "tag_id"
-    t.index ["item_id"], name: "index_items_tags_on_item_id", using: :btree
-    t.index ["tag_id"], name: "index_items_tags_on_tag_id", using: :btree
+    t.index ["item_id"], name: "index_items_tags_on_item_id"
+    t.index ["tag_id"], name: "index_items_tags_on_tag_id"
   end
 
-  create_table "links", force: :cascade do |t|
-    t.string   "name"
-    t.string   "url"
-    t.integer  "item_id"
+  create_table "links", id: :serial, force: :cascade do |t|
+    t.string "name"
+    t.string "url"
+    t.integer "item_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["item_id"], name: "index_links_on_item_id", using: :btree
+    t.index ["item_id"], name: "index_links_on_item_id"
   end
 
-  create_table "lists", force: :cascade do |t|
-    t.string   "name"
-    t.string   "description"
-    t.string   "scraper"
-    t.string   "fa_icon"
+  create_table "lists", id: :serial, force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.string "scraper"
+    t.string "fa_icon"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id"
-    t.index ["user_id"], name: "index_lists_on_user_id", using: :btree
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_lists_on_user_id"
   end
 
-  create_table "notes", force: :cascade do |t|
-    t.text     "text"
-    t.integer  "item_id"
+  create_table "notes", id: :serial, force: :cascade do |t|
+    t.text "text"
+    t.integer "item_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["item_id"], name: "index_notes_on_item_id", using: :btree
+    t.index ["item_id"], name: "index_notes_on_item_id"
   end
 
-  create_table "tags", force: :cascade do |t|
-    t.string   "name"
+  create_table "tags", id: :serial, force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id"
-    t.index ["name"], name: "index_tags_on_name", using: :btree
-    t.index ["user_id"], name: "index_tags_on_user_id", using: :btree
+    t.integer "user_id"
+    t.index ["name"], name: "index_tags_on_name"
+    t.index ["user_id"], name: "index_tags_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
-    t.string   "email",                          null: false
-    t.string   "encrypted_password", limit: 128, null: false
-    t.string   "confirmation_token", limit: 128
-    t.string   "remember_token",     limit: 128, null: false
-    t.index ["email"], name: "index_users_on_email", using: :btree
-    t.index ["remember_token"], name: "index_users_on_remember_token", using: :btree
+  create_table "users", id: :serial, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "email", null: false
+    t.string "encrypted_password", limit: 128, null: false
+    t.string "confirmation_token", limit: 128
+    t.string "remember_token", limit: 128, null: false
+    t.string "api_token"
+    t.index ["email"], name: "index_users_on_email"
+    t.index ["remember_token"], name: "index_users_on_remember_token"
   end
 
   add_foreign_key "items", "users"

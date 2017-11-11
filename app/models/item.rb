@@ -9,10 +9,6 @@ class Item < ApplicationRecord
 
   has_and_belongs_to_many :tags
 
-  # Deprecated. This statement and the items_lists table will be removed after
-  # the next deployment.
-  has_and_belongs_to_many :lists
-
   mount_uploader :image, ImageUploader
 
   validates :list, presence: true
