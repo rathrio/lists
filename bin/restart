@@ -1,6 +1,9 @@
 #! /bin/sh
 #
-# Restart services in production.
+# Migrate and restart services in production.
+
+bundle exec rake assets:precompile
+bundle exec rake db:migrate
 
 bundle exec sidekiqctl stop tmp/pids/sidekiq.pid
 bundle exec sidekiq -C config/sidekiq.yml
