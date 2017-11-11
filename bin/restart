@@ -1,0 +1,9 @@
+#! /bin/sh
+#
+# Restart services in production.
+
+bundle exec sidekiqctl stop tmp/pids/sidekiq.pid
+bundle exec sidekiq -C config/sidekiq.yml
+
+kill -9 $(cat /tmp/lists.pid)
+bundle exec puma -C config/puma_production.rb
