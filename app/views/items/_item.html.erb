@@ -9,12 +9,12 @@
         </div>
 
         <div class="level-item title-item">
-          <div class="title is-4"><%= link_to item, item %></div>
+          <div class="subtitle is-4"><%= link_to item, item %></div>
         </div>
 
         <% if item.year %>
           <div class="level-item">
-            <span class="tag is-light is-small">
+            <span class="tag is-rounded is-light is-small">
               <%= item.year %>
             </span>
           </div>
@@ -23,7 +23,7 @@
         <% if item.list.present? %>
           <div class="level-item is-hidden-mobile">
             <%= link_to items_path(list_ids: item.list_id) do %>
-              <span class="tag is-light is-small">
+              <span class="tag is-rounded is-light is-small">
                 <%= item.list_name %>
               </span>
             <% end %>
@@ -33,7 +33,7 @@
         <% item.tags.first(4).each do |tag| %>
           <div class="level-item is-hidden-touch">
             <%= link_to items_path(list_ids: current_list_id_params, tag_ids: tag.id) do %>
-              <span class="tag is-light is-small">
+              <span class="tag is-rounded is-light is-small">
                 <%= tag.name %>
               </span>
             <% end %>

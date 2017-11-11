@@ -1,4 +1,4 @@
-<h1 class="title is-4">Found on the interwebs</h1>
+<h4 class="subtitle is-4">Found on the interwebs</h4>
 
 <% results.each_with_index do |result, index| %>
   <div class="box item-box" data-balloon="Add to <%= current_list %>">
@@ -24,7 +24,7 @@
               <% end %>
 
 
-              <div class="title is-4">
+              <div class="subtitle is-4">
                 <%= result.name %>
               </div>
             <% end %>
@@ -32,7 +32,7 @@
 
           <% if result.date %>
             <div class="level-item">
-              <span class="tag is-light is-small">
+              <span class="tag is-rounded is-light is-small">
                 <%= result.date.year %>
               </span>
             </div>
@@ -40,7 +40,7 @@
 
           <% result.tags.first(4).each do |tag| %>
             <div class="level-item">
-              <span class="tag is-light is-small">
+              <span class="tag is-rounded is-light is-small">
                 <%= tag %>
               </span>
             </div>

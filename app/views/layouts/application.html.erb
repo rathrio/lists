@@ -15,8 +15,6 @@
 
   <body>
     <div class="columns is-gapless">
-      <%# <%= check_box_tag 'menu-trigger', nil, false, class: 'is-hidden' %1> %>
-
       <% if signed_in? %>
         <% cache ['side-nav', current_user.id, current_user.lists, current_list_id_params, display_archived?] do %>
           <div class="column is-2 hero is-dark is-fullheight is-hidden-touch side-bar is-mobile">
@@ -41,7 +39,7 @@
                       <%= link_to items_path(list_ids: list.id), class: css_class do %>
                         <div class="level-right">
                           <div class="level-item">
-                            <h2 class="title is-4"><%= list.name %></h2>
+                            <h4 class="subtitle is-4"><%= list.name %></h4>
                           </div>
 
                           <%= icon list.fa_icon %>
@@ -55,7 +53,7 @@
                     <%= link_to items_path(archived: true), class: css_class do %>
                       <div class="level-right">
                         <div class="level-item">
-                          <h2 class="title is-4">Archive</h1>
+                          <h4 class="subtitle is-4">Archive</h4>
                         </div>
 
                         <%= icon :archive %>
@@ -68,7 +66,7 @@
                   <%= link_to lists_path do %>
                     <div class="level-right">
                       <div class="level-item">
-                        <h2 class="title is-4">Settings</h1>
+                        <h4 class="subtitle is-4">Settings</h4>
                       </div>
 
                       <%= icon :cog %>
