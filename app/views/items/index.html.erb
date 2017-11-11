@@ -1,19 +1,6 @@
 <div class="new-item has-bottom-padding">
   <%= form_for :item do |f| %>
     <p class="control has-addons">
-
-      <%# <list for="menu-trigger" class="menu-trigger button is-medium is-hidden-desktop"> %>
-      <%#   <% if current_list && current_list.fa_icon.present? %1> %>
-      <%#     <%= icon current_list.fa_icon, size: :medium %1> %>
-      <%#   <% else %1> %>
-      <%#     <% if display_archived? %1> %>
-      <%#       <%= icon :archive, size: :medium %1> %>
-      <%#     <% else %1> %>
-      <%#       <%= icon :bars, size: :medium %1> %>
-      <%#     <% end %1> %>
-      <%#   <% end %1> %>
-      <%# </list> %>
-
       <%= f.text_field :name, class: 'input is-expanded is-medium filter scraper-query', placeholder: 'Search', autocomplete: :off, autofocus: focus_search?, data: { 'filter-container' => '.items-list', 'filter-attribute' => 'name', 'scrape-path' => scraper_results_path, 'scrape' => current_list.present? } %>
     </p>
   <% end %>

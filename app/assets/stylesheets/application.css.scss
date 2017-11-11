@@ -47,29 +47,6 @@
   }
 }
 
-// #menu-trigger:checked + .side-bar {
-//   display: block !important;
-//   position: fixed;
-//   left: 0px;
-//   width: 200px;
-
-//   .level-right {
-//     display: flex;
-
-//     & > .level-item {
-//       &:not(:last-child) {
-//         margin-bottom: 0;
-//       }
-//     }
-//   }
-// }
-
-// #menu-trigger:checked + .side-bar + .main-content {
-//   position: fixed;
-//   width: 100%;
-//   margin-left: 200px;
-// }
-
 .side-nav {
   padding-top: 3rem;
   padding-bottom: 3rem;

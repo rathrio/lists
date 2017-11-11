@@ -7,7 +7,9 @@
 
     delay(function() {
       var query = that.val();
-      if (query.length < 3) {
+
+      // Don't trigger scraping if query is less than two chars long.
+      if (query.length < 2) {
         return false;
       }
 
