@@ -18,4 +18,8 @@ module Lists
   def self.version
     @version ||= `git rev-parse --short HEAD`.chomp
   end
+
+  def self.last_release
+    @last_release ||= `git log -1 --format=%cr HEAD`.chomp
+  end
 end
