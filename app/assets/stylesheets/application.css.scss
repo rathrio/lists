@@ -29,8 +29,14 @@
   padding-bottom: 1.5rem;
 }
 
-.notification.flash-notification {
-  border-radius: 0;
+.notification {
+  &.flash-notification {
+    border-radius: 0;
+    position: absolute;
+    bottom: 20px;
+    right: 0;
+    z-index: 99;
+  }
 }
 
 .main-section {

@@ -44,15 +44,15 @@
       </div>
     <% end %>
 
-    <% flash.each do |name, msg| %>
-      <%= content_tag :div, msg, class: "notification flash-notification is-#{name == 'notice' ? 'success' : 'danger'}" %>
-    <% end %>
-
     <% css_class = signed_in? ? 'main-section' : '' %>
     <section class="section <%= css_class %>">
       <div class="container">
         <%= yield %>
       </div>
     </section>
+
+    <% flash.each do |name, msg| %>
+      <%= content_tag :div, msg, class: "notification flash-notification is-#{name == 'notice' ? 'success' : 'danger'} is-pulled-right" %>
+    <% end %>
   </body>
 </html>
