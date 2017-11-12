@@ -4,6 +4,7 @@ module IconHelper
     span_class << "is-#{size}" if size
 
     icon_class = ''
+    icon_class << 'fa-lg ' if size.to_s.to_sym == :medium
     icon_class << 'fa-spinner fa-pulse' if spin
 
     content_tag :span, class: span_class, data: { balloon: tip, 'balloon-pos' => tip_pos } do

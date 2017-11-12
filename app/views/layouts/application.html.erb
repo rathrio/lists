@@ -15,7 +15,7 @@
 
   <body>
     <% if signed_in? %>
-      <div class="tabs is-large">
+      <div class="tabs is-large is-fullwidth">
         <ul>
           <% current_user.lists.each do |list| %>
             <% css_class = current_list_ids.include?(list.id) ? 'is-active' : '' %>
