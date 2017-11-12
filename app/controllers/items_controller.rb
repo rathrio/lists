@@ -24,6 +24,16 @@ class ItemsController < ApplicationController
     @items = @items.includes(:list, :tags)
   end
 
+  def root
+    first_list_id = current_user.list_ids.first
+    set_list_ids(first_list_id)
+
+    @items = current_user.items.in_lists(first_list_id)
+    @items = @items.includes(:list, :tags)
+
+    render 'index'
+  end
+
   def show
     render 'form'
   end
