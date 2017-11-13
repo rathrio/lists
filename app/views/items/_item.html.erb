@@ -32,7 +32,7 @@
 
         <% item.tags.first(4).each do |tag| %>
           <div class="level-item is-hidden-touch">
-            <%= link_to items_path(list_ids: current_list_id_params, tag_ids: tag.id) do %>
+            <%= link_to items_path(list_ids: current_list_id_params, tag_ids: tag.id), data: { balloon: %{Show #{tag} items only} } do %>
               <span class="tag is-rounded is-light is-small">
                 <%= tag.name %>
               </span>
@@ -49,8 +49,20 @@
         </div>
 
         <div class="level-item is-hidden-mobile">
+          <%= link_to google_search_url(item.name), target: :blank do %>
+            <%= icon :google, size: :medium, tip: 'Search Google' %>
+          <% end %>
+        </div>
+
+        <div class="level-item is-hidden-mobile">
           <%= link_to youtube_search_url(item.name), target: :blank do %>
             <%= icon 'youtube-play', size: :medium, tip: 'Search YouTube' %>
+          <% end %>
+        </div>
+
+        <div class="level-item is-hidden-mobile">
+          <%= link_to netflix_search_url(item.name), target: :blank do %>
+            <%= icon :tv, size: :medium, tip: 'Search Netflix' %>
           <% end %>
         </div>
 
