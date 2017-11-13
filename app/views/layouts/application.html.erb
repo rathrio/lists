@@ -15,7 +15,7 @@
 
   <body>
     <% if signed_in? %>
-      <div class="tabs is-large is-fullwidth">
+      <div class="tabs is-large is-fullwidth topnav-tabs">
         <ul>
           <% current_user.lists.each do |list| %>
             <% css_class = current_list_ids.include?(list.id) ? 'is-active' : '' %>
@@ -44,6 +44,10 @@
       </div>
     <% end %>
 
+    <% flash.each do |name, msg| %>
+      <%= content_tag :div, msg, class: "notification flash-notification is-#{name == 'notice' ? 'success' : 'danger'}" %>
+    <% end %>
+
     <% css_class = signed_in? ? 'main-section' : '' %>
     <section class="section <%= css_class %>">
       <div class="container">
@@ -51,8 +55,5 @@
       </div>
     </section>
 
-    <% flash.each do |name, msg| %>
-      <%= content_tag :div, msg, class: "notification flash-notification is-#{name == 'notice' ? 'success' : 'danger'} is-pulled-right" %>
-    <% end %>
   </body>
 </html>

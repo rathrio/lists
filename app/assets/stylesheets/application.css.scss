@@ -32,15 +32,11 @@
 .notification {
   &.flash-notification {
     border-radius: 0;
-    position: absolute;
-    bottom: 20px;
-    right: 0;
-    z-index: 99;
   }
 }
 
-.main-section {
-  padding-top: 0;
+.tabs.topnav-tabs {
+  margin-bottom: 0;
 }
 
 .item-box {
