@@ -58,14 +58,20 @@
       </div>
     </section>
 
-    <% cache 'shortcuts-modal' do %>
-      <div class="modal shortcuts-modal">
-        <div class="modal-background"></div>
-        <div class="modal-card">
-          <header class="modal-card-head">
-            <p class="modal-card-title">Help</p>
-          </header>
-          <section class="modal-card-body">
+    <div class="modal shortcuts-modal">
+      <div class="modal-background"></div>
+
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Help</p>
+        </header>
+
+        <section class="modal-card-body">
+          <div class="content">
+            <p>Version: <%= link_to Lists.version, github_commit_url(Lists.version), target: :blank %> released <%= Lists.last_release %>.</p>
+          </div>
+
+          <% cache 'shortcuts' do %>
             <table class="table is-hoverable is-fullwidth">
               <thead>
                 <tr>
@@ -73,7 +79,12 @@
                   <th>Action</th>
                 </tr>
               </thead>
+
               <tbody>
+                <tr>
+                  <td><code>1</code>-<code>9</code></td>
+                  <td>Top navigation list shortcuts</td>
+                </tr>
                 <tr>
                   <td><code>/</code></td>
                   <td>Focus Search</td>
@@ -98,16 +109,12 @@
                   <td><code>g s</code></td>
                   <td>Go to settings page</td>
                 </tr>
-                <tr>
-                  <td><code>1</code>-<code>9</code></td>
-                  <td>Top navigation list shortcuts</td>
-                </tr>
               </tbody>
             </table>
-          </section>
-        </div>
+          <% end %>
+        </section>
       </div>
-    <% end %>
+    </div>
 
   </body>
 </html>
