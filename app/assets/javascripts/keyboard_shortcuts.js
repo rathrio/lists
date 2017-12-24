@@ -30,8 +30,26 @@
     visit(url);
   }
 
+  function toggleShortcutsModal() {
+    Modal.toggle(".shortcuts-modal");
+  }
+
+  function closeModals() {
+    Modal.closeAll();
+  }
+
+  function abortScraper() {
+    Scraper.abort();
+  }
+
+  function escapeActions() {
+    closeModals();
+  }
+
   function ready() {
     Mousetrap.bind('/', focusFilter);
+    Mousetrap.bind('?', toggleShortcutsModal);
+    Mousetrap.bind('esc', escapeActions);
     Mousetrap.bind('g h', gotoHome);
     Mousetrap.bind('g a', gotoArchived);
 

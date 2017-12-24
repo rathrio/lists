@@ -1,4 +1,11 @@
-(function() {
+var Scraper = (function() {
+  // Current ajax request.
+  var xhr;
+
+  function abort() {
+    xhr.abort();
+  }
+
   function scrape(e) {
     if (e.which != 13) {
       return true;
@@ -18,7 +25,7 @@
 
     var url = that.data('scrape-path') + '?query=' + encodeURIComponent(query);
     Spinner.show('.scraper-results');
-    $('.scraper-results').load(url);
+    xhr = $('.scraper-results').load(url);
 
     return false;
   }
@@ -27,4 +34,8 @@
     // Start scraping interwebs for items on enter.
     $('.scraper-query').on('keydown', scrape);
   });
+
+  return {
+    abort: abort
+  };
 })();
