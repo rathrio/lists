@@ -10,7 +10,7 @@
       <% end %>
 
       <div class="level-item">
-        <h1 class="title">Edit "<%= @item.name %>"</h1>
+        <h1 class="title"><%= @item.name %></h1>
       </div>
     </div>
   </div>
@@ -31,6 +31,30 @@
     </div>
 
     <div class="field">
+      <%= f.label 'Image', class: 'label' %>
+
+      <div class="file has-name is-fullwidth is-right">
+        <label class="file-label">
+          <input class="file-input" type="file" name="item[remote_image_url]">
+
+          <span class="file-cta">
+            <%= icon :upload, span_class: 'file-icon' %>
+
+            <span class="file-label">
+              Choose a file…
+            </span>
+          </span>
+
+          <% if @item.image.url.present? %>
+            <span class="file-name">
+              <%= @item.image.url %>
+            </span>
+          <% end %>
+        </label>
+      </div>
+    </div>
+
+    <div class="field">
       <p class="control">
         <%= f.label 'Release Date', class: 'label' %>
         <%= f.text_field :date, class: 'input' %>
@@ -39,15 +63,8 @@
 
     <div class="field">
       <p class="control">
-        <%= f.label 'Image', class: 'label' %>
-        <%= f.text_field :remote_image_url, class: 'input' %>
-      </p>
-    </div>
-
-    <div class="field">
-      <p class="control">
         <%= f.label 'Date added', class: 'label' %>
-        <%= f.text_field :created_at, class: 'input is-disabled' %>
+        <%= f.text_field :created_at, class: 'input', disabled: true %>
       </p>
     </div>
 

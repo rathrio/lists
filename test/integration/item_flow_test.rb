@@ -11,12 +11,9 @@ class ItemFlowTest < ActionDispatch::IntegrationTest
     @list = create(:list, user: @user1)
   end
 
-  test 'can see items on homepage' do
+  test 'redirect to first list when requesting homepage' do
     get '/', params: { as: @user1.id }
-    assert_response :success
-    assert_select 'a', 'user1 item'
-    assert_select 'a', { count: 0, text: 'user2 item' },
-      "Page must not show another user's items"
+    assert_redirected_to "/items?list_ids=#{@list.id}"
   end
 
   test 'can create item with list id in session' do
