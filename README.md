@@ -2,7 +2,7 @@
 
 ![Build status](https://travis-ci.org/rathrio/lists.svg?branch=master)
 
-![Screenshot](https://i.imgur.com/L0kJMyc.png)
+![Screenshot](https://i.imgur.com/w5QObdq.png)
 
 Smart lists to keep track of media to consume.
 

@@ -14,81 +14,100 @@
   </head>
 
   <body>
-    <div class="columns is-gapless">
-      <% if signed_in? %>
-        <% cache ['side-nav', current_user.id, current_user.lists, current_list_id_params, display_archived?] do %>
-          <div class="column is-2 hero is-dark is-fullheight is-hidden-touch side-bar is-mobile">
-            <aside class="menu side-nav">
-              <ul class="menu-list">
-                <li>
-                  <%= link_to root_path do %>
-                    <div class="level-right">
-                      <div class="level-item">
-                        <h1 class="title"><strong>Lists</strong></h1>
-                      </div>
+    <% if signed_in? %>
+      <div class="tabs is-large is-fullwidth topnav-tabs">
+        <ul>
+          <% current_user.lists.each_with_index do |list, index| %>
+            <% number = index + 1 %>
+            <% css_class = current_list_ids.include?(list.id) ? 'is-active' : '' %>
+            <% url = items_path(list_ids: list.id) %>
 
-                      <%= icon :home, size: :medium %>
-                    </div>
-                  <% end %>
-                </li>
+            <li class="<%= css_class %>">
+              <%= link_to url, data: { shortcut: number } do %>
+                <%= icon list.fa_icon %>
+                <span><%= list.name %></span>
+              <% end %>
+            </li>
+          <% end %>
 
-                <div class="list-nav">
-                  <% current_user.lists.each do |list| %>
-                    <li>
-                      <% css_class = current_list_ids.include?(list.id) ? 'is-active' : '' %>
-                      <%= link_to items_path(list_ids: list.id), class: css_class do %>
-                        <div class="level-right">
-                          <div class="level-item">
-                            <h4 class="subtitle is-4"><%= list.name %></h4>
-                          </div>
+          <% css_class = display_archived? ? 'is-active' : '' %>
+          <li class="<%= css_class %>">
+            <%= link_to items_path(archived: true) do %>
+              <%= icon :archive %>
+              <span>Archive</span>
+            <% end %>
+          </li>
 
-                          <%= icon list.fa_icon %>
-                        </div>
-                      <% end %>
-                    </li>
-                  <% end %>
+          <li>
+            <%= link_to lists_path do %>
+              <%= icon :cog %>
+              <span>Settings</span>
+            <% end %>
+          </li>
+      </div>
+    <% end %>
 
-                  <li>
-                    <% css_class = display_archived? ? 'is-active' : '' %>
-                    <%= link_to items_path(archived: true), class: css_class do %>
-                      <div class="level-right">
-                        <div class="level-item">
-                          <h4 class="subtitle is-4">Archive</h4>
-                        </div>
+    <% flash.each do |name, msg| %>
+      <%= content_tag :div, msg, class: "notification flash-notification is-#{name == 'notice' ? 'success' : 'danger'}" %>
+    <% end %>
 
-                        <%= icon :archive %>
-                      </div>
-                    <% end %>
-                  </li>
-                </div>
+    <% css_class = signed_in? ? 'main-section' : '' %>
+    <section class="section <%= css_class %>">
+      <div class="container">
+        <%= yield %>
+      </div>
+    </section>
 
-                <li>
-                  <%= link_to lists_path do %>
-                    <div class="level-right">
-                      <div class="level-item">
-                        <h4 class="subtitle is-4">Settings</h4>
-                      </div>
-
-                      <%= icon :cog %>
-                    </div>
-                  <% end %>
-                </li>
-              </ul>
-            </aside>
-          </div>
-        <% end %>
-      <% end %>
-
-
-      <div class="column main-content">
-        <% flash.each do |name, msg| %>
-            <%= content_tag :div, msg, class: "notification flash-notification is-#{name == 'notice' ? 'success' : 'danger'}" %>
-        <% end %>
-
-        <div class="section main-content-section">
-          <%= yield %>
+    <% cache 'shortcuts-modal' do %>
+      <div class="modal shortcuts-modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Help</p>
+          </header>
+          <section class="modal-card-body">
+            <table class="table is-hoverable is-fullwidth">
+              <thead>
+                <tr>
+                  <th>Shortcut</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>/</code></td>
+                  <td>Focus Search</td>
+                </tr>
+                <tr>
+                  <td><code>?</code></td>
+                  <td>Toggle Help</td>
+                </tr>
+                <tr>
+                  <td><code>ESC</code></td>
+                  <td>Close modals</td>
+                </tr>
+                <tr>
+                  <td><code>g h</code></td>
+                  <td>Go to home page (default list)</td>
+                </tr>
+                <tr>
+                  <td><code>g a</code></td>
+                  <td>Show archived items</td>
+                </tr>
+                <tr>
+                  <td><code>g s</code></td>
+                  <td>Go to settings page</td>
+                </tr>
+                <tr>
+                  <td><code>1</code>-<code>9</code></td>
+                  <td>Top navigation list shortcuts</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
         </div>
       </div>
-    </div>
+    <% end %>
+
   </body>
 </html>

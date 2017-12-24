@@ -20,6 +20,6 @@ module Lists
   end
 
   def self.last_release
-    @last_release ||= `git log -1 --format=%cr HEAD`.chomp
+    `git log -1 --format=%cr HEAD`.chomp
   end
 end

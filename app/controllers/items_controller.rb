@@ -24,6 +24,11 @@ class ItemsController < ApplicationController
     @items = @items.includes(:list, :tags)
   end
 
+  def root
+    first_list_id = current_user.list_ids.first
+    redirect_to items_path(list_ids: first_list_id)
+  end
+
   def show
     render 'form'
   end

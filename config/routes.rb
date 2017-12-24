@@ -23,5 +23,5 @@ Rails.application.routes.draw do
     delete :really_destroy, on: :member
   end
 
-  root 'items#index'
+  root 'items#root'
 end
