@@ -14,4 +14,8 @@ module ApplicationHelper
   def netflix_search_url(query)
     "https://www.netflix.com/search?q=#{URI.escape(query)}"
   end
+
+  def github_commit_url(commit)
+    "https://github.com/rathrio/lists/commit/#{commit}"
+  end
 end

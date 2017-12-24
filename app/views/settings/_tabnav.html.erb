@@ -22,13 +22,6 @@
         <% end %>
       </li>
 
-      <li class='<%= 'is-active' if active_tab == :about %>'>
-        <%= link_to about_path do %>
-          <%= icon 'info-circle' %>
-          <span>About</span>
-        <% end %>
-      </li>
-
       <li>
         <%= link_to sign_out_path, method: :delete do %>
           <%= icon 'sign-out' %>
