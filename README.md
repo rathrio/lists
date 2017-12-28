@@ -8,7 +8,7 @@ Smart lists to keep track of media to consume.
 
 ## Prerequisites
 
-+ [Ruby 2.4.0](https://www.ruby-lang.org/en/documentation/installation/)
++ [Ruby 2.5.0](https://www.ruby-lang.org/en/documentation/installation/)
 + [Bundler](https://bundler.io/)
 + [PostgreSQL](https://www.postgresql.org/)
 + [Redis](https://redis.io/)
