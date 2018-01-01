@@ -300,8 +300,5 @@ DEPENDENCIES
   yard
   yui-compressor (~> 0.12.0)
 
-RUBY VERSION
-   ruby 2.5.0p-1
-
 BUNDLED WITH
    1.16.1
