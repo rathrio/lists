@@ -17,9 +17,10 @@ class GameScraper
     url = result.dig('cover', 'url')
 
     if url.present?
-      url = url.sub("//", "https://")
       url = url.sub("t_thumb", "t_cover_big")
     end
+
+    url
   end
 
   def scrape_date(result)
@@ -36,8 +37,8 @@ class GameScraper
   end
 
   def scrape_tags(result)
-    genres = igdb_client.genre(result['genres'])
-    genres.map { |g| g['name'] }.uniq.compact
+    return [] if result['genres'].blank?
+    result['genres'].map { |g| g['name'] }.uniq.compact
   end
 
   private

@@ -1,11 +1,11 @@
 class IgdbClient
   include HTTParty
-  headers 'X-Mashape-Key' => ENV['IGDB_API_KEY']
-  base_uri 'https://igdbcom-internet-game-database-v1.p.mashape.com'
+  headers 'user-key' => ENV['IGDB_API_KEY']
+  base_uri 'https://api-2445582011268.apicast.io'
   default_params fields: '*'
 
   def search(query)
-    self.class.get("/games/", query: { search: query })
+    self.class.get("/games/", query: { search: query, expand: "genres" })
   end
 
   def genre(ids)
