@@ -18,6 +18,8 @@ class GameScraper
 
     if url.present?
       url = url.sub("t_thumb", "t_cover_big")
+      # IGDB sometimes adds a "//" prefix for whatever reasons.
+      url = url.sub("//", "https://")
     end
 
     url
