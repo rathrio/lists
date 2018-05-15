@@ -15,6 +15,8 @@
 
   <body>
     <% if signed_in? %>
+      <%= javascript_pack_tag 'lists-bundle' %>
+
       <div class="tabs is-large is-fullwidth topnav-tabs">
         <ul>
           <% current_user.lists.each_with_index do |list, index| %>
