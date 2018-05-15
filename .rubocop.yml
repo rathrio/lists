@@ -1,5 +1,14 @@
 # https://github.com/bbatsov/rubocop/blob/master/config/default.yml
 
+AllCops:
+  Include:
+    - Rakefile
+    - config.ru
+  Exclude:
+    - db/**/**
+    - config/**
+    - Gemfile
+
 Style/StringLiterals:
   Enabled: false
 
