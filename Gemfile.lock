@@ -206,6 +206,12 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
+    react_on_rails (10.1.0)
+      addressable
+      connection_pool
+      execjs (~> 2.5)
+      rails (>= 3.2)
+      rainbow (~> 2.2)
     redis (4.0.1)
     rubocop (0.55.0)
       parallel (~> 1.10)
@@ -304,6 +310,7 @@ DEPENDENCIES
   puma
   rails (~> 5)
   rails-erd
+  react_on_rails (= 10.1.0)
   sass-rails (~> 5)
   sidekiq
   spring
