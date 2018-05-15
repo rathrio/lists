@@ -13,6 +13,7 @@ Smart lists to keep track of media to consume.
 + [PostgreSQL](https://www.postgresql.org/)
 + [Redis](https://redis.io/)
 + [Imagemagick >= 7](https://www.imagemagick.org/script/index.php)
++ [Yarn](https://yarnpkg.com/en/docs/install)
 
 Make sure postgres and redis servers are running.
 
@@ -21,6 +22,7 @@ Make sure postgres and redis servers are running.
 1. Install dependencies:
     ```
     bundle install
+    yarn install
     ```
 
 2. Setup database:
@@ -42,7 +44,7 @@ Make sure postgres and redis servers are running.
 
 2. Run the application server:
     ```
-    bundle exec rails server
+    foreman start -f Procfile.dev
     ```
 
 ## Running tests
