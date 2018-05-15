@@ -43,6 +43,9 @@ gem 'paranoia'
 # Background jobs
 gem 'sidekiq'
 
+# For packing frontend libs
+gem 'webpacker'
+
 # Frontend
 gem 'font-awesome-rails'
 gem 'bulma-rails'
