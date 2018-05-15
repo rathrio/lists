@@ -45,6 +45,7 @@ gem 'sidekiq'
 
 # For packing frontend libs
 gem 'webpacker'
+gem 'react_on_rails', '10.1.0'
 
 # Frontend
 gem 'font-awesome-rails'
