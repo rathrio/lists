@@ -17,13 +17,8 @@ export default class ItemsList extends Component {
     str.toLowerCase().match(query.toLowerCase())
   )
 
-  onOmniInput = (e) => {
-    this.filter(e.target.value)
-  }
-
-  onTagClick = (tag) => {
-    this.filter(tag)
-  }
+  onOmniInput = (e) => this.filter(e.target.value)
+  onTagClick = (tag) => this.filter(tag)
 
   filter = (query) => {
     const items = this.props.items.filter((i) => (
