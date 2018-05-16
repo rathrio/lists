@@ -1,30 +1,50 @@
-import React from 'react';
+import PropTypes from 'prop-types'
+import React, { Component, Fragment } from 'react';
+import OmniBar from './OmniBar'
+import ItemBox from './ItemBox'
 
-export default class ItemsList extends React.Component {
+export default class ItemsList extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      search: "Some Movie",
+      query: "",
       items: this.props.items
     }
   }
 
-  onChange = (e) => {
-    this.setState({search: e.target.value})
+  match = (str, query) => (
+    str.toLowerCase().match(query.toLowerCase())
+  )
+
+  onOmniInput = (e) => {
+    this.filter(e.target.value)
+  }
+
+  onTagClick = (tag) => {
+    this.filter(tag)
+  }
+
+  filter = (query) => {
+    const items = this.props.items.filter((i) => (
+      (this.match(i.name, query) || i.tags.some((t) => (this.match(t, query))))
+    ))
+
+    this.setState({ query: query, items: items })
   }
 
   render() {
+    const itemsList = this.state.items.map((i) => (
+      <ItemBox key={i.id} item={i} onTagClick={this.onTagClick} />
+    ))
+
     return (
-      <div className="new-item has-bottom-padding">
-        <form action="/items" acceptCharset="UTF-8" method="post">
-          <input name="utf8" type="hidden" value="✓" />
-          <input type="hidden" name="authenticity_token" value="YKd0dbDQmmzUiqJevXRBF6XpXAMMk2OZ+iYFy3cf4MzkRAftVTxesYMkPg62a5jHbbqrnkg7Mns3cURcPK/kZg==" />
-          <p className="control has-addons">
-            <input value={this.state.search} onChange={this.onChange} className="input is-expanded is-medium filter scraper-query" placeholder="Search" autoComplete="off" type="text" name="item[name]" id="item_name" />
-          </p>
-        </form>
-      </div>
+      <Fragment>
+        <OmniBar onInput={this.onOmniInput} query={this.state.query} />
+        <div className="items-list">
+          {itemsList}
+        </div>
+      </Fragment>
     )
   }
 }
