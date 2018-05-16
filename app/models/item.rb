@@ -73,6 +73,14 @@ class Item < ApplicationRecord
     update_from(result) if result
   end
 
+  def as_json(*)
+    super.tap do |hash|
+      hash['tags'] = tags.map(&:name)
+      hash['list'] = list_name
+      hash['year'] = year
+    end
+  end
+
   private
 
   def scrape_in_background
