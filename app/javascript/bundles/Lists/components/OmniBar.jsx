@@ -1,11 +1,20 @@
 import PropTypes from 'prop-types'
 import React from 'react';
 
-const OmniBar = ({query, placeholder, onInput}) => {
+const OmniBar = ({query, placeholder, onInput, onSubmit}) => {
+  const onKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      onSubmit(e)
+      return
+    }
+
+    return true
+  }
+
   return(
     <div className="new-item has-bottom-padding omni-bar">
-      <p className="control has-addons">
-        <input value={query} onChange={onInput} className="input filter is-expanded is-medium" placeholder={placeholder} autoComplete="off" type="text" />
+      <p className="control">
+        <input value={query} onChange={onInput} onKeyPress={onKeyPress} className="input filter is-expanded is-medium" placeholder={placeholder} autoComplete="off" type="text" />
       </p>
     </div>
   )
