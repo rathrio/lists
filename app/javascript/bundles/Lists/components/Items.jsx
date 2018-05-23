@@ -1,20 +1,18 @@
+import axios from 'axios'
 import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react';
 import OmniBar from './OmniBar'
 import ItemList from './ItemList'
+import Spinner from './Spinner'
 
-const Spinner = () => (
-  <div className="columns">
-    <div className="column is-1 is-offset-5">
-      <span className="icon is-large">
-        <i className="fa fa-spinner fa-pulse fa-3x"></i>
-      </span>
-    </div>
-  </div>
-)
+const BASE_URL = "http://localhost:3000"
+
+const API = axios.create({
+  baseURL: 'http://localhost:3000',
+  timeout: 5000,
+})
 
 class ScraperResults extends Component {
-
   render() {
     return(
       <div className="scraper-results">
@@ -43,10 +41,19 @@ export default class Items extends Component {
   onOmniInput = (e) => this.filter(e.target.value)
   onTagClick = (tag) => this.filter(tag)
 
+  showSpinner = () => this.setState({ showSpinner: true })
+  hideSpinner = () => this.setState({ showSpinner: false })
+
   onOmniSubmit = (e) => {
-    this.setState({showSpinner: true})
+    this.showSpinner()
     const query = e.target.value
-    debugger
+
+    API.get('/scraper_results', { params: { query: query } })
+      .then((response) => {
+        this.hideSpinner()
+        this.setState({ scraperResults: [1, 2, 4] })
+        // TODO: set scraper results
+      })
   }
 
   filter = (query) => {
