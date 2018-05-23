@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react';
 import OmniBar from './OmniBar'
-import ItemBox from './ItemBox'
+import ItemList from './ItemList'
 
-export default class ItemsList extends Component {
+export default class Items extends Component {
   constructor(props) {
     super(props)
 
@@ -29,16 +29,10 @@ export default class ItemsList extends Component {
   }
 
   render() {
-    const itemsList = this.state.items.map((i) => (
-      <ItemBox key={i.id} item={i} onTagClick={this.onTagClick} />
-    ))
-
     return (
       <Fragment>
         <OmniBar onInput={this.onOmniInput} query={this.state.query} />
-        <div className="items-list">
-          {itemsList}
-        </div>
+        <ItemList items={this.state.items} onTagClick={this.onTagClick} />
       </Fragment>
     )
   }
