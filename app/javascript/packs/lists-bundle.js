@@ -1,8 +1,8 @@
 import ReactOnRails from 'react-on-rails';
 
-import ItemsList from '../bundles/Lists/components/ItemsList';
+import Items from '../bundles/Lists/components/Items';
 
-// This is how react_on_rails can see the ItemsList in the browser.
+// This is how react_on_rails can see the Items component in the browser.
 ReactOnRails.register({
-  ItemsList
+  Items
 });
