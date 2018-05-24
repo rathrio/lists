@@ -39,32 +39,24 @@
   // }
 
   function toggleShortcutsModal() {
-    Modal.toggle(".shortcuts-modal");
+    Modal.toggle("shortcuts-modal");
   }
 
   function closeModals() {
     Modal.closeAll();
   }
 
-  // function abortScraper() {
-  //   Scraper.abort();
-  // }
-
   function escapeActions() {
     closeModals();
   }
-
-  // function escape() {
-  //   visit('/sign_out');
-  // }
 
   document.addEventListener("turbolinks:load", function() {
     Mousetrap.bind('/', focusFilter);
     Mousetrap.bind('?', toggleShortcutsModal);
     Mousetrap.bind('esc', escapeActions);
-    // Mousetrap.bind('g h', gotoHome);
-    // Mousetrap.bind('g a', gotoArchived);
-    // Mousetrap.bind('g s', gotoSettings);
+    Mousetrap.bind('g h', gotoHome);
+    Mousetrap.bind('g a', gotoArchived);
+    Mousetrap.bind('g s', gotoSettings);
 
     // [1, 2, 3, 4, 5, 6, 7, 8, 9].forEach(function(n) {
     //   Mousetrap.bind(n.toString(), gotoList);
