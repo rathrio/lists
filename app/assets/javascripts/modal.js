@@ -1,3 +1,4 @@
+// TODO port to plain js
 var Modal = (function() {
   function closeAll() {
     $('.modal').removeClass('is-active');

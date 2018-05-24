@@ -57,7 +57,7 @@ gem 'sass-rails', '~> 5'
 # Use Yui as compressor for JavaScript assets
 gem 'yui-compressor', '~> 0.12.0'
 # Use jquery as the JavaScript library
-gem 'jquery-rails'
+# gem 'jquery-rails'
 
 group :development, :test do
   gem 'dotenv-rails'
