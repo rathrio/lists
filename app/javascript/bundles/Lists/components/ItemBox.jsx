@@ -14,7 +14,7 @@ const ItemBox = ({ item, onTagClick }) => {
           </div>
 
           <div className="level-item title-item">
-            <div className="subtitle is-4"><a href="/items/1484">{item.name}</a></div>
+            <div className="subtitle is-4"><a href={`/items/${item.id}`}>{item.name}</a></div>
           </div>
 
           <div className="level-item">
@@ -38,10 +38,38 @@ const ItemBox = ({ item, onTagClick }) => {
               </div>
             )
           })}
-
         </div>
 
         <div className="level-right is-mobile item-actions is-hidden">
+          <div className="level-item is-hidden-mobile">
+            <a target="blank" href="https://thepiratebay.org/search/The%20Last%20Guardian">
+              <span className="icon is-medium" data-balloon="Search the Bay"><i className="fa fa-magnet fa-lg "></i></span>
+            </a>
+          </div>
+
+          <div className="level-item is-hidden-mobile">
+            <a target="blank" href="https://www.google.ch/search?q=The%20Last%20Guardian">
+              <span className="icon is-medium" data-balloon="Search Google"><i className="fa fa-google fa-lg "></i></span>
+            </a>
+          </div>
+
+          <div className="level-item is-hidden-mobile">
+            <a target="blank" href="https://www.youtube.com/results?search_query=The%20Last%20Guardian">
+              <span className="icon is-medium" data-balloon="Search YouTube"><i className="fa fa-youtube-play fa-lg "></i></span>
+            </a>
+          </div>
+
+          <div className="level-item is-hidden-mobile">
+            <a target="blank" href="https://www.netflix.com/search?q=The%20Last%20Guardian">
+              <span className="icon is-medium" data-balloon="Search Netflix"><i className="fa fa-tv fa-lg "></i></span>
+            </a>
+          </div>
+
+          <div className="level-item">
+            <a rel="nofollow" data-method="delete" href={`/items/${item.id}`}>
+              <span className="icon is-medium" data-balloon="Archive"><i className="fa fa-archive fa-lg "></i></span>
+            </a>
+          </div>
         </div>
       </div>
     </div>

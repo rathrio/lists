@@ -1,8 +1,8 @@
 var Modal = (function() {
   function closeAll() {
-    var modals = document.getElementsByClassName('modal');
+    const modals = document.getElementsByClassName('modal');
     for (let i = 0; i < modals.length; i++) {
-      var modal = modals[i];
+      const modal = modals[i];
       modal.classList.remove('is-active');
     }
   }
