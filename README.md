@@ -44,7 +44,7 @@ Make sure postgres and redis servers are running.
 
 2. Run the application server:
     ```
-    foreman start -f Procfile.dev
+    foreman start -f Procfile.dev-server
     ```
 
 ## Running tests
