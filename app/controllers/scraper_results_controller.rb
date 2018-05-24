@@ -13,8 +13,10 @@ class ScraperResultsController < ApplicationController
   def import
     item = Item.new(user: current_user)
     item.update_from(result_params.merge(list: current_list))
-    flash[:notice] = 'Item successfully added'
-    redirect_to items_path(list_ids: current_list_id_params)
+    render json: item.to_json
+
+    # flash[:notice] = 'Item successfully added'
+    # redirect_to items_path(list_ids: current_list_id_params)
   end
 
   private

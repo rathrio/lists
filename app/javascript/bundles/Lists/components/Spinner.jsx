@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Spinner = () => (
+const Spinner = ({size}) => (
   <div className="columns">
     <div className="column is-1 is-offset-5">
       <span className="icon is-large">
