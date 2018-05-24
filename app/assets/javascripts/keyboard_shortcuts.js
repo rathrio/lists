@@ -25,18 +25,17 @@
     visit('/lists');
   }
 
-  // function gotoList(n) {
-  //   var key = n.key;
-  //   var selector = '[data-shortcut="' + key + '"]';
-  //   var link = $(selector);
+  function gotoList(n) {
+    var key = n.key;
+    var selector = '[data-shortcut="' + key + '"]';
+    var link = document.querySelector(selector);
 
-  //   if (link.length === 0) {
-  //     return;
-  //   }
+    if (link.length === 0) {
+      return;
+    }
 
-  //   var url = link.attr("href");
-  //   visit(url);
-  // }
+    visit(link.href);
+  }
 
   function toggleShortcutsModal() {
     Modal.toggle("shortcuts-modal");
@@ -58,8 +57,8 @@
     Mousetrap.bind('g a', gotoArchived);
     Mousetrap.bind('g s', gotoSettings);
 
-    // [1, 2, 3, 4, 5, 6, 7, 8, 9].forEach(function(n) {
-    //   Mousetrap.bind(n.toString(), gotoList);
-    // });
+    [1, 2, 3, 4, 5, 6, 7, 8, 9].forEach(function(n) {
+      Mousetrap.bind(n.toString(), gotoList);
+    });
   });
 })();
