@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-const ItemBox = ({item, onTagClick}) => {
+const ItemBox = ({ item, onTagClick }) => {
   const thumbUrl = item.image.thumb.url
 
   return (
@@ -31,7 +31,7 @@ const ItemBox = ({item, onTagClick}) => {
 
           {item.tags.map((tag) => {
             return(
-              <div key={tag} className="level-item is-hidden-touch item-tag" onClick={() => onTagClick(tag)}>
+              <div key={`item-tag-${tag}`} className="level-item is-hidden-touch item-tag" onClick={() => onTagClick(tag)}>
                 <span className="tag is-rounded is-light is-small">
                   {tag}
                 </span>

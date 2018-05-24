@@ -4,8 +4,9 @@ class ScraperResultsController < ApplicationController
     scraper = current_list.default_scraper
     results = scraper.new(query: query).scrape
     results = FuzzySubstringMatchFilter.new(results, query).matches
-    results = results.map { |r| OpenStruct.new(r) }
     render json: results.to_json
+
+    # results = results.map { |r| OpenStruct.new(r) }
     # render partial: 'scraper_results', locals: { results: results }, layout: false
   end
 

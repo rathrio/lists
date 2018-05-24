@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types'
 import React from 'react';
 
-const OmniBar = ({query, placeholder, onInput, onSubmit}) => {
+const OmniBar = ({ query, placeholder, onInput, onSubmit }) => {
   const onKeyPress = (e) => {
     if (e.key === 'Enter') {
       onSubmit(e)
-      return
     }
 
     return true
