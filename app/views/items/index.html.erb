@@ -1,4 +1,6 @@
-<%= react_component("Items", props: { items: @items }, prerender: false) %>
+<% cache cache_key_for_items(@items) do %>
+  <%= react_component("Items", props: { items: @items }, prerender: false) %>
+<% end %>
 
 <!--
 <div class="new-item has-bottom-padding">
