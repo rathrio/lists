@@ -11,6 +11,33 @@ const API = axios.create({
   timeout: 10000,
 })
 
+const ItemsStateToggle = () => {
+  return (
+    <div className="tabs is-toggle is-centered is-small">
+      <ul>
+        <li className="is-active">
+          <a>
+            <span className="icon is-small"><i className="fa fa-square-o" aria-hidden="true"></i></span>
+            <span>Todo</span>
+          </a>
+        </li>
+        <li>
+          <a>
+            <span className="icon is-small"><i className="fa fa-clock-o" aria-hidden="true"></i></span>
+            <span>Doing</span>
+          </a>
+        </li>
+        <li>
+          <a>
+            <span className="icon is-small"><i className="fa fa-check-square-o" aria-hidden="true"></i></span>
+            <span>Done</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  )
+}
+
 export default class Items extends Component {
   constructor(props) {
     super(props)
@@ -62,9 +89,25 @@ export default class Items extends Component {
         this.setState(prevState => ({ items: [response.data, ...prevState.items] }))
       },
       (error) => {
-        console.log(error);
+        console.log(error)
       }
     )
+  }
+
+  onItemArchive = (item) => {
+    API.delete(`/items/${item.id}`).then(
+      (response) => {
+        this.setState(
+          prevState => (
+            { items: this.state.items.filter(i => (i !== item)) }
+          )
+        )
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+    console.log(item.name);
   }
 
   filter = (query) => {
@@ -80,9 +123,10 @@ export default class Items extends Component {
 
   render() {
     const query = this.state.query
+    const items = query ? this.filteredItems(query) : this.state.items
 
     const scraperResults = (this.state.scraperResults.length > 0)
-      ? (<ScraperResults results={this.state.scraperResults} onAdd={this.onResultAdd}/>)
+      ? (<ScraperResults results={this.state.scraperResults} onAdd={this.onResultAdd} />)
       : ""
 
     const spinner = (this.state.showSpinner) ? (<Spinner />) : ""
@@ -90,7 +134,11 @@ export default class Items extends Component {
     return (
       <Fragment>
         <OmniBar onInput={this.onOmniInput} onSubmit={this.onOmniSubmit} query={this.state.query} />
-        <ItemList items={this.filteredItems(query)} onTagClick={this.onTagClick} />
+        <ItemList
+          items={items}
+          onTagClick={this.onTagClick}
+          onItemArchive={this.onItemArchive} />
+
         {spinner}
         {scraperResults}
       </Fragment>

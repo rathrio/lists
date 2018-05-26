@@ -1,5 +1,4 @@
 import React from 'react';
-import Spinner from './Spinner'
 
 const ScraperResult = ({ result, onAdd }) => {
   const thumbUrl = result.remote_image_url
