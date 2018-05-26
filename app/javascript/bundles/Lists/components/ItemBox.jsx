@@ -69,6 +69,11 @@ const ItemBox = ({ item, onTagClick, onArchive, onRestore, onDelete }) => {
     onDelete(item)
   }
 
+  const onStatusToggleClick = () => {
+    console.log("TOGGLING");
+
+  }
+
   const itemActions = (item.deleted) ?
     <RestoreActions onRestoreClick={onRestoreClick} onDeleteClick={onDeleteClick} /> :
     <ArchiveActions onArchiveClick={onArchiveClick} />
@@ -142,6 +147,10 @@ const ItemBox = ({ item, onTagClick, onArchive, onRestore, onDelete }) => {
           </div>
 
           {itemActions}
+
+          <div className="level-item" onClick={onStatusToggleClick}>
+            <span className="icon is-medium" data-balloon="Toggle Status"><i className={`fa fa-square fa-lg item-status-toggle is-${item.status}`}></i></span>
+          </div>
         </div>
       </div>
     </div>

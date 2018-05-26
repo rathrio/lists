@@ -70,6 +70,18 @@
   }
 }
 
+.item-status-toggle {
+  &.is-todo {
+    color: $light;
+  }
+  &.is-doing {
+    color: $yellow;
+  }
+  &.is-done {
+    color: $green;
+  }
+}
+
 .image {
   .scraper-result-image {
     width: 64px;
