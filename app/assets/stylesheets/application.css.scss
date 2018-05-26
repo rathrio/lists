@@ -21,12 +21,20 @@
 @import 'bulma';
 @import 'font-awesome';
 
+.has-pointer {
+  cursor: pointer;
+}
+
 .has-no-bottom-padding {
   padding-bottom: 0;
 }
 
 .has-bottom-padding {
   padding-bottom: 1.5rem;
+}
+
+.main-section {
+  padding: 2rem 1.5rem;
 }
 
 .notification {
@@ -37,6 +45,10 @@
 
 .tabs.topnav-tabs {
   margin-bottom: 0;
+}
+
+.items-list {
+  margin-bottom: 1.5rem;
 }
 
 .item-box {

@@ -1,6 +1,8 @@
 class Item < ApplicationRecord
   acts_as_paranoid
 
+  enum status: %i(todo doing done)
+
   belongs_to :user
   belongs_to :list
 
@@ -12,7 +14,7 @@ class Item < ApplicationRecord
   mount_uploader :image, ImageUploader
 
   validates :list, presence: true
-  validates :name, presence: true, uniqueness: { scope: [:user_id] }
+  validates :name, presence: true, uniqueness: { scope: %i[user_id date] }
 
   after_create :scrape_in_background, unless: -> { Rails.env.test? || scraped? }
 
@@ -69,6 +71,15 @@ class Item < ApplicationRecord
     result = results.first if result.nil?
 
     update_from(result) if result
+  end
+
+  def as_json(*)
+    super.tap do |hash|
+      hash['tags'] = tags.map(&:name)
+      hash['list'] = list_name
+      hash['year'] = year
+      hash['deleted'] = deleted?
+    end
   end
 
   private

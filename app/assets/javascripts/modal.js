@@ -1,24 +1,33 @@
 var Modal = (function() {
   function closeAll() {
-    $('.modal').removeClass('is-active');
+    const modals = document.getElementsByClassName('modal');
+    for (let i = 0; i < modals.length; i++) {
+      const modal = modals[i];
+      modal.classList.remove('is-active');
+    }
   }
 
-  function open(selector) {
-    $(selector).addClass('is-active');
+  function open(id) {
+    var modal = document.getElementById(id);
+    modal.classList.add('is-active');
   }
 
-  function toggle(selector) {
-    $(selector).toggleClass('is-active');
+  function toggle(id) {
+    var modal = document.getElementById(id);
+    modal.classList.toggle('is-active');
   }
 
   function ready() {
-    $('.modal-background').on('click', function(e) {
+    var modalBackground = document.getElementsByClassName('modal-background')[0];
+    modalBackground.onclick = function(e) {
       e.preventDefault();
       closeAll();
-    });
+    };
   }
 
-  $(document).on('turbolinks:load', ready);
+  document.addEventListener("turbolinks:load", function() {
+    ready()
+  });
 
   return {
     closeAll: closeAll,
