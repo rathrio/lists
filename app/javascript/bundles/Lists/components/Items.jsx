@@ -115,11 +115,14 @@ export default class Items extends Component {
     this.setState({ query: query })
   }
 
-  filteredItems = (query) => (
-    this.state.items.filter((i) => (
-      (this.match(i.name, query) || i.tags.some((t) => (this.match(t, query))))
+  escapeRgx = (str) => str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")
+
+  filteredItems = (query) => {
+    const q = this.escapeRgx(query)
+    return this.state.items.filter((i) => (
+      (this.match(i.name, q) || i.tags.some((t) => (this.match(t, q))))
     ))
-  )
+  }
 
   render() {
     const query = this.state.query
