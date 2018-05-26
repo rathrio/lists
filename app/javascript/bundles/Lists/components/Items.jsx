@@ -7,7 +7,6 @@ import Spinner from './Spinner'
 import ScraperResults from './ScraperResults'
 
 const API = axios.create({
-  baseURL: 'http://localhost:3000',
   timeout: 10000,
 })
 
