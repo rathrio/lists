@@ -112,7 +112,7 @@ export default class Items extends Component {
 
   filter = (query) => {
     this.resetScraperResults()
-    this.setState({ query: query })
+    this.setState({ query: query.toString() })
   }
 
   escapeRgx = (str) => str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")
@@ -120,7 +120,11 @@ export default class Items extends Component {
   filteredItems = (query) => {
     const q = this.escapeRgx(query)
     return this.state.items.filter((i) => (
-      (this.match(i.name, q) || i.tags.some((t) => (this.match(t, q))))
+      (
+        this.match(i.name, q)
+        || i.tags.some((t) => (this.match(t, q)))
+        || (i.year && this.match(i.year.toString(), q))
+      )
     ))
   }
 
