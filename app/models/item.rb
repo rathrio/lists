@@ -78,6 +78,7 @@ class Item < ApplicationRecord
       hash['tags'] = tags.map(&:name)
       hash['list'] = list_name
       hash['year'] = year
+      hash['deleted'] = deleted?
     end
   end
 
