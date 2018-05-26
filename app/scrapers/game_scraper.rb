@@ -1,6 +1,14 @@
 class GameScraper
   include Scraper
 
+  def self.human_status_names
+    @human_status_names ||= {
+      todo: 'To Play',
+      doing: 'Playing',
+      done: 'Played'
+    }
+  end
+
   def search_results
     igdb_client.search(query)
   end

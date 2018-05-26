@@ -1,6 +1,14 @@
 class MovieScraper
   include Scraper
 
+  def self.human_status_names
+    @human_status_names ||= {
+      todo: 'To Watch',
+      doing: 'Watching',
+      done: 'Watched'
+    }
+  end
+
   def search_results
     title = query.gsub(/\((\d{2,4})\)/, '').strip
     moviedb_client.search(title, type: :movie, year: $1)['results'].to_a
