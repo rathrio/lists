@@ -17,7 +17,7 @@
     <% if signed_in? %>
       <%= javascript_pack_tag 'lists-bundle' %>
 
-      <div class="tabs is-large is-fullwidth topnav-tabs">
+      <div class="tabs is-medium is-fullwidth topnav-tabs">
         <ul>
           <% current_user.lists.each_with_index do |list, index| %>
             <% number = index + 1 %>
