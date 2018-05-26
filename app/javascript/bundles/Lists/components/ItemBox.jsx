@@ -1,5 +1,29 @@
 import React, { Fragment } from 'react';
 
+const StatusTags = ({ status }) => {
+  let tagColor
+
+  switch (status) {
+    case 'doing':
+      tagColor = 'warning'
+      break;
+    case 'done':
+      tagColor = 'success'
+      break;
+    default:
+      tagColor = 'light'
+      break;
+  }
+
+  return (
+    <div className="level-item has-pointer">
+      <span className={`tag is-rounded is-small is-${tagColor}`}>
+        {status}
+      </span>
+    </div>
+  )
+}
+
 const ArchiveActions = ({ onArchiveClick }) => (
   <div className="level-item">
     <a target="blank" href="#" onClick={onArchiveClick}>
@@ -63,6 +87,8 @@ const ItemBox = ({ item, onTagClick, onArchive, onRestore, onDelete }) => {
           <div className="level-item title-item">
             <div className="subtitle is-4"><a href={`/items/${item.id}`}>{item.name}</a></div>
           </div>
+
+          {item.status !== 'todo' && <StatusTags status={item.status} />}
 
           {item.year && (
             <div className="level-item has-pointer" onClick={() => onTagClick(item.year)} data-balloon={`Show ${item.year} items`}>
