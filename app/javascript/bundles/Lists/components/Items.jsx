@@ -11,33 +11,6 @@ const API = axios.create({
   timeout: 10000,
 })
 
-const ItemsStateToggle = () => {
-  return (
-    <div className="tabs is-toggle is-centered is-small">
-      <ul>
-        <li className="is-active">
-          <a>
-            <span className="icon is-small"><i className="fa fa-square-o" aria-hidden="true"></i></span>
-            <span>Todo</span>
-          </a>
-        </li>
-        <li>
-          <a>
-            <span className="icon is-small"><i className="fa fa-clock-o" aria-hidden="true"></i></span>
-            <span>Doing</span>
-          </a>
-        </li>
-        <li>
-          <a>
-            <span className="icon is-small"><i className="fa fa-check-square-o" aria-hidden="true"></i></span>
-            <span>Done</span>
-          </a>
-        </li>
-      </ul>
-    </div>
-  )
-}
-
 export default class Items extends Component {
   constructor(props) {
     super(props)
@@ -107,7 +80,36 @@ export default class Items extends Component {
         console.log(error)
       }
     )
-    console.log(item.name);
+  }
+
+  onItemRestore = (item) => {
+    API.put(`/items/${item.id}/restore`).then(
+      (response) => {
+        this.setState(
+          prevState => (
+            { items: this.state.items.filter(i => (i !== item)) }
+          )
+        )
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
+
+  onItemDelete = (item) => {
+    API.delete(`/items/${item.id}/really_destroy`).then(
+      (response) => {
+        this.setState(
+          prevState => (
+            { items: this.state.items.filter(i => (i !== item)) }
+          )
+        )
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
   }
 
   filter = (query) => {
@@ -141,10 +143,13 @@ export default class Items extends Component {
     return (
       <Fragment>
         <OmniBar onInput={this.onOmniInput} onSubmit={this.onOmniSubmit} query={this.state.query} />
+
         <ItemList
           items={items}
           onTagClick={this.onTagClick}
-          onItemArchive={this.onItemArchive} />
+          onItemArchive={this.onItemArchive}
+          onItemRestore={this.onItemRestore}
+          onItemDelete={this.onItemDelete} />
 
         {spinner}
         {scraperResults}
