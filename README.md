@@ -13,6 +13,7 @@ Smart lists to keep track of media to consume.
 + [PostgreSQL](https://www.postgresql.org/)
 + [Redis](https://redis.io/)
 + [Imagemagick >= 7](https://www.imagemagick.org/script/index.php)
++ [Yarn](https://yarnpkg.com/en/docs/install)
 
 Make sure postgres and redis servers are running.
 
@@ -21,40 +22,41 @@ Make sure postgres and redis servers are running.
 1. Install dependencies:
     ```
     bundle install
+    yarn install
     ```
 
 2. Setup database:
     ```
-    bundle exec rake db:setup
+    ./bin/rails db:setup
     ```
 
 3. Apply migrations:
     ```
-    bundle exec rake db:migrate
+    ./bin/rails db:migrate
     ```
 
 ## Running
 
 1. Run sidekiq for background jobs:
     ```
-    bundle exec sidekiq -C config/sidekiq.yml
+    ./bin/sidekiq -C config/sidekiq.yml
     ```
 
 2. Run the application server:
     ```
-    bundle exec rails server
+    foreman start -f Procfile.dev-server
     ```
 
 ## Running tests
 
 ```
-bundle exec rake test
+./bin/rails test
 ```
 
 ## Generate Documentation
 
 ```
-bundle exec rake docs
+./bin/rails docs
 ```
 
 ## Contributing
@@ -65,12 +67,12 @@ bundle exec rake docs
 4. Push to the branch `git push origin my-new-feature`
 5. Run tests
     ```
-    bundle exec rake
+    ./bin/rails test
     ```
 
 6. Review changes and fix style
     ```
-    bundle exec rake review
+    ./bin/pronto run
     ```
 
 5. Create new Pull Request (in your forked repository)

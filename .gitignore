@@ -22,8 +22,14 @@
 
 .env
 /public/uploads/*
+/public/assets/
 
 # Do not push generated doc files
 .yardoc/
 doc/
 erd.pdf
+/public/packs
+/public/packs-test
+/node_modules
+yarn-debug.log*
+.yarn-integrity
