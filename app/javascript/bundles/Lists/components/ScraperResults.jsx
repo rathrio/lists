@@ -9,7 +9,7 @@ const ScraperResult = ({ result, onAdd }) => {
   const onClick = (_) => onAdd(result)
 
   return (
-    <div className="box item-box scraper-result" data-balloon="Add to List" onClick={onClick}>
+    <div className="box item-box scraper-result has-pointer" data-balloon="Add to List" onClick={onClick}>
       <div className="level is-mobile">
         <div className="level-left is-mobile">
           <div className="level-item">

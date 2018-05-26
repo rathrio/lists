@@ -33,6 +33,10 @@
   padding-bottom: 1.5rem;
 }
 
+.main-section {
+  padding: 2rem 1.5rem;
+}
+
 .notification {
   &.flash-notification {
     border-radius: 0;
@@ -93,8 +97,4 @@
       }
     }
   }
-}
-
-.scraper-result {
-  cursor: pointer;
 }
