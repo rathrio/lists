@@ -33,12 +33,6 @@ const ItemBox = ({ item, onTagClick, onArchive }) => {
             </span>
           </div>
 
-          <div className="level-item is-hidden-mobile">
-            <span className="tag is-rounded is-light is-small">
-              {item.list}
-            </span>
-          </div>
-
           {item.tags.map((tag) => {
             return(
               <div key={`item-tag-${tag}`} className="level-item is-hidden-touch item-tag" onClick={() => onTagClick(tag)}>
