@@ -57,22 +57,16 @@ class ItemsController < ApplicationController
   def destroy
     @item.destroy!
     render json: @item.to_json
-    # flash[:notice] = 'Item successfully archived'
-    # redirect_to action: :index, list_ids: current_list_id_params
   end
 
   def really_destroy
     @item.really_destroy!
     render json: @item.to_json
-    # flash[:notice] = 'Item successfully deleted'
-    # redirect_to action: :index, archived: true
   end
 
   def restore
     @item.restore
     render json: @item.to_json
-    # flash[:notice] = 'Item successfully restored'
-    # redirect_to @item
   end
 
   def scrape
