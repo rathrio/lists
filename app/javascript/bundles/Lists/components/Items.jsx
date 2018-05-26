@@ -5,6 +5,7 @@ import OmniBar from './OmniBar'
 import ItemList from './ItemList'
 import Spinner from './Spinner'
 import ScraperResults from './ScraperResults'
+import ReactOnRails from 'react-on-rails';
 
 const API = axios.create({
   timeout: 10000,
@@ -29,6 +30,12 @@ export default class Items extends Component {
 
   match = (str, query) => (
     str.toLowerCase().match(query.toLowerCase())
+  )
+
+  matchItem = (item, query) => (
+    this.match(item.name, query)
+      || item.tags.some((tag) => (this.match(tag, query)))
+      || (item.year && this.match(item.year.toString(), query))
   )
 
   onOmniInput = (e) => this.filter(e.target.value)
@@ -118,16 +125,10 @@ export default class Items extends Component {
 
   escapeRgx = (str) => str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")
 
-  filteredItems = (query) => {
-    const q = this.escapeRgx(query)
-    return this.state.items.filter((i) => (
-      (
-        this.match(i.name, q)
-        || i.tags.some((t) => (this.match(t, q)))
-        || (i.year && this.match(i.year.toString(), q))
-      )
-    ))
-  }
+
+  filteredItems = (query) => (
+    this.state.items.filter(item => this.matchItem(item, this.escapeRgx(query)))
+  )
 
   render() {
     const query = this.state.query

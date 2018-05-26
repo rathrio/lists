@@ -20,7 +20,6 @@
 
 @import 'bulma';
 @import 'font-awesome';
-
 .has-pointer {
   cursor: pointer;
 }
@@ -54,18 +53,15 @@
 .item-box {
   padding: 0;
   padding-right: 1.25rem;
-
   img {
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
   }
-
   &:hover {
-    .level > .item-actions {
+    .level>.item-actions {
       display: flex !important;
     }
   }
-
   @media (max-width: 500px) {
     .title {
       width: 100px;
@@ -82,16 +78,15 @@
   }
 }
 
-.level-left, .level-right {
+.level-left,
+.level-right {
   &.is-mobile {
     display: flex;
     margin-top: 0;
-
-    & > .level-item {
+    &>.level-item {
       &:not(:last-child) {
         margin-bottom: 0;
       }
-
       &:not(.is-narrow) {
         flex-grow: 1;
       }
