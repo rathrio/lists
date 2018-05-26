@@ -8,6 +8,10 @@ const ItemBox = ({ item, onTagClick, onArchive }) => {
     onArchive(item)
   }
 
+  const pirateSearchUrl = encodeURI(`https://thepiratebay.org/search/${item.name}`)
+  const youtubeSearchUrl = encodeURI(`https://www.youtube.com/results?search_query=${item.name}`)
+  const googleSearchUrl = encodeURI(`https://www.google.ch/search?q=${item.name}`)
+  const netflixSearchUrl = encodeURI(`https://www.netflix.com/search?q=${item.name}`)
 
   return (
     <div className="box item-box">
@@ -48,25 +52,25 @@ const ItemBox = ({ item, onTagClick, onArchive }) => {
 
         <div className="level-right is-mobile item-actions is-hidden">
           <div className="level-item is-hidden-mobile">
-            <a target="blank" href="https://thepiratebay.org/search/The%20Last%20Guardian">
+            <a target="blank" href={pirateSearchUrl}>
               <span className="icon is-medium" data-balloon="Search the Bay"><i className="fa fa-magnet fa-lg"></i></span>
             </a>
           </div>
 
           <div className="level-item is-hidden-mobile">
-            <a target="blank" href="https://www.google.ch/search?q=The%20Last%20Guardian">
+            <a target="blank" href={googleSearchUrl}>
               <span className="icon is-medium" data-balloon="Search Google"><i className="fa fa-google fa-lg"></i></span>
             </a>
           </div>
 
           <div className="level-item is-hidden-mobile">
-            <a target="blank" href="https://www.youtube.com/results?search_query=The%20Last%20Guardian">
+            <a target="blank" href={youtubeSearchUrl}>
               <span className="icon is-medium" data-balloon="Search YouTube"><i className="fa fa-youtube-play fa-lg"></i></span>
             </a>
           </div>
 
           <div className="level-item is-hidden-mobile">
-            <a target="blank" href="https://www.netflix.com/search?q=The%20Last%20Guardian">
+            <a target="blank" href={netflixSearchUrl}>
               <span className="icon is-medium" data-balloon="Search Netflix"><i className="fa fa-tv fa-lg"></i></span>
             </a>
           </div>
