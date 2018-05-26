@@ -1,24 +1,23 @@
 import React, { Fragment } from 'react';
 
-const StatusTags = ({ status }) => {
+const StatusTags = ({ item }) => {
   let tagColor
 
-  switch (status) {
+  switch (item.status) {
     case 'doing':
       tagColor = 'warning'
-      break;
+      break
     case 'done':
       tagColor = 'success'
-      break;
+      break
     default:
-      tagColor = 'light'
-      break;
+      return ""
   }
 
   return (
     <div className="level-item has-pointer">
       <span className={`tag is-rounded is-small is-${tagColor}`}>
-        {status}
+        {item.human_status}
       </span>
     </div>
   )
@@ -88,7 +87,7 @@ const ItemBox = ({ item, onTagClick, onArchive, onRestore, onDelete }) => {
             <div className="subtitle is-4"><a href={`/items/${item.id}`}>{item.name}</a></div>
           </div>
 
-          {item.status !== 'todo' && <StatusTags status={item.status} />}
+          {item.status !== 'todo' && <StatusTags item={item} />}
 
           {item.year && (
             <div className="level-item has-pointer" onClick={() => onTagClick(item.year)} data-balloon={`Show ${item.year} items`}>

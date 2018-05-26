@@ -31,6 +31,19 @@
 #   item.update_from(result)
 #   item.name # => 'lethal weapon 2: reloaded'
 module Scraper
+  module ClassMethods
+    def human_status_names
+      @human_status_names ||= {
+        todo: 'Todo',
+        doing: 'Doing',
+        done: 'Done'
+      }
+    end
+
+    def human_status(status)
+      human_status_names.fetch(status.to_sym.downcase)
+    end
+  end
 
   # @return [Array<Scraper>] list of classes that include this module.
   def self.all
@@ -39,6 +52,8 @@ module Scraper
 
   def self.included(scraper)
     all << scraper
+
+    scraper.extend(ClassMethods)
   end
 
   attr_reader :query

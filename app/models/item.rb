@@ -58,6 +58,10 @@ class Item < ApplicationRecord
     date&.year
   end
 
+  def human_status
+    default_scraper&.human_status(status)
+  end
+
   def default_scraper
     list&.default_scraper
   end
@@ -79,6 +83,7 @@ class Item < ApplicationRecord
       hash['list'] = list_name
       hash['year'] = year
       hash['deleted'] = deleted?
+      hash['human_status'] = human_status
     end
   end
 
