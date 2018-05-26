@@ -27,7 +27,7 @@ const ItemBox = ({ item, onTagClick, onArchive }) => {
             <div className="subtitle is-4"><a href={`/items/${item.id}`}>{item.name}</a></div>
           </div>
 
-          <div className="level-item" onClick={() => onTagClick(item.year)}>
+          <div className="level-item has-pointer" onClick={() => onTagClick(item.year)} data-balloon={`Show ${item.year} items`}>
             <span className="tag is-rounded is-light is-small">
               {item.year}
             </span>
@@ -35,7 +35,7 @@ const ItemBox = ({ item, onTagClick, onArchive }) => {
 
           {item.tags.map((tag) => {
             return (
-              <div key={`item-tag-${tag}`} className="level-item is-hidden-touch item-tag" onClick={() => onTagClick(tag)}>
+              <div key={`item-tag-${tag}`} className="level-item is-hidden-touch has-pointer" onClick={() => onTagClick(tag)} data-balloon={`Show ${tag} items`}>
                 <span className="tag is-rounded is-light is-small">
                   {tag}
                 </span>
