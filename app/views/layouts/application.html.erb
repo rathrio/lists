@@ -10,13 +10,13 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'lists-bundle' %>
+
     <%= favicon_link_tag %>
   </head>
 
   <body>
     <% if signed_in? %>
-      <%= javascript_pack_tag 'lists-bundle' %>
-
       <div class="tabs is-medium is-fullwidth topnav-tabs">
         <ul>
           <% current_user.lists.each_with_index do |list, index| %>
