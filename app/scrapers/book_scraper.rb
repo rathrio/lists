@@ -1,6 +1,14 @@
 class BookScraper
   include Scraper
 
+  def self.human_status_names
+    @human_status_names ||= {
+      todo: 'To Read',
+      doing: 'Reading',
+      done: 'Read'
+    }
+  end
+
   def search_results
     title = query.strip.tr(' ', '+')
     google_books_client.search(title)['items']

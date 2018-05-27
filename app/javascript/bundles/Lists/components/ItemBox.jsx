@@ -148,7 +148,7 @@ const ItemBox = ({ item, onTagClick, onArchive, onRestore, onDelete, onToggle })
           {itemActions}
 
           <div className="level-item has-pointer" onClick={onStatusToggleClick}>
-            <span className="icon is-medium" data-balloon="Toggle Status"><i className={`fa fa-square fa-lg item-status-toggle is-${item.status}`}></i></span>
+            <span className="icon is-medium" data-balloon="Toggle Status"><i className={`fa fa-check fa-lg item-status-toggle is-${item.status}`}></i></span>
           </div>
         </div>
       </div>
