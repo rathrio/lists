@@ -104,6 +104,10 @@ export default class Items extends Component {
   }
 
   onItemDelete = (item) => {
+    if (!window.confirm('Are you sure?')) {
+      return
+    }
+
     API.delete(`/items/${item.id}/really_destroy`).then(
       (response) => {
         this.remove(item)
