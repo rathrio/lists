@@ -1,4 +1,4 @@
-var Modal = (function() {
+const Modal = (function() {
   function closeAll() {
     const modals = document.getElementsByClassName('modal');
     for (let i = 0; i < modals.length; i++) {
@@ -34,4 +34,6 @@ var Modal = (function() {
     toggle: toggle,
     open: open
   };
-})();
+})()
+
+export default Modal
