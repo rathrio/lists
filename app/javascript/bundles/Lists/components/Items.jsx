@@ -135,13 +135,18 @@ export default class Items extends Component {
   escapeRgx = (str) => str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")
 
 
-  filteredItems = (query) => (
-    this.state.items.filter(item => this.matchItem(item, this.escapeRgx(query)))
-  )
+  filteredItems = (query) => {
+    let items = this.state.items
+
+    if (query) {
+      items = this.state.items.filter(item => this.matchItem(item, this.escapeRgx(query)))
+    }
+
+    return items
+  }
 
   render() {
     const query = this.state.query
-    const items = query ? this.filteredItems(query) : this.state.items
 
     const scraperResults = (this.state.scraperResults.length > 0)
       ? (<ScraperResults results={this.state.scraperResults} onAdd={this.onResultAdd} />)
@@ -154,7 +159,7 @@ export default class Items extends Component {
         <OmniBar onInput={this.onOmniInput} onSubmit={this.onOmniSubmit} query={this.state.query} />
 
         <ItemList
-          items={items}
+          items={this.filteredItems(query)}
           onTagClick={this.onTagClick}
           onItemArchive={this.onItemArchive}
           onItemRestore={this.onItemRestore}
