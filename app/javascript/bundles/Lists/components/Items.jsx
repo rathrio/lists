@@ -58,7 +58,7 @@ export default class Items extends Component {
       return `s[${nextStatus}]`
     })
 
-    this.setState({ query: newQuery })
+    this.filter(newQuery.trim())
   }
 
   match = (str, query) => (
