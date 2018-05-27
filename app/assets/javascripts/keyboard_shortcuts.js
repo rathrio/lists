@@ -2,9 +2,11 @@
   function focusFilter() {
     window.scrollTo(0, 0);
 
-    var input = document.getElementsByClassName('filter')[0];
+    var input = document.getElementById('omni-bar');
     input.focus()
-    input.select()
+
+    // Comment in for selecting the input
+    // input.select()
 
     return false;
   }

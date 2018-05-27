@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 
-const StatusTags = ({ item }) => {
+const StatusTags = ({ item, onTagClick }) => {
   let tagColor
 
   switch (item.status) {
@@ -15,7 +15,7 @@ const StatusTags = ({ item }) => {
   }
 
   return (
-    <div className="level-item has-pointer">
+    <div className="level-item has-pointer" onClick={e => onTagClick(e, `s[${item.status}]`)}>
       <span className={`tag is-rounded is-small is-${tagColor}`}>
         {item.human_status}
       </span>
@@ -96,10 +96,10 @@ const ItemBox = ({ item, onTagFilter, onArchive, onRestore, onDelete, onToggle }
             <div className="subtitle is-5"><a href={`/items/${item.id}`}>{item.name}</a></div>
           </div>
 
-          {item.status !== 'todo' && <StatusTags item={item} />}
+          {item.status !== 'todo' && <StatusTags item={item} onTagClick={onTagClick} />}
 
           {item.year && (
-            <div className="level-item has-pointer" onClick={e => onTagClick(e, `y:[${item.year}]`)} data-balloon={`Show ${item.year} items`}>
+            <div className="level-item has-pointer" onClick={e => onTagClick(e, `y[${item.year}]`)} data-balloon={`Show ${item.year} items`}>
               <span className="tag is-rounded is-light is-small">
                 {item.year}
               </span>
@@ -116,7 +116,7 @@ const ItemBox = ({ item, onTagFilter, onArchive, onRestore, onDelete, onToggle }
 
           {item.tags.map((tag) => {
             return (
-              <div key={`item-tag-${tag}`} className="level-item is-hidden-touch has-pointer" onClick={e => onTagClick(e, `t:[${tag}]`)} data-balloon={`Show ${tag} items`}>
+              <div key={`item-tag-${tag}`} className="level-item is-hidden-touch has-pointer" onClick={e => onTagClick(e, `t[${tag}]`)} data-balloon={`Show ${tag} items`}>
                 <span className="tag is-rounded is-light is-small">
                   {tag}
                 </span>
