@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   resources :items do
     put :scrape, on: :member
     put :restore, on: :member
+    put :toggle_status, on: :member
     delete :really_destroy, on: :member
   end
 

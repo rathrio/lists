@@ -35,6 +35,12 @@ class Item < ApplicationRecord
     where(scraped: false)
   end
 
+  # What's the int representation of the next status the item can toggle to?
+  def next_status_index
+    statuses = self.class.statuses
+    (statuses.fetch(status) + 1) % statuses.length
+  end
+
   def list_name
     list&.name
   end
