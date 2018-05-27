@@ -56,7 +56,10 @@
       return;
     }
 
-    var itemBox = elements[elements.length - 1];
+    var itemBox = Array.from(elements).find(function(node) {
+      return node.className.includes('item-box');
+    });
+
     var toggle = itemBox.getElementsByClassName('item-status-toggle')[0];
     if (toggle) {
       toggle.click();
