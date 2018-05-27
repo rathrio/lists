@@ -1,4 +1,5 @@
 import * as Mousetrap from 'mousetrap'
+import Modal from './modal'
 
 function focusFilter() {
   window.scrollTo(0, 0);
