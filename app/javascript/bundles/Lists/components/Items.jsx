@@ -30,6 +30,34 @@ export default class Items extends Component {
   componentDidMount() {
     const csrfToken = ReactOnRails.authenticityToken();
     API.defaults.headers.common['X-CSRF-Token'] = csrfToken
+
+    Mousetrap.bind('s', this.toggleItemStatusFilter)
+  }
+
+  toggleItemStatusFilter = () => {
+    if (!this.state.query.trim()) {
+      this.setState(prevState => ({ query: `s[todo] ${prevState.query}` }))
+      return
+    }
+
+    const newQuery = this.state.query.replace(/\bs\[([^\]]+)\]/g, (_, status) => {
+      let nextStatus = ''
+      switch (status) {
+        case 'todo':
+          nextStatus = 'doing'
+          break;
+        case 'doing':
+          nextStatus = 'done'
+          break;
+        case 'done':
+          nextStatus = 'todo'
+          break;
+      }
+
+      return `s[${nextStatus}]`
+    })
+
+    this.setState({ query: newQuery })
   }
 
   match = (str, query) => (
