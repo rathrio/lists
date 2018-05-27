@@ -1,11 +1,13 @@
+import ReactOnRails from 'react-on-rails';
 import axios from 'axios'
 import PropTypes from 'prop-types'
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment } from 'react'
+import * as Mousetrap from 'mousetrap'
+
 import OmniBar from './OmniBar'
 import ItemList from './ItemList'
 import Spinner from './Spinner'
 import ScraperResults from './ScraperResults'
-import ReactOnRails from 'react-on-rails';
 
 const API = axios.create({
   timeout: 10000,
@@ -16,7 +18,7 @@ export default class Items extends Component {
     super(props)
 
     this.state = {
-      query: "s[todo] ",
+      query: 's[todo] ',
       items: this.props.items,
       scraperResults: [],
       showSpinner: false
