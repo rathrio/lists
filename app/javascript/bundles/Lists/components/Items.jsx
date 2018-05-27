@@ -16,11 +16,13 @@ export default class Items extends Component {
     super(props)
 
     this.state = {
-      query: "",
+      query: "s[todo] ",
       items: this.props.items,
       scraperResults: [],
       showSpinner: false
     }
+
+    this.tagsRgx = /\b(s|t|y)\[([^\]]+)\]/g
   }
 
   componentDidMount() {
@@ -34,7 +36,7 @@ export default class Items extends Component {
 
   matchItem = (item, query) => (
     this.match(item.name, query)
-    || item.tags.some((tag) => (this.match(tag, query)))
+    || item.tags.some(tag => (this.match(tag, query)))
     || (item.year && this.match(item.year.toString(), query))
   )
 
@@ -65,7 +67,7 @@ export default class Items extends Component {
 
   onOmniSubmit = (e) => {
     this.showSpinner()
-    const query = e.target.value
+    const query = e.target.value.replace(this.tagsRgx, '').trim()
 
     API.get('/scraper_results', { params: { query: query } }).then(
       (response) => {
@@ -153,21 +155,25 @@ export default class Items extends Component {
       return items
     }
 
-    let q = query
+    const q = query.replace(this.tagsRgx, (_, type, tag) => {
+      switch (type) {
+        case 's':
+          items = items.filter(item => (item.status === tag.toLowerCase()))
+          break;
+        case 'y':
+          items = items.filter(item => (item.year && this.match(item.year.toString(), tag)))
+          break;
+        case 't':
+          items = items.filter(item => item.tags.some(t => this.match(t, tag)))
+          break;
+        default:
+          console.log(`Unknown tag type ${type}`);
+          break;
+      }
 
-    // Filter tags
-    q = q.replace(/\bt:\[([^\]]+)\]/g, (match, tag, offset, string) => {
-      items = items.filter(item => item.tags.some(t => this.match(t, tag)))
       return ''
-    })
+    }).trim()
 
-    // Filter year
-    q = q.replace(/\by:\[([^\]]+)\]/g, (match, year, offset, string) => {
-      items = items.filter(item => (item.year && this.match(item.year.toString(), year)))
-      return ''
-    })
-
-    q = q.trim()
     if (q) {
       items = items.filter(item => this.matchItem(item, q))
     }
