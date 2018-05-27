@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import ItemBox from './ItemBox'
 
-const ItemList = ({ items, onTagClick, onItemArchive, onItemRestore, onItemDelete, onItemToggle }) => {
+const ItemList = ({ items, onTagFilter, onItemArchive, onItemRestore, onItemDelete, onItemToggle }) => {
   const itemBoxes = items.map((i) => (
     <ItemBox
       key={`item-${i.id}`}
       item={i}
-      onTagClick={onTagClick}
+      onTagFilter={onTagFilter}
       onArchive={onItemArchive}
       onRestore={onItemRestore}
       onDelete={onItemDelete}

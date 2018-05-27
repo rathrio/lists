@@ -29,7 +29,7 @@ export default class Items extends Component {
   }
 
   match = (str, query) => (
-    str.toLowerCase().match(query.toLowerCase())
+    str.toLowerCase().match(this.escapeRgx(query.toLowerCase()))
   )
 
   matchItem = (item, query) => (
@@ -39,7 +39,16 @@ export default class Items extends Component {
   )
 
   onOmniInput = (e) => this.filter(e.target.value)
-  onTagClick = (tag) => this.filter(tag)
+
+  onTagFilter = (tag, options) => {
+    if (!options.append) {
+      this.filter(tag)
+      return
+    }
+
+    const currentQuery = this.state.query
+    this.filter(`${currentQuery} ${tag}`.trim())
+  }
 
   showSpinner = () => this.setState({ showSpinner: true })
   hideSpinner = () => this.setState({ showSpinner: false })
@@ -138,12 +147,29 @@ export default class Items extends Component {
 
   escapeRgx = (str) => str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")
 
-
   filteredItems = (query) => {
     let items = this.state.items
+    if (!query) {
+      return items
+    }
 
-    if (query) {
-      items = this.state.items.filter(item => this.matchItem(item, this.escapeRgx(query)))
+    let q = query
+
+    // Filter tags
+    q = q.replace(/\bt:\[([^\]]+)\]/g, (match, tag, offset, string) => {
+      items = items.filter(item => item.tags.some(t => this.match(t, tag)))
+      return ''
+    })
+
+    // Filter year
+    q = q.replace(/\by:\[([^\]]+)\]/g, (match, year, offset, string) => {
+      items = items.filter(item => (item.year && this.match(item.year.toString(), year)))
+      return ''
+    })
+
+    q = q.trim()
+    if (q) {
+      items = items.filter(item => this.matchItem(item, q))
     }
 
     return items
@@ -164,7 +190,7 @@ export default class Items extends Component {
 
         <ItemList
           items={this.filteredItems(query)}
-          onTagClick={this.onTagClick}
+          onTagFilter={this.onTagFilter}
           onItemArchive={this.onItemArchive}
           onItemRestore={this.onItemRestore}
           onItemDelete={this.onItemDelete}
