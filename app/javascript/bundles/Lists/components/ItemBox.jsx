@@ -46,7 +46,7 @@ const RestoreActions = ({ onRestoreClick, onDeleteClick }) => (
   </Fragment>
 )
 
-const ItemBox = ({ item, onTagClick, onArchive, onRestore, onDelete, onToggle }) => {
+const ItemBox = ({ item, onTagFilter, onArchive, onRestore, onDelete, onToggle }) => {
   const thumbUrl = item.image.thumb.url
 
   const pirateSearchUrl = encodeURI(`https://thepiratebay.org/search/${item.name}`)
@@ -73,6 +73,11 @@ const ItemBox = ({ item, onTagClick, onArchive, onRestore, onDelete, onToggle })
     onToggle(item)
   }
 
+  const onTagClick = (e, tag) => {
+    const options = (e.metaKey) ? { append: true } : {}
+    onTagFilter(tag, options)
+  }
+
   const itemActions = (item.deleted) ?
     <RestoreActions onRestoreClick={onRestoreClick} onDeleteClick={onDeleteClick} /> :
     <ArchiveActions onArchiveClick={onArchiveClick} />
@@ -94,7 +99,7 @@ const ItemBox = ({ item, onTagClick, onArchive, onRestore, onDelete, onToggle })
           {item.status !== 'todo' && <StatusTags item={item} />}
 
           {item.year && (
-            <div className="level-item has-pointer" onClick={() => onTagClick(item.year)} data-balloon={`Show ${item.year} items`}>
+            <div className="level-item has-pointer" onClick={e => onTagClick(e, `y:[${item.year}]`)} data-balloon={`Show ${item.year} items`}>
               <span className="tag is-rounded is-light is-small">
                 {item.year}
               </span>
@@ -111,7 +116,7 @@ const ItemBox = ({ item, onTagClick, onArchive, onRestore, onDelete, onToggle })
 
           {item.tags.map((tag) => {
             return (
-              <div key={`item-tag-${tag}`} className="level-item is-hidden-touch has-pointer" onClick={() => onTagClick(tag)} data-balloon={`Show ${tag} items`}>
+              <div key={`item-tag-${tag}`} className="level-item is-hidden-touch has-pointer" onClick={e => onTagClick(e, `t:[${tag}]`)} data-balloon={`Show ${tag} items`}>
                 <span className="tag is-rounded is-light is-small">
                   {tag}
                 </span>
