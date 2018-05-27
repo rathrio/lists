@@ -35,12 +35,14 @@ export default class Items extends Component {
   }
 
   toggleItemStatusFilter = () => {
-    if (!this.state.query.trim()) {
+    const statusRgx = /\bs\[([^\]]+)\]/g
+
+    if (!this.state.query.match(statusRgx)) {
       this.setState(prevState => ({ query: `s[todo] ${prevState.query}` }))
       return
     }
 
-    const newQuery = this.state.query.replace(/\bs\[([^\]]+)\]/g, (_, status) => {
+    const newQuery = this.state.query.replace(statusRgx, (_, status) => {
       let nextStatus = ''
       switch (status) {
         case 'todo':
@@ -50,8 +52,7 @@ export default class Items extends Component {
           nextStatus = 'done'
           break;
         case 'done':
-          nextStatus = 'todo'
-          break;
+          return ''
       }
 
       return `s[${nextStatus}]`

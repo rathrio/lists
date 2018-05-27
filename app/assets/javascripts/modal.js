@@ -13,7 +13,6 @@ var Modal = (function() {
   }
 
   function toggle(id) {
-    console.log("GOT HERE");
     var modal = document.getElementById(id);
     modal.classList.toggle('is-active');
   }
