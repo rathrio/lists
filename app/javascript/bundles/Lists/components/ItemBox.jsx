@@ -46,7 +46,7 @@ const RestoreActions = ({ onRestoreClick, onDeleteClick }) => (
   </Fragment>
 )
 
-const ItemBox = ({ item, onTagClick, onArchive, onRestore, onDelete }) => {
+const ItemBox = ({ item, onTagClick, onArchive, onRestore, onDelete, onToggle }) => {
   const thumbUrl = item.image.thumb.url
 
   const pirateSearchUrl = encodeURI(`https://thepiratebay.org/search/${item.name}`)
@@ -70,8 +70,7 @@ const ItemBox = ({ item, onTagClick, onArchive, onRestore, onDelete }) => {
   }
 
   const onStatusToggleClick = () => {
-    console.log("TOGGLING");
-
+    onToggle(item)
   }
 
   const itemActions = (item.deleted) ?
@@ -89,7 +88,7 @@ const ItemBox = ({ item, onTagClick, onArchive, onRestore, onDelete }) => {
           </div>
 
           <div className="level-item title-item">
-            <div className="subtitle is-4"><a href={`/items/${item.id}`}>{item.name}</a></div>
+            <div className="subtitle is-5"><a href={`/items/${item.id}`}>{item.name}</a></div>
           </div>
 
           {item.status !== 'todo' && <StatusTags item={item} />}
@@ -148,7 +147,7 @@ const ItemBox = ({ item, onTagClick, onArchive, onRestore, onDelete }) => {
 
           {itemActions}
 
-          <div className="level-item" onClick={onStatusToggleClick}>
+          <div className="level-item has-pointer" onClick={onStatusToggleClick}>
             <span className="icon is-medium" data-balloon="Toggle Status"><i className={`fa fa-square fa-lg item-status-toggle is-${item.status}`}></i></span>
           </div>
         </div>

@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action :set_item,
-    only: %i(show update destroy scrape really_destroy restore)
+    only: %i(show update destroy scrape really_destroy restore toggle_status)
 
   def index
     @items = if (list_ids = params[:list_ids]).present?
@@ -52,6 +52,12 @@ class ItemsController < ApplicationController
       redirect_to action: :index, list_ids: current_list_id_params
     else
     end
+  end
+
+  def toggle_status
+    next_status_index = @item.next_status_index
+    @item.update_attributes!(status: next_status_index)
+    render json: @item.to_json
   end
 
   def destroy
