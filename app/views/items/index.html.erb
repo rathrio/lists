@@ -1,24 +1,3 @@
-<% cache cache_key_for_items(@items) do %>
+<% cache cache_key_for_items(@items), skip_digest: true do %>
   <%= react_component("Items", props: { items: @items }, prerender: false) %>
 <% end %>
-
-<!--
-<div class="new-item has-bottom-padding">
-  <%= form_for :item do |f| %>
-    <p class="control has-addons">
-      <%= f.text_field :name, class: 'input is-expanded is-medium filter scraper-query', placeholder: 'Search', autocomplete: :off, autofocus: focus_search?, data: { 'filter-container' => '.items-list', 'filter-attribute' => 'name', 'scrape-path' => scraper_results_path, 'scrape' => current_list.present? } %>
-    </p>
-  <% end %>
-</div>
-
-<% cache cache_key_for_items(@items) do %>
-  <div class="items-list">
-    <% @items.each do |item| %>
-      <%= render 'item', item: item %>
-    <% end %>
-  </div>
-<% end %>
-
-<div class="scraper-results">
-</div>
--->
