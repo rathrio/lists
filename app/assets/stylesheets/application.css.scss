@@ -55,15 +55,19 @@
   margin-bottom: 1rem !important;
   padding: 0;
   padding-right: 1.25rem;
+
   img {
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
   }
+
   &:hover {
+    box-shadow: 0 2px 3px rgba(146, 178, 235, 0.8), 0 0 0 1px rgba(146, 178, 235, 0.8);
     .level>.item-actions {
       display: flex !important;
     }
   }
+
   @media (max-width: 500px) {
     .title {
       width: 100px;
