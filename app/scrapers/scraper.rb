@@ -40,6 +40,9 @@ module Scraper
       }
     end
 
+    # @return [String] media specific status name, e.g. "Watching" for the
+    #   status "doing" if this scraper scrapes movie data. Override
+    #   .human_status_names in scraper descendants.
     def human_status(status)
       human_status_names.fetch(status.to_sym.downcase)
     end
@@ -114,7 +117,7 @@ module Scraper
   def scrape_date(result)
   end
 
-  # @retun [Array<Link>] list of links extracted from result.
+  # @return [Array<Link>] list of links extracted from result.
   def scrape_links(result)
     []
   end

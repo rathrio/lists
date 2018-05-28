@@ -1,39 +1,37 @@
-const Modal = (function() {
+const Modal = (() => {
   function closeAll() {
-    const modals = document.getElementsByClassName('modal');
+    const modals = document.getElementsByClassName('modal')
     for (let i = 0; i < modals.length; i++) {
-      const modal = modals[i];
-      modal.classList.remove('is-active');
+      const modal = modals[i]
+      modal.classList.remove('is-active')
     }
   }
 
   function open(id) {
-    var modal = document.getElementById(id);
-    modal.classList.add('is-active');
+    const modal = document.getElementById(id)
+    modal.classList.add('is-active')
   }
 
   function toggle(id) {
-    var modal = document.getElementById(id);
-    modal.classList.toggle('is-active');
+    const modal = document.getElementById(id)
+    modal.classList.toggle('is-active')
   }
 
   function ready() {
-    var modalBackground = document.getElementsByClassName('modal-background')[0];
-    modalBackground.onclick = function(e) {
-      e.preventDefault();
-      closeAll();
-    };
+    const modalBackground = document.getElementsByClassName('modal-background')[0]
+    modalBackground.onclick = e => {
+      e.preventDefault()
+      closeAll()
+    }
   }
 
-  document.addEventListener("turbolinks:load", function() {
-    ready()
-  });
+  document.addEventListener("turbolinks:load", ready)
 
   return {
     closeAll: closeAll,
     toggle: toggle,
     open: open
-  };
+  }
 })()
 
 export default Modal
