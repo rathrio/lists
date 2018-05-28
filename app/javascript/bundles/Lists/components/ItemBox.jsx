@@ -4,14 +4,14 @@ const StatusTags = ({ item, onTagClick }) => {
   let tagColor
 
   switch (item.status) {
-    case 'doing':
-      tagColor = 'warning'
-      break
-    case 'done':
-      tagColor = 'success'
-      break
-    default:
-      return ""
+  case 'doing':
+    tagColor = 'warning'
+    break
+  case 'done':
+    tagColor = 'success'
+    break
+  default:
+    return ''
   }
 
   return (
@@ -26,7 +26,7 @@ const StatusTags = ({ item, onTagClick }) => {
 const ArchiveActions = ({ onArchiveClick }) => (
   <div className="level-item">
     <a target="blank" href="#" onClick={onArchiveClick}>
-      <span className="icon is-medium" data-balloon="Archive"><i className="fa fa-archive fa-lg"></i></span>
+      <span className="icon is-medium" data-balloon="Archive"><i className="fa fa-archive fa-lg" /></span>
     </a>
   </div>
 )
@@ -35,18 +35,20 @@ const RestoreActions = ({ onRestoreClick, onDeleteClick }) => (
   <Fragment>
     <div className="level-item">
       <a target="blank" href="#" onClick={onRestoreClick}>
-        <span className="icon is-medium" data-balloon="Restore"><i className="fa fa-recycle fa-lg"></i></span>
+        <span className="icon is-medium" data-balloon="Restore"><i className="fa fa-recycle fa-lg" /></span>
       </a>
     </div>
     <div className="level-item">
       <a target="blank" href="#" onClick={onDeleteClick}>
-        <span className="icon is-medium" data-balloon="Delete for good"><i className="fa fa-trash fa-lg"></i></span>
+        <span className="icon is-medium" data-balloon="Delete for good"><i className="fa fa-trash fa-lg" /></span>
       </a>
     </div>
   </Fragment>
 )
 
-const ItemBox = ({ item, onTagFilter, onArchive, onRestore, onDelete, onToggle }) => {
+const ItemBox = ({
+  item, onTagFilter, onArchive, onRestore, onDelete, onToggle
+}) => {
   const thumbUrl = item.image.thumb.url
 
   const pirateSearchUrl = encodeURI(`https://thepiratebay.org/search/${item.name}`)
@@ -88,7 +90,7 @@ const ItemBox = ({ item, onTagFilter, onArchive, onRestore, onDelete, onToggle }
         <div className="level-left is-mobile">
           <div className="level-item">
             <figure className="image is-64x64">
-              <img src={thumbUrl} />
+              <img src={thumbUrl} alt={item.name} />
             </figure>
           </div>
 
@@ -114,46 +116,44 @@ const ItemBox = ({ item, onTagFilter, onArchive, onRestore, onDelete, onToggle }
             </div>
           )}
 
-          {item.tags.map((tag) => {
-            return (
-              <div key={`item-tag-${tag}`} className="level-item is-hidden-touch has-pointer" onClick={e => onTagClick(e, `t[${tag}]`)} data-balloon={`Show ${tag} items`}>
-                <span className="tag is-rounded is-light is-small">
-                  {tag}
-                </span>
-              </div>
-            )
-          })}
+          {item.tags.map(tag => (
+            <div key={`item-tag-${tag}`} className="level-item is-hidden-touch has-pointer" onClick={e => onTagClick(e, `t[${tag}]`)} data-balloon={`Show ${tag} items`}>
+              <span className="tag is-rounded is-light is-small">
+                {tag}
+              </span>
+            </div>
+          ))}
         </div>
 
         <div className="level-right is-mobile item-actions is-hidden">
           <div className="level-item is-hidden-mobile">
             <a target="blank" href={pirateSearchUrl}>
-              <span className="icon is-medium" data-balloon="Search the Bay"><i className="fa fa-magnet fa-lg"></i></span>
+              <span className="icon is-medium" data-balloon="Search the Bay"><i className="fa fa-magnet fa-lg" /></span>
             </a>
           </div>
 
           <div className="level-item is-hidden-mobile">
             <a target="blank" href={googleSearchUrl}>
-              <span className="icon is-medium" data-balloon="Search Google"><i className="fa fa-google fa-lg"></i></span>
+              <span className="icon is-medium" data-balloon="Search Google"><i className="fa fa-google fa-lg" /></span>
             </a>
           </div>
 
           <div className="level-item is-hidden-mobile">
             <a target="blank" href={youtubeSearchUrl}>
-              <span className="icon is-medium" data-balloon="Search YouTube"><i className="fa fa-youtube-play fa-lg"></i></span>
+              <span className="icon is-medium" data-balloon="Search YouTube"><i className="fa fa-youtube-play fa-lg" /></span>
             </a>
           </div>
 
           <div className="level-item is-hidden-mobile">
             <a target="blank" href={netflixSearchUrl}>
-              <span className="icon is-medium" data-balloon="Search Netflix"><i className="fa fa-tv fa-lg"></i></span>
+              <span className="icon is-medium" data-balloon="Search Netflix"><i className="fa fa-tv fa-lg" /></span>
             </a>
           </div>
 
           {itemActions}
 
           <div className="level-item has-pointer" onClick={onStatusToggleClick}>
-            <span className="icon is-medium" data-balloon="Toggle Status"><i className={`fa fa-check fa-lg item-status-toggle is-${item.status}`}></i></span>
+            <span className="icon is-medium" data-balloon="Toggle Status"><i className={`fa fa-check fa-lg item-status-toggle is-${item.status}`} /></span>
           </div>
         </div>
       </div>
