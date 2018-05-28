@@ -6,7 +6,7 @@ const ScraperResult = ({ result, onAdd }) => {
   const year = new Date(date).getFullYear()
   const tags = result.tags.slice(0, 4)
 
-  const onClick = (_) => onAdd(result)
+  const onClick = e => onAdd(result)
 
   return (
     <div className="box item-box scraper-result has-pointer" data-balloon="Add to List" onClick={onClick}>
@@ -14,7 +14,7 @@ const ScraperResult = ({ result, onAdd }) => {
         <div className="level-left is-mobile">
           <div className="level-item">
             <figure className="image is-64x64">
-              <img src={thumbUrl} style={{ width: "64px", height: "64px", objectFit: "cover" }} />
+              <img src={thumbUrl} style={{ width: '64px', height: '64px', objectFit: 'cover' }} alt={result.name} />
             </figure>
           </div>
 
@@ -30,15 +30,13 @@ const ScraperResult = ({ result, onAdd }) => {
             </span>
           </div>
 
-          {tags.map((tag) => {
-            return (
-              <div key={`scraper-result-tag-${tag}`} className="level-item is-hidden-touch item-tag">
-                <span className="tag is-rounded is-light is-small">
-                  {tag}
-                </span>
-              </div>
-            )
-          })}
+          {tags.map(tag => (
+            <div key={`scraper-result-tag-${tag}`} className="level-item is-hidden-touch item-tag">
+              <span className="tag is-rounded is-light is-small">
+                {tag}
+              </span>
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -46,8 +44,8 @@ const ScraperResult = ({ result, onAdd }) => {
 }
 
 const ScraperResults = ({ results, onAdd }) => {
-  const resultsList = results.map((result, index) => (
-    <ScraperResult key={`scraper-result-${index}`} result={result} onAdd={onAdd} />
+  const resultsList = results.map(result => (
+    <ScraperResult key={`scraper-result-${result.name}-${result.date}`} result={result} onAdd={onAdd} />
   ))
 
   return (

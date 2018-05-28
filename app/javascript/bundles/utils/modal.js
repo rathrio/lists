@@ -1,7 +1,7 @@
 const Modal = (() => {
   function closeAll() {
     const modals = document.getElementsByClassName('modal')
-    for (let i = 0; i < modals.length; i++) {
+    for (let i = 0; i < modals.length; i += 1) {
       const modal = modals[i]
       modal.classList.remove('is-active')
     }
@@ -19,18 +19,18 @@ const Modal = (() => {
 
   function ready() {
     const modalBackground = document.getElementsByClassName('modal-background')[0]
-    modalBackground.onclick = e => {
+    modalBackground.onclick = (e) => {
       e.preventDefault()
       closeAll()
     }
   }
 
-  document.addEventListener("turbolinks:load", ready)
+  document.addEventListener('turbolinks:load', ready)
 
   return {
-    closeAll: closeAll,
-    toggle: toggle,
-    open: open
+    closeAll,
+    toggle,
+    open
   }
 })()
 

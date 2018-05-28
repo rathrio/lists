@@ -34,44 +34,8 @@ export default class Items extends Component {
     Mousetrap.bind('s', this.toggleItemStatusFilter)
   }
 
-  toggleItemStatusFilter = () => {
-    const statusRgx = /\bs\[([^\]]+)\]/g
 
-    if (!this.state.query.match(statusRgx)) {
-      this.setState(prevState => ({ query: `s[todo] ${prevState.query}` }))
-      return
-    }
-
-    const newQuery = this.state.query.replace(statusRgx, (_, status) => {
-      let nextStatus = ''
-      switch (status) {
-        case 'todo':
-          nextStatus = 'doing'
-          break;
-        case 'doing':
-          nextStatus = 'done'
-          break;
-        case 'done':
-          return ''
-      }
-
-      return `s[${nextStatus}]`
-    })
-
-    this.filter(newQuery.trim())
-  }
-
-  match = (str, query) => (
-    str.toLowerCase().match(this.escapeRgx(query.toLowerCase()))
-  )
-
-  matchItem = (item, query) => (
-    this.match(item.name, query)
-    || item.tags.some(tag => (this.match(tag, query)))
-    || (item.year && this.match(item.year.toString(), query))
-  )
-
-  onOmniInput = (e) => this.filter(e.target.value)
+  onOmniInput = e => this.filter(e.target.value)
 
   onTagFilter = (tag, options) => {
     if (!options.append) {
@@ -83,24 +47,11 @@ export default class Items extends Component {
     this.filter(`${currentQuery} ${tag}`.trim())
   }
 
-  showSpinner = () => this.setState({ showSpinner: true })
-  hideSpinner = () => this.setState({ showSpinner: false })
-
-  resetScraperResults = () => this.setState({ scraperResults: [] })
-
-  remove = (item) => (
-    this.setState(
-      prevState => (
-        { items: this.state.items.filter(i => (i !== item)) }
-      )
-    )
-  )
-
   onOmniSubmit = (e) => {
     this.showSpinner()
     const query = e.target.value.replace(this.tagsRgx, '').trim()
 
-    API.get('/scraper_results', { params: { query: query } }).then(
+    API.get('/scraper_results', { params: { query } }).then(
       (response) => {
         this.hideSpinner()
         this.setState({ scraperResults: response.data })
@@ -164,7 +115,7 @@ export default class Items extends Component {
     API.put(`/items/${item.id}/toggle_status`).then(
       (response) => {
         this.setState(prevState => (
-          { items: prevState.items.map(i => (i.id === item.id) ? response.data : i) }
+          { items: prevState.items.map(i => ((i.id === item.id) ? response.data : i)) }
         ))
       },
       (error) => {
@@ -173,33 +124,82 @@ export default class Items extends Component {
     )
   }
 
+  toggleItemStatusFilter = () => {
+    const statusRgx = /\bs\[([^\]]+)\]/g
+
+    if (!this.state.query.match(statusRgx)) {
+      this.setState(prevState => ({ query: `s[todo] ${prevState.query}` }))
+      return
+    }
+
+    const newQuery = this.state.query.replace(statusRgx, (_, status) => {
+      let nextStatus = ''
+      switch (status) {
+      case 'todo':
+        nextStatus = 'doing'
+        break;
+      case 'doing':
+        nextStatus = 'done'
+        break;
+      default:
+        return ''
+      }
+
+      return `s[${nextStatus}]`
+    })
+
+    this.filter(newQuery.trim())
+  }
+
+  match = (str, query) => (
+    str.toLowerCase().match(this.escapeRgx(query.toLowerCase()))
+  )
+
+  matchItem = (item, query) => (
+    this.match(item.name, query)
+    || item.tags.some(tag => (this.match(tag, query)))
+    || (item.year && this.match(item.year.toString(), query))
+  )
+
   filter = (query) => {
     this.resetScraperResults()
     this.setState({ query: query.toString() })
   }
 
-  escapeRgx = (str) => str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")
+  showSpinner = () => this.setState({ showSpinner: true })
+  hideSpinner = () => this.setState({ showSpinner: false })
+
+  resetScraperResults = () => this.setState({ scraperResults: [] })
+
+  remove = item => (
+    this.setState(prevState => (
+      { items: prevState.items.filter(i => (i !== item)) }
+    ))
+  )
+
+  escapeRgx = str => str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&')
 
   filteredItems = (query) => {
-    let items = this.state.items
+    let { items } = this.state
+
     if (!query) {
       return items
     }
 
     const q = query.replace(this.tagsRgx, (_, type, tag) => {
       switch (type) {
-        case 's':
-          items = items.filter(item => (item.status === tag.toLowerCase()))
-          break;
-        case 'y':
-          items = items.filter(item => (item.year && this.match(item.year.toString(), tag)))
-          break;
-        case 't':
-          items = items.filter(item => item.tags.some(t => this.match(t, tag)))
-          break;
-        default:
-          console.log(`Unknown tag type ${type}`);
-          break;
+      case 's':
+        items = items.filter(item => (item.status === tag.toLowerCase()))
+        break;
+      case 'y':
+        items = items.filter(item => (item.year && this.match(item.year.toString(), tag)))
+        break;
+      case 't':
+        items = items.filter(item => item.tags.some(t => this.match(t, tag)))
+        break;
+      default:
+        console.log(`Unknown tag type ${type}`);
+        break;
       }
 
       return ''
@@ -213,13 +213,13 @@ export default class Items extends Component {
   }
 
   render() {
-    const query = this.state.query
+    const { query } = this.state
 
     const scraperResults = (this.state.scraperResults.length > 0)
       ? (<ScraperResults results={this.state.scraperResults} onAdd={this.onResultAdd} />)
-      : ""
+      : ''
 
-    const spinner = (this.state.showSpinner) ? (<Spinner />) : ""
+    const spinner = (this.state.showSpinner) ? (<Spinner />) : ''
 
     return (
       <Fragment>
@@ -231,7 +231,8 @@ export default class Items extends Component {
           onItemArchive={this.onItemArchive}
           onItemRestore={this.onItemRestore}
           onItemDelete={this.onItemDelete}
-          onItemToggle={this.onItemToggle} />
+          onItemToggle={this.onItemToggle}
+        />
 
         {spinner}
         {scraperResults}
