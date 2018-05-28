@@ -10,6 +10,12 @@
     "react-on-rails": "^11.0.6"
   },
   "devDependencies": {
+    "babel-eslint": "8",
+    "eslint": "4.x",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.8.2",
     "webpack-dev-server": "2.11.2"
   }
 }

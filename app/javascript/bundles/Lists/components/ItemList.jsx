@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ItemBox from './ItemBox'
 
 const ItemList = ({ items, onTagFilter, onItemArchive, onItemRestore, onItemDelete, onItemToggle }) => {

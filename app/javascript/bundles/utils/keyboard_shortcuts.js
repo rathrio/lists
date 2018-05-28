@@ -31,7 +31,7 @@ function gotoSettings() {
 
 function gotoList(n) {
   const key = n.key
-  const selector = '[data-shortcut="' + key + '"]'
+  const selector = `[data-shortcut="${key}"]`
   const link = document.querySelector(selector)
 
   if (link.length === 0) {
@@ -42,7 +42,7 @@ function gotoList(n) {
 }
 
 function toggleShortcutsModal() {
-  Modal.toggle("shortcuts-modal")
+  Modal.toggle('shortcuts-modal')
 }
 
 function closeModals() {
@@ -56,8 +56,8 @@ function escapeActions() {
 function toggleItemStatus() {
   const elements = document.querySelectorAll(':hover')
 
-  if (elements.length == 0) {
-    return
+  if (elements.length === 0) {
+    return true
   }
 
   const itemBox = Array.from(elements).find(node => (
@@ -82,6 +82,6 @@ Mousetrap.bind('g a', gotoArchived)
 Mousetrap.bind('g s', gotoSettings)
 Mousetrap.bind('space', toggleItemStatus);
 
-[1, 2, 3, 4, 5, 6, 7, 8, 9].forEach(n => {
+[1, 2, 3, 4, 5, 6, 7, 8, 9].forEach((n) => {
   Mousetrap.bind(n.toString(), gotoList)
 })
