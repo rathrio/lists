@@ -95,3 +95,9 @@ Metrics/AbcSize:
 
 Metrics/BlockLength:
   Enabled: false
+
+Naming/MemoizedInstanceVariableName:
+  Enabled: false
+
+Naming/HeredocDelimiterNaming:
+  Enabled: false

@@ -2,86 +2,86 @@ import * as Mousetrap from 'mousetrap'
 import Modal from './modal'
 
 function focusFilter() {
-  window.scrollTo(0, 0);
+  window.scrollTo(0, 0)
 
-  const input = document.getElementById('omni-bar');
+  const input = document.getElementById('omni-bar')
   input.focus()
 
   // Comment in for selecting the input
   // input.select()
 
-  return false;
+  return false
 }
 
 function visit(url) {
-  Turbolinks.visit(url);
+  Turbolinks.visit(url)
 }
 
 function gotoHome() {
-  visit('/');
+  visit('/')
 }
 
 function gotoArchived() {
-  visit('/items?archived=true');
+  visit('/items?archived=true')
 }
 
 function gotoSettings() {
-  visit('/lists');
+  visit('/lists')
 }
 
 function gotoList(n) {
-  const key = n.key;
-  const selector = '[data-shortcut="' + key + '"]';
-  const link = document.querySelector(selector);
+  const key = n.key
+  const selector = '[data-shortcut="' + key + '"]'
+  const link = document.querySelector(selector)
 
   if (link.length === 0) {
-    return;
+    return
   }
 
-  visit(link.href);
+  visit(link.href)
 }
 
 function toggleShortcutsModal() {
-  Modal.toggle("shortcuts-modal");
+  Modal.toggle("shortcuts-modal")
 }
 
 function closeModals() {
-  Modal.closeAll();
+  Modal.closeAll()
 }
 
 function escapeActions() {
-  closeModals();
+  closeModals()
 }
 
 function toggleItemStatus() {
-  const elements = document.querySelectorAll(':hover');
+  const elements = document.querySelectorAll(':hover')
 
   if (elements.length == 0) {
-    return;
+    return
   }
 
-  var itemBox = Array.from(elements).find(node => (
+  const itemBox = Array.from(elements).find(node => (
     node.className.includes('item-box')
-  ));
+  ))
 
-  var toggle = itemBox.getElementsByClassName('item-status-toggle')[0];
+  const toggle = itemBox.getElementsByClassName('item-status-toggle')[0]
   if (toggle) {
-    toggle.click();
+    toggle.click()
   }
 
-  return false;
+  return false
 }
 
-Mousetrap.reset();
+Mousetrap.reset()
 
-Mousetrap.bind('/', focusFilter);
-Mousetrap.bind('?', toggleShortcutsModal);
-Mousetrap.bind('esc', escapeActions);
-Mousetrap.bind('g h', gotoHome);
-Mousetrap.bind('g a', gotoArchived);
-Mousetrap.bind('g s', gotoSettings);
+Mousetrap.bind('/', focusFilter)
+Mousetrap.bind('?', toggleShortcutsModal)
+Mousetrap.bind('esc', escapeActions)
+Mousetrap.bind('g h', gotoHome)
+Mousetrap.bind('g a', gotoArchived)
+Mousetrap.bind('g s', gotoSettings)
 Mousetrap.bind('space', toggleItemStatus);
 
-[1, 2, 3, 4, 5, 6, 7, 8, 9].forEach(function (n) {
-  Mousetrap.bind(n.toString(), gotoList);
-});
+[1, 2, 3, 4, 5, 6, 7, 8, 9].forEach(n => {
+  Mousetrap.bind(n.toString(), gotoList)
+})
