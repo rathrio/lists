@@ -1,6 +1,5 @@
 import ReactOnRails from 'react-on-rails';
 import axios from 'axios'
-import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
 import * as Mousetrap from 'mousetrap'
 
