@@ -94,7 +94,7 @@ const ItemBox = ({
             </figure>
           </div>
 
-          <div className="level-item title-item">
+          <div className="level-item title-item" data-balloon={item.description} data-balloon-length="xlarge">
             <div className="subtitle is-5"><a href={`/items/${item.id}`}>{item.name}</a></div>
           </div>
 
