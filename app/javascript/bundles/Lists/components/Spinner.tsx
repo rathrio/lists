@@ -8,6 +8,6 @@ const Spinner = () => (
       </span>
     </div>
   </div>
-)
+);
 
-export default Spinner
+export default Spinner;
