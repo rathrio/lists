@@ -23,4 +23,14 @@ export interface Item {
   deleted_at: string;
   date: string;
   image?: Image;
+  links?: string[];
+}
+
+export interface ScraperResult {
+  name: string;
+  description: string;
+  remote_image_url: string;
+  date: string;
+  tags: string[];
+  links?: string[];
 }

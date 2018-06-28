@@ -1,5 +1,6 @@
 import * as Mousetrap from 'mousetrap';
 import Modal from './modal';
+import Rails from './rails';
 
 function focusFilter() {
   window.scrollTo(0, 0);
@@ -14,9 +15,7 @@ function focusFilter() {
 }
 
 function visit(url: string) {
-  window.location.replace(url);
-  // TODO get turbolinks working with TS.
-  // Turbolinks.visit(url);
+  Rails.visit(url);
 }
 
 function gotoHome() {

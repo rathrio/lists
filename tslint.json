@@ -11,7 +11,10 @@
         "object-literal-sort-keys": false,
         "prefer-for-of": false,
         "trailing-comma": false,
-        "ordered-imports": false
+        "ordered-imports": false,
+        "member-access": false,
+        "no-console": false,
+        "semicolon": [true, "always", "ignore-bound-class-methods"]
     },
     "rulesDirectory": []
 }
