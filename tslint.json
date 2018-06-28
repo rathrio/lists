@@ -10,7 +10,8 @@
         "interface-name": [true, "never-prefix"],
         "object-literal-sort-keys": false,
         "prefer-for-of": false,
-        "trailing-comma": false
+        "trailing-comma": false,
+        "ordered-imports": false
     },
     "rulesDirectory": []
 }
