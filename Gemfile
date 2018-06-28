@@ -44,7 +44,7 @@ gem 'paranoia'
 gem 'sidekiq'
 
 # For packing frontend libs
-gem 'webpacker'
+gem 'webpacker', '>= 4.0.x'
 gem 'react_on_rails', '10.1.0'
 
 # Frontend
