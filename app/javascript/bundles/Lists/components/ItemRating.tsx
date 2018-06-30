@@ -15,6 +15,8 @@ class ItemRating extends React.Component<Props, State> {
     rating: this.props.item.rating || 0
   };
 
+  private readonly ratingNames = ['Abysmal', 'Poor', 'Good', 'Great', 'Masterful'];
+
   onStarEnter = (rating: number) => {
     this.setState({ rating });
   };
@@ -31,13 +33,14 @@ class ItemRating extends React.Component<Props, State> {
     const starIcon = n <= this.state.rating ? 'fa-star' : 'fa-star-o';
     const className = `fa ${starIcon} fa-sm has-pointer item-rating-star`;
     return (
-      <i
-        key={n}
-        className={className}
-        onMouseEnter={() => this.onStarEnter(n)}
-        onMouseLeave={() => this.onStarLeave(n)}
-        onMouseDown={() => this.onStarClick(n)}
-      />
+      <span key={n} data-balloon={this.ratingNames[n - 1]}>
+        <i
+          className={className}
+          onMouseEnter={() => this.onStarEnter(n)}
+          onMouseLeave={() => this.onStarLeave(n)}
+          onMouseDown={() => this.onStarClick(n)}
+        />
+      </span>
     );
   };
 
