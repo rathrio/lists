@@ -63,7 +63,10 @@
 
   &:hover {
     box-shadow: 0 2px 3px rgba(146, 178, 235, 0.8), 0 0 0 1px rgba(146, 178, 235, 0.8);
-    .level>.item-actions {
+    .level > .item-actions {
+      display: flex !important;
+    }
+    .show-on-hover {
       display: flex !important;
     }
   }
@@ -110,7 +113,4 @@
       }
     }
   }
-}
-
-.item-rating {
 }

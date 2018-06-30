@@ -45,8 +45,14 @@ class ItemRating extends React.Component<Props, State> {
   };
 
   render() {
+    let className = 'level-item is-hidden-mobile item-rating show-on-hover';
+
+    if (this.state.rating === 0) {
+      className = `${className} is-hidden`;
+    }
+
     return (
-      <div className="level-item is-hidden-mobile item-rating">
+      <div className={className}>
         {[1, 2, 3, 4, 5].map((n) => this.renderStar(n))}
       </div>
     );
