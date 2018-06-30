@@ -66,7 +66,7 @@ function toggleItemStatus() {
   );
 
   const toggle = itemBox!.getElementsByClassName(
-    'item-status-toggle'
+    'status-bar'
   )[0] as HTMLElement;
 
   if (toggle) {
