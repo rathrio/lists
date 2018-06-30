@@ -9,6 +9,7 @@ interface Props {
   onItemRestore(item: Item): void;
   onItemDelete(item: Item): void;
   onItemToggle(item: Item): void;
+  onItemUpdateRating(item: Item, rating: number): void;
 }
 
 const ItemList = ({
@@ -17,7 +18,8 @@ const ItemList = ({
   onItemArchive,
   onItemRestore,
   onItemDelete,
-  onItemToggle
+  onItemToggle,
+  onItemUpdateRating
 }: Props) => {
   const itemBoxes = items.map((i) => (
     <ItemBox
@@ -28,6 +30,7 @@ const ItemList = ({
       onRestore={onItemRestore}
       onDelete={onItemDelete}
       onToggle={onItemToggle}
+      onUpdateRating={onItemUpdateRating}
     />
   ));
 
