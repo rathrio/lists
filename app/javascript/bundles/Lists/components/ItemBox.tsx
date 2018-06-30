@@ -144,6 +144,12 @@ const ItemBox = ({
 
   return (
     <div className="box item-box">
+      <div
+        className={`status-bar is-${item.status} has-pointer`}
+        data-balloon="Toggle Status"
+        onClick={onStatusToggleClick}
+      />
+
       <div className="level is-mobile">
         <div className="level-left is-mobile">
           <div className="level-item">
@@ -235,16 +241,6 @@ const ItemBox = ({
           </div>
 
           {itemActions}
-
-          <div className="level-item has-pointer" onClick={onStatusToggleClick}>
-            <span className="icon is-medium" data-balloon="Toggle Status">
-              <i
-                className={`fa fa-check fa-lg item-status-toggle is-${
-                  item.status
-                }`}
-              />
-            </span>
-          </div>
         </div>
       </div>
     </div>
