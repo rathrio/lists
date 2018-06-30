@@ -2,14 +2,15 @@
 #
 # Migrate and restart services in production.
 
+# Shutdown first to free up memory
+bundle exec sidekiqctl stop tmp/pids/sidekiq.pid
+kill -9 $(cat /tmp/lists.pid)
+
 bundle install
 yarn install
 
 bundle exec rake assets:precompile
 bundle exec rake db:migrate
 
-bundle exec sidekiqctl stop tmp/pids/sidekiq.pid
 bundle exec sidekiq -C config/sidekiq.yml
-
-kill -9 $(cat /tmp/lists.pid)
 bundle exec puma -C config/puma_production.rb
