@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { Item } from '..';
+import ItemRating from './ItemRating';
 
 interface StatusTagsProps {
   item: Item;
@@ -81,6 +82,7 @@ interface Props {
   onRestore(item: Item): void;
   onDelete(item: Item): void;
   onToggle(item: Item): void;
+  onUpdateRating(item: Item, rating: number): void;
 }
 
 const ItemBox = ({
@@ -89,7 +91,8 @@ const ItemBox = ({
   onArchive,
   onRestore,
   onDelete,
-  onToggle
+  onToggle,
+  onUpdateRating
 }: Props) => {
   const thumbUrl = item!.image!.thumb.url || '';
 
@@ -194,6 +197,8 @@ const ItemBox = ({
               <span className="tag is-rounded is-light is-small">{tag}</span>
             </div>
           ))}
+
+          <ItemRating item={item} onUpdateRating={onUpdateRating} />
         </div>
 
         <div className="level-right is-mobile item-actions is-hidden">

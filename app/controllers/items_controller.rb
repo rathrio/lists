@@ -1,6 +1,14 @@
 class ItemsController < ApplicationController
-  before_action :set_item,
-    only: %i(show update destroy scrape really_destroy restore toggle_status)
+  before_action :set_item, only: %i(
+    show
+    update
+    destroy
+    scrape
+    really_destroy
+    restore
+    toggle_status
+    update_rating
+  )
 
   def index
     @items = if (list_ids = params[:list_ids]).present?
@@ -60,6 +68,12 @@ class ItemsController < ApplicationController
     render json: @item.to_json
   end
 
+  def update_rating
+    rating = params.fetch(:rating)
+    @item.update_attributes!(rating: rating)
+    render json: @item.to_json
+  end
+
   def destroy
     @item.destroy!
     render json: @item.to_json
@@ -77,9 +91,7 @@ class ItemsController < ApplicationController
 
   def scrape
     begin
-      unless @item.lucky_scrape
-        flash[:alert] = 'Could not scrape item'
-      end
+      flash[:alert] = 'Could not scrape item' unless @item.lucky_scrape
     rescue SocketError
       flash[:alert] = 'No internet connection'
     end
@@ -94,6 +106,12 @@ class ItemsController < ApplicationController
   end
 
   def item_params
-    params.require(:item).permit(:name, :description, :date, :remote_image_url)
+    params.require(:item).permit(
+      :name,
+      :description,
+      :date,
+      :remote_image_url,
+      :rating
+    )
   end
 end

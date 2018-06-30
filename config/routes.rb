@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     put :scrape, on: :member
     put :restore, on: :member
     put :toggle_status, on: :member
+    put :update_rating, on: :member
     delete :really_destroy, on: :member
   end
 

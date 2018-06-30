@@ -1,17 +1,13 @@
-import axios from 'axios';
 import React, { Fragment } from 'react';
 import * as Mousetrap from 'mousetrap';
 
+import API from '../../utils/api';
 import Rails from '../../utils/rails';
 import OmniBar from './OmniBar';
 import ItemList from './ItemList';
 import Spinner from './Spinner';
 import ScraperResults from './ScraperResults';
 import { Item, ScraperResult } from '..';
-
-const API = axios.create({
-  timeout: 10000
-});
 
 interface Props {
   readonly items: Item[];
@@ -136,6 +132,21 @@ export default class Items extends React.Component<Props, State> {
     );
   };
 
+  onItemUpdateRating = (item: Item, rating: number) => {
+    API.put(`/items/${item.id}/update_rating`, { rating }).then(
+      (response) => {
+        this.setState((prevState) => ({
+          items: prevState.items.map(
+            (i) => (i.id === item.id ? response.data : i)
+          )
+        }));
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
+
   toggleItemStatusFilter = () => {
     const statusRgx = /\bs\[([^\]]+)\]/g;
 
@@ -238,8 +249,8 @@ export default class Items extends React.Component<Props, State> {
           onAdd={this.onResultAdd}
         />
       ) : (
-        ''
-      );
+          ''
+        );
 
     const spinner = this.state.showSpinner ? <Spinner /> : '';
 
@@ -258,6 +269,7 @@ export default class Items extends React.Component<Props, State> {
           onItemRestore={this.onItemRestore}
           onItemDelete={this.onItemDelete}
           onItemToggle={this.onItemToggle}
+          onItemUpdateRating={this.onItemUpdateRating}
         />
 
         {spinner}
