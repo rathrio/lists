@@ -5,11 +5,11 @@ import Rails from './rails';
 function focusFilter() {
   window.scrollTo(0, 0);
 
-  const input = document.getElementById('omni-bar');
+  const input = document.getElementById('omni-bar') as HTMLInputElement;
   input!.focus();
 
   // Comment in for selecting the input
-  // input.select()
+  input!.select();
 
   return false;
 }
