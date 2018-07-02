@@ -2,40 +2,6 @@ import React, { Fragment } from 'react';
 import { Item } from '..';
 import ItemRating from './ItemRating';
 
-interface StatusTagsProps {
-  item: Item;
-  onTagClick(e: any, tag: string): void;
-}
-
-class StatusTags extends React.Component<StatusTagsProps> {
-  public render() {
-    let tagColor: string;
-    const { item, onTagClick } = this.props;
-
-    switch (item.status) {
-      case 'doing':
-        tagColor = 'warning';
-        break;
-      case 'done':
-        tagColor = 'success';
-        break;
-      default:
-        return '';
-    }
-
-    return (
-      <div
-        className="level-item has-pointer"
-        onClick={(e) => onTagClick(e, `s[${item.status}]`)}
-      >
-        <span className={`tag is-rounded is-small is-${tagColor}`}>
-          {item.human_status}
-        </span>
-      </div>
-    );
-  }
-}
-
 const ArchiveActions = ({
   onArchiveClick
 }: {
@@ -168,10 +134,6 @@ const ItemBox = ({
               <a href={`/items/${item.id}`}>{item.name}</a>
             </div>
           </div>
-
-          {item.status !== 'todo' && (
-            <StatusTags item={item} onTagClick={onTagClick} />
-          )}
 
           {item.year && (
             <div
