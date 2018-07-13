@@ -28,8 +28,6 @@ class ItemsController < ApplicationController
              else
                @items.reverse_order
              end
-
-    @items = @items.includes(:list, :tags)
   end
 
   def root

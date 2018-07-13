@@ -1,3 +1,3 @@
 <% cache cache_key_for_items(@items), skip_digest: true do %>
-  <%= react_component("Items", props: { items: @items }, prerender: false) %>
+  <%= react_component("Items", props: { items: @items.includes(:list, :tags) }, prerender: false) %>
 <% end %>
