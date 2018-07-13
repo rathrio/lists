@@ -60,7 +60,7 @@ const ItemBox = ({
   onToggle,
   onUpdateRating
 }: Props) => {
-  const thumbUrl = item!.image!.thumb.url || '';
+  const thumbUrl = item!.image!.thumb.url;
 
   const pirateSearchUrl = encodeURI(
     `https://thepiratebay.org/search/${item.name}`
