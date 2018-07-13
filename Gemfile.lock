@@ -52,7 +52,7 @@ GEM
     bulma-rails (0.7.1)
       sass (~> 3.2)
     byebug (10.0.2)
-    carrierwave (1.2.2)
+    carrierwave (1.2.3)
       activemodel (>= 4.0.0)
       activesupport (>= 4.0.0)
       mime-types (>= 1.16)
@@ -86,9 +86,9 @@ GEM
       railties (>= 3.2, < 6.0)
     foreman (0.85.0)
       thor (~> 0.19.1)
-    gitlab (4.4.0)
-      httparty (>= 0.14.0)
-      terminal-table (>= 1.5.1)
+    gitlab (3.6.1)
+      httparty
+      terminal-table
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     httparty (0.16.2)
@@ -103,7 +103,6 @@ GEM
       execjs
       multi_json (>= 1.3)
       rake
-    libv8 (6.3.292.48.1)
     listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -122,39 +121,35 @@ GEM
     mini_magick (4.8.0)
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
-    mini_racer (0.1.15)
-      libv8 (~> 6.3)
     minitest (5.11.3)
     multi_json (1.13.1)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
     nio4r (2.3.1)
-    nokogiri (1.8.3)
+    nokogiri (1.8.4)
       mini_portile2 (~> 2.3.0)
     octokit (4.9.0)
       sawyer (~> 0.8.0, >= 0.5.3)
     parallel (1.12.1)
     paranoia (2.4.1)
       activerecord (>= 4.0, < 5.3)
-    parser (2.5.1.0)
+    parser (2.5.1.2)
       ast (~> 2.4.0)
     pg (1.0.0)
     powerpack (0.1.2)
-    pronto (0.9.5)
-      gitlab (~> 4.0, >= 4.0.0)
-      httparty (>= 0.13.7)
-      octokit (~> 4.7, >= 4.7.0)
-      rainbow (~> 2.1)
+    pronto (0.6.0)
+      gitlab (~> 3.6, >= 3.4.0)
+      octokit (~> 4.3, >= 4.1.0)
       rugged (~> 0.24, >= 0.23.0)
       thor (~> 0.19.0)
-    pronto-jshint (0.9.0)
+    pronto-jshint (0.6.1)
       jshintrb (~> 0.3.0)
-      pronto (~> 0.9.0)
-    pronto-rubocop (0.9.0)
-      pronto (~> 0.9.0)
+      pronto (~> 0.6.0)
+    pronto-rubocop (0.6.2)
+      pronto (~> 0.6.0)
       rubocop (~> 0.38, >= 0.35.0)
-    pronto-scss (0.9.1)
-      pronto (~> 0.9.0)
+    pronto-scss (0.6.0)
+      pronto (~> 0.6.0)
       scss_lint (~> 0.43, >= 0.43.0)
     pry (0.11.3)
       coderay (~> 1.1.0)
@@ -165,7 +160,7 @@ GEM
     pry-rails (0.3.6)
       pry (>= 0.10.4)
     public_suffix (3.0.2)
-    puma (3.11.4)
+    puma (3.12.0)
     rack (2.0.5)
     rack-protection (2.0.3)
       rack
@@ -202,23 +197,22 @@ GEM
       method_source
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
-    rainbow (2.2.2)
-      rake
+    rainbow (3.0.0)
     rake (12.3.1)
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
-    react_on_rails (10.1.0)
+    react_on_rails (11.0.9)
       addressable
       connection_pool
       execjs (~> 2.5)
       rails (>= 3.2)
-      rainbow (~> 2.2)
+      rainbow (~> 3.0)
     redis (4.0.1)
-    rubocop (0.57.2)
+    rubocop (0.58.1)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
-      parser (>= 2.5)
+      parser (>= 2.5, != 2.5.1.1)
       powerpack (~> 0.1)
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
@@ -302,7 +296,6 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   listen (~> 3.0.5)
   mini_magick
-  mini_racer
   paranoia
   pg
   pronto
@@ -314,7 +307,8 @@ DEPENDENCIES
   puma
   rails (~> 5)
   rails-erd
-  react_on_rails (= 10.1.0)
+  react_on_rails
+  redis
   sass-rails (~> 5)
   sidekiq
   spring
