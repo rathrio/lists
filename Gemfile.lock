@@ -91,6 +91,7 @@ GEM
       terminal-table
     globalid (0.4.1)
       activesupport (>= 4.2.0)
+    hiredis (0.6.1)
     httparty (0.16.2)
       multi_xml (>= 0.5.2)
     i18n (1.0.1)
@@ -292,6 +293,7 @@ DEPENDENCIES
   ffaker
   font-awesome-rails
   foreman
+  hiredis
   httparty
   jbuilder (~> 2.5)
   listen (~> 3.0.5)
