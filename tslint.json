@@ -14,7 +14,8 @@
         "ordered-imports": false,
         "member-access": false,
         "no-console": false,
-        "semicolon": [true, "always", "ignore-bound-class-methods"]
+        "semicolon": [true, "always", "ignore-bound-class-methods"],
+        "member-ordering": false
     },
     "rulesDirectory": []
 }
