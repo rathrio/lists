@@ -1,11 +1,10 @@
-import { observable, autorun } from 'mobx';
-import { ScraperResult } from './../index.d';
-import { Item } from '..';
+import { observable, autorun, computed } from 'mobx';
+import { Item, ScraperResult } from '..';
 import API from '../../utils/api';
 
-export default class ItemStore {
+class ItemStore {
   readonly items = observable<Item>([]);
-  readonly filteredItems = observable<Item>([]);
+  readonly allFilteredItems = observable<Item>([]);
   readonly scraperResults = observable<ScraperResult>([]);
 
   @observable
@@ -14,17 +13,21 @@ export default class ItemStore {
   @observable
   spinnerVisible = false;
 
+  @observable
+  allItemsVisible = false;
+
   private readonly tagsRgx = /\b(s|t|y)\[([^\]]+)\]/g;
+  private readonly itemsToShow = 15;
 
   constructor(items: Item[]) {
     this.items.replace(items);
 
     autorun(
       () => {
-        this.filteredItems.replace(this.computeFilteredItems());
+        this.allFilteredItems.replace(this.computeFilteredItems());
       },
       {
-        delay: 200
+        delay: 300
       }
     );
   }
@@ -169,12 +172,16 @@ export default class ItemStore {
     (item.year && this.match(item.year.toString(), query));
 
   filter = (query: string) => {
+    this.doNotShowAllItems();
     this.resetScraperResults();
     this.query = query.toString();
   };
 
   showSpinner = () => this.spinnerVisible = true;
   hideSpinner = () => this.spinnerVisible = false;
+
+  showAllItems = () => this.allItemsVisible = true;
+  doNotShowAllItems = () => this.allItemsVisible = false;
 
   resetScraperResults = () => this.scraperResults.replace([]);
 
@@ -222,4 +229,29 @@ export default class ItemStore {
 
     return items;
   }
+
+  @computed
+  get filteredItems(): Item[] {
+    if (this.allItemsVisible) {
+      return this.allFilteredItems;
+    }
+
+    return this.allFilteredItems.slice(0, this.itemsToShow);
+  }
+
+  @computed
+  get hasMoreFilteredItems() {
+    return this.allFilteredItems.length > this.filteredItems.length;
+  }
+
+  @computed
+  get moreItemsToShow(): number {
+    if (!this.hasMoreFilteredItems) {
+      return 0;
+    }
+
+    return this.allFilteredItems.length - this.filteredItems.length;
+  }
 }
+
+export default ItemStore;
