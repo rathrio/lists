@@ -21,6 +21,12 @@
 @import 'bulma';
 @import 'font-awesome';
 
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 0.25s, opacity 0.25s linear;
+}
+
 .has-pointer {
   cursor: pointer;
 }
@@ -84,11 +90,11 @@
 
   &:hover {
     box-shadow: 0 2px 3px rgba(146, 178, 235, 0.8), 0 0 0 1px rgba(146, 178, 235, 0.8);
-    .level > .item-actions {
-      display: flex !important;
-    }
-    .show-on-hover {
-      display: flex !important;
+
+    .level > .item-actions, .show-on-hover {
+      visibility: visible;
+      opacity: 1;
+      transition: opacity 0.25s linear;
     }
   }
 

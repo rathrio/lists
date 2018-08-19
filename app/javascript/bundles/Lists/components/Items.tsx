@@ -200,7 +200,8 @@ export default class Items extends React.Component<Props, State> {
   escapeRgx = (str: string) =>
     str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
 
-  filteredItems = (query: string) => {
+  get filteredItems() {
+    const query = this.state.query;
     let { items } = this.state;
 
     if (!query) {
@@ -240,8 +241,6 @@ export default class Items extends React.Component<Props, State> {
   };
 
   render() {
-    const { query } = this.state;
-
     const scraperResults =
       this.state.scraperResults.length > 0 ? (
         <ScraperResults
@@ -263,7 +262,7 @@ export default class Items extends React.Component<Props, State> {
         />
 
         <ItemList
-          items={this.filteredItems(query)}
+          items={this.filteredItems}
           onTagFilter={this.onTagFilter}
           onItemArchive={this.onItemArchive}
           onItemRestore={this.onItemRestore}

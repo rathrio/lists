@@ -111,7 +111,7 @@ const ItemBox = ({
   return (
     <div className="box item-box">
       <div
-        className={`status-bar is-${item.status} has-pointer`}
+        className={`status-bar is-${item.status} has-pointer show-on-hover ${item.status === 'todo' ? 'hidden' : ''}`}
         data-balloon="Toggle Status"
         onClick={onStatusToggleClick}
       />
@@ -169,7 +169,7 @@ const ItemBox = ({
           <ItemRating item={item} onUpdateRating={onUpdateRating} />
         </div>
 
-        <div className="level-right is-mobile item-actions is-hidden">
+        <div className="level-right is-mobile item-actions hidden">
           <div className="level-item is-hidden-mobile">
             <a target="blank" href={pirateSearchUrl}>
               <span className="icon is-medium" data-balloon="Search the Bay">
