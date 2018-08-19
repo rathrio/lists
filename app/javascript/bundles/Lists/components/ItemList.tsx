@@ -1,40 +1,34 @@
 import React from 'react';
+import { observer } from 'mobx-react';
 import ItemBox from './ItemBox';
-import { Item } from '..';
+import ItemStore from '../stores/ItemStore';
 
 interface Props {
-  items: Item[];
-  onTagFilter(tag: string, options: object): void;
-  onItemArchive(item: Item): void;
-  onItemRestore(item: Item): void;
-  onItemDelete(item: Item): void;
-  onItemToggle(item: Item): void;
-  onItemUpdateRating(item: Item, rating: number): void;
+  store: ItemStore;
 }
 
-const ItemList = ({
-  items,
-  onTagFilter,
-  onItemArchive,
-  onItemRestore,
-  onItemDelete,
-  onItemToggle,
-  onItemUpdateRating
-}: Props) => {
-  const itemBoxes = items.map((i) => (
-    <ItemBox
-      key={`item-${i.id}`}
-      item={i}
-      onTagFilter={onTagFilter}
-      onArchive={onItemArchive}
-      onRestore={onItemRestore}
-      onDelete={onItemDelete}
-      onToggle={onItemToggle}
-      onUpdateRating={onItemUpdateRating}
-    />
-  ));
+@observer
+class ItemList extends React.Component<Props> {
+  render() {
+    const {
+      store
+    } = this.props;
 
-  return <div className="items-list">{itemBoxes}</div>;
-};
+    const itemBoxes = store.filteredItems.map((i) => (
+      <ItemBox
+        key={`item-${i.id}`}
+        item={i}
+        onTagFilter={store.onTagFilter}
+        onArchive={store.onItemArchive}
+        onRestore={store.onItemRestore}
+        onDelete={store.onItemDelete}
+        onToggle={store.onItemToggle}
+        onUpdateRating={store.onItemUpdateRating}
+      />
+    ));
+
+    return <div className="items-list">{itemBoxes}</div>;
+  }
+}
 
 export default ItemList;
