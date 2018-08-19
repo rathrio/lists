@@ -50,8 +50,10 @@ export default class Items extends React.Component<Props, State> {
   };
 
   onOmniSubmit = (e: any) => {
+    e.preventDefault();
+
     this.showSpinner();
-    const query = e.target.value.replace(this.tagsRgx, '').trim();
+    const query = this.state.query.replace(this.tagsRgx, '').trim();
 
     API.get('/scraper_results', { params: { query } }).then(
       (response) => {
@@ -238,7 +240,7 @@ export default class Items extends React.Component<Props, State> {
     }
 
     return items;
-  };
+  }
 
   render() {
     const scraperResults =

@@ -8,29 +8,22 @@ interface Props {
 }
 
 const OmniBar = ({ query, placeholder, onInput, onSubmit }: Props) => {
-  const onKeyPress = (e: any) => {
-    if (e.key === 'Enter') {
-      onSubmit(e);
-    }
-
-    return true;
-  };
-
   return (
-    <div className="new-item has-bottom-padding omni-bar">
-      <p className="control">
-        <input
-          value={query}
-          onChange={onInput}
-          onKeyPress={onKeyPress}
-          className="input filter is-expanded is-medium"
-          id="omni-bar"
-          placeholder={placeholder || 'Search'}
-          autoComplete="off"
-          type="text"
-        />
-      </p>
-    </div>
+    <form onSubmit={onSubmit}>
+      <div className="new-item has-bottom-padding omni-bar">
+        <p className="control">
+          <input
+            value={query}
+            onChange={onInput}
+            className="input filter is-expanded is-medium"
+            id="omni-bar"
+            placeholder={placeholder || 'Search'}
+            autoComplete="off"
+            type="text"
+          />
+        </p>
+      </div>
+    </form>
   );
 };
 
