@@ -1,10 +1,9 @@
-import { observable, autorun, computed } from 'mobx';
+import { observable, computed } from 'mobx';
 import { Item, ScraperResult } from '..';
 import API from '../../utils/api';
 
 class ItemStore {
   readonly items = observable<Item>([]);
-  readonly allFilteredItems = observable<Item>([]);
   readonly scraperResults = observable<ScraperResult>([]);
 
   @observable
@@ -21,15 +20,6 @@ class ItemStore {
 
   constructor(items: Item[]) {
     this.items.replace(items);
-
-    autorun(
-      () => {
-        this.allFilteredItems.replace(this.computeFilteredItems());
-      },
-      {
-        delay: 300
-      }
-    );
   }
 
   onOmniInput = (e: any) => this.filter(e.target.value);
@@ -190,7 +180,8 @@ class ItemStore {
   escapeRgx = (str: string) =>
     str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
 
-  computeFilteredItems = (): Item[] => {
+  @computed
+  get allFilteredItems(): Item[] {
     const query = this.query;
     let items = this.items.slice();
 
