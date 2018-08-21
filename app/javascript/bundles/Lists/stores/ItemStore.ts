@@ -1,7 +1,10 @@
-import { observable, computed } from 'mobx';
+import { observable, computed, action } from 'mobx';
 import { Item, ScraperResult } from '..';
 import API from '../../utils/api';
 
+/**
+ * State managment for items overview.
+ */
 class ItemStore {
   readonly items = observable<Item>([]);
   readonly scraperResults = observable<ScraperResult>([]);
@@ -12,6 +15,9 @@ class ItemStore {
   @observable
   spinnerVisible = false;
 
+  /**
+   * Indicates whether we should render all filter matches.
+   */
   @observable
   allItemsVisible = false;
 
@@ -22,8 +28,10 @@ class ItemStore {
     this.items.replace(items);
   }
 
+  @action
   onOmniInput = (e: any) => this.filter(e.target.value);
 
+  @action
   onTagFilter = (tag: string, options: { append: boolean }) => {
     if (!options.append) {
       this.filter(tag);
@@ -34,6 +42,7 @@ class ItemStore {
     this.filter(`${currentQuery} ${tag}`.trim());
   };
 
+  @action
   onOmniSubmit = (e: any) => {
     e.preventDefault();
 
@@ -51,6 +60,7 @@ class ItemStore {
     );
   };
 
+  @action
   onResultAdd = (result: ScraperResult) => {
     API.post('/scraper_results/import', { scraper_results: result }).then(
       (response) => {
@@ -63,6 +73,7 @@ class ItemStore {
     );
   };
 
+  @action
   onItemArchive = (item: Item) => {
     API.delete(`/items/${item.id}`).then(
       (response) => {
@@ -74,6 +85,7 @@ class ItemStore {
     );
   };
 
+  @action
   onItemRestore = (item: Item) => {
     API.put(`/items/${item.id}/restore`).then(
       (response) => {
@@ -85,6 +97,7 @@ class ItemStore {
     );
   };
 
+  @action
   onItemDelete = (item: Item) => {
     if (!window.confirm('Are you sure?')) {
       return;
@@ -100,6 +113,7 @@ class ItemStore {
     );
   };
 
+  @action
   onItemToggle = (item: Item) => {
     API.put(`/items/${item.id}/toggle_status`).then(
       (response) => {
@@ -113,6 +127,7 @@ class ItemStore {
     );
   };
 
+  @action
   onItemUpdateRating = (item: Item, rating: number) => {
     API.put(`/items/${item.id}/update_rating`, { rating }).then(
       (response) => {
@@ -126,6 +141,7 @@ class ItemStore {
     );
   };
 
+  @action
   toggleItemStatusFilter = () => {
     const statusRgx = /\bs\[([^\]]+)\]/g;
 
@@ -153,31 +169,44 @@ class ItemStore {
     this.filter(newQuery.trim());
   };
 
-  match = (str: string, query: string) =>
-    str.toLowerCase().match(this.escapeRgx(query.toLowerCase())) !== null;
-
-  matchItem = (item: Item, query: string) =>
-    this.match(item.name, query) ||
-    item.tags.some((tag) => this.match(tag, query)) ||
-    (item.year && this.match(item.year.toString(), query));
-
+  @action
   filter = (query: string) => {
     this.doNotShowAllItems();
     this.resetScraperResults();
     this.query = query.toString();
   };
 
+  @action
   showSpinner = () => this.spinnerVisible = true;
+
+  @action
   hideSpinner = () => this.spinnerVisible = false;
 
+  /**
+   * Show all *filtered* items, because by default only the first 15 matches
+   * are rendered for fast rerendering.
+   */
+  @action
   showAllItems = () => this.allItemsVisible = true;
+
+  @action
   doNotShowAllItems = () => this.allItemsVisible = false;
 
+  @action
   resetScraperResults = () => this.scraperResults.replace([]);
 
+  @action
   remove = (item: Item) => this.items.replace(this.items.filter((i) => i !== item));
 
-  escapeRgx = (str: string) =>
+  private match = (str: string, query: string) =>
+    str.toLowerCase().match(this.escapeRgx(query.toLowerCase())) !== null;
+
+  private matchItem = (item: Item, query: string) =>
+    this.match(item.name, query) ||
+    item.tags.some((tag) => this.match(tag, query)) ||
+    (item.year && this.match(item.year.toString(), query));
+
+  private escapeRgx = (str: string) =>
     str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
 
   @computed
