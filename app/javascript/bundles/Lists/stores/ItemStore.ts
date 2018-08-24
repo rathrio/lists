@@ -10,6 +10,12 @@ class ItemStore {
   readonly scraperResults = observable<ScraperResult>([]);
 
   @observable
+  activeItem?: Item;
+
+  @observable
+  detailsModalVisible = false;
+
+  @observable
   query = 's[todo] ';
 
   @observable
@@ -193,6 +199,18 @@ class ItemStore {
   doNotShowAllItems = () => this.allItemsVisible = false;
 
   @action
+  showDetailsModal = () => this.detailsModalVisible = true;
+
+  @action
+  hideDetailsModal = () => this.detailsModalVisible = false;
+
+  @action
+  showItemDetails = (item: Item) => {
+    this.activeItem = item;
+    this.showDetailsModal();
+  };
+
+  @action
   resetScraperResults = () => this.scraperResults.replace([]);
 
   @action
@@ -271,6 +289,10 @@ class ItemStore {
     }
 
     return this.allFilteredItems.length - this.filteredItems.length;
+  }
+
+  isActive = (item: Item) => {
+    return this.activeItem === item;
   }
 }
 

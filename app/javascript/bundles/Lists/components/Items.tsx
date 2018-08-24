@@ -8,6 +8,7 @@ import ItemList from './ItemList';
 import { Item } from '..';
 import ItemStore from '../stores/ItemStore';
 import ScraperResultsContent from './ScraperResultsContent';
+import ItemDetails from './ItemDetails';
 
 interface Props {
   readonly items: Item[];
@@ -39,6 +40,7 @@ class Items extends React.Component<Props> {
         <OmniBar store={this.store} />
         <ItemList store={this.store} />
         <ScraperResultsContent store={this.store} />
+        <ItemDetails store={this.store} />
       </Fragment>
     );
   }

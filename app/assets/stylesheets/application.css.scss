@@ -129,3 +129,51 @@
     }
   }
 }
+
+.item-details-modal {
+  .modal-card-head {
+    .edit-item-pencil {
+      cursor: pointer;
+    }
+
+    .external-item-links {
+      z-index: 9999;
+
+      a {
+        margin-right: 20px;
+      }
+    }
+
+    &:hover {
+      .external-item-links, .edit-item-pencil {
+        visibility: visible;
+        opacity: 1;
+        transition: opacity 0.25s linear;
+      }
+    }
+  }
+  .item-details-modal-background {
+    background-color: rgba(10, 10, 10, 0.86);
+  }
+
+  .tags {
+    margin-bottom: 0;
+  }
+
+  .modal-card {
+    width: 900px;
+  }
+
+  @media (max-width: 950px) {
+    .modal-card {
+      width: 95%;
+    }
+  }
+
+  .modal-card-body {
+    display: grid;
+    grid-template-columns: 25% auto;
+    grid-gap: 1em;
+    grid-template-areas: "image fields";
+  }
+}

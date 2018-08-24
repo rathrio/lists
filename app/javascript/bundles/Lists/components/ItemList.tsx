@@ -17,6 +17,7 @@ class ItemList extends React.Component<Props> {
       <ItemBox
         key={`item-${i.id}`}
         item={i}
+        onItemClick={store.showItemDetails}
         onTagFilter={store.onTagFilter}
         onArchive={store.onItemArchive}
         onRestore={store.onItemRestore}
