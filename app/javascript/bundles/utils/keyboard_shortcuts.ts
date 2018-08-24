@@ -1,6 +1,6 @@
 import * as Mousetrap from 'mousetrap';
-import Modal from './modal';
-import Rails from './rails';
+import Modal from './Modal';
+import Rails from './Rails';
 
 function focusFilter() {
   window.scrollTo(0, 0);
