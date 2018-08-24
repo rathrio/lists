@@ -10,6 +10,7 @@ kill -9 $(cat /tmp/lists.pid)
 
 yarn install
 
+rm -r public/packs
 bundle exec rake assets:precompile
 bundle exec rake db:migrate
 
