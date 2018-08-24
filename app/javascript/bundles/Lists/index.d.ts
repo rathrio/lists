@@ -24,6 +24,7 @@ export interface Item {
   date: string;
   image?: Image;
   links?: string[];
+  remote_image_url?: string;
 }
 
 export interface ScraperResult {
