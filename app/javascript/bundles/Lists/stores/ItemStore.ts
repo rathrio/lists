@@ -70,8 +70,8 @@ class ItemStore {
   onResultAdd = (result: ScraperResult) => {
     API.post('/scraper_results/import', { scraper_results: result }).then(
       (response) => {
-        this.scraperResults.replace(this.scraperResults.filter((r) => r !== result));
-        this.items.replace([response.data, ...this.items]);
+        this.scraperResults.remove(result);
+        this.items.unshift(response.data);
       },
       (error) => {
         console.log(error);
@@ -123,9 +123,7 @@ class ItemStore {
   onItemToggle = (item: Item) => {
     API.put(`/items/${item.id}/toggle_status`).then(
       (response) => {
-        this.items.replace(this.items.map(
-          (i) => (i.id === item.id ? response.data : i)
-        ));
+        Object.assign(item, response.data);
       },
       (error) => {
         console.log(error);
@@ -135,16 +133,7 @@ class ItemStore {
 
   @action
   onItemUpdateRating = (item: Item, rating: number) => {
-    API.put(`/items/${item.id}/update_rating`, { rating }).then(
-      (response) => {
-        this.items.replace(this.items.map(
-          (i) => (i.id === item.id ? response.data : i)
-        ));
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    this.update(item, { rating });
   };
 
   @action
@@ -214,11 +203,13 @@ class ItemStore {
   resetScraperResults = () => this.scraperResults.replace([]);
 
   @action
-  remove = (item: Item) => this.items.replace(this.items.filter((i) => i !== item));
+  remove = (item: Item) => {
+    this.items.remove(item);
+  }
 
   @action
   update = (item: Item, attributes: Partial<Item>) => {
-    API.put(`/items/${item.id}`, { item: attributes}).then(
+    API.put(`/items/${item.id}`, { item: attributes }).then(
       (response) => {
         Object.assign(item, response.data);
       },

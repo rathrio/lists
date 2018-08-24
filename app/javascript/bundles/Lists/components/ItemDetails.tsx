@@ -6,6 +6,7 @@ import * as Mousetrap from 'mousetrap';
 import ItemStore from '../stores/ItemStore';
 import { Item } from '..';
 import * as urls from '../../utils/external_item_urls';
+import ItemRating from './ItemRating';
 
 interface Props {
   store: ItemStore;
@@ -29,6 +30,11 @@ class ItemDetails extends React.Component<Props> {
       e.preventDefault();
       this.toggleEditing();
     });
+
+    Mousetrap.bind('esc', (e) => {
+      e.preventDefault();
+      this.close();
+    });
   }
 
   onCancel = (e: any) => {
@@ -43,6 +49,7 @@ class ItemDetails extends React.Component<Props> {
 
   @action
   disableEditing = () => {
+    this.formData = {};
     this.editing = false;
   };
 
@@ -51,7 +58,8 @@ class ItemDetails extends React.Component<Props> {
     this.editing = !this.editing;
   }
 
-  onModalBackgroundClick = () => {
+  @action
+  close = () => {
     if (Object.keys(this.formData).length !== 0) {
       if (!confirm('You have unsaved changes. Close this anyways?')) {
         return;
@@ -90,7 +98,7 @@ class ItemDetails extends React.Component<Props> {
         }`}
       >
         <div
-          onClick={this.onModalBackgroundClick}
+          onClick={this.close}
           className="modal-background"
         />
 
@@ -136,7 +144,7 @@ class ItemDetails extends React.Component<Props> {
             </header>
 
             <section className="modal-card-body">
-              <div>
+              <div className="image-content">
                 <figure className="image is-2by3">
                   <img
                     src={item.image!.url}
@@ -148,6 +156,10 @@ class ItemDetails extends React.Component<Props> {
                     }}
                   />
                 </figure>
+
+                <div className={`item-rating ${item.rating ? '' : 'hidden'}`}>
+                  <ItemRating item={item} onUpdateRating={store.onItemUpdateRating} />
+                </div>
               </div>
 
               {this.editing ? (

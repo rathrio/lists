@@ -158,6 +158,16 @@
     padding-bottom: 15px;
   }
 
+  .image-content {
+    // text-align: center;
+
+    &:hover .item-rating {
+      visibility: visible;
+      opacity: 1;
+      transition: opacity 0.25s linear;
+    }
+  }
+
   .item-details-modal-background {
     background-color: rgba(10, 10, 10, 0.86);
   }

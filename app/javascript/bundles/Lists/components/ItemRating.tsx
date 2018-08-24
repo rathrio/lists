@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Item } from '..';
+import { observer } from 'mobx-react';
+import { observable } from 'mobx';
 
 interface Props {
   item: Item;
@@ -10,19 +12,19 @@ interface State {
   rating: number;
 }
 
+@observer
 class ItemRating extends React.Component<Props, State> {
-  readonly state: State = {
-    rating: this.props.item.rating || 0
-  };
+  @observable
+  rating: number = this.props.item.rating || 0;
 
   private readonly ratingNames = ['Abysmal', 'Poor', 'Good', 'Great', 'Masterful'];
 
   onStarEnter = (rating: number) => {
-    this.setState({ rating });
+    this.rating = rating;
   };
 
   onStarLeave = (rating: number) => {
-    this.setState({ rating: this.props.item.rating || 0 });
+    this.rating = this.props.item.rating || 0;
   };
 
   onStarClick = (rating: number) => {
@@ -30,7 +32,7 @@ class ItemRating extends React.Component<Props, State> {
   };
 
   renderStar = (n: number) => {
-    const starIcon = n <= this.state.rating ? 'fa-star' : 'fa-star-o';
+    const starIcon = n <= this.rating ? 'fa-star' : 'fa-star-o';
     const className = `fa ${starIcon} fa-sm has-pointer item-rating-star`;
     return (
       <span key={n} data-balloon={this.ratingNames[n - 1]}>
@@ -45,16 +47,10 @@ class ItemRating extends React.Component<Props, State> {
   };
 
   render() {
-    let className = 'level-item is-hidden-mobile item-rating show-on-hover';
-
-    if (this.state.rating === 0) {
-      className = `${className} hidden`;
-    }
-
     return (
-      <div className={className}>
+      <Fragment>
         {[1, 2, 3, 4, 5].map((n) => this.renderStar(n))}
-      </div>
+      </Fragment>
     );
   }
 }
