@@ -24,7 +24,7 @@
 .hidden {
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0s 0.25s, opacity 0.25s linear;
+  transition: visibility 0s 0.2s, opacity 0.2s linear;
 }
 
 .has-pointer {
@@ -89,13 +89,13 @@
     border-bottom-left-radius: 5px;
   }
 
-  &:hover {
-    box-shadow: 0 2px 3px rgba(146, 178, 235, 0.8), 0 0 0 1px rgba(146, 178, 235, 0.8);
+  &:hover, &.is-focused {
+    box-shadow: 0 4px 3px rgba(146, 178, 235, 0.8), 0 0 0 1px rgba(146, 178, 235, 0.8);
 
     .level > .item-actions, .show-on-hover {
       visibility: visible;
       opacity: 1;
-      transition: opacity 0.25s linear;
+      transition: opacity 0.2s linear;
     }
   }
 
@@ -147,7 +147,7 @@
       .external-item-links, .edit-item-pencil {
         visibility: visible;
         opacity: 1;
-        transition: opacity 0.25s linear;
+        transition: opacity 0.2s linear;
       }
     }
   }
@@ -158,12 +158,10 @@
   }
 
   .image-content {
-    // text-align: center;
-
     &:hover .item-rating {
       visibility: visible;
       opacity: 1;
-      transition: opacity 0.25s linear;
+      transition: opacity 0.2s linear;
     }
   }
 

@@ -2,16 +2,6 @@ import * as Mousetrap from 'mousetrap';
 import Modal from './modal';
 import Rails from './rails';
 
-function focusFilter() {
-  window.scrollTo(0, 0);
-
-  const input = document.getElementById('omni-bar') as HTMLInputElement;
-  input.focus();
-  input.select();
-
-  return false;
-}
-
 function visit(url: string) {
   Rails.visit(url);
 }
@@ -54,7 +44,6 @@ function escapeActions() {
 
 Mousetrap.reset();
 
-Mousetrap.bind('/', focusFilter);
 Mousetrap.bind('?', toggleShortcutsModal);
 Mousetrap.bind('esc', escapeActions);
 Mousetrap.bind('g h', gotoHome);
