@@ -6,10 +6,8 @@ function focusFilter() {
   window.scrollTo(0, 0);
 
   const input = document.getElementById('omni-bar') as HTMLInputElement;
-  input!.focus();
-
-  // Comment in for selecting the input
-  input!.select();
+  input.focus();
+  input.select();
 
   return false;
 }
