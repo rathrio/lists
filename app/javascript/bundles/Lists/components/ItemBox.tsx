@@ -66,10 +66,10 @@ const ItemBox = ({
     `https://thepiratebay.org/search/${item.name}`
   );
   const youtubeSearchUrl = encodeURI(
-    `https://www.youtube.com/results?search_query=${item.name}`
+    `https://www.youtube.com/results?search_query=${item.name} ${item.year}`
   );
   const googleSearchUrl = encodeURI(
-    `https://www.google.ch/search?q=${item.name}`
+    `https://www.google.ch/search?q=${item.name} ${item.year}`
   );
   const netflixSearchUrl = encodeURI(
     `https://www.netflix.com/search?q=${item.name}`
