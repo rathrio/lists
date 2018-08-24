@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import { Item } from '..';
 import ItemRating from './ItemRating';
 import * as urls from '../../utils/external_item_urls';
+import ItemStore from '../stores/ItemStore';
 
 const ArchiveActions = ({
   onArchiveClick
@@ -45,13 +46,7 @@ const RestoreActions = ({
 
 interface Props {
   item: Item;
-  onItemClick(item: Item): void;
-  onTagFilter(tag: string, options: object): void;
-  onArchive(item: Item): void;
-  onRestore(item: Item): void;
-  onDelete(item: Item): void;
-  onToggle(item: Item): void;
-  onUpdateRating(item: Item, rating: number): void;
+  store: ItemStore;
 }
 
 @observer
@@ -59,39 +54,33 @@ class ItemBox extends React.Component<Props> {
   render() {
     const {
       item,
-      onItemClick,
-      onTagFilter,
-      onArchive,
-      onRestore,
-      onDelete,
-      onToggle,
-      onUpdateRating
+      store
     } = this.props;
 
     const thumbUrl = item!.image!.thumb.url;
 
     const onArchiveClick = (e: any) => {
       e.preventDefault();
-      onArchive(item);
+      store.onItemArchive(item);
     };
 
     const onRestoreClick = (e: any) => {
       e.preventDefault();
-      onRestore(item);
+      store.onItemRestore(item);
     };
 
     const onDeleteClick = (e: any) => {
       e.preventDefault();
-      onDelete(item);
+      store.onItemDelete(item);
     };
 
     const onStatusToggleClick = () => {
-      onToggle(item);
+      store.onItemToggle(item);
     };
 
     const onTagClick = (e: any, tag: string) => {
       const options = e.metaKey ? { append: true } : {};
-      onTagFilter(tag, options);
+      store.onTagFilter(tag, options);
     };
 
     const itemActions = item.deleted ? (
@@ -105,7 +94,7 @@ class ItemBox extends React.Component<Props> {
 
     const onItemNameClick = (e: any) => {
       e.preventDefault();
-      onItemClick(item);
+      store.showItemDetails(item);
     };
 
     let itemRatingClassName = 'level-item is-hidden-mobile item-rating show-on-hover';
@@ -134,7 +123,6 @@ class ItemBox extends React.Component<Props> {
 
             <div className="level-item title-item">
               <div className="subtitle is-5">
-                {/* <a href={`/items/${item.id}`}>{item.name}</a> */}
                 <a onClick={onItemNameClick}>{item.name}</a>
               </div>
             </div>
@@ -171,7 +159,7 @@ class ItemBox extends React.Component<Props> {
             ))}
 
             <div className={itemRatingClassName}>
-              <ItemRating item={item} onUpdateRating={onUpdateRating} />
+              <ItemRating item={item} onUpdateRating={store.onItemUpdateRating} />
             </div>
           </div>
 

@@ -38,7 +38,7 @@ class ItemStore {
   onOmniInput = (e: any) => this.filter(e.target.value);
 
   @action
-  onTagFilter = (tag: string, options: { append: boolean }) => {
+  onTagFilter = (tag: string, options: { append?: boolean }) => {
     if (!options.append) {
       this.filter(tag);
       return;
