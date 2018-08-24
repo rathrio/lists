@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import * as Mousetrap from 'mousetrap';
 
 import API from '../../utils/api';
-import Rails from '../../utils/Rails';
+import Rails from '../../utils/rails';
 import OmniBar from './OmniBar';
 import ItemList from './ItemList';
 import { Item } from '..';
