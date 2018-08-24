@@ -34,6 +34,10 @@ class ItemDetails extends React.Component<Props> {
     });
 
     Mousetrap.bind('esc', (e) => {
+      if (!store.activeItem || !store.detailsModalVisible) {
+        return;
+      }
+
       e.preventDefault();
       this.close();
     });
@@ -248,7 +252,7 @@ class ItemDetails extends React.Component<Props> {
                     )}
                   </div>
 
-                  <p>{item.description}</p>
+                  <p style={{ whiteSpace: 'pre-wrap' }}>{item.description}</p>
                 </div>
               )}
             </section>
