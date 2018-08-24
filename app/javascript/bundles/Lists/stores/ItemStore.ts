@@ -216,6 +216,18 @@ class ItemStore {
   @action
   remove = (item: Item) => this.items.replace(this.items.filter((i) => i !== item));
 
+  @action
+  update = (item: Item, attributes: Partial<Item>) => {
+    API.put(`/items/${item.id}`, { item: attributes}).then(
+      (response) => {
+        Object.assign(item, response.data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
   private match = (str: string, query: string) =>
     str.toLowerCase().match(this.escapeRgx(query.toLowerCase())) !== null;
 
