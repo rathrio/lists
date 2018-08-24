@@ -26,6 +26,8 @@ class ItemDetails extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 
+    const store = props.store;
+
     Mousetrap.bind('e', (e) => {
       e.preventDefault();
       this.toggleEditing();
@@ -34,6 +36,15 @@ class ItemDetails extends React.Component<Props> {
     Mousetrap.bind('esc', (e) => {
       e.preventDefault();
       this.close();
+    });
+
+    Mousetrap.bind('space', (e) => {
+      if (!store.activeItem || !store.detailsModalVisible) {
+        return;
+      }
+
+      e.preventDefault();
+      store.onItemToggle(store.activeItem);
     });
   }
 
@@ -56,11 +67,15 @@ class ItemDetails extends React.Component<Props> {
   @action
   toggleEditing = () => {
     this.editing = !this.editing;
+  };
+
+  get hasFormDataChanges() {
+    return Object.keys(this.formData).length !== 0;
   }
 
   @action
   close = () => {
-    if (Object.keys(this.formData).length !== 0) {
+    if (this.hasFormDataChanges) {
       if (!confirm('You have unsaved changes. Close this anyways?')) {
         return;
       }
@@ -72,13 +87,16 @@ class ItemDetails extends React.Component<Props> {
 
   handleFormChange = (e: any) => {
     this.formData[e.target.name] = e.target.value;
-  }
+  };
 
   onSave = (e: any) => {
     e.preventDefault();
 
-    const item = this.props.store.activeItem!;
-    this.props.store.update(item, this.formData);
+    if (this.hasFormDataChanges) {
+      const item = this.props.store.activeItem!;
+      this.props.store.update(item, this.formData);
+    }
+
     this.formData = {};
     this.disableEditing();
   };
@@ -97,10 +115,7 @@ class ItemDetails extends React.Component<Props> {
           store.detailsModalVisible ? 'is-active' : ''
         }`}
       >
-        <div
-          onClick={this.close}
-          className="modal-background"
-        />
+        <div onClick={this.close} className="modal-background" />
 
         <form onSubmit={this.onSave}>
           <div className="modal-card">
@@ -157,8 +172,11 @@ class ItemDetails extends React.Component<Props> {
                   />
                 </figure>
 
-                <div className={`item-rating ${item.rating ? '' : 'hidden'}`}>
-                  <ItemRating item={item} onUpdateRating={store.onItemUpdateRating} />
+                <div className={`item-rating ${item.rating ? '' : 'hidden'}`} style={{ marginTop: '3px' }}>
+                  <ItemRating
+                    item={item}
+                    onUpdateRating={store.onItemUpdateRating}
+                  />
                 </div>
               </div>
 
@@ -211,14 +229,23 @@ class ItemDetails extends React.Component<Props> {
               ) : (
                 <div>
                   <div className="tags">
-                    <span className="tag is-rounded is-small">
-                      {item.year}
-                    </span>
+                    <span className="tag is-rounded is-small">{item.year}</span>
+
                     {item.tags.map((tag) => (
                       <span key={tag} className="tag is-rounded is-small">
                         {tag}
                       </span>
                     ))}
+
+                    {item.status !== 'todo' && (
+                      <span
+                        className={`tag is-rounded is-small is-${
+                          item.status === 'doing' ? 'warning' : 'success'
+                        }`}
+                      >
+                        {item.human_status}
+                      </span>
+                    )}
                   </div>
 
                   <p>{item.description}</p>
