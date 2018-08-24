@@ -1,6 +1,11 @@
+/**
+ * Actions for non-react controlled modals, e.g. modals rendered with Rails.
+ * Note that these modals set the "non-react-modal" and
+ * "non-react-modal-background" class.
+ */
 const Modal = (() => {
   function closeAll() {
-    const modals = document.getElementsByClassName('modal');
+    const modals = document.getElementsByClassName('non-react-modal');
     for (let i = 0; i < modals.length; i += 1) {
       const modal = modals[i];
       modal.classList.remove('is-active');
@@ -18,14 +23,16 @@ const Modal = (() => {
   }
 
   function ready() {
-    const modalBackground = document.getElementsByClassName(
-      'modal-background',
-    )[0] as HTMLElement;
+    const modalBackgrounds = document.getElementsByClassName(
+      'non-react-modal-background'
+    );
 
-    modalBackground.onclick = (e) => {
-      e.preventDefault();
-      closeAll();
-    };
+    Array.from(modalBackgrounds).forEach((modalBackground) => {
+      (modalBackground as HTMLElement).onclick = (e) => {
+        e.preventDefault();
+        closeAll();
+      };
+    });
   }
 
   document.addEventListener('turbolinks:load', ready);
@@ -33,7 +40,7 @@ const Modal = (() => {
   return {
     closeAll,
     toggle,
-    open,
+    open
   };
 })();
 

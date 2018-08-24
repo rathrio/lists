@@ -43,6 +43,7 @@ const RestoreActions = ({
 
 interface Props {
   item: Item;
+  onItemClick(item: Item): void;
   onTagFilter(tag: string, options: object): void;
   onArchive(item: Item): void;
   onRestore(item: Item): void;
@@ -53,6 +54,7 @@ interface Props {
 
 const ItemBox = ({
   item,
+  onItemClick,
   onTagFilter,
   onArchive,
   onRestore,
@@ -108,10 +110,17 @@ const ItemBox = ({
     <ArchiveActions onArchiveClick={onArchiveClick} />
   );
 
+  const onItemNameClick = (e: any) => {
+    e.preventDefault();
+    onItemClick(item);
+  };
+
   return (
     <div className="box item-box">
       <div
-        className={`status-bar is-${item.status} has-pointer show-on-hover ${item.status === 'todo' ? 'hidden' : ''}`}
+        className={`status-bar is-${item.status} has-pointer show-on-hover ${
+          item.status === 'todo' ? 'hidden' : ''
+        }`}
         data-balloon="Toggle Status"
         onClick={onStatusToggleClick}
       />
@@ -124,14 +133,10 @@ const ItemBox = ({
             </figure>
           </div>
 
-          <div
-            className="level-item title-item"
-            data-balloon={item.description}
-            data-balloon-pos="right"
-            data-balloon-length="xlarge"
-          >
+          <div className="level-item title-item">
             <div className="subtitle is-5">
-              <a href={`/items/${item.id}`}>{item.name}</a>
+              {/* <a href={`/items/${item.id}`}>{item.name}</a> */}
+              <a onClick={onItemNameClick}>{item.name}</a>
             </div>
           </div>
 
