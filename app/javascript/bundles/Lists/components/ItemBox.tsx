@@ -137,7 +137,7 @@ class ItemBox extends React.Component<Props> {
 
             <div className="level-item title-item">
               <div className="subtitle is-5">
-                <a onClick={this.onItemNameClick} tabIndex={0}>{item.name}</a>
+                <a onClick={this.onItemNameClick}>{item.name}</a>
               </div>
             </div>
 
