@@ -18,6 +18,10 @@ interface FormData extends Partial<Item> {
 
 @observer
 class ItemDetails extends React.Component<Props> {
+  /**
+   * Is used to determine whether to render a form or show a compact,
+   * read-only representation.
+   */
   @observable
   editing = false;
 
@@ -176,7 +180,10 @@ class ItemDetails extends React.Component<Props> {
                   />
                 </figure>
 
-                <div className={`item-rating ${item.rating ? '' : 'hidden'}`} style={{ marginTop: '3px' }}>
+                <div
+                  className={`item-rating ${item.rating ? '' : 'hidden'}`}
+                  style={{ marginTop: '3px' }}
+                >
                   <ItemRating
                     item={item}
                     onUpdateRating={store.onItemUpdateRating}
@@ -227,6 +234,25 @@ class ItemDetails extends React.Component<Props> {
                         onChange={this.handleFormChange}
                         required
                       />
+                    </div>
+                  </div>
+
+                  <div className="field">
+                    <label className="label">Image</label>
+                    <div className="control has-icon">
+                      <input
+                        name="remote_image_url"
+                        type="url"
+                        className="input"
+                        placeholder="Paste link to new image here"
+                        defaultValue={item.remote_image_url}
+                        onChange={this.handleFormChange}
+                        required
+                      />
+
+                      <span className="icon is-small">
+                        <i className="fa fa-external-link fa-small" />
+                      </span>
                     </div>
                   </div>
                 </div>
