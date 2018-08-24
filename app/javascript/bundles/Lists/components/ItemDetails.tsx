@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { observable, action } from 'mobx';
+import { observable, action, computed } from 'mobx';
 import * as Mousetrap from 'mousetrap';
 
 import ItemStore from '../stores/ItemStore';
@@ -38,7 +38,7 @@ class ItemDetails extends React.Component<Props> {
     });
 
     Mousetrap.bind('esc', (e) => {
-      if (!store.activeItem || !store.detailsModalVisible) {
+      if (this.isClosed) {
         return;
       }
 
@@ -47,13 +47,18 @@ class ItemDetails extends React.Component<Props> {
     });
 
     Mousetrap.bind('space', (e) => {
-      if (!store.activeItem || !store.detailsModalVisible) {
+      if (this.isClosed) {
         return;
       }
 
       e.preventDefault();
-      store.onItemToggle(store.activeItem);
+      store.onItemToggle(store.activeItem!);
     });
+  }
+
+  @computed
+  get isClosed() {
+    return (!this.props.store.activeItem || !this.props.store.detailsModalVisible);
   }
 
   onCancel = (e: any) => {

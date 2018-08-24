@@ -13,6 +13,9 @@ class ItemStore {
   activeItem?: Item;
 
   @observable
+  focusedItem?: Item;
+
+  @observable
   detailsModalVisible = false;
 
   @observable
@@ -168,6 +171,7 @@ class ItemStore {
   filter = (query: string) => {
     this.doNotShowAllItems();
     this.resetScraperResults();
+    this.unfocusItem();
     this.query = query.toString();
   };
 
@@ -198,6 +202,75 @@ class ItemStore {
     this.activeItem = item;
     this.showDetailsModal();
   };
+
+  @action
+  showFocusedItemDetails = () => {
+    if (!this.focusedItem) {
+      return;
+    }
+
+    this.showItemDetails(this.focusedItem);
+  }
+
+  @action
+  focusNextItem = () => {
+    if (this.filteredItems.length === 0) {
+      return;
+    }
+
+    // Focus the first item if none is focused yet.
+    if (!this.focusedItem) {
+      this.focusItem(this.filteredItems[0]);
+      return;
+    }
+
+    const focusedIndex = this.filteredItems.indexOf(this.focusedItem);
+
+    // Focus the first item if the last one is focused.
+    if (focusedIndex === this.filteredItems.length - 1) {
+      this.focusItem(this.filteredItems[0]);
+      return;
+    }
+
+    this.focusItem(this.filteredItems[focusedIndex + 1]);
+  }
+
+  @action
+  focusPreviousItem = () => {
+    if (this.filteredItems.length === 0) {
+      return;
+    }
+
+    // Focus the last item if none is focused yet.
+    if (!this.focusedItem) {
+      this.focusItem(this.filteredItems[this.filteredItems.length - 1]);
+      return;
+    }
+
+    const focusedIndex = this.filteredItems.indexOf(this.focusedItem);
+
+    // Focus the last item if the first one is focused.
+    if (focusedIndex === 0) {
+      this.focusItem(this.filteredItems[this.filteredItems.length - 1]);
+      return;
+    }
+
+    this.focusItem(this.filteredItems[focusedIndex - 1]);
+  }
+
+  @action
+  focusItem = (item: Item) => {
+    this.focusedItem = item;
+
+    if (this.detailsModalVisible) {
+      this.activeItem = item;
+    }
+  }
+
+  @action
+  unfocusItem = () => {
+    this.focusedItem = undefined;
+  }
 
   @action
   resetScraperResults = () => this.scraperResults.replace([]);
@@ -296,6 +369,10 @@ class ItemStore {
 
   isActive = (item: Item) => {
     return this.activeItem === item;
+  }
+
+  isFocused = (item: Item) => {
+    return this.focusedItem === item;
   }
 }
 

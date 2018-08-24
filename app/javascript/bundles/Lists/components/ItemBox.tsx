@@ -51,6 +51,49 @@ interface Props {
 
 @observer
 class ItemBox extends React.Component<Props> {
+  readonly itemBoxDiv = React.createRef<HTMLDivElement>();
+
+  onArchiveClick = (e: any) => {
+    e.preventDefault();
+    this.props.store.onItemArchive(this.props.item);
+  };
+
+  onRestoreClick = (e: any) => {
+    e.preventDefault();
+    this.props.store.onItemRestore(this.props.item);
+  };
+
+  onDeleteClick = (e: any) => {
+    e.preventDefault();
+    this.props.store.onItemDelete(this.props.item);
+  };
+
+  onStatusToggleClick = () => {
+    this.props.store.onItemToggle(this.props.item);
+  };
+
+  onTagClick = (e: any, tag: string) => {
+    const options = e.metaKey ? { append: true } : {};
+    this.props.store.onTagFilter(tag, options);
+  };
+
+  onItemNameClick = (e: any) => {
+    e.preventDefault();
+    this.props.store.focusItem(this.props.item);
+    this.props.store.showItemDetails(this.props.item);
+  };
+
+  componentDidUpdate() {
+    const { item, store } = this.props;
+    const currentItemBoxDiv = this.itemBoxDiv.current;
+
+    if (!store.isFocused(item) || !currentItemBoxDiv) {
+      return;
+    }
+
+    currentItemBoxDiv.scrollIntoView({ behavior: 'smooth' });
+  }
+
   render() {
     const {
       item,
@@ -59,43 +102,14 @@ class ItemBox extends React.Component<Props> {
 
     const thumbUrl = item!.image!.thumb.url;
 
-    const onArchiveClick = (e: any) => {
-      e.preventDefault();
-      store.onItemArchive(item);
-    };
-
-    const onRestoreClick = (e: any) => {
-      e.preventDefault();
-      store.onItemRestore(item);
-    };
-
-    const onDeleteClick = (e: any) => {
-      e.preventDefault();
-      store.onItemDelete(item);
-    };
-
-    const onStatusToggleClick = () => {
-      store.onItemToggle(item);
-    };
-
-    const onTagClick = (e: any, tag: string) => {
-      const options = e.metaKey ? { append: true } : {};
-      store.onTagFilter(tag, options);
-    };
-
     const itemActions = item.deleted ? (
       <RestoreActions
-        onRestoreClick={onRestoreClick}
-        onDeleteClick={onDeleteClick}
+        onRestoreClick={this.onRestoreClick}
+        onDeleteClick={this.onDeleteClick}
       />
     ) : (
-      <ArchiveActions onArchiveClick={onArchiveClick} />
+      <ArchiveActions onArchiveClick={this.onArchiveClick} />
     );
-
-    const onItemNameClick = (e: any) => {
-      e.preventDefault();
-      store.showItemDetails(item);
-    };
 
     let itemRatingClassName = 'level-item is-hidden-mobile item-rating show-on-hover';
 
@@ -104,13 +118,13 @@ class ItemBox extends React.Component<Props> {
     }
 
     return (
-      <div className="box item-box">
+      <div className={`box item-box ${store.isFocused(item) && 'is-focused'}`} ref={this.itemBoxDiv}>
         <div
           className={`status-bar is-${item.status} has-pointer show-on-hover ${
             item.status === 'todo' ? 'hidden' : ''
           }`}
           data-balloon="Toggle Status"
-          onClick={onStatusToggleClick}
+          onClick={this.onStatusToggleClick}
         />
 
         <div className="level is-mobile">
@@ -123,14 +137,14 @@ class ItemBox extends React.Component<Props> {
 
             <div className="level-item title-item">
               <div className="subtitle is-5">
-                <a onClick={onItemNameClick}>{item.name}</a>
+                <a onClick={this.onItemNameClick} tabIndex={0}>{item.name}</a>
               </div>
             </div>
 
             {item.year && (
               <div
                 className="level-item has-pointer"
-                onClick={(e) => onTagClick(e, `y[${item.year}]`)}
+                onClick={(e) => this.onTagClick(e, `y[${item.year}]`)}
                 data-balloon={`Show ${item.year} items`}
               >
                 <span className="tag is-rounded is-light is-small">
@@ -151,7 +165,7 @@ class ItemBox extends React.Component<Props> {
               <div
                 key={`item-tag-${tag}`}
                 className="level-item is-hidden-touch has-pointer"
-                onClick={(e) => onTagClick(e, `t[${tag}]`)}
+                onClick={(e) => this.onTagClick(e, `t[${tag}]`)}
                 data-balloon={`Show ${tag} items`}
               >
                 <span className="tag is-rounded is-light is-small">{tag}</span>

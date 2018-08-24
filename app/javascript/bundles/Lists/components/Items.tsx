@@ -25,13 +25,31 @@ class Items extends React.Component<Props> {
     super(props);
     this.store = new ItemStore(props.items);
     (window as any).store = this.store;
+
+    Mousetrap.bind('s', (e) => {
+      e.preventDefault();
+      this.store.toggleItemStatusFilter();
+    });
+
+    Mousetrap.bind('enter', (e) => {
+      e.preventDefault();
+      this.store.showFocusedItemDetails();
+    });
+
+    Mousetrap.bind(['j', 'tab'], (e) => {
+      e.preventDefault();
+      this.store.focusNextItem();
+    });
+
+    Mousetrap.bind(['k', 'shift+tab'], (e) => {
+      e.preventDefault();
+      this.store.focusPreviousItem();
+    });
   }
 
   componentDidMount() {
     const csrfToken = Rails.authenticityToken();
     API.defaults.headers.common['X-CSRF-Token'] = csrfToken;
-
-    Mousetrap.bind('s', this.store.toggleItemStatusFilter);
   }
 
   render() {
