@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { observer } from 'mobx-react';
 import { Item } from '..';
 import ItemRating from './ItemRating';
 
@@ -52,166 +53,171 @@ interface Props {
   onUpdateRating(item: Item, rating: number): void;
 }
 
-const ItemBox = ({
-  item,
-  onItemClick,
-  onTagFilter,
-  onArchive,
-  onRestore,
-  onDelete,
-  onToggle,
-  onUpdateRating
-}: Props) => {
-  const thumbUrl = item!.image!.thumb.url;
+@observer
+class ItemBox extends React.Component<Props> {
+  render() {
+    const {
+      item,
+      onItemClick,
+      onTagFilter,
+      onArchive,
+      onRestore,
+      onDelete,
+      onToggle,
+      onUpdateRating
+    } = this.props;
 
-  const pirateSearchUrl = encodeURI(
-    `https://thepiratebay.org/search/${item.name}`
-  );
-  const youtubeSearchUrl = encodeURI(
-    `https://www.youtube.com/results?search_query=${item.name} ${item.year}`
-  );
-  const googleSearchUrl = encodeURI(
-    `https://www.google.ch/search?q=${item.name} ${item.year}`
-  );
-  const netflixSearchUrl = encodeURI(
-    `https://www.netflix.com/search?q=${item.name}`
-  );
+    const thumbUrl = item!.image!.thumb.url;
 
-  const onArchiveClick = (e: any) => {
-    e.preventDefault();
-    onArchive(item);
-  };
+    const pirateSearchUrl = encodeURI(
+      `https://thepiratebay.org/search/${item.name}`
+    );
+    const youtubeSearchUrl = encodeURI(
+      `https://www.youtube.com/results?search_query=${item.name} ${item.year}`
+    );
+    const googleSearchUrl = encodeURI(
+      `https://www.google.ch/search?q=${item.name} ${item.year}`
+    );
+    const netflixSearchUrl = encodeURI(
+      `https://www.netflix.com/search?q=${item.name}`
+    );
 
-  const onRestoreClick = (e: any) => {
-    e.preventDefault();
-    onRestore(item);
-  };
+    const onArchiveClick = (e: any) => {
+      e.preventDefault();
+      onArchive(item);
+    };
 
-  const onDeleteClick = (e: any) => {
-    e.preventDefault();
-    onDelete(item);
-  };
+    const onRestoreClick = (e: any) => {
+      e.preventDefault();
+      onRestore(item);
+    };
 
-  const onStatusToggleClick = () => {
-    onToggle(item);
-  };
+    const onDeleteClick = (e: any) => {
+      e.preventDefault();
+      onDelete(item);
+    };
 
-  const onTagClick = (e: any, tag: string) => {
-    const options = e.metaKey ? { append: true } : {};
-    onTagFilter(tag, options);
-  };
+    const onStatusToggleClick = () => {
+      onToggle(item);
+    };
 
-  const itemActions = item.deleted ? (
-    <RestoreActions
-      onRestoreClick={onRestoreClick}
-      onDeleteClick={onDeleteClick}
-    />
-  ) : (
-    <ArchiveActions onArchiveClick={onArchiveClick} />
-  );
+    const onTagClick = (e: any, tag: string) => {
+      const options = e.metaKey ? { append: true } : {};
+      onTagFilter(tag, options);
+    };
 
-  const onItemNameClick = (e: any) => {
-    e.preventDefault();
-    onItemClick(item);
-  };
-
-  return (
-    <div className="box item-box">
-      <div
-        className={`status-bar is-${item.status} has-pointer show-on-hover ${
-          item.status === 'todo' ? 'hidden' : ''
-        }`}
-        data-balloon="Toggle Status"
-        onClick={onStatusToggleClick}
+    const itemActions = item.deleted ? (
+      <RestoreActions
+        onRestoreClick={onRestoreClick}
+        onDeleteClick={onDeleteClick}
       />
+    ) : (
+      <ArchiveActions onArchiveClick={onArchiveClick} />
+    );
 
-      <div className="level is-mobile">
-        <div className="level-left is-mobile">
-          <div className="level-item">
-            <figure className="image is-64x64">
-              <img src={thumbUrl} alt={item.name} />
-            </figure>
-          </div>
+    const onItemNameClick = (e: any) => {
+      e.preventDefault();
+      onItemClick(item);
+    };
 
-          <div className="level-item title-item">
-            <div className="subtitle is-5">
-              {/* <a href={`/items/${item.id}`}>{item.name}</a> */}
-              <a onClick={onItemNameClick}>{item.name}</a>
+    return (
+      <div className="box item-box">
+        <div
+          className={`status-bar is-${item.status} has-pointer show-on-hover ${
+            item.status === 'todo' ? 'hidden' : ''
+          }`}
+          data-balloon="Toggle Status"
+          onClick={onStatusToggleClick}
+        />
+
+        <div className="level is-mobile">
+          <div className="level-left is-mobile">
+            <div className="level-item">
+              <figure className="image is-64x64">
+                <img src={thumbUrl} alt={item.name} />
+              </figure>
             </div>
-          </div>
 
-          {item.year && (
-            <div
-              className="level-item has-pointer"
-              onClick={(e) => onTagClick(e, `y[${item.year}]`)}
-              data-balloon={`Show ${item.year} items`}
-            >
-              <span className="tag is-rounded is-light is-small">
-                {item.year}
-              </span>
+            <div className="level-item title-item">
+              <div className="subtitle is-5">
+                {/* <a href={`/items/${item.id}`}>{item.name}</a> */}
+                <a onClick={onItemNameClick}>{item.name}</a>
+              </div>
             </div>
-          )}
 
-          {item.deleted && (
-            <div className="level-item has-pointer">
-              <span className="tag is-rounded is-light is-small">
-                {item.list}
-              </span>
+            {item.year && (
+              <div
+                className="level-item has-pointer"
+                onClick={(e) => onTagClick(e, `y[${item.year}]`)}
+                data-balloon={`Show ${item.year} items`}
+              >
+                <span className="tag is-rounded is-light is-small">
+                  {item.year}
+                </span>
+              </div>
+            )}
+
+            {item.deleted && (
+              <div className="level-item has-pointer">
+                <span className="tag is-rounded is-light is-small">
+                  {item.list}
+                </span>
+              </div>
+            )}
+
+            {item.tags.map((tag) => (
+              <div
+                key={`item-tag-${tag}`}
+                className="level-item is-hidden-touch has-pointer"
+                onClick={(e) => onTagClick(e, `t[${tag}]`)}
+                data-balloon={`Show ${tag} items`}
+              >
+                <span className="tag is-rounded is-light is-small">{tag}</span>
+              </div>
+            ))}
+
+            <ItemRating item={item} onUpdateRating={onUpdateRating} />
+          </div>
+
+          <div className="level-right is-mobile item-actions hidden">
+            <div className="level-item is-hidden-mobile">
+              <a target="blank" href={pirateSearchUrl}>
+                <span className="icon is-medium" data-balloon="Search the Bay">
+                  <i className="fa fa-magnet fa-lg" />
+                </span>
+              </a>
             </div>
-          )}
 
-          {item.tags.map((tag) => (
-            <div
-              key={`item-tag-${tag}`}
-              className="level-item is-hidden-touch has-pointer"
-              onClick={(e) => onTagClick(e, `t[${tag}]`)}
-              data-balloon={`Show ${tag} items`}
-            >
-              <span className="tag is-rounded is-light is-small">{tag}</span>
+            <div className="level-item is-hidden-mobile">
+              <a target="blank" href={googleSearchUrl}>
+                <span className="icon is-medium" data-balloon="Search Google">
+                  <i className="fa fa-google fa-lg" />
+                </span>
+              </a>
             </div>
-          ))}
 
-          <ItemRating item={item} onUpdateRating={onUpdateRating} />
-        </div>
+            <div className="level-item is-hidden-mobile">
+              <a target="blank" href={youtubeSearchUrl}>
+                <span className="icon is-medium" data-balloon="Search YouTube">
+                  <i className="fa fa-youtube-play fa-lg" />
+                </span>
+              </a>
+            </div>
 
-        <div className="level-right is-mobile item-actions hidden">
-          <div className="level-item is-hidden-mobile">
-            <a target="blank" href={pirateSearchUrl}>
-              <span className="icon is-medium" data-balloon="Search the Bay">
-                <i className="fa fa-magnet fa-lg" />
-              </span>
-            </a>
+            <div className="level-item is-hidden-mobile">
+              <a target="blank" href={netflixSearchUrl}>
+                <span className="icon is-medium" data-balloon="Search Netflix">
+                  <i className="fa fa-tv fa-lg" />
+                </span>
+              </a>
+            </div>
+
+            {itemActions}
           </div>
-
-          <div className="level-item is-hidden-mobile">
-            <a target="blank" href={googleSearchUrl}>
-              <span className="icon is-medium" data-balloon="Search Google">
-                <i className="fa fa-google fa-lg" />
-              </span>
-            </a>
-          </div>
-
-          <div className="level-item is-hidden-mobile">
-            <a target="blank" href={youtubeSearchUrl}>
-              <span className="icon is-medium" data-balloon="Search YouTube">
-                <i className="fa fa-youtube-play fa-lg" />
-              </span>
-            </a>
-          </div>
-
-          <div className="level-item is-hidden-mobile">
-            <a target="blank" href={netflixSearchUrl}>
-              <span className="icon is-medium" data-balloon="Search Netflix">
-                <i className="fa fa-tv fa-lg" />
-              </span>
-            </a>
-          </div>
-
-          {itemActions}
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default ItemBox;
