@@ -152,6 +152,12 @@
       }
     }
   }
+
+  .modal-card-head, .modal-card-foot {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+
   .item-details-modal-background {
     background-color: rgba(10, 10, 10, 0.86);
   }

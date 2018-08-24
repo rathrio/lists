@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { observer } from 'mobx-react';
 import { Item } from '..';
 import ItemRating from './ItemRating';
+import * as urls from '../../utils/external_item_urls';
 
 const ArchiveActions = ({
   onArchiveClick
@@ -68,19 +69,6 @@ class ItemBox extends React.Component<Props> {
     } = this.props;
 
     const thumbUrl = item!.image!.thumb.url;
-
-    const pirateSearchUrl = encodeURI(
-      `https://thepiratebay.org/search/${item.name}`
-    );
-    const youtubeSearchUrl = encodeURI(
-      `https://www.youtube.com/results?search_query=${item.name} ${item.year}`
-    );
-    const googleSearchUrl = encodeURI(
-      `https://www.google.ch/search?q=${item.name} ${item.year}`
-    );
-    const netflixSearchUrl = encodeURI(
-      `https://www.netflix.com/search?q=${item.name}`
-    );
 
     const onArchiveClick = (e: any) => {
       e.preventDefault();
@@ -181,7 +169,7 @@ class ItemBox extends React.Component<Props> {
 
           <div className="level-right is-mobile item-actions hidden">
             <div className="level-item is-hidden-mobile">
-              <a target="blank" href={pirateSearchUrl}>
+              <a target="blank" href={urls.pirateSearchUrl(item)}>
                 <span className="icon is-medium" data-balloon="Search the Bay">
                   <i className="fa fa-magnet fa-lg" />
                 </span>
@@ -189,7 +177,7 @@ class ItemBox extends React.Component<Props> {
             </div>
 
             <div className="level-item is-hidden-mobile">
-              <a target="blank" href={googleSearchUrl}>
+              <a target="blank" href={urls.googleSearchUrl(item)}>
                 <span className="icon is-medium" data-balloon="Search Google">
                   <i className="fa fa-google fa-lg" />
                 </span>
@@ -197,7 +185,7 @@ class ItemBox extends React.Component<Props> {
             </div>
 
             <div className="level-item is-hidden-mobile">
-              <a target="blank" href={youtubeSearchUrl}>
+              <a target="blank" href={urls.youtubeSearchUrl(item)}>
                 <span className="icon is-medium" data-balloon="Search YouTube">
                   <i className="fa fa-youtube-play fa-lg" />
                 </span>
@@ -205,7 +193,7 @@ class ItemBox extends React.Component<Props> {
             </div>
 
             <div className="level-item is-hidden-mobile">
-              <a target="blank" href={netflixSearchUrl}>
+              <a target="blank" href={urls.netflixSearchUrl(item)}>
                 <span className="icon is-medium" data-balloon="Search Netflix">
                   <i className="fa fa-tv fa-lg" />
                 </span>

@@ -5,6 +5,7 @@ import * as Mousetrap from 'mousetrap';
 
 import ItemStore from '../stores/ItemStore';
 import { Item } from '..';
+import * as urls from '../../utils/external_item_urls';
 
 interface Props {
   store: ItemStore;
@@ -99,25 +100,25 @@ class ItemDetails extends React.Component<Props> {
               <p className="modal-card-title">{item.name}</p>
 
               <span className="external-item-links hidden">
-                <a target="blank" href={''}>
+                <a target="blank" href={urls.pirateSearchUrl(item)}>
                   <span className="icon is-medium">
                     <i className="fa fa-magnet fa-lg" />
                   </span>
                 </a>
 
-                <a target="blank" href={''}>
+                <a target="blank" href={urls.googleSearchUrl(item)}>
                   <span className="icon is-medium">
                     <i className="fa fa-google fa-lg" />
                   </span>
                 </a>
 
-                <a target="blank" href={''}>
+                <a target="blank" href={urls.youtubeSearchUrl(item)}>
                   <span className="icon is-medium">
                     <i className="fa fa-youtube-play fa-lg" />
                   </span>
                 </a>
 
-                <a target="blank" href={''}>
+                <a target="blank" href={urls.netflixSearchUrl(item)}>
                   <span className="icon is-medium">
                     <i className="fa fa-tv fa-lg" />
                   </span>
@@ -126,7 +127,7 @@ class ItemDetails extends React.Component<Props> {
 
               {!this.editing && (
                 <span
-                  className="icon is-medium edit-item-pencil hidden"
+                  className="icon is-medium edit-item-pencil"
                   onClick={this.enableEditing}
                 >
                   <i className="fa fa-pencil fa-lg" />
@@ -198,11 +199,11 @@ class ItemDetails extends React.Component<Props> {
               ) : (
                 <div>
                   <div className="tags">
-                    <span className="tag is-rounded is-medium">
+                    <span className="tag is-rounded is-small">
                       {item.year}
                     </span>
                     {item.tags.map((tag) => (
-                      <span key={tag} className="tag is-rounded is-medium">
+                      <span key={tag} className="tag is-rounded is-small">
                         {tag}
                       </span>
                     ))}
