@@ -14,17 +14,7 @@ class ItemList extends React.Component<Props> {
     const { store } = this.props;
 
     const itemBoxes = store.filteredItems.map((i) => (
-      <ItemBox
-        key={`item-${i.id}`}
-        item={i}
-        onItemClick={store.showItemDetails}
-        onTagFilter={store.onTagFilter}
-        onArchive={store.onItemArchive}
-        onRestore={store.onItemRestore}
-        onDelete={store.onItemDelete}
-        onToggle={store.onItemToggle}
-        onUpdateRating={store.onItemUpdateRating}
-      />
+      <ItemBox key={`item-${i.id}`} item={i} store={store} />
     ));
 
     return (
