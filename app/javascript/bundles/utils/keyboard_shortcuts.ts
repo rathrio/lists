@@ -52,28 +52,6 @@ function escapeActions() {
   closeModals();
 }
 
-function toggleItemStatus() {
-  const elements = document.querySelectorAll(':hover');
-
-  if (elements.length === 0) {
-    return true;
-  }
-
-  const itemBox = Array.from(elements).find((node) =>
-    node.className.includes('item-box')
-  );
-
-  const toggle = itemBox!.getElementsByClassName(
-    'status-bar'
-  )[0] as HTMLElement;
-
-  if (toggle) {
-    toggle.click();
-  }
-
-  return false;
-}
-
 Mousetrap.reset();
 
 Mousetrap.bind('/', focusFilter);
@@ -82,7 +60,6 @@ Mousetrap.bind('esc', escapeActions);
 Mousetrap.bind('g h', gotoHome);
 Mousetrap.bind('g a', gotoArchived);
 Mousetrap.bind('g s', gotoSettings);
-Mousetrap.bind('space', toggleItemStatus);
 
 [1, 2, 3, 4, 5, 6, 7, 8, 9].forEach((n) => {
   Mousetrap.bind(n.toString(), gotoList);

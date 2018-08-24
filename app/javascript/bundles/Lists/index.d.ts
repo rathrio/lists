@@ -11,7 +11,7 @@ export interface Item {
   description: string;
   quantity: number;
   scraped: boolean;
-  status: string;
+  status: 'todo' | 'doing' | 'done';
   human_status: string;
   tags: string[];
   user_id: number;
