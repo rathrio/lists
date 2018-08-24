@@ -1,6 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { observable } from 'mobx';
+import { observable, action } from 'mobx';
+import * as Mousetrap from 'mousetrap';
+
 import ItemStore from '../stores/ItemStore';
 import { Item } from '..';
 
@@ -19,20 +21,42 @@ class ItemDetails extends React.Component<Props> {
 
   formData: FormData = {};
 
+  constructor(props: Props) {
+    super(props);
+
+    Mousetrap.bind('e', (e) => {
+      e.preventDefault();
+      this.toggleEditing();
+    });
+  }
+
   onCancel = (e: any) => {
     e.preventDefault();
     this.disableEditing();
   };
 
+  @action
   enableEditing = () => {
     this.editing = true;
   };
 
+  @action
   disableEditing = () => {
     this.editing = false;
   };
 
+  @action
+  toggleEditing = () => {
+    this.editing = !this.editing;
+  }
+
   onModalBackgroundClick = () => {
+    if (Object.keys(this.formData).length !== 0) {
+      if (!confirm('You have unsaved changes. Close this anyways?')) {
+        return;
+      }
+    }
+
     this.disableEditing();
     this.props.store.hideDetailsModal();
   };
@@ -46,6 +70,7 @@ class ItemDetails extends React.Component<Props> {
 
     const item = this.props.store.activeItem!;
     this.props.store.update(item, this.formData);
+    this.formData = {};
     this.disableEditing();
   };
 
