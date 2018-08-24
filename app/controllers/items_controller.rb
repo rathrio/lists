@@ -54,7 +54,6 @@ class ItemsController < ApplicationController
 
   def update
     if @item.update_attributes(item_params)
-      flash[:notice] = 'Item successfully updated'
       render json: @item.to_json
     else
       render json: { message: 'Validation failed', errors: @order.errors }, status: 400
