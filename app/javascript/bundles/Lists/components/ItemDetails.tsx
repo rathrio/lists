@@ -247,7 +247,6 @@ class ItemDetails extends React.Component<Props> {
                         placeholder="Paste link to new image here"
                         defaultValue={item.remote_image_url}
                         onChange={this.handleFormChange}
-                        required
                       />
 
                       <span className="icon is-small">
