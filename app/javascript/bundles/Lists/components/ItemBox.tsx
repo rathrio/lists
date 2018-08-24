@@ -108,6 +108,12 @@ class ItemBox extends React.Component<Props> {
       onItemClick(item);
     };
 
+    let itemRatingClassName = 'level-item is-hidden-mobile item-rating show-on-hover';
+
+    if (!item.rating) {
+      itemRatingClassName = `${itemRatingClassName} hidden`;
+    }
+
     return (
       <div className="box item-box">
         <div
@@ -164,7 +170,9 @@ class ItemBox extends React.Component<Props> {
               </div>
             ))}
 
-            <ItemRating item={item} onUpdateRating={onUpdateRating} />
+            <div className={itemRatingClassName}>
+              <ItemRating item={item} onUpdateRating={onUpdateRating} />
+            </div>
           </div>
 
           <div className="level-right is-mobile item-actions hidden">
