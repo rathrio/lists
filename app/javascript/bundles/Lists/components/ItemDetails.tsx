@@ -1,21 +1,23 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
+import { observable } from 'mobx';
 import ItemStore from '../stores/ItemStore';
-import ItemRating from './ItemRating';
+import { Item } from '..';
 
 interface Props {
   store: ItemStore;
 }
 
-interface State {
-  editing: boolean;
+interface FormData extends Partial<Item> {
+  [key: string]: any;
 }
 
 @observer
-class ItemDetails extends React.Component<Props, State> {
-  readonly state: State = {
-    editing: false
-  };
+class ItemDetails extends React.Component<Props> {
+  @observable
+  editing = false;
+
+  formData: FormData = {};
 
   onCancel = (e: any) => {
     e.preventDefault();
@@ -23,11 +25,28 @@ class ItemDetails extends React.Component<Props, State> {
   };
 
   enableEditing = () => {
-    this.setState({ editing: true });
+    this.editing = true;
   };
 
   disableEditing = () => {
-    this.setState({ editing: false });
+    this.editing = false;
+  };
+
+  onModalBackgroundClick = () => {
+    this.disableEditing();
+    this.props.store.hideDetailsModal();
+  };
+
+  handleFormChange = (e: any) => {
+    this.formData[e.target.name] = e.target.value;
+  }
+
+  onSave = (e: any) => {
+    e.preventDefault();
+
+    const item = this.props.store.activeItem!;
+    this.props.store.update(item, this.formData);
+    this.disableEditing();
   };
 
   render() {
@@ -44,9 +63,12 @@ class ItemDetails extends React.Component<Props, State> {
           store.detailsModalVisible ? 'is-active' : ''
         }`}
       >
-        <div onClick={store.hideDetailsModal} className="modal-background" />
+        <div
+          onClick={this.onModalBackgroundClick}
+          className="modal-background"
+        />
 
-        <form>
+        <form onSubmit={this.onSave}>
           <div className="modal-card">
             <header className="modal-card-head">
               <p className="modal-card-title">{item.name}</p>
@@ -77,7 +99,7 @@ class ItemDetails extends React.Component<Props, State> {
                 </a>
               </span>
 
-              {!this.state.editing && (
+              {!this.editing && (
                 <span
                   className="icon is-medium edit-item-pencil hidden"
                   onClick={this.enableEditing}
@@ -93,24 +115,80 @@ class ItemDetails extends React.Component<Props, State> {
                   <img
                     src={item.image!.url}
                     alt={item.name}
-                    style={{ objectFit: 'cover', borderRadius: '5px', maxHeight: 'auto' }}
+                    style={{
+                      objectFit: 'cover',
+                      borderRadius: '5px',
+                      maxHeight: 'auto'
+                    }}
                   />
                 </figure>
               </div>
 
-              <div>
-                <div className="tags">
-                  <span className="tag is-rounded is-medium">{item.year}</span>
-                  {item.tags.map((tag) => (
-                    <span key={tag} className="tag is-rounded is-medium">{tag}</span>
-                  ))}
-                </div>
+              {this.editing ? (
+                <div>
+                  <div className="field">
+                    <label className="label">Name</label>
+                    <p className="control">
+                      <input
+                        name="name"
+                        defaultValue={item.name}
+                        onChange={this.handleFormChange}
+                        className="input"
+                        type="text"
+                        placeholder="Name"
+                        required
+                        autoFocus
+                      />
+                    </p>
+                  </div>
 
-                <p>{item.description}</p>
-              </div>
+                  <div className="field">
+                    <label className="label">Description</label>
+                    <div className="control">
+                      <textarea
+                        name="description"
+                        defaultValue={item.description}
+                        onChange={this.handleFormChange}
+                        className="textarea"
+                        placeholder="Description"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="field">
+                    <label className="label">Release Date</label>
+                    <div className="control">
+                      <input
+                        name="date"
+                        type="date"
+                        className="input"
+                        placeholder="Release Date"
+                        defaultValue={item.date}
+                        onChange={this.handleFormChange}
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <div className="tags">
+                    <span className="tag is-rounded is-medium">
+                      {item.year}
+                    </span>
+                    {item.tags.map((tag) => (
+                      <span key={tag} className="tag is-rounded is-medium">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <p>{item.description}</p>
+                </div>
+              )}
             </section>
 
-            {this.state.editing && (
+            {this.editing && (
               <footer className="modal-card-foot">
                 <button className="button is-primary">Update</button>
                 <button onClick={this.onCancel} className="button">
