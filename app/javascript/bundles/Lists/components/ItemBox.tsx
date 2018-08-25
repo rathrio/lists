@@ -98,7 +98,7 @@ class ItemBox extends React.Component<Props> {
         className={`box item-box ${store.isFocused(item) && 'is-focused'}`}
         ref={this.itemBoxDiv}
       >
-        <div className="level is-mobile" style={{ overflowX: 'scroll' }}>
+        <div className="level is-mobile" style={{ overflowX: 'clip' }}>
           <div className="level-left is-mobile">
             <div className="level-item">
               <figure className="image is-64x64">
@@ -106,7 +106,7 @@ class ItemBox extends React.Component<Props> {
               </figure>
             </div>
 
-            <div className="level-item title-item">
+            <div className="level-item title-item item-name">
               <div className="subtitle is-5">
                 <a onClick={this.onItemNameClick}>{item.name}</a>
               </div>
@@ -114,7 +114,7 @@ class ItemBox extends React.Component<Props> {
 
             {item.year && (
               <div
-                className="level-item has-pointer"
+                className="level-item has-pointer item-year"
                 onClick={(e) => this.onTagClick(e, `y[${item.year}]`)}
                 data-balloon={`Show ${item.year} items`}
               >

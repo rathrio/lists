@@ -224,7 +224,6 @@ class ItemDetails extends React.Component<Props> {
                         type="text"
                         placeholder="Name"
                         required
-                        autoFocus
                       />
                     </p>
                   </div>
@@ -233,10 +232,10 @@ class ItemDetails extends React.Component<Props> {
                     <label className="label is-small">Description</label>
                     <div className="control">
                       <textarea
-                        name="description is-small"
+                        name="description"
                         defaultValue={item.description}
                         onChange={this.handleFormChange}
-                        className="textarea"
+                        className="textarea is-small"
                         placeholder="Description"
                       />
                     </div>
