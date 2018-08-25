@@ -194,11 +194,22 @@
     grid-gap: 1em;
     grid-template-areas: "image fields";
 
+    .item-description {
+      white-space: pre-wrap;
+    }
+
     @media (max-width: 500px) {
       grid-template-columns: 1fr;
       grid-template-areas:
         "image"
         "fields";
+    }
+
+    @media (min-width: 501px) {
+      .item-description {
+        max-height: 60vh;
+        overflow-y: scroll;
+      }
     }
   }
 }
