@@ -138,6 +138,7 @@
 
 .item-details-modal {
   .modal-card-head {
+    min-height: 63px;
     .edit-item-pencil {
       margin-left: auto;
       cursor: pointer;
@@ -186,6 +187,16 @@
   .modal-card {
     width: 95vw;
     max-width: 1000px;
+
+    @media (max-width: 500px) {
+      height: 100vh !important;
+      max-height: 100vh !important;
+      width: 100vw;
+
+      .modal-card-head, .modal-card-foot {
+        border-radius: 0px;
+      }
+    }
   }
 
   .modal-card-body {
@@ -207,7 +218,7 @@
 
     @media (min-width: 501px) {
       .item-description {
-        max-height: 60vh;
+        max-height: 40vh;
         overflow-y: scroll;
       }
     }
