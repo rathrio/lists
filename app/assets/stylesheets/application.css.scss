@@ -148,16 +148,12 @@
   }
 
   .tags {
-    margin-bottom: 0;
+    margin-bottom: 1rem;
   }
 
   .modal-card {
-    width: 900px;
-
-    @media (max-width: 950px) {
-      margin: 0 auto;
-      width: 95%;
-    }
+    width: 95vw;
+    max-width: 1000px;
   }
 
   .modal-card-body {
@@ -166,7 +162,7 @@
     grid-gap: 1em;
     grid-template-areas: "image fields";
 
-    @media (max-width: 600px) {
+    @media (max-width: 680px) {
       grid-template-columns: 1fr;
       grid-template-areas:
         "image"
