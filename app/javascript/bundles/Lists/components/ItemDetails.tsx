@@ -112,21 +112,21 @@ class ItemDetails extends React.Component<Props> {
     const { store } = this.props;
     const item = store.activeItem!;
     store.onItemArchive(item);
-  }
+  };
 
   onRestoreClick = (e: any) => {
     e.preventDefault();
     const { store } = this.props;
     const item = store.activeItem!;
     store.onItemRestore(item);
-  }
+  };
 
   onStatusTagClick = (e: any) => {
     e.preventDefault();
     const { store } = this.props;
     const item = store.activeItem!;
     store.onItemToggle(item);
-  }
+  };
 
   render() {
     const { store } = this.props;
@@ -158,7 +158,9 @@ class ItemDetails extends React.Component<Props> {
         <form onSubmit={this.onSave}>
           <div className="modal-card">
             <header className="modal-card-head">
-              <p className="modal-card-title">{`${item.name} ${item.deleted ? ' (Archived)' : ''}`}</p>
+              <p className="modal-card-title">{`${item.name} ${
+                item.deleted ? ' (Archived)' : ''
+              }`}</p>
 
               <span className="external-item-links hidden is-hidden-touch">
                 <a target="blank" href={urls.pirateSearchUrl(item)}>
@@ -326,7 +328,7 @@ class ItemDetails extends React.Component<Props> {
                     )}
                   </div>
 
-                  <p style={{ whiteSpace: 'pre-wrap' }}>{item.description}</p>
+                  <p className="item-description">{item.description}</p>
                 </div>
               )}
             </section>
