@@ -333,11 +333,17 @@ class ItemDetails extends React.Component<Props> {
               )}
             </section>
 
-            {this.editing && (
+            {this.editing ? (
               <footer className="modal-card-foot">
                 <button className="button is-primary">Update</button>
                 <button onClick={this.onCancel} className="button">
                   Cancel
+                </button>
+              </footer>
+            ) : (
+              <footer className="modal-card-foot">
+                <button onClick={() => this.close()} className="button">
+                  Close
                 </button>
               </footer>
             )}
