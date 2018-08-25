@@ -45,15 +45,6 @@ class ItemDetails extends React.Component<Props> {
       e.preventDefault();
       this.close();
     });
-
-    Mousetrap.bind('space', (e) => {
-      if (this.isClosed) {
-        return;
-      }
-
-      e.preventDefault();
-      store.onItemToggle(store.activeItem!);
-    });
   }
 
   @computed
@@ -223,13 +214,13 @@ class ItemDetails extends React.Component<Props> {
               {this.editing ? (
                 <div>
                   <div className="field">
-                    <label className="label">Name</label>
+                    <label className="label is-small">Name</label>
                     <p className="control">
                       <input
                         name="name"
                         defaultValue={item.name}
                         onChange={this.handleFormChange}
-                        className="input"
+                        className="input is-small"
                         type="text"
                         placeholder="Name"
                         required
@@ -239,10 +230,10 @@ class ItemDetails extends React.Component<Props> {
                   </div>
 
                   <div className="field">
-                    <label className="label">Description</label>
+                    <label className="label is-small">Description</label>
                     <div className="control">
                       <textarea
-                        name="description"
+                        name="description is-small"
                         defaultValue={item.description}
                         onChange={this.handleFormChange}
                         className="textarea"
@@ -252,12 +243,12 @@ class ItemDetails extends React.Component<Props> {
                   </div>
 
                   <div className="field">
-                    <label className="label">Release Date</label>
+                    <label className="label is-small">Release Date</label>
                     <div className="control">
                       <input
                         name="date"
                         type="date"
-                        className="input"
+                        className="input is-small"
                         placeholder="Release Date"
                         defaultValue={item.date}
                         onChange={this.handleFormChange}
@@ -267,12 +258,12 @@ class ItemDetails extends React.Component<Props> {
                   </div>
 
                   <div className="field">
-                    <label className="label">Image</label>
+                    <label className="label is-small">Image</label>
                     <div className="control has-icon">
                       <input
                         name="remote_image_url"
                         type="url"
-                        className="input"
+                        className="input is-small"
                         placeholder="Paste link to new image here"
                         defaultValue={item.remote_image_url}
                         onChange={this.handleFormChange}
