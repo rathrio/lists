@@ -1,5 +1,7 @@
 import React, { Fragment } from 'react';
 import { observer } from 'mobx-react';
+import scrollIntoView from 'scroll-into-view-if-needed';
+
 import { Item } from '..';
 import ItemRating from './ItemRating';
 import * as urls from '../../utils/external_item_urls';
@@ -91,7 +93,7 @@ class ItemBox extends React.Component<Props> {
       return;
     }
 
-    currentItemBoxDiv.scrollIntoView({ behavior: 'smooth' });
+    scrollIntoView(currentItemBoxDiv, { behavior: 'smooth', scrollMode: 'if-needed' });
   }
 
   render() {
