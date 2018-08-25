@@ -19,7 +19,7 @@ class ItemStore {
   detailsModalVisible = false;
 
   @observable
-  query = 's[todo] ';
+  query = '';
 
   @observable
   spinnerVisible = false;
