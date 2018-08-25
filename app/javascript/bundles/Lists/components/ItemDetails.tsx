@@ -169,7 +169,7 @@ class ItemDetails extends React.Component<Props> {
             <header className="modal-card-head">
               <p className="modal-card-title">{`${item.name} ${item.deleted ? ' (Archived)' : ''}`}</p>
 
-              <span className="external-item-links hidden">
+              <span className="external-item-links hidden is-hidden-touch">
                 <a target="blank" href={urls.pirateSearchUrl(item)}>
                   <span className="icon is-medium">
                     <i className="fa fa-magnet fa-lg" />

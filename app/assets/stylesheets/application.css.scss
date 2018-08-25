@@ -153,11 +153,9 @@
 
   .modal-card {
     width: 900px;
-  }
 
-  @media (max-width: 950px) {
-    .modal-card {
-      width: 95%;
+    @media (max-width: 950px) {
+      width: 90%;
     }
   }
 
@@ -166,5 +164,12 @@
     grid-template-columns: 25% auto;
     grid-gap: 1em;
     grid-template-areas: "image fields";
+
+    @media (max-width: 600px) {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "image"
+        "fields";
+    }
   }
 }

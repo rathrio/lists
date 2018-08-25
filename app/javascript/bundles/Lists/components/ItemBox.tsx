@@ -75,29 +75,34 @@ class ItemBox extends React.Component<Props> {
       return;
     }
 
-    scrollIntoView(currentItemBoxDiv, { behavior: 'smooth', scrollMode: 'if-needed' });
+    scrollIntoView(currentItemBoxDiv, {
+      behavior: 'smooth',
+      scrollMode: 'if-needed'
+    });
   }
 
   render() {
-    const {
-      item,
-      store
-    } = this.props;
+    const { item, store } = this.props;
 
     const thumbUrl = item!.image!.thumb.url;
 
-    let itemRatingClassName = 'level-item is-hidden-mobile item-rating show-on-hover';
+    let itemRatingClassName =
+      'level-item is-hidden-mobile item-rating show-on-hover';
 
     if (!item.rating) {
       itemRatingClassName = `${itemRatingClassName} hidden`;
     }
 
-    return <div className={`box item-box ${store.isFocused(item) && 'is-focused'}`} ref={this.itemBoxDiv}>
-        <div className="level is-mobile">
+    return (
+      <div
+        className={`box item-box ${store.isFocused(item) && 'is-focused'}`}
+        ref={this.itemBoxDiv}
+      >
+        <div className="level is-mobile" style={{ overflowX: 'scroll' }}>
           <div className="level-left is-mobile">
             <div className="level-item">
               <figure className="image is-64x64">
-                <img src={thumbUrl} alt={item.name} />
+                <img src={thumbUrl} alt={item.name} className="item-cover" />
               </figure>
             </div>
 
@@ -107,17 +112,25 @@ class ItemBox extends React.Component<Props> {
               </div>
             </div>
 
-            {item.year && <div className="level-item has-pointer" onClick={(e) => this.onTagClick(e, `y[${item.year}]`)} data-balloon={`Show ${item.year} items`}>
+            {item.year && (
+              <div
+                className="level-item has-pointer"
+                onClick={(e) => this.onTagClick(e, `y[${item.year}]`)}
+                data-balloon={`Show ${item.year} items`}
+              >
                 <span className="tag is-rounded is-light is-small">
                   {item.year}
                 </span>
-              </div>}
+              </div>
+            )}
 
-            {item.deleted && <div className="level-item has-pointer">
+            {item.deleted && (
+              <div className="level-item has-pointer">
                 <span className="tag is-rounded is-light is-small">
                   {item.list}
                 </span>
-              </div>}
+              </div>
+            )}
 
             {item.tags.map((tag) => (
               <div
@@ -126,13 +139,12 @@ class ItemBox extends React.Component<Props> {
                 onClick={(e) => this.onTagClick(e, `t[${tag}]`)}
                 data-balloon={`Show ${tag} items`}
               >
-                <span className="tag is-rounded is-light is-small">
-                  {tag}
-                </span>
+                <span className="tag is-rounded is-light is-small">{tag}</span>
               </div>
             ))}
 
-            {item.status !== 'todo' && <div className="level-item is-hidden-touch">
+            {item.status !== 'todo' && (
+              <div className="level-item is-hidden-touch">
                 <span
                   className={`tag is-rounded is-small ${
                     item.status === 'doing' ? 'is-warning' : 'is-success'
@@ -140,10 +152,14 @@ class ItemBox extends React.Component<Props> {
                 >
                   {item.human_status}
                 </span>
-              </div>}
+              </div>
+            )}
 
             <div className={itemRatingClassName}>
-              <ItemRating item={item} onUpdateRating={store.onItemUpdateRating} />
+              <ItemRating
+                item={item}
+                onUpdateRating={store.onItemUpdateRating}
+              />
             </div>
           </div>
 
@@ -180,10 +196,16 @@ class ItemBox extends React.Component<Props> {
               </a>
             </div>
 
-            {item.deleted && <RestoreActions onRestoreClick={this.onRestoreClick} onDeleteClick={this.onDeleteClick} />}
+            {item.deleted && (
+              <RestoreActions
+                onRestoreClick={this.onRestoreClick}
+                onDeleteClick={this.onDeleteClick}
+              />
+            )}
           </div>
         </div>
-      </div>;
+      </div>
+    );
   }
 }
 
