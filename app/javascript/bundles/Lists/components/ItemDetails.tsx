@@ -58,7 +58,9 @@ class ItemDetails extends React.Component<Props> {
 
   @computed
   get isClosed() {
-    return (!this.props.store.activeItem || !this.props.store.detailsModalVisible);
+    return (
+      !this.props.store.activeItem || !this.props.store.detailsModalVisible
+    );
   }
 
   onCancel = (e: any) => {
@@ -114,12 +116,44 @@ class ItemDetails extends React.Component<Props> {
     this.disableEditing();
   };
 
+  onArchiveClick = (e: any) => {
+    e.preventDefault();
+    const { store } = this.props;
+    const item = store.activeItem!;
+    store.onItemArchive(item);
+  }
+
+  onRestoreClick = (e: any) => {
+    e.preventDefault();
+    const { store } = this.props;
+    const item = store.activeItem!;
+    store.onItemRestore(item);
+  }
+
+  onStatusTagClick = (e: any) => {
+    e.preventDefault();
+    const { store } = this.props;
+    const item = store.activeItem!;
+    store.onItemToggle(item);
+  }
+
   render() {
     const { store } = this.props;
     const item = store.activeItem;
 
     if (!item) {
       return '';
+    }
+
+    let statusTagClassName = '';
+    switch (item.status) {
+      case 'doing':
+        statusTagClassName = 'is-warning';
+        break;
+      case 'done':
+        statusTagClassName = 'is-success';
+      default:
+        break;
     }
 
     return (
@@ -133,7 +167,7 @@ class ItemDetails extends React.Component<Props> {
         <form onSubmit={this.onSave}>
           <div className="modal-card">
             <header className="modal-card-head">
-              <p className="modal-card-title">{item.name}</p>
+              <p className="modal-card-title">{`${item.name} ${item.deleted ? ' (Archived)' : ''}`}</p>
 
               <span className="external-item-links hidden">
                 <a target="blank" href={urls.pirateSearchUrl(item)}>
@@ -184,16 +218,6 @@ class ItemDetails extends React.Component<Props> {
                     }}
                   />
                 </figure>
-
-                <div
-                  className={`item-rating ${item.rating ? '' : 'hidden'}`}
-                  style={{ marginTop: '3px' }}
-                >
-                  <ItemRating
-                    item={item}
-                    onUpdateRating={store.onItemUpdateRating}
-                  />
-                </div>
               </div>
 
               {this.editing ? (
@@ -271,14 +295,44 @@ class ItemDetails extends React.Component<Props> {
                       </span>
                     ))}
 
-                    {item.status !== 'todo' && (
-                      <span
-                        className={`tag is-rounded is-small is-${
-                          item.status === 'doing' ? 'warning' : 'success'
-                        }`}
+                    <span
+                      className={`tag is-rounded is-small ${statusTagClassName} has-pointer`}
+                      data-balloon="Toggle status"
+                      onClick={this.onStatusTagClick}
+                    >
+                      {item.human_status}
+                    </span>
+
+                    <span
+                      className="item-rating"
+                      style={{ marginTop: '-10px', marginLeft: '3px' }}
+                    >
+                      <ItemRating
+                        item={item}
+                        onUpdateRating={store.onItemUpdateRating}
+                      />
+                    </span>
+
+                    {item.deleted ? (
+                      <a
+                        href="#"
+                        onClick={this.onRestoreClick}
+                        style={{ marginTop: '-10px', marginLeft: 'auto' }}
                       >
-                        {item.human_status}
-                      </span>
+                        <span className="icon is-medium">
+                          <i className="fa fa-recycle fa-lg" />
+                        </span>
+                      </a>
+                    ) : (
+                      <a
+                        href="#"
+                        onClick={this.onArchiveClick}
+                        style={{ marginTop: '-10px', marginLeft: 'auto' }}
+                      >
+                        <span className="icon is-medium">
+                          <i className="fa fa-archive fa-lg" />
+                        </span>
+                      </a>
                     )}
                   </div>
 
