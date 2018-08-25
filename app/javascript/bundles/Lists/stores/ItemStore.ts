@@ -87,6 +87,7 @@ class ItemStore {
     API.delete(`/items/${item.id}`).then(
       (response) => {
         this.remove(item);
+        Object.assign(item, response.data);
       },
       (error) => {
         console.log(error);
@@ -99,6 +100,7 @@ class ItemStore {
     API.put(`/items/${item.id}/restore`).then(
       (response) => {
         this.remove(item);
+        Object.assign(item, response.data);
       },
       (error) => {
         console.log(error);
@@ -195,7 +197,10 @@ class ItemStore {
   showDetailsModal = () => this.detailsModalVisible = true;
 
   @action
-  hideDetailsModal = () => this.detailsModalVisible = false;
+  hideDetailsModal = () => {
+    this.activeItem = undefined;
+    this.detailsModalVisible = false;
+  }
 
   @action
   showItemDetails = (item: Item) => {

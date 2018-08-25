@@ -60,29 +60,7 @@
 .item-box {
   margin-bottom: 1rem !important;
   padding: 0;
-  padding-right: 1.25rem;
   position: relative;
-
-  .status-bar {
-    position: absolute;
-    right: 0;
-    width: 15px;
-    height: 100%;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-
-    &.is-todo {
-      background-color: $light;
-    }
-
-    &.is-doing {
-      background-color: $yellow;
-    }
-
-    &.is-done {
-      background-color: $green;
-    }
-  }
 
   img {
     border-top-left-radius: 5px;
