@@ -158,7 +158,10 @@ class ItemDetails extends React.Component<Props> {
         <form onSubmit={this.onSave}>
           <div className="modal-card">
             <header className="modal-card-head">
-              <span className="icon is-medium is-hidden-mobile" style={{ marginRight: '5px' }}>
+              <span
+                className="icon is-medium is-hidden-mobile"
+                style={{ marginRight: '5px' }}
+              >
                 <i className={`fa fa-${item.fa_icon} fa-lg`} />
               </span>
 
