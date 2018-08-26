@@ -37,7 +37,7 @@ class Items extends React.Component<Props> {
     });
 
     Mousetrap.bind(['j', 'tab'], (e) => {
-      // Tab should only works outside of details modal.
+      // Tab should only work outside of details modal.
       if (this.store.detailsModalVisible && e.key === 'Tab') {
         return;
       }
@@ -47,7 +47,7 @@ class Items extends React.Component<Props> {
     });
 
     Mousetrap.bind(['k', 'shift+tab'], (e) => {
-      // Tab should only works outside of details modal.
+      // Tab should only work outside of details modal.
       if (this.store.detailsModalVisible && e.key === 'Tab') {
         return;
       }
