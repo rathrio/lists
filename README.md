@@ -20,42 +20,42 @@ Make sure postgres and redis servers are running.
 ## Installation
 
 1. Install dependencies:
-    ```
+    ```bash
     bundle install
     yarn install
     ```
 
 2. Setup database:
-    ```
+    ```bash
     ./bin/rails db:setup
     ```
 
 3. Apply migrations:
-    ```
+    ```bash
     ./bin/rails db:migrate
     ```
 
 ## Running
 
 1. Run sidekiq for background jobs:
-    ```
+    ```bash
     ./bin/sidekiq -C config/sidekiq.yml
     ```
 
 2. Run the application server:
-    ```
+    ```bash
     foreman start -f Procfile.dev-server
     ```
 
 ## Running tests
 
-```
+```bash
 ./bin/rails test
 ```
 
 ## Generate Documentation
 
-```
+```bash
 ./bin/rails docs
 ```
 
@@ -66,13 +66,13 @@ Make sure postgres and redis servers are running.
 3. Commit your changes `git commit -am "Add some feature"`
 4. Push to the branch `git push origin my-new-feature`
 5. Run tests
-    ```
+    ```bash
     ./bin/rails test
     ```
 
 6. Review changes and fix style
-    ```
+    ```bash
     ./bin/pronto run
     ```
 
-5. Create new Pull Request (in your forked repository)
+7. Create new Pull Request (in your forked repository)
