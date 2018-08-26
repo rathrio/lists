@@ -15,22 +15,22 @@ Style/StringLiterals:
 Style/StringLiteralsInInterpolation:
   Enabled: false
 
-Style/SpaceInsideStringInterpolation:
+Layout/SpaceInsideStringInterpolation:
   Enabled: false
 
 Style/PercentLiteralDelimiters:
   Enabled: false
 
-Style/EmptyLinesAroundBlockBody:
+Layout/EmptyLinesAroundBlockBody:
   Enabled: false
 
-Style/EmptyLinesAroundClassBody:
+Layout/EmptyLinesAroundClassBody:
   Enabled: false
 
-Style/EmptyLinesAroundModuleBody:
+Layout/EmptyLinesAroundModuleBody:
   Enabled: false
 
-Style/AlignParameters:
+Layout/AlignParameters:
   EnforcedStyle: with_fixed_indentation
 
 Style/SingleLineBlockParams:
@@ -39,7 +39,7 @@ Style/SingleLineBlockParams:
 Style/TrivialAccessors:
   AllowPredicates: true
 
-Style/DotPosition:
+Layout/DotPosition:
   EnforcedStyle: trailing
 
 Style/Semicolon:
@@ -54,7 +54,7 @@ Style/SingleLineMethods:
 Style/Documentation:
   Enabled: false
 
-Style/MultilineOperationIndentation:
+Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
 
 Style/DoubleNegation:
@@ -64,7 +64,7 @@ Style/Alias:
   EnforcedStyle: prefer_alias_method
 
 Style/FrozenStringLiteralComment:
-  Enabled: false
+  Enabled: true
 
 Style/NumericLiterals:
   Enabled: false

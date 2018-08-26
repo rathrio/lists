@@ -3,7 +3,7 @@ import { Item, ScraperResult } from '..';
 import API from '../../utils/api';
 
 /**
- * State managment for items overview.
+ * State managment for items.
  */
 class ItemStore {
   readonly items = observable<Item>([]);
@@ -178,29 +178,29 @@ class ItemStore {
   };
 
   @action
-  showSpinner = () => this.spinnerVisible = true;
+  showSpinner = () => (this.spinnerVisible = true);
 
   @action
-  hideSpinner = () => this.spinnerVisible = false;
+  hideSpinner = () => (this.spinnerVisible = false);
 
   /**
    * Show all *filtered* items, because by default only the first 15 matches
    * are rendered for fast rerendering.
    */
   @action
-  showAllItems = () => this.allItemsVisible = true;
+  showAllItems = () => (this.allItemsVisible = true);
 
   @action
-  doNotShowAllItems = () => this.allItemsVisible = false;
+  doNotShowAllItems = () => (this.allItemsVisible = false);
 
   @action
-  showDetailsModal = () => this.detailsModalVisible = true;
+  showDetailsModal = () => (this.detailsModalVisible = true);
 
   @action
   hideDetailsModal = () => {
     this.activeItem = undefined;
     this.detailsModalVisible = false;
-  }
+  };
 
   @action
   showItemDetails = (item: Item) => {
@@ -215,7 +215,7 @@ class ItemStore {
     }
 
     this.showItemDetails(this.focusedItem);
-  }
+  };
 
   @action
   focusNextItem = () => {
@@ -238,7 +238,7 @@ class ItemStore {
     }
 
     this.focusItem(this.filteredItems[focusedIndex + 1]);
-  }
+  };
 
   @action
   focusPreviousItem = () => {
@@ -261,7 +261,7 @@ class ItemStore {
     }
 
     this.focusItem(this.filteredItems[focusedIndex - 1]);
-  }
+  };
 
   @action
   focusItem = (item: Item) => {
@@ -270,12 +270,12 @@ class ItemStore {
     if (this.detailsModalVisible) {
       this.activeItem = item;
     }
-  }
+  };
 
   @action
   unfocusItem = () => {
     this.focusedItem = undefined;
-  }
+  };
 
   @action
   resetScraperResults = () => this.scraperResults.replace([]);
@@ -283,7 +283,7 @@ class ItemStore {
   @action
   remove = (item: Item) => {
     this.items.remove(item);
-  }
+  };
 
   @action
   update = (item: Item, attributes: Partial<Item>) => {
@@ -295,18 +295,25 @@ class ItemStore {
         console.log(error);
       }
     );
+  };
+
+  private match = (str: string, query: string) => {
+    return (
+      str.toLowerCase().match(this.escapeRgx(query.toLowerCase())) !== null
+    );
+  };
+
+  private matchItem = (item: Item, query: string) => {
+    return (
+      this.match(item.name, query) ||
+      item.tags.some((tag) => this.match(tag, query)) ||
+      (item.year && this.match(item.year.toString(), query))
+    );
+  };
+
+  private escapeRgx = (str: string) => {
+    return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
   }
-
-  private match = (str: string, query: string) =>
-    str.toLowerCase().match(this.escapeRgx(query.toLowerCase())) !== null;
-
-  private matchItem = (item: Item, query: string) =>
-    this.match(item.name, query) ||
-    item.tags.some((tag) => this.match(tag, query)) ||
-    (item.year && this.match(item.year.toString(), query));
-
-  private escapeRgx = (str: string) =>
-    str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
 
   @computed
   get allFilteredItems(): Item[] {
@@ -374,11 +381,11 @@ class ItemStore {
 
   isActive = (item: Item) => {
     return this.activeItem === item;
-  }
+  };
 
   isFocused = (item: Item) => {
     return this.focusedItem === item;
-  }
+  };
 }
 
 export default ItemStore;

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Item < ApplicationRecord
   acts_as_paranoid
 
@@ -46,6 +48,10 @@ class Item < ApplicationRecord
     list&.name
   end
 
+  def fa_icon
+    list&.fa_icon
+  end
+
   def update_from(scraper_result)
     update_attributes!(scraper_result.merge(scraped: true))
   end
@@ -53,7 +59,7 @@ class Item < ApplicationRecord
   def tags=(names)
     names.each do |name|
       tag = user.tags.find_or_create_by(name: name)
-      self.tags << tag unless tags.include?(tag)
+      tags << tag unless tags.include?(tag)
     end
   end
 
@@ -88,6 +94,7 @@ class Item < ApplicationRecord
     super.tap do |hash|
       hash['tags'] = tags.map(&:name)
       hash['list'] = list_name
+      hash['fa_icon'] = fa_icon
       hash['year'] = year
       hash['deleted'] = deleted?
       hash['human_status'] = human_status

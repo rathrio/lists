@@ -30,8 +30,6 @@ class ItemDetails extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 
-    const store = props.store;
-
     Mousetrap.bind('e', (e) => {
       e.preventDefault();
       this.toggleEditing();
@@ -132,6 +130,8 @@ class ItemDetails extends React.Component<Props> {
     const { store } = this.props;
     const item = store.activeItem;
 
+    // Render nothing if there's no active item. Guard is necessary because
+    // this component is always mounted.
     if (!item) {
       return '';
     }
@@ -158,6 +158,10 @@ class ItemDetails extends React.Component<Props> {
         <form onSubmit={this.onSave}>
           <div className="modal-card">
             <header className="modal-card-head">
+              <span className="icon is-medium is-hidden-mobile" style={{ marginRight: '5px' }}>
+                <i className={`fa fa-${item.fa_icon} fa-lg`} />
+              </span>
+
               <p className="modal-card-title">{`${item.name} ${
                 item.deleted ? ' (Archived)' : ''
               }`}</p>

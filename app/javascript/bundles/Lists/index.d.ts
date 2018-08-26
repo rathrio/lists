@@ -6,6 +6,7 @@ export interface Image {
 export interface Item {
   id: number;
   list: string;
+  fa_icon: string;
   list_id: number;
   name: string;
   description: string;
