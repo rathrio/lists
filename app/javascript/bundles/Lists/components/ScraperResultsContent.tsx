@@ -17,7 +17,7 @@ class ScraperResultsContent extends React.Component<Props> {
       store.scraperResults.length > 0 ? (
         <ScraperResults
           results={store.scraperResults}
-          onAdd={store.onResultAdd}
+          onAdd={store.importScraperResult}
         />
       ) : (
           ''

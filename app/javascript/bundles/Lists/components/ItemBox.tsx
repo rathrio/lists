@@ -11,8 +11,8 @@ const RestoreActions = ({
   onRestoreClick,
   onDeleteClick
 }: {
-  onRestoreClick(e: any): void;
-  onDeleteClick(e: any): void;
+  onRestoreClick(e: React.MouseEvent): void;
+  onDeleteClick(e: React.MouseEvent): void;
 }) => (
   <Fragment>
     <div className="level-item">
@@ -44,27 +44,22 @@ interface Props {
 class ItemBox extends React.Component<Props> {
   readonly itemBoxDiv = React.createRef<HTMLDivElement>();
 
-  onArchiveClick = (e: any) => {
+  onRestoreClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    this.props.store.onItemArchive(this.props.item);
+    this.props.store.restore(this.props.item);
   };
 
-  onRestoreClick = (e: any) => {
+  onDeleteClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    this.props.store.onItemRestore(this.props.item);
+    this.props.store.delete(this.props.item);
   };
 
-  onDeleteClick = (e: any) => {
-    e.preventDefault();
-    this.props.store.onItemDelete(this.props.item);
-  };
-
-  onTagClick = (e: any, tag: string) => {
+  onTagClick = (e: React.MouseEvent, tag: string) => {
     const options = e.metaKey ? { append: true } : {};
     this.props.store.onTagFilter(tag, options);
   };
 
-  onItemNameClick = (e: any) => {
+  onItemNameClick = (e: React.MouseEvent) => {
     e.preventDefault();
     this.props.store.focusItem(this.props.item);
     this.props.store.showItemDetails(this.props.item);
@@ -161,7 +156,7 @@ class ItemBox extends React.Component<Props> {
             <div className={itemRatingClassName}>
               <ItemRating
                 item={item}
-                onUpdateRating={store.onItemUpdateRating}
+                onUpdateRating={store.updateRating}
               />
             </div>
           </div>
