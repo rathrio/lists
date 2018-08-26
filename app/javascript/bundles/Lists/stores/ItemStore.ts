@@ -38,9 +38,6 @@ class ItemStore {
   }
 
   @action
-  onOmniInput = (e: any) => this.filter(e.target.value);
-
-  @action
   onTagFilter = (tag: string, options: { append?: boolean }) => {
     if (!options.append) {
       this.filter(tag);
@@ -52,9 +49,7 @@ class ItemStore {
   };
 
   @action
-  onOmniSubmit = (e: any) => {
-    e.preventDefault();
-
+  scrape = () => {
     this.showSpinner();
     const query = this.query.replace(this.tagsRgx, '').trim();
 
@@ -70,7 +65,7 @@ class ItemStore {
   };
 
   @action
-  onResultAdd = (result: ScraperResult) => {
+  importScraperResult = (result: ScraperResult) => {
     API.post('/scraper_results/import', { scraper_results: result }).then(
       (response) => {
         this.scraperResults.remove(result);
@@ -83,7 +78,7 @@ class ItemStore {
   };
 
   @action
-  onItemArchive = (item: Item) => {
+  archive = (item: Item) => {
     API.delete(`/items/${item.id}`).then(
       (response) => {
         this.remove(item);
@@ -96,7 +91,7 @@ class ItemStore {
   };
 
   @action
-  onItemRestore = (item: Item) => {
+  restore = (item: Item) => {
     API.put(`/items/${item.id}/restore`).then(
       (response) => {
         this.remove(item);
@@ -109,7 +104,7 @@ class ItemStore {
   };
 
   @action
-  onItemDelete = (item: Item) => {
+  delete = (item: Item) => {
     if (!window.confirm('Are you sure?')) {
       return;
     }
@@ -125,7 +120,7 @@ class ItemStore {
   };
 
   @action
-  onItemToggle = (item: Item) => {
+  toggleStatus = (item: Item) => {
     API.put(`/items/${item.id}/toggle_status`).then(
       (response) => {
         Object.assign(item, response.data);
@@ -137,7 +132,7 @@ class ItemStore {
   };
 
   @action
-  onItemUpdateRating = (item: Item, rating: number) => {
+  updateRating = (item: Item, rating: number) => {
     this.update(item, { rating });
   };
 

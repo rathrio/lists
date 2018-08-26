@@ -52,7 +52,7 @@ class ItemDetails extends React.Component<Props> {
     );
   }
 
-  onCancel = (e: any) => {
+  onCancel = (e: React.MouseEvent) => {
     e.preventDefault();
     this.disableEditing();
   };
@@ -89,11 +89,13 @@ class ItemDetails extends React.Component<Props> {
     this.props.store.hideDetailsModal();
   };
 
-  handleFormChange = (e: any) => {
+  handleFormChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     this.formData[e.target.name] = e.target.value;
   };
 
-  onSave = (e: any) => {
+  onSave = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (this.hasFormDataChanges) {
@@ -105,25 +107,25 @@ class ItemDetails extends React.Component<Props> {
     this.disableEditing();
   };
 
-  onArchiveClick = (e: any) => {
+  onArchiveClick = (e: React.MouseEvent) => {
     e.preventDefault();
     const { store } = this.props;
     const item = store.activeItem!;
-    store.onItemArchive(item);
+    store.archive(item);
   };
 
-  onRestoreClick = (e: any) => {
+  onRestoreClick = (e: React.MouseEvent) => {
     e.preventDefault();
     const { store } = this.props;
     const item = store.activeItem!;
-    store.onItemRestore(item);
+    store.restore(item);
   };
 
-  onStatusTagClick = (e: any) => {
+  onStatusTagClick = (e: React.MouseEvent) => {
     e.preventDefault();
     const { store } = this.props;
     const item = store.activeItem!;
-    store.onItemToggle(item);
+    store.toggleStatus(item);
   };
 
   render() {
@@ -308,7 +310,7 @@ class ItemDetails extends React.Component<Props> {
                     >
                       <ItemRating
                         item={item}
-                        onUpdateRating={store.onItemUpdateRating}
+                        onUpdateRating={store.updateRating}
                       />
                     </span>
 

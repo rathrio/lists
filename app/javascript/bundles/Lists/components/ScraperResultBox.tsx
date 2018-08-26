@@ -12,7 +12,7 @@ const ScraperResultBox = ({ result, onAdd }: Props) => {
   const year = new Date(date).getFullYear();
   const tags = result.tags.slice(0, 4);
 
-  const onClick = (e: any) => onAdd(result);
+  const onClick = (e: React.MouseEvent) => onAdd(result);
 
   return (
     <div
