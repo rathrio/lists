@@ -10,16 +10,25 @@ const Modal = (() => {
       const modal = modals[i];
       modal.classList.remove('is-active');
     }
+
+    const body = document.getElementsByTagName('body')[0];
+    body.classList.remove('modal-open');
   }
 
   function open(id: string) {
-    const modal = document.getElementById(id);
-    modal!.classList.add('is-active');
+    const modal = document.getElementById(id)!;
+    modal.classList.add('is-active');
+
+    const body = document.getElementsByTagName('body')[0];
+    body.classList.add('modal-open');
   }
 
   function toggle(id: string) {
     const modal = document.getElementById(id);
     modal!.classList.toggle('is-active');
+
+    const body = document.getElementsByTagName('body')[0];
+    body.classList.toggle('modal-open');
   }
 
   function ready() {

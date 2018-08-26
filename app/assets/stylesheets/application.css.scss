@@ -14,12 +14,13 @@
  *= require_self
  */
 
-@media (max-width: 768px) {
-  $radius: 0px;
-}
-
 @import 'bulma';
 @import 'font-awesome';
+
+body.modal-open {
+  overflow: hidden;
+  position: fixed;
+}
 
 .hidden {
   visibility: hidden;

@@ -3,7 +3,7 @@ import { Item, ScraperResult } from '..';
 import API from '../../utils/api';
 
 /**
- * State managment for items.
+ * State management for items.
  */
 class ItemStore {
   readonly items = observable<Item>([]);
