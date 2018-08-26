@@ -37,6 +37,9 @@ interface Props {
   store: ItemStore;
 }
 
+/**
+ * Technically a Bulma level element.
+ */
 @observer
 class ItemBox extends React.Component<Props> {
   readonly itemBoxDiv = React.createRef<HTMLDivElement>();
