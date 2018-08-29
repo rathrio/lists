@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import scrollIntoView from 'scroll-into-view-if-needed';
 
 import { Item } from '..';
-import ItemRating from './ItemRating';
+import ItemRating, { RATING_NAMES } from './ItemRating';
 import * as urls from '../../utils/external_item_urls';
 import ItemStore from '../stores/ItemStore';
 
@@ -85,11 +85,16 @@ class ItemBox extends React.Component<Props> {
     const thumbUrl = item!.image!.thumb.url;
 
     let itemRatingClassName =
-      'level-item is-hidden-mobile item-rating show-on-hover';
+      'level-item is-hidden-mobile item-rating show-on-hover has-pointer';
 
     if (!item.rating) {
       itemRatingClassName = `${itemRatingClassName} hidden`;
     }
+
+    const itemRatingProps = { className: itemRatingClassName };
+    (itemRatingProps as any)['data-balloon'] = item.rating
+      ? `Show items rated "${RATING_NAMES[item.rating - 1]}"`
+      : 'Show unrated items';
 
     return (
       <div
@@ -153,10 +158,11 @@ class ItemBox extends React.Component<Props> {
               </div>
             )}
 
-            <div className={itemRatingClassName}>
+            <div {...itemRatingProps}>
               <ItemRating
                 item={item}
                 onUpdateRating={store.updateRating}
+                readonly
               />
             </div>
           </div>
