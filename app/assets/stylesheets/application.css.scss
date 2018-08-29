@@ -17,10 +17,10 @@
 @import 'bulma';
 @import 'font-awesome';
 
-body.modal-open {
-  overflow: hidden;
-  position: fixed;
-}
+// body.modal-open {
+//   overflow: hidden;
+//   position: fixed;
+// }
 
 .hidden {
   visibility: hidden;
@@ -175,10 +175,6 @@ body.modal-open {
       opacity: 1;
       transition: opacity 0.2s linear;
     }
-  }
-
-  .item-details-modal-background {
-    background-color: rgba(10, 10, 10, 0.86);
   }
 
   .tags {

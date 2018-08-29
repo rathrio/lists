@@ -1,41 +1,86 @@
 import React, { Fragment } from 'react';
-import { Item } from '..';
 import { observer } from 'mobx-react';
-import { observable } from 'mobx';
+import { observable, computed, action } from 'mobx';
+
+import { Item } from '..';
 
 interface Props {
   item: Item;
   onUpdateRating(item: Item, rating: number): void;
+  readonly?: boolean;
 }
 
 interface State {
   rating: number;
 }
 
+export const RATING_NAMES = [
+  'Abysmal',
+  'Poor',
+  'Good',
+  'Great',
+  'Masterful'
+];
+
 @observer
 class ItemRating extends React.Component<Props, State> {
   @observable
-  rating: number = this.props.item.rating || 0;
+  rating?: number;
 
-  private readonly ratingNames = ['Abysmal', 'Poor', 'Good', 'Great', 'Masterful'];
+  private readonly = false;
 
+  constructor(props: Props) {
+    super(props);
+
+    if (props.readonly) {
+      this.readonly = true;
+    }
+  }
+
+  @computed
+  get currentRating(): number {
+    return this.rating || this.props.item.rating || 0;
+  }
+
+  @action
   onStarEnter = (rating: number) => {
+    if (this.readonly) {
+      return;
+    }
+
     this.rating = rating;
   };
 
+  @action
   onStarLeave = (rating: number) => {
+    if (this.readonly) {
+      return;
+    }
+
     this.rating = this.props.item.rating || 0;
   };
 
+  @action
   onStarClick = (rating: number) => {
+    if (this.readonly) {
+      return;
+    }
+
     this.props.onUpdateRating(this.props.item, rating);
   };
 
   renderStar = (n: number) => {
-    const starIcon = n <= this.rating ? 'fa-star' : 'fa-star-o';
-    const className = `fa ${starIcon} fa-sm has-pointer item-rating-star`;
+    const starIcon = n <= this.currentRating ? 'fa-star' : 'fa-star-o';
+    const className = `fa ${starIcon} fa-sm item-rating-star ${
+      this.readonly ? '' : 'has-pointer'
+    }`;
+
+    const spanProps = this.readonly
+      ? {}
+      : { 'data-balloon': RATING_NAMES[n - 1], 'data-balloon-pos': 'down' };
+
     return (
-      <span key={n} data-balloon={this.ratingNames[n - 1]}>
+      <span key={n} {...spanProps}>
         <i
           className={className}
           onMouseEnter={() => this.onStarEnter(n)}
@@ -48,9 +93,7 @@ class ItemRating extends React.Component<Props, State> {
 
   render() {
     return (
-      <Fragment>
-        {[1, 2, 3, 4, 5].map((n) => this.renderStar(n))}
-      </Fragment>
+      <Fragment>{[1, 2, 3, 4, 5].map((n) => this.renderStar(n))}</Fragment>
     );
   }
 }

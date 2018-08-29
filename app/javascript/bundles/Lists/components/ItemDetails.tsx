@@ -299,6 +299,7 @@ class ItemDetails extends React.Component<Props> {
                     <span
                       className={`tag is-rounded is-small ${statusTagClassName} has-pointer`}
                       data-balloon="Toggle status"
+                      data-balloon-pos="down"
                       onClick={this.onStatusTagClick}
                     >
                       {item.human_status}
@@ -319,6 +320,8 @@ class ItemDetails extends React.Component<Props> {
                         href="#"
                         onClick={this.onRestoreClick}
                         style={{ marginTop: '-10px', marginLeft: 'auto' }}
+                        data-balloon="Restore"
+                        data-balloon-pos="down"
                       >
                         <span className="icon is-medium">
                           <i className="fa fa-recycle fa-lg" />
@@ -329,6 +332,8 @@ class ItemDetails extends React.Component<Props> {
                         href="#"
                         onClick={this.onArchiveClick}
                         style={{ marginTop: '-10px', marginLeft: 'auto' }}
+                        data-balloon="Archive"
+                        data-balloon-pos="down"
                       >
                         <span className="icon is-medium">
                           <i className="fa fa-archive fa-lg" />
