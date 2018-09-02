@@ -36,3 +36,16 @@ export interface ScraperResult {
   tags: string[];
   links?: string[];
 }
+
+export interface Tag {
+  /**
+   * Display name, e.g. "Watching" for a status.
+   */
+  name: string;
+
+  /**
+   * Value used for filtering, e.g. "doing" for a status.
+   */
+  value?: string | number;
+  type: 'tag' | 'status' | 'list' | 'year' | 'rating';
+}

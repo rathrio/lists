@@ -1,8 +1,9 @@
 import React, { Fragment } from 'react';
 import { observer } from 'mobx-react';
 import scrollIntoView from 'scroll-into-view-if-needed';
+import _ from 'lodash';
 
-import { Item } from '..';
+import { Item, Tag } from '..';
 import ItemRating, { RATING_NAMES } from './ItemRating';
 import * as urls from '../../utils/external_item_urls';
 import ItemStore from '../stores/ItemStore';
@@ -11,26 +12,26 @@ const RestoreActions = ({
   onRestoreClick,
   onDeleteClick
 }: {
-  onRestoreClick(e: React.MouseEvent): void;
-  onDeleteClick(e: React.MouseEvent): void;
-}) => (
-  <Fragment>
-    <div className="level-item">
-      <a target="blank" href="#" onClick={onRestoreClick}>
-        <span className="icon is-medium" data-balloon="Restore">
-          <i className="fa fa-recycle fa-lg" />
-        </span>
-      </a>
-    </div>
-    <div className="level-item">
-      <a target="blank" href="#" onClick={onDeleteClick}>
-        <span className="icon is-medium" data-balloon="Delete for good">
-          <i className="fa fa-trash fa-lg" />
-        </span>
-      </a>
-    </div>
-  </Fragment>
-);
+    onRestoreClick(e: React.MouseEvent): void;
+    onDeleteClick(e: React.MouseEvent): void;
+  }) => (
+    <Fragment>
+      <div className="level-item">
+        <a target="blank" href="#" onClick={onRestoreClick}>
+          <span className="icon is-medium" data-balloon="Restore">
+            <i className="fa fa-recycle fa-lg" />
+          </span>
+        </a>
+      </div>
+      <div className="level-item">
+        <a target="blank" href="#" onClick={onDeleteClick}>
+          <span className="icon is-medium" data-balloon="Delete for good">
+            <i className="fa fa-trash fa-lg" />
+          </span>
+        </a>
+      </div>
+    </Fragment>
+  );
 
 interface Props {
   item: Item;
@@ -54,9 +55,10 @@ class ItemBox extends React.Component<Props> {
     this.props.store.delete(this.props.item);
   };
 
-  onTagClick = (e: React.MouseEvent, tag: string) => {
+  onTagClick = (e: React.MouseEvent, tag: Tag) => {
+    e.preventDefault();
     const options = e.metaKey ? { append: true } : {};
-    this.props.store.onTagFilter(tag, options);
+    this.props.store.addTagFilter(tag, options);
   };
 
   onItemNameClick = (e: React.MouseEvent) => {
@@ -96,6 +98,20 @@ class ItemBox extends React.Component<Props> {
       ? `Show items rated "${RATING_NAMES[item.rating - 1]}"`
       : 'Show unrated items';
 
+    (itemRatingProps as any)['onClick'] = item.rating
+      ? (e: React.MouseEvent) =>
+        this.onTagClick(e, {
+          name: `${item.rating}/5`,
+          value: item.rating,
+          type: 'rating'
+        })
+      : (e: React.MouseEvent) =>
+        this.onTagClick(e, {
+          name: `Unrated`,
+          value: item.rating,
+          type: 'rating'
+        });
+
     return (
       <div
         className={`box item-box ${store.isFocused(item) && 'is-focused'}`}
@@ -118,7 +134,13 @@ class ItemBox extends React.Component<Props> {
             {item.year && (
               <div
                 className="level-item has-pointer item-year"
-                onClick={(e) => this.onTagClick(e, `y[${item.year}]`)}
+                onClick={(e) =>
+                  this.onTagClick(e, {
+                    name: item.year.toString(),
+                    value: item.year,
+                    type: 'year'
+                  })
+                }
                 data-balloon={`Show ${item.year} items`}
               >
                 <span className="tag is-rounded is-light is-small">
@@ -139,7 +161,9 @@ class ItemBox extends React.Component<Props> {
               <div
                 key={`item-tag-${tag}`}
                 className="level-item is-hidden-touch has-pointer"
-                onClick={(e) => this.onTagClick(e, `t[${tag}]`)}
+                onClick={(e) =>
+                  this.onTagClick(e, { name: tag, value: tag, type: 'tag' })
+                }
                 data-balloon={`Show ${tag} items`}
               >
                 <span className="tag is-rounded is-light is-small">{tag}</span>
@@ -149,9 +173,16 @@ class ItemBox extends React.Component<Props> {
             {item.status !== 'todo' && (
               <div className="level-item is-hidden-touch">
                 <span
-                  className={`tag is-rounded is-small ${
+                  className={`tag is-rounded is-small has-pointer ${
                     item.status === 'doing' ? 'is-warning' : 'is-success'
-                  }`}
+                    }`}
+                  onClick={(e) =>
+                    this.onTagClick(e, {
+                      name: _.capitalize(item.status),
+                      value: item.status,
+                      type: 'status'
+                    })
+                  }
                 >
                   {item.human_status}
                 </span>
