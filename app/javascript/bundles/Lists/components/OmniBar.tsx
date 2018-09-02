@@ -1,8 +1,9 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import * as Mousetrap from 'mousetrap'
+import * as Mousetrap from 'mousetrap';
 
 import ItemStore from '../stores/ItemStore';
+import { Tag } from '..';
 
 interface Props {
   store: ItemStore;
@@ -25,25 +26,41 @@ class OmniBar extends React.Component<Props> {
   }
 
   onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.keyCode !== 9) {
-      return true;
+    const { store } = this.props;
+
+    switch (e.keyCode) {
+      case 9: // Tab to focus first filtered item
+        e.preventDefault();
+        store.focusNextItem();
+        this.searchField.blur();
+        return false;
+
+      case 8: // Backspace to remove last tag
+        if (store.query || store.tags.length === 0) {
+          return true;
+        }
+        e.preventDefault();
+
+        // CMD/CTRL + Backspace should clear all tags
+        if (e.metaKey) {
+          store.clearTagFilter();
+        } else {
+          store.popTagFilter();
+        }
+
+      default:
+        return true;
     }
-
-    e.preventDefault();
-    this.props.store.focusNextItem();
-
-    this.searchField.blur();
-    return false;
-  }
+  };
 
   onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.props.store.filter(e.target.value);
-  }
+  };
 
   onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     this.props.store.scrape();
-  }
+  };
 
   get searchField(): HTMLInputElement {
     const currentField = this.inputField.current;
@@ -54,25 +71,44 @@ class OmniBar extends React.Component<Props> {
     return currentField;
   }
 
+  tagClass = (tag: Tag): string => {
+    if (tag.type !== 'status' || tag.value === 'todo') {
+      return '';
+    }
+
+    return tag.value === 'doing' ? 'is-warning' : 'is-success';
+  };
+
   render() {
     const { store } = this.props;
 
     return (
       <form onSubmit={this.onSubmit}>
-        <div className="new-item has-bottom-padding omni-bar">
-          <p className="control">
-            <input
-              ref={this.inputField}
-              value={store.query}
-              onChange={this.onChange}
-              onKeyDown={this.onKeyDown}
-              className="input filter is-expanded is-medium"
-              id="omni-bar"
-              placeholder={'Search'}
-              autoComplete="off"
-              type="text"
-            />
-          </p>
+        <div className="omni-bar">
+          <div className="tags">
+            {store.tags.map((tag) => (
+              <span
+                className={`tag is-light is-rounded ${this.tagClass(tag)}`}
+                key={tag.value}
+              >
+                {tag.name}
+                <button
+                  className="delete is-small"
+                  onClick={() => store.removeTagFilter(tag)}
+                />
+              </span>
+            ))}
+          </div>
+
+          <input
+            ref={this.inputField}
+            value={store.query}
+            onChange={this.onChange}
+            onKeyDown={this.onKeyDown}
+            placeholder="Search"
+            autoComplete="off"
+            type="text"
+          />
         </div>
       </form>
     );

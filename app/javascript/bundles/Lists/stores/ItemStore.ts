@@ -1,57 +1,85 @@
 import { observable, computed, action } from 'mobx';
-import { Item, ScraperResult } from '..';
+import _ from 'lodash';
+import { Item, ScraperResult, Tag } from '..';
 import API from '../../utils/api';
+
 
 /**
  * State management for items.
  */
 class ItemStore {
+  static itemsToShow = 15;
+
+  /**
+   * All items provided by Rails.
+   */
   readonly items = observable<Item>([]);
+
+  /**
+   * Results rendered when searching the web.
+   */
   readonly scraperResults = observable<ScraperResult>([]);
 
+  /**
+   * Tags in omnibar.
+   */
+  readonly tags = observable<Tag>([]);
+
+  /**
+   * The item to show in the details modal.
+   */
   @observable
   activeItem?: Item;
 
+  /**
+   * The item focused in the overview.
+   */
   @observable
   focusedItem?: Item;
 
   @observable
   detailsModalVisible = false;
 
+  /**
+   * The query in the omnibar.
+   */
   @observable
   query = '';
 
+  /**
+   * Whether to show the spinner in the scraper results area.
+   */
   @observable
   spinnerVisible = false;
 
   /**
-   * Indicates whether we should render all filter matches.
+   * Whether we should render all filter matches.
    */
   @observable
   allItemsVisible = false;
-
-  private readonly tagsRgx = /\b(s|t|y)\[([^\]]+)\]/g;
-  private readonly itemsToShow = 15;
 
   constructor(items: Item[]) {
     this.items.replace(items);
   }
 
   @action
-  onTagFilter = (tag: string, options: { append?: boolean }) => {
-    if (!options.append) {
-      this.filter(tag);
-      return;
-    }
+  addTagFilter = (tag: Tag, { append = false }) => {
+    this.doNotShowAllItems();
 
-    const currentQuery = this.query;
-    this.filter(`${currentQuery} ${tag}`.trim());
-  };
+    if (append) {
+      // Append if it's not already in there.
+      if (!this.tags.some((t) => _.isEqual(t, tag))) {
+        this.tags.push(tag);
+      }
+    } else {
+      this.tags.replace([tag]);
+    }
+  }
 
   @action
   scrape = () => {
     this.showSpinner();
-    const query = this.query.replace(this.tagsRgx, '').trim();
+    const query = this.query;
 
     API.get('/scraper_results', { params: { query } }).then(
       (response) => {
@@ -138,30 +166,26 @@ class ItemStore {
 
   @action
   toggleItemStatusFilter = () => {
-    const statusRgx = /\bs\[([^\]]+)\]/g;
+    this.doNotShowAllItems();
+    const currentStatusTag = this.tags.find((tag) => tag.type === 'status');
 
-    if (!this.query.match(statusRgx)) {
-      this.query = `s[todo] ${this.query}`;
+    if (!currentStatusTag) {
+      this.tags.unshift({ value: 'todo', type: 'status', name: 'Todo' });
       return;
     }
 
-    const newQuery = this.query.replace(statusRgx, (_, status) => {
-      let nextStatus = '';
-      switch (status) {
-        case 'todo':
-          nextStatus = 'doing';
-          break;
-        case 'doing':
-          nextStatus = 'done';
-          break;
-        default:
-          return '';
-      }
-
-      return `s[${nextStatus}]`;
-    });
-
-    this.filter(newQuery.trim());
+    switch (currentStatusTag.value) {
+      case 'todo':
+        Object.assign(currentStatusTag, { value: 'doing', name: 'Doing' });
+        break;
+      case 'doing':
+        Object.assign(currentStatusTag, { value: 'done', name: 'Done' });
+        break;
+      case 'done':
+        this.tags.remove(currentStatusTag);
+      default:
+        break;
+    }
   };
 
   @action
@@ -292,6 +316,21 @@ class ItemStore {
     );
   };
 
+  @action
+  removeTagFilter = (tag: Tag) => {
+    this.tags.remove(tag);
+  }
+
+  @action
+  clearTagFilter = () => {
+    this.tags.clear();
+  }
+
+  @action
+  popTagFilter = () => {
+    this.tags.pop();
+  }
+
   private match = (str: string, query: string) => {
     return (
       str.toLowerCase().match(this.escapeRgx(query.toLowerCase())) !== null
@@ -313,41 +352,31 @@ class ItemStore {
   @computed
   get allFilteredItems(): Item[] {
     const query = this.query;
+    const tags = this.tags;
     let items = this.items.slice();
+
+    tags.forEach((tag) => {
+      switch (tag.type) {
+        case 'tag':
+          items = items.filter((item) => item.tags.some((t) => t === tag.value));
+          break;
+        case 'year':
+          items = items.filter((item) => item.year === tag.value);
+          break;
+        case 'status':
+          items = items.filter((item) => item.status === tag.value);
+          break;
+        case 'rating':
+          items = items.filter((item) => item.rating === tag.value);
+          break;
+      }
+    });
 
     if (!query) {
       return items;
     }
 
-    const q = query
-      .replace(this.tagsRgx, (_, type, tag) => {
-        switch (type) {
-          case 's':
-            items = items.filter((item) => item.status === tag.toLowerCase());
-            break;
-          case 'y':
-            items = items.filter(
-              (item) => item.year && this.match(item.year.toString(), tag)
-            );
-            break;
-          case 't':
-            items = items.filter((item) =>
-              item.tags.some((t) => this.match(t, tag))
-            );
-            break;
-          default:
-            console.log(`Unknown tag type ${type}`);
-            break;
-        }
-
-        return '';
-      })
-      .trim();
-
-    if (q) {
-      items = items.filter((item) => this.matchItem(item, q));
-    }
-
+    items = items.filter((item) => this.matchItem(item, query));
     return items;
   }
 
@@ -357,7 +386,7 @@ class ItemStore {
       return this.allFilteredItems;
     }
 
-    return this.allFilteredItems.slice(0, this.itemsToShow);
+    return this.allFilteredItems.slice(0, ItemStore.itemsToShow);
   }
 
   @computed
