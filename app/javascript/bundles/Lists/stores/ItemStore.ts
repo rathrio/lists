@@ -318,16 +318,19 @@ class ItemStore {
 
   @action
   removeTagFilter = (tag: Tag) => {
+    this.doNotShowAllItems();
     this.tags.remove(tag);
   }
 
   @action
   clearTagFilter = () => {
+    this.doNotShowAllItems();
     this.tags.clear();
   }
 
   @action
   popTagFilter = () => {
+    this.doNotShowAllItems();
     this.tags.pop();
   }
 
