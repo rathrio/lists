@@ -15,7 +15,8 @@
         "member-access": false,
         "no-console": false,
         "semicolon": [true, "always", "ignore-bound-class-methods"],
-        "member-ordering": false
+        "member-ordering": false,
+        "max-classes-per-file": false
     },
     "rulesDirectory": []
 }

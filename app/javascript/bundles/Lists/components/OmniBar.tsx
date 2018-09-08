@@ -1,9 +1,48 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { observer } from 'mobx-react';
 import * as Mousetrap from 'mousetrap';
 
 import ItemStore from '../stores/ItemStore';
 import { Tag } from '..';
+import StarRating, { RATING_NAMES } from './StarRating';
+import { action } from 'mobx';
+
+interface TagContentProps {
+  tag: Tag;
+}
+
+class TagContent extends React.Component<TagContentProps> {
+  @action
+  updateTagValue = (value: number | string | undefined) => {
+    this.props.tag.value = value;
+  };
+
+  ratingBalloonMessage = (rating: number) => {
+    if (rating) {
+      return `Show items rated "${RATING_NAMES[rating - 1]}"`;
+    }
+
+    return 'Show unrated items';
+  };
+
+  render() {
+    const { tag } = this.props;
+
+    return (
+      <Fragment>
+        {tag.type === 'rating' ? (
+          <StarRating
+            rating={tag.value as number | undefined}
+            onStarClick={this.updateTagValue}
+            balloonMessage={this.ratingBalloonMessage}
+          />
+        ) : (
+          tag.name
+        )}
+      </Fragment>
+    );
+  }
+}
 
 interface Props {
   store: ItemStore;
@@ -91,7 +130,8 @@ class OmniBar extends React.Component<Props> {
                 className={`tag is-light is-rounded ${this.tagClass(tag)}`}
                 key={tag.value}
               >
-                {tag.name}
+                <TagContent tag={tag} />
+
                 <button
                   className="delete is-small"
                   onClick={() => store.removeTagFilter(tag)}

@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import { observable, computed, action } from 'mobx';
 
 import { Item } from '..';
+import { RATING_NAMES } from './StarRating';
 
 interface Props {
   item: Item;
@@ -14,14 +15,10 @@ interface State {
   rating: number;
 }
 
-export const RATING_NAMES = [
-  'Abysmal',
-  'Poor',
-  'Good',
-  'Great',
-  'Masterful'
-];
-
+/**
+ * Item rating rendered in item overview and detail. Support a readonly mode.
+ * TODO: Find a way to get rid of duplication with StarRating.
+ */
 @observer
 class ItemRating extends React.Component<Props, State> {
   @observable

@@ -4,9 +4,10 @@ import scrollIntoView from 'scroll-into-view-if-needed';
 import _ from 'lodash';
 
 import { Item, Tag } from '..';
-import ItemRating, { RATING_NAMES } from './ItemRating';
+import ItemRating from './ItemRating';
 import * as urls from '../../utils/external_item_urls';
 import ItemStore from '../stores/ItemStore';
+import { RATING_NAMES } from './StarRating';
 
 const RestoreActions = ({
   onRestoreClick,
