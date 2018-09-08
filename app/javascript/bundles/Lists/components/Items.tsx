@@ -27,6 +27,10 @@ class Items extends React.Component<Props> {
     (window as any).store = this.store;
 
     Mousetrap.bind('t', (e) => {
+      if (this.store.detailsModalVisible) {
+        return;
+      }
+
       e.preventDefault();
       this.store.toggleItemStatusFilter();
     });
