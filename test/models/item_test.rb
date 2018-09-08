@@ -70,4 +70,22 @@ class ItemTest < ActiveSupport::TestCase
     assert item.scraped
     assert_equal 'Foobar', item.name
   end
+
+  test 'links and notes are only destroyed on a real destroy' do
+    item = create(:item)
+    link = item.links.create!
+    note = item.notes.create!
+
+    item.destroy!
+    refute link.reload.destroyed?
+    refute note.reload.destroyed?
+
+    item.restore
+    refute_empty item.reload.links
+    refute_empty item.reload.notes
+
+    item.really_destroy!
+    assert_empty Link.where(item_id: item.id)
+    assert_empty Note.where(item_id: item.id)
+  end
 end

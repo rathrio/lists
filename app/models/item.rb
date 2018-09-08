@@ -8,8 +8,8 @@ class Item < ApplicationRecord
   belongs_to :user
   belongs_to :list
 
-  has_many :links, dependent: :delete_all
-  has_many :notes, dependent: :delete_all
+  has_many :links
+  has_many :notes
 
   has_and_belongs_to_many :tags
 
@@ -36,6 +36,15 @@ class Item < ApplicationRecord
 
   def self.unscraped
     where(scraped: false)
+  end
+
+  # Because paranaoia basically makes the default dependent hooks useless.
+  # They'll actually delete the associated models even when soft deleting a
+  # model.
+  def really_destroy!
+    links.delete_all
+    notes.delete_all
+    super
   end
 
   # What's the int representation of the next status the item can toggle to?
