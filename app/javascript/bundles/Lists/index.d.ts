@@ -24,8 +24,8 @@ export interface Item {
   deleted_at: string;
   date: string;
   image?: Image;
-  links?: string[];
   remote_image_url?: string;
+  notes: Note[];
 }
 
 export interface ScraperResult {
@@ -48,4 +48,11 @@ export interface Tag {
    */
   value?: string | number;
   type: 'tag' | 'status' | 'list' | 'year' | 'rating';
+}
+
+export interface Note {
+  id: number;
+  list_id: number;
+  text: string;
+  created_at: string;
 }

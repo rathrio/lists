@@ -239,7 +239,7 @@
   }
 
   .tags {
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
   }
 
   .modal-card {
@@ -278,6 +278,29 @@
       .item-description {
         max-height: 40vh;
         overflow-y: scroll;
+      }
+    }
+  }
+}
+
+.note-boxes {
+  .note-box {
+    &:hover {
+      .node-delete-button {
+        visibility: visible;
+        opacity: 1;
+        transition: opacity 0.2s linear;
+      }
+    }
+
+    .note-header {
+      display: flex;
+      flex-flow: row nowrap;
+      font-weight: bold;
+
+      .node-delete-button {
+        margin-top: -5px;
+        margin-left: 5px;
       }
     }
   }

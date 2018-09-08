@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Include this module make a class behave like a scraper.
 #
 # There are a bunch of template methods you can override to tweak the scraping
