@@ -7,6 +7,7 @@ import ItemStore from '../stores/ItemStore';
 import { Item } from '..';
 import * as urls from '../../utils/external_item_urls';
 import ItemRating from './ItemRating';
+import NoteBoxes from './NoteBoxes';
 
 interface Props {
   store: ItemStore;
@@ -343,6 +344,8 @@ class ItemDetails extends React.Component<Props> {
                   </div>
 
                   <p className="item-description">{item.description}</p>
+
+                  <NoteBoxes item={item} store={store} style={{ marginTop: '1.5rem' }}/>
                 </div>
               )}
             </section>
