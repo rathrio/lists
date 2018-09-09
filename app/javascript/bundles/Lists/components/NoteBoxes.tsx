@@ -15,7 +15,7 @@ class NoteBoxes extends React.Component<Props> {
     return (
       <div className="note-boxes" style={style}>
         {item.notes.map((note) => (
-          <article className="note-box">
+          <article className="note-box" key={`note-${note.id}`}>
             <div className="note-header">
               {new Date(note.created_at).toDateString()}
 
@@ -30,7 +30,7 @@ class NoteBoxes extends React.Component<Props> {
           </article>
         ))}
 
-        <a>Add note</a>
+        {/* <a>Add note</a> */}
       </div>
     );
   }

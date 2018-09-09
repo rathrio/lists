@@ -297,10 +297,12 @@
       display: flex;
       flex-flow: row nowrap;
       font-weight: bold;
+      border-bottom: 1px dotted #dbdbdb;
+      margin-bottom: 5px;
 
       .node-delete-button {
         margin-top: -5px;
-        margin-left: 5px;
+        margin-left: auto;
       }
     }
   }
