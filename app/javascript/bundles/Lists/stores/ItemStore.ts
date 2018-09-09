@@ -23,9 +23,13 @@ class ItemStore {
   /**
    * Tags in omnibar.
    */
-  readonly tags = observable<Tag>([
-    { name: 'Todo', value: 'todo', type: 'status' }
-  ]);
+  readonly tags = observable<Tag>([]);
+
+  /**
+   * The query in the omnibar.
+   */
+  @observable
+  query = '';
 
   /**
    * The item to show in the details modal.
@@ -41,12 +45,6 @@ class ItemStore {
 
   @observable
   detailsModalVisible = false;
-
-  /**
-   * The query in the omnibar.
-   */
-  @observable
-  query = '';
 
   /**
    * Whether to show the spinner in the scraper results area.

@@ -224,7 +224,7 @@ class ItemDetails extends React.Component<Props> {
               </div>
 
               {this.editing ? (
-                <div>
+                <div className="fields">
                   <div className="field">
                     <label className="label is-small">Name</label>
                     <p className="control">
@@ -232,7 +232,7 @@ class ItemDetails extends React.Component<Props> {
                         name="name"
                         defaultValue={item.name}
                         onChange={this.handleFormChange}
-                        className="input is-small"
+                        className="input"
                         type="text"
                         placeholder="Name"
                         required
@@ -247,7 +247,7 @@ class ItemDetails extends React.Component<Props> {
                         name="description"
                         defaultValue={item.description}
                         onChange={this.handleFormChange}
-                        className="textarea is-small"
+                        className="textarea"
                         placeholder="Description"
                       />
                     </div>
@@ -259,7 +259,7 @@ class ItemDetails extends React.Component<Props> {
                       <input
                         name="date"
                         type="date"
-                        className="input is-small"
+                        className="input"
                         placeholder="Release Date"
                         defaultValue={item.date}
                         onChange={this.handleFormChange}
@@ -274,20 +274,20 @@ class ItemDetails extends React.Component<Props> {
                       <input
                         name="remote_image_url"
                         type="url"
-                        className="input is-small"
+                        className="input"
                         placeholder="Paste link to new image here"
                         defaultValue={item.remote_image_url}
                         onChange={this.handleFormChange}
                       />
 
-                      <span className="icon is-small">
-                        <i className="fa fa-external-link fa-small" />
+                      <span className="icon">
+                        <i className="fa fa-external-link" />
                       </span>
                     </div>
                   </div>
                 </div>
               ) : (
-                <div>
+                <div className="fields">
                   <div className="tags">
                     <span className="tag is-rounded is-small">{item.year}</span>
 
@@ -345,7 +345,7 @@ class ItemDetails extends React.Component<Props> {
 
                   <p className="item-description">{item.description}</p>
 
-                  <NoteBoxes item={item} store={store} style={{ marginTop: '1.5rem' }}/>
+                  {/* <NoteBoxes item={item} store={store} style={{ marginTop: '1.5rem' }}/> */}
                 </div>
               )}
             </section>
@@ -359,7 +359,7 @@ class ItemDetails extends React.Component<Props> {
               </footer>
             ) : (
               <footer className="modal-card-foot">
-                <button onClick={() => this.close()} className="button">
+                <button onClick={this.close} className="button">
                   Close
                 </button>
               </footer>

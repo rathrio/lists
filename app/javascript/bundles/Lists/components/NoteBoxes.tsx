@@ -1,4 +1,5 @@
 import React, { CSSProperties } from 'react';
+import { observer } from 'mobx-react';
 import ItemStore from '../stores/ItemStore';
 import { Item } from '..';
 
@@ -8,6 +9,7 @@ interface Props {
   style?: CSSProperties;
 }
 
+@observer
 class NoteBoxes extends React.Component<Props> {
   render() {
     const { item, store, style } = this.props;
@@ -17,7 +19,12 @@ class NoteBoxes extends React.Component<Props> {
         {item.notes.map((note) => (
           <article className="note-box" key={`note-${note.id}`}>
             <div className="note-header">
-              {new Date(note.created_at).toDateString()}
+              {new Date(note.created_at).toLocaleDateString('en-CH', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              })}
 
               <a className="node-delete-button hidden">
                 <span className="icon is-medium">
@@ -30,7 +37,25 @@ class NoteBoxes extends React.Component<Props> {
           </article>
         ))}
 
-        {/* <a>Add note</a> */}
+        <div className="note-form">
+          <article className="note-box">
+            <div className="note-header">
+              {new Date().toLocaleDateString('en-CH', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              })}
+            </div>
+
+            <textarea
+              rows={3}
+              name="text"
+              className="textarea note-textarea"
+              placeholder="New note..."
+            />
+          </article>
+        </div>
       </div>
     );
   }
