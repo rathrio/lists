@@ -1,48 +1,10 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
 import * as Mousetrap from 'mousetrap';
 
 import ItemStore from '../stores/ItemStore';
 import { Tag } from '..';
-import StarRating, { RATING_NAMES } from './StarRating';
-import { action } from 'mobx';
-
-interface TagContentProps {
-  tag: Tag;
-}
-
-class TagContent extends React.Component<TagContentProps> {
-  @action
-  updateTagValue = (value: number | string | undefined) => {
-    this.props.tag.value = value;
-  };
-
-  ratingBalloonMessage = (rating: number) => {
-    if (rating) {
-      return `Show items rated "${RATING_NAMES[rating - 1]}"`;
-    }
-
-    return 'Show unrated items';
-  };
-
-  render() {
-    const { tag } = this.props;
-
-    return (
-      <Fragment>
-        {tag.type === 'rating' ? (
-          <StarRating
-            rating={tag.value as number | undefined}
-            onStarClick={this.updateTagValue}
-            balloonMessage={this.ratingBalloonMessage}
-          />
-        ) : (
-          tag.name
-        )}
-      </Fragment>
-    );
-  }
-}
+import TagContent from './TagContent';
 
 interface Props {
   store: ItemStore;
@@ -75,7 +37,10 @@ class OmniBar extends React.Component<Props> {
         return false;
 
       case 8: // Backspace to remove last tag
-        if (store.query || store.tags.length === 0) {
+        const input = e.currentTarget;
+        const cursorAtStart = input.selectionStart === 0 && input.selectionEnd === 0;
+
+        if (store.tags.length === 0 || !cursorAtStart) {
           return true;
         }
         e.preventDefault();
