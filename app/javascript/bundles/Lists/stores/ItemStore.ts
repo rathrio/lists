@@ -23,7 +23,9 @@ class ItemStore {
   /**
    * Tags in omnibar.
    */
-  readonly tags = observable<Tag>([]);
+  readonly tags = observable<Tag>([
+    { name: 'Todo', value: 'todo', type: 'status' }
+  ]);
 
   /**
    * The item to show in the details modal.
