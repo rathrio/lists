@@ -65,6 +65,7 @@ gem 'yui-compressor', '~> 0.12.0'
 group :development, :test do
   gem 'dotenv-rails'
   gem 'pry-rails'
+  gem 'pry-doc'
   gem 'pry-byebug'
 
   gem 'factory_bot_rails'

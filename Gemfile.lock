@@ -155,6 +155,9 @@ GEM
     pry-byebug (3.6.0)
       byebug (~> 10.0)
       pry (~> 0.10)
+    pry-doc (0.13.5)
+      pry (~> 0.11)
+      yard (~> 0.9.11)
     pry-rails (0.3.7)
       pry (>= 0.10.4)
     public_suffix (3.0.3)
@@ -300,6 +303,7 @@ DEPENDENCIES
   pronto-rubocop
   pronto-scss
   pry-byebug
+  pry-doc
   pry-rails
   puma
   rails (~> 5)

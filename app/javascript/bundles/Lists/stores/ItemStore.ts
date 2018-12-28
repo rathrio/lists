@@ -2,7 +2,7 @@ import { observable, computed, action } from 'mobx';
 import _ from 'lodash';
 import { Item, ScraperResult, Tag } from '..';
 import API from '../../utils/api';
-
+import Items from '../components/Items';
 
 /**
  * State management for items.
@@ -74,7 +74,7 @@ class ItemStore {
     } else {
       this.tags.replace([tag]);
     }
-  }
+  };
 
   @action
   scrape = () => {
@@ -228,6 +228,16 @@ class ItemStore {
   };
 
   @action
+  showRandomItemDetails = () => {
+    if (!this.itemsTodo.length) {
+      return;
+    }
+
+    const item = _.sample(this.itemsTodo)!;
+    this.showItemDetails(item);
+  };
+
+  @action
   showFocusedItemDetails = () => {
     if (!this.focusedItem) {
       return;
@@ -320,19 +330,19 @@ class ItemStore {
   removeTagFilter = (tag: Tag) => {
     this.doNotShowAllItems();
     this.tags.remove(tag);
-  }
+  };
 
   @action
   clearTagFilter = () => {
     this.doNotShowAllItems();
     this.tags.clear();
-  }
+  };
 
   @action
   popTagFilter = () => {
     this.doNotShowAllItems();
     this.tags.pop();
-  }
+  };
 
   private match = (str: string, query: string) => {
     return (
@@ -350,8 +360,11 @@ class ItemStore {
 
   private escapeRgx = (str: string) => {
     return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
-  }
+  };
 
+  /**
+   * this.items with omnibar filters applied.
+   */
   @computed
   get allFilteredItems(): Item[] {
     const query = this.query;
@@ -361,7 +374,9 @@ class ItemStore {
     tags.forEach((tag) => {
       switch (tag.type) {
         case 'tag':
-          items = items.filter((item) => item.tags.some((t) => t === tag.value));
+          items = items.filter((item) =>
+            item.tags.some((t) => t === tag.value)
+          );
           break;
         case 'year':
           items = items.filter((item) => item.year === tag.value);
@@ -383,6 +398,14 @@ class ItemStore {
     return items;
   }
 
+  @computed
+  get itemsTodo(): Item[] {
+    return this.items.filter((item) => item.status === 'todo');
+  }
+
+  /**
+   * Only a subset of this.allFilteredItems by default (speeds up re-rendering).
+   */
   @computed
   get filteredItems(): Item[] {
     if (this.allItemsVisible) {
