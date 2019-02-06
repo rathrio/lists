@@ -26,8 +26,7 @@ class GameScraper
 
     if url.present?
       url = url.sub("t_thumb", "t_cover_big")
-      # IGDB sometimes adds a "//" prefix for whatever reasons.
-      url = url.sub("//", "https://")
+      url = url.sub("//", "https://") if url.start_with?('//')
     end
 
     url
@@ -37,13 +36,8 @@ class GameScraper
     release_date_unix = result['first_release_date'].to_s
     return nil unless release_date_unix.present?
 
-    DateTime.strptime(release_date_unix,'%Q')
-  end
-
-  def scrape_links(result)
-    [
-      Link.new(url: result['url'])
-    ]
+    # Parse UNIX time stamp.
+    DateTime.strptime(release_date_unix,'%s')
   end
 
   def scrape_tags(result)
