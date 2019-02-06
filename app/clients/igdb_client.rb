@@ -1,15 +1,28 @@
+# frozen_string_literal: true
+
+require 'net/https'
+
+# https://api-docs.igdb.com/
 class IgdbClient
-  include HTTParty
-  headers 'user-key' => ENV['IGDB_API_KEY']
-  base_uri 'https://api-2445582011268.apicast.io'
-  default_params fields: '*'
+  HOST = 'api-v3.igdb.com'
+  HTTP = Net::HTTP.new(HOST, 80)
+
+  FIELDS = %w[
+    game.name
+    game.summary
+    game.genres.name
+    game.cover.url
+    game.first_release_date
+  ]
 
   def search(query)
-    self.class.get("/games/", query: { search: query, expand: "genres" })
-  end
+    request = Net::HTTP::Get.new(URI("https://#{HOST}/search"), { 'user-key' => ENV['IGDB_API_KEY'] })
 
-  def genre(ids)
-    return [] if ids.blank?
-    self.class.get("/genres/#{ids.join(',')}", query: { fields: 'name' })
+    apicalypse_query = +"fields #{FIELDS.join(',')};"
+    apicalypse_query << %{search "#{query}";}
+    apicalypse_query << 'where game != null;'
+
+    request.body = apicalypse_query
+    Oj.load(HTTP.request(request).body).map { |result| result['game'] }
   end
 end

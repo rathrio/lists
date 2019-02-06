@@ -26,6 +26,9 @@ gem 'redis', require: ["redis", "redis/connection/hiredis"]
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# A fast JSON parser and Object marshaller.
+gem 'oj'
+
 # Authentication
 gem 'clearance'
 
@@ -76,9 +79,6 @@ group :development do
   gem 'foreman'
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '~> 3.0.5'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
 
   # For style reviews
   gem 'pronto'
