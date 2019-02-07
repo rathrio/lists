@@ -5,7 +5,7 @@ branches:
     - master
 
 rvm:
-  - 2.5.1
+  - 2.6.1
 
 bundler_args: --jobs=2
 
