@@ -20,6 +20,7 @@ class OmniBar extends React.Component<Props> {
     Mousetrap.bind('/', (e) => {
       e.preventDefault();
 
+      this.props.store.hideDetailsModal();
       this.searchField.focus();
       this.searchField.select();
       window.scrollTo({ top: 0, behavior: 'smooth' });
