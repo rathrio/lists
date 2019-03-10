@@ -16,6 +16,7 @@ class Item < ApplicationRecord
   mount_uploader :image, ImageUploader
 
   validates :list, presence: true, unless: ->(item) { item.list_id.present? }
+  validates :name, presence: true
   validates :rating, inclusion: 0..5, allow_blank: true
 
   after_create :scrape_in_background, unless: -> { Rails.env.test? || scraped? }
