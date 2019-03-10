@@ -32,6 +32,10 @@ class ItemDetails extends React.Component<Props> {
     super(props);
 
     Mousetrap.bind('e', (e) => {
+      if (!this.props.store.detailsModalVisible) {
+        return;
+      }
+
       e.preventDefault();
       this.toggleEditing();
     });
@@ -245,10 +249,12 @@ class ItemDetails extends React.Component<Props> {
                     <div className="control">
                       <textarea
                         name="description"
+                        rows={7}
                         defaultValue={item.description}
                         onChange={this.handleFormChange}
                         className="textarea"
                         placeholder="Description"
+                        autoFocus
                       />
                     </div>
                   </div>
