@@ -1,0 +1,9 @@
+#! /bin/sh
+#
+# Migrate and restart services in production.
+
+ssh rathr.io << EOF
+  cd /var/www/lists/current
+  git pull origin master
+  ./bin/restart
+EOF
