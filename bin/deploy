@@ -1,8 +1,8 @@
 #! /bin/sh
 #
-# Migrate and restart services in production.
+# Stuff to run on server
 
-ssh rathr.io << EOF
+ssh rathr.io 'bash --login -s' << "EOF"
   cd /var/www/lists/current
   git pull origin master
   ./bin/restart
