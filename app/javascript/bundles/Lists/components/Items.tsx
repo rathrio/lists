@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import * as Mousetrap from 'mousetrap';
 
 import API from '../../utils/api';
-import Rails from '../../utils/rails';
+import Rails from '../../utils/Rails';
 import OmniBar from './OmniBar';
 import ItemList from './ItemList';
 import { Item } from '..';
@@ -74,6 +74,15 @@ class Items extends React.Component<Props> {
       e.preventDefault();
       const item = this.store.focusedItem;
       window.open(googleSearchUrl(item), '_blank');
+    });
+
+    Mousetrap.bind('g e', (e) => {
+      if (this.store.detailsModalVisible) {
+        return;
+      }
+
+      e.preventDefault();
+      this.store.exportItems();
     });
   }
 
