@@ -2,7 +2,11 @@ import { observable, computed, action } from 'mobx';
 import _ from 'lodash';
 import { Item, ScraperResult, Tag } from '..';
 import API from '../../utils/api';
-import Items from '../components/Items';
+
+interface OmnibarFilter {
+  query: string;
+  tags: Tag[];
+}
 
 /**
  * State management for items.
@@ -43,6 +47,9 @@ class ItemStore {
   @observable
   focusedItem?: Item;
 
+  /**
+   * Whether to show the details modal.
+   */
   @observable
   detailsModalVisible = false;
 
@@ -344,6 +351,42 @@ class ItemStore {
     this.tags.pop();
   };
 
+  /**
+   * To sync with letterboxd from time to time.
+   *
+   * https://letterboxd.com/about/importing-data/
+   */
+  @action
+  exportItems = () => {
+    const contents = encodeURI(this.toCsv(this.allFilteredItems));
+
+    const timestamp = new Date().toISOString().slice(0, 10);
+    let filename = `${timestamp}-items`;
+    if (this.omnibarFilter.query) {
+      filename += `-query_${this.omnibarFilter.query.replace(/[^a-z0-9]+/gi, '-')}`;
+    }
+
+    _.sortBy(this.omnibarFilter.tags, 'type').forEach((tag) => {
+      filename += `-${tag.type}_${tag.value!.toString().replace(/[^a-z0-9]+/gi, '-')}`;
+    });
+    filename += '.csv';
+
+    const link = document.createElement('a');
+    link.setAttribute('href', contents);
+    link.setAttribute('download', filename);
+    link.click();
+  };
+
+  private toCsv = (items: Item[]): string => {
+    let contents = 'data:text/csv;charset=utf-8,';
+    const header = 'Title,Year,Rating\n';
+    contents += header;
+    contents += items
+      .map((item) => `"${item.name}","${item.year}","${item.rating}"`)
+      .join('\n');
+    return contents;
+  };
+
   private match = (str: string, query: string) => {
     return (
       str.toLowerCase().match(this.escapeRgx(query.toLowerCase())) !== null
@@ -362,13 +405,21 @@ class ItemStore {
     return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
   };
 
+  @computed
+  get omnibarFilter(): OmnibarFilter {
+    return {
+      query: this.query,
+      tags: this.tags
+    };
+  }
+
   /**
-   * this.items with omnibar filters applied.
+   * this.items with omnibar filter applied.
    */
   @computed
   get allFilteredItems(): Item[] {
-    const query = this.query;
-    const tags = this.tags;
+    const query = this.omnibarFilter.query;
+    const tags = this.omnibarFilter.tags;
     let items = this.items.slice();
 
     tags.forEach((tag) => {
