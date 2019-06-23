@@ -69,10 +69,4 @@ Make sure postgres and redis servers are running.
     ```bash
     ./bin/rails test
     ```
-
-6. Review changes and fix style
-    ```bash
-    ./bin/pronto run
-    ```
-
-7. Create new Pull Request (in your forked repository)
+6. Create new Pull Request (in your forked repository)
