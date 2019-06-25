@@ -17,4 +17,5 @@ test:
 production:
   <<: *default
   database: lists_production
-  username: <%= ENV['DB_USER'] %>
+  host: db
+  username: postgres

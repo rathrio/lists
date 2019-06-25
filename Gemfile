@@ -61,9 +61,9 @@ gem 'bulma-rails', '= 0.7.1'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5'
 # Use Uglifier as compressor for JavaScript assets
-# gem 'uglifier', '>= 1.3.0'
+gem 'uglifier'
 # Use Yui as compressor for JavaScript assets
-gem 'yui-compressor', '~> 0.12.0'
+# gem 'yui-compressor', '~> 0.12.0'
 
 group :development, :test do
   gem 'dotenv-rails'

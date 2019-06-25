@@ -21,6 +21,7 @@
 .byebug_history
 
 .env
+.env.*
 /public/uploads/*
 /public/assets/
 
@@ -34,3 +35,5 @@ erd.pdf
 yarn-debug.log*
 .yarn-integrity
 yarn-error.log
+
+/data

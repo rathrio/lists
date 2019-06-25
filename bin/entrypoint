@@ -1,0 +1,15 @@
+#! /bin/sh
+
+# docker-compose entrypoint for production
+
+set -e
+
+skip_setup () [[ -v SKIP_SETUP ]]
+
+rm -f /app/tmp/pids/server.pid
+
+skip_setup && rm -rf public/packs
+skip_setup && bundle exec rails assets:precompile
+skip_setup && bundle exec rails db:create db:migrate
+
+exec "$@"

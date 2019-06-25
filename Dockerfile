@@ -15,6 +15,7 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
 COPY . /app
 WORKDIR /app
 
-RUN bundle install && yarn install
+RUN bundle install --without development test
+RUN yarn install
 
 CMD ["bash"]

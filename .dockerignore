@@ -1,4 +1,6 @@
 .git
+.env
+.env.production
 .gitignore
 .DS_Store
 Dockerfile
