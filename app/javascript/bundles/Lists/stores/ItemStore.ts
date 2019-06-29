@@ -13,6 +13,11 @@ interface OmnibarFilter {
  */
 class ItemStore {
   static itemsToShow = 15;
+  static statusRank = {
+    doing: 0,
+    todo: 1,
+    done: 2
+  };
 
   /**
    * All items provided by Rails.
@@ -415,6 +420,9 @@ class ItemStore {
 
   /**
    * this.items with omnibar filter applied.
+   *
+   * Note that not all of them will be rendered.
+   * @see filteredItems
    */
   @computed
   get allFilteredItems(): Item[] {
@@ -441,11 +449,11 @@ class ItemStore {
       }
     });
 
-    if (!query) {
-      return items;
+    if (query) {
+      items = items.filter((item) => this.matchItem(item, query));
     }
 
-    items = items.filter((item) => this.matchItem(item, query));
+    items = _.sortBy(items, (item) => ItemStore.statusRank[item.status]);
     return items;
   }
 
@@ -456,6 +464,8 @@ class ItemStore {
 
   /**
    * Only a subset of this.allFilteredItems by default (speeds up re-rendering).
+   *
+   * @see allFilteredItems
    */
   @computed
   get filteredItems(): Item[] {
