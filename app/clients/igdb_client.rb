@@ -13,16 +13,19 @@ class IgdbClient
     game.genres.name
     game.cover.url
     game.first_release_date
-  ]
+  ].freeze
 
   def search(query)
-    request = Net::HTTP::Get.new(URI("https://#{HOST}/search"), { 'user-key' => ENV['IGDB_API_KEY'] })
+    request = Net::HTTP::Get.new(URI("https://#{HOST}/search"), 'user-key' => ENV['IGDB_API_KEY'])
 
     apicalypse_query = +"fields #{FIELDS.join(',')};"
     apicalypse_query << %{search "#{query}";}
     apicalypse_query << 'where game != null;'
-
     request.body = apicalypse_query
-    Oj.load(HTTP.request(request).body).map { |result| result['game'] }
+
+    response_body = HTTP.request(request).body
+    return [] if response_body.blank?
+
+    Oj.load(response_body).map { |result| result['game'] }
   end
 end
