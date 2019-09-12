@@ -129,6 +129,10 @@
     border-bottom-left-radius: 5px;
   }
 
+  .level > .item-actions {
+    margin-right: 10px;
+  }
+
   &:hover, &.is-focused {
     box-shadow: 0 2px 3px rgba(146, 178, 235, 0.8), 0 0 0 1px rgba(146, 178, 235, 0.8);
 
