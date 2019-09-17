@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
-require 'net/https'
-
 # https://api-docs.igdb.com/
 class IgdbClient
-  HOST = 'api-v3.igdb.com'
-  HTTP = Net::HTTP.new(HOST, 80)
+  include HTTParty
+  base_uri 'https://api-v3.igdb.com'
+  headers 'user-key' => ENV['IGDB_API_KEY']
 
   FIELDS = %w[
     game.name
@@ -16,16 +15,12 @@ class IgdbClient
   ].freeze
 
   def search(query)
-    request = Net::HTTP::Get.new(URI("https://#{HOST}/search"), 'user-key' => ENV['IGDB_API_KEY'])
-
     apicalypse_query = +"fields #{FIELDS.join(',')};"
     apicalypse_query << %{search "#{query}";}
     apicalypse_query << 'where game != null;'
-    request.body = apicalypse_query
+    response = self.class.get('/search', body: apicalypse_query)
+    return [] if response.nil? || response.empty?
 
-    response_body = HTTP.request(request).body
-    return [] if response_body.blank?
-
-    Oj.load(response_body).map { |result| result['game'] }
+    response.map { |hash| hash['game'] }.select { |hash| hash.is_a? Hash }
   end
 end
