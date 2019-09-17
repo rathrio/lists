@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GameScraper
   include Scraper
 
@@ -37,11 +39,12 @@ class GameScraper
     return nil unless release_date_unix.present?
 
     # Parse UNIX time stamp.
-    DateTime.strptime(release_date_unix,'%s')
+    DateTime.strptime(release_date_unix, '%s')
   end
 
   def scrape_tags(result)
     return [] if result['genres'].blank?
+
     result['genres'].map { |g| g['name'] }.uniq.compact
   end
 
