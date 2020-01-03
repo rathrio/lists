@@ -40,6 +40,35 @@ class ItemStore {
   @observable
   query = '';
 
+  keywords = ['status', 'year', 'tags'];
+
+  @computed
+  get autoCompleteSuggestion(): string {
+    if (!this.query.length) {
+      return '';
+    }
+
+    const kw = this.keywords.find((keyword) => keyword.startsWith(this.query));
+    if (!kw) {
+      return this.query;
+    }
+
+    return `${kw}=`;
+  }
+
+  get canAutoComplete(): boolean {
+    return this.autoCompleteSuggestion.length > this.query.length;
+  }
+
+  @action
+  autoComplete = () => {
+    if (!this.canAutoComplete) {
+      return;
+    }
+
+    this.query = this.autoCompleteSuggestion;
+  }
+
   /**
    * The item to show in the details modal.
    */
