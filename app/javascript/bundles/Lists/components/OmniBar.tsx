@@ -31,26 +31,28 @@ class OmniBar extends React.Component<Props> {
     const { store } = this.props;
 
     switch (e.keyCode) {
-      case 9: // Tab to focus first filtered item
+      case 9: // Tab to autoComplete or focus first filtered item
         e.preventDefault();
-        store.focusNextItem();
-        this.searchField.blur();
+        if (store.canAutoComplete) {
+          store.autoComplete();
+        } else {
+          store.focusNextItem();
+          this.searchField.blur();
+        }
+
         return false;
 
-      case 8: // Backspace to remove last tag
-        const input = e.currentTarget;
-        const cursorAtStart = input.selectionStart === 0 && input.selectionEnd === 0;
-
-        if (store.tags.length === 0 || !cursorAtStart) {
-          return true;
+      case 39: // Right arrow
+        if (store.canAutoComplete) {
+          e.preventDefault();
+          store.autoComplete();
+          return false;
         }
-        e.preventDefault();
-
-        // CMD/CTRL + Backspace should clear all tags
-        if (e.metaKey) {
-          store.clearTagFilter();
-        } else {
-          store.popTagFilter();
+      case 69: // "e" key
+        if (e.ctrlKey && store.canAutoComplete) {
+          e.preventDefault();
+          store.autoComplete();
+          return false;
         }
 
       default:
@@ -89,24 +91,9 @@ class OmniBar extends React.Component<Props> {
 
     return (
       <form onSubmit={this.onSubmit}>
-        <div className="omni-bar">
-          <div className="tags">
-            {store.tags.map((tag) => (
-              <span
-                className={`tag is-light is-rounded ${this.tagClass(tag)}`}
-                key={tag.value}
-              >
-                <TagContent tag={tag} />
-
-                <button
-                  className="delete is-small"
-                  onClick={() => store.removeTagFilter(tag)}
-                />
-              </span>
-            ))}
-          </div>
-
+        <div className="omni-bar" style={{ position: 'relative' }}>
           <input
+            style={{ zIndex: 5 }}
             ref={this.inputField}
             value={store.query}
             onChange={this.onChange}
@@ -114,6 +101,16 @@ class OmniBar extends React.Component<Props> {
             placeholder="Search"
             autoComplete="off"
             type="text"
+          />
+
+          <input
+            style={{ zIndex: 1, color: '#b1b1b1' }}
+            value={store.autoCompleteSuggestion}
+            autoComplete="off"
+            autoCorrect="off"
+            spellCheck={false}
+            type="text"
+            disabled
           />
         </div>
       </form>
