@@ -40,13 +40,14 @@ class OmniBar extends React.Component<Props> {
         }
 
         return false;
-
       case 39: // Right arrow
         if (store.canAutoComplete) {
           e.preventDefault();
           store.autoComplete();
           return false;
         }
+
+        return true;
       case 69: // "e" key
         if (e.ctrlKey && store.canAutoComplete) {
           e.preventDefault();
@@ -54,6 +55,11 @@ class OmniBar extends React.Component<Props> {
           return false;
         }
 
+        return true;
+      case 13: // ENTER
+        this.onSubmit(e);
+
+        return false;
       default:
         return true;
     }
@@ -89,30 +95,28 @@ class OmniBar extends React.Component<Props> {
     const { store } = this.props;
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <div className="omni-bar" style={{ position: 'relative' }}>
-          <input
-            style={{ zIndex: 5 }}
-            ref={this.inputField}
-            value={store.query}
-            onChange={this.onChange}
-            onKeyDown={this.onKeyDown}
-            placeholder="Search"
-            autoComplete="off"
-            type="text"
-          />
+      <div className="omni-bar" style={{ position: 'relative' }}>
+        <input
+          style={{ zIndex: 5 }}
+          ref={this.inputField}
+          value={store.query}
+          onChange={this.onChange}
+          onKeyDown={this.onKeyDown}
+          placeholder="Search"
+          autoComplete="off"
+          type="text"
+        />
 
-          <input
-            style={{ zIndex: 1, color: '#b1b1b1' }}
-            value={store.autoCompleteSuggestion}
-            autoComplete="off"
-            autoCorrect="off"
-            spellCheck={false}
-            type="text"
-            disabled
-          />
-        </div>
-      </form>
+        <input
+          style={{ zIndex: 1, color: '#b1b1b1' }}
+          value={store.autoCompleteSuggestion}
+          autoComplete="off"
+          autoCorrect="off"
+          spellCheck={false}
+          type="text"
+          disabled
+        />
+      </div>
     );
   }
 }
