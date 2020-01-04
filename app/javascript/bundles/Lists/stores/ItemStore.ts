@@ -3,10 +3,15 @@ import _ from 'lodash';
 import { Item, ScraperResult, Tag } from '..';
 import API from '../../utils/api';
 
-interface OmnibarFilter {
-  query: string;
-  tags: Tag[];
+enum Filter {
+  Status = 'status',
+  Year = 'year',
+  Tag = 'tag',
+  Rating = 'rating'
 }
+
+const FILTERS = [Filter.Status, Filter.Year, Filter.Tag, Filter.Rating];
+const FILTER_RGX = /\w+\s*=\s*([^\s]|(\s*&\s*))+/g;
 
 /**
  * State management for items.
@@ -30,44 +35,10 @@ class ItemStore {
   readonly scraperResults = observable<ScraperResult>([]);
 
   /**
-   * Tags in omnibar.
-   */
-  readonly tags = observable<Tag>([]);
-
-  /**
    * The query in the omnibar.
    */
   @observable
   query = '';
-
-  keywords = ['status', 'year', 'tags'];
-
-  @computed
-  get autoCompleteSuggestion(): string {
-    if (!this.query.length) {
-      return '';
-    }
-
-    const kw = this.keywords.find((keyword) => keyword.startsWith(this.query));
-    if (!kw) {
-      return this.query;
-    }
-
-    return `${kw}=`;
-  }
-
-  get canAutoComplete(): boolean {
-    return this.autoCompleteSuggestion.length > this.query.length;
-  }
-
-  @action
-  autoComplete = () => {
-    if (!this.canAutoComplete) {
-      return;
-    }
-
-    this.query = this.autoCompleteSuggestion;
-  }
 
   /**
    * The item to show in the details modal.
@@ -104,17 +75,23 @@ class ItemStore {
   }
 
   @action
+  autoComplete = () => {
+    if (!this.canAutoComplete) {
+      return;
+    }
+
+    this.query = this.autoCompleteSuggestion;
+  };
+
+  @action
   addTagFilter = (tag: Tag, { append = false }) => {
     this.doNotShowAllItems();
 
-    if (append) {
-      // Append if it's not already in there.
-      if (!this.tags.some((t) => _.isEqual(t, tag))) {
-        this.tags.push(tag);
-      }
-    } else {
-      this.tags.replace([tag]);
+    if (!append) {
+      this.query = this.query.replace(FILTER_RGX, '').trim();
     }
+
+    this.query = `${this.query} ${tag.type}=${tag.value || 0}`.trim();
   };
 
   @action
@@ -207,26 +184,25 @@ class ItemStore {
 
   @action
   toggleItemStatusFilter = () => {
-    this.doNotShowAllItems();
-    const currentStatusTag = this.tags.find((tag) => tag.type === 'status');
-
-    if (!currentStatusTag) {
-      this.tags.unshift({ value: 'todo', type: 'status', name: 'Todo' });
-      return;
-    }
-
-    switch (currentStatusTag.value) {
-      case 'todo':
-        Object.assign(currentStatusTag, { value: 'doing', name: 'Doing' });
-        break;
-      case 'doing':
-        Object.assign(currentStatusTag, { value: 'done', name: 'Done' });
-        break;
-      case 'done':
-        this.tags.remove(currentStatusTag);
-      default:
-        break;
-    }
+    // TODO!
+    // this.doNotShowAllItems();
+    // const currentStatusTag = this.tags.find((tag) => tag.type === 'status');
+    // if (!currentStatusTag) {
+    //   this.tags.unshift({ value: 'todo', type: 'status', name: 'Todo' });
+    //   return;
+    // }
+    // switch (currentStatusTag.value) {
+    //   case 'todo':
+    //     Object.assign(currentStatusTag, { value: 'doing', name: 'Doing' });
+    //     break;
+    //   case 'doing':
+    //     Object.assign(currentStatusTag, { value: 'done', name: 'Done' });
+    //     break;
+    //   case 'done':
+    //     this.tags.remove(currentStatusTag);
+    //   default:
+    //     break;
+    // }
   };
 
   @action
@@ -367,24 +343,6 @@ class ItemStore {
     );
   };
 
-  @action
-  removeTagFilter = (tag: Tag) => {
-    this.doNotShowAllItems();
-    this.tags.remove(tag);
-  };
-
-  @action
-  clearTagFilter = () => {
-    this.doNotShowAllItems();
-    this.tags.clear();
-  };
-
-  @action
-  popTagFilter = () => {
-    this.doNotShowAllItems();
-    this.tags.pop();
-  };
-
   /**
    * To sync with letterboxd from time to time.
    *
@@ -396,13 +354,10 @@ class ItemStore {
 
     const timestamp = new Date().toISOString().slice(0, 10);
     let filename = `${timestamp}-items`;
-    if (this.omnibarFilter.query) {
-      filename += `-query_${this.omnibarFilter.query.replace(/[^a-z0-9]+/gi, '-')}`;
+    if (this.query.length) {
+      filename += `-query_${this.query.replace(/[^a-z0-9]+/gi, '-')}`;
     }
 
-    _.sortBy(this.omnibarFilter.tags, 'type').forEach((tag) => {
-      filename += `-${tag.type}_${tag.value!.toString().replace(/[^a-z0-9]+/gi, '-')}`;
-    });
     filename += '.csv';
 
     const link = document.createElement('a');
@@ -422,29 +377,38 @@ class ItemStore {
   };
 
   private match = (str: string, query: string) => {
-    return (
-      str.toLowerCase().match(this.escapeRgx(query.toLowerCase())) !== null
-    );
+    return str.toLowerCase().includes(query.toLowerCase());
   };
 
   private matchItem = (item: Item, query: string) => {
-    return (
-      this.match(item.name, query) ||
-      item.tags.some((tag) => this.match(tag, query)) ||
-      (item.year && this.match(item.year.toString(), query))
-    );
-  };
-
-  private escapeRgx = (str: string) => {
-    return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
+    return this.match(item.name, query);
   };
 
   @computed
-  get omnibarFilter(): OmnibarFilter {
-    return {
-      query: this.query,
-      tags: this.tags
-    };
+  get autoCompleteSuggestion(): string {
+    if (!this.query.length) {
+      return '';
+    }
+
+    const reversedTokens = this.query.split(/\s+/).reverse();
+    const lastToken = reversedTokens[0];
+
+    if (!lastToken.length) {
+      return this.query;
+    }
+
+    const kw = FILTERS.find((keyword) => keyword.startsWith(lastToken));
+    if (!kw) {
+      return this.query;
+    }
+
+    const suggestion =
+      this.query.replace(new RegExp(`${lastToken}$`), kw) + '=';
+    return suggestion;
+  }
+
+  get canAutoComplete(): boolean {
+    return this.autoCompleteSuggestion.length > this.query.length;
   }
 
   /**
@@ -455,25 +419,28 @@ class ItemStore {
    */
   @computed
   get allFilteredItems(): Item[] {
-    const query = this.omnibarFilter.query;
-    const tags = this.omnibarFilter.tags;
+    const filterMatches = this.query.match(FILTER_RGX) || [];
+    const query = this.query.replace(FILTER_RGX, '').trim();
+
     let items = this.items.slice();
 
-    tags.forEach((tag) => {
-      switch (tag.type) {
-        case 'tag':
+    filterMatches.forEach((match) => {
+      const [filter, value] = match.split('=').map((str) => str.trim());
+
+      switch (filter as Filter) {
+        case Filter.Rating:
+          items = items.filter((item) => item.rating === parseInt(value, 10));
+          break;
+        case Filter.Year:
+          items = items.filter((item) => item.year === parseInt(value, 10));
+          break;
+        case Filter.Tag:
           items = items.filter((item) =>
-            item.tags.some((t) => t === tag.value)
+            item.tags.some((t) => t.toLowerCase() === value.toLowerCase())
           );
           break;
-        case 'year':
-          items = items.filter((item) => item.year === tag.value);
-          break;
-        case 'status':
-          items = items.filter((item) => item.status === tag.value);
-          break;
-        case 'rating':
-          items = items.filter((item) => item.rating === tag.value);
+        case Filter.Status:
+          items = items.filter((item) => item.status === value.toLowerCase());
           break;
       }
     });

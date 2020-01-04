@@ -4,7 +4,6 @@ import * as Mousetrap from 'mousetrap';
 
 import ItemStore from '../stores/ItemStore';
 import { Tag } from '..';
-import TagContent from './TagContent';
 
 interface Props {
   store: ItemStore;
