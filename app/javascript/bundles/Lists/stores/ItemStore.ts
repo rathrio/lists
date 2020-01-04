@@ -1,7 +1,7 @@
 import { observable, computed, action } from 'mobx';
 import _ from 'lodash';
-import { Item, ScraperResult, Tag } from '..';
 import API from '../../utils/api';
+import { Item, ScraperResult, Tag } from '..';
 
 enum Filter {
   Status = 'status',
@@ -385,6 +385,20 @@ class ItemStore {
   };
 
   @computed
+  get knownYears(): number[] {
+    return _.uniq(this.items.map((item) => item.year)).sort();
+  }
+
+  @computed
+  get knownTags(): string[] {
+    return _.chain(this.items)
+      .flatMap((item) => item.tags)
+      .uniq()
+      .value()
+      .sort();
+  }
+
+  @computed
   get autoCompleteSuggestion(): string {
     if (!this.query.length) {
       return '';
@@ -397,14 +411,66 @@ class ItemStore {
       return this.query;
     }
 
+    // Keyword values, e.g. "horror"
+    if (lastToken.includes('=')) {
+      const [filter, value] = lastToken.split('=').map((str) => str.trim());
+      let valueSuggestion = value;
+
+      switch (filter) {
+        case Filter.Rating:
+          if (!value) {
+            valueSuggestion = _.sample([0, 1, 2, 3, 4, 5])!.toString();
+          }
+
+          break;
+        case Filter.Year:
+          if (!value) {
+            valueSuggestion = (_.sample(this.knownYears) || 1991).toString();
+          } else {
+            valueSuggestion = (
+              this.knownYears.find((year) =>
+                year.toString().startsWith(value)
+              ) || value
+            ).toString();
+          }
+
+          break;
+        case Filter.Tag:
+          if (!value) {
+            valueSuggestion = (_.sample(this.knownTags) || '').toString();
+          } else {
+            valueSuggestion =
+              this.knownTags.find((tag) =>
+                tag.toLowerCase().startsWith(value.toLowerCase())
+              ) || value;
+          }
+
+          break;
+        case Filter.Status:
+          valueSuggestion =
+            ['todo', 'done', 'doing'].find((status) =>
+              status.toLowerCase().startsWith(value.toLowerCase())
+            ) || value;
+
+          break;
+      }
+
+      const suggestion = this.query.replace(
+        new RegExp(`${value}$`),
+        valueSuggestion.replace(new RegExp(value, 'i'), value)
+      );
+      return suggestion;
+    }
+
+    // Keyword, e.g. "tag="
     const kw = FILTERS.find((keyword) => keyword.startsWith(lastToken));
     if (!kw) {
       return this.query;
     }
 
-    const suggestion =
+    const kwSuggestion =
       this.query.replace(new RegExp(`${lastToken}$`), kw) + '=';
-    return suggestion;
+    return kwSuggestion;
   }
 
   get canAutoComplete(): boolean {
@@ -427,9 +493,14 @@ class ItemStore {
     filterMatches.forEach((match) => {
       const [filter, value] = match.split('=').map((str) => str.trim());
 
-      switch (filter as Filter) {
+      switch (filter) {
         case Filter.Rating:
-          items = items.filter((item) => item.rating === parseInt(value, 10));
+          if (value === '0') {
+            items = items.filter((item) => !item.rating);
+          } else {
+            items = items.filter((item) => item.rating === parseInt(value, 10));
+          }
+
           break;
         case Filter.Year:
           items = items.filter((item) => item.year === parseInt(value, 10));
@@ -438,6 +509,7 @@ class ItemStore {
           items = items.filter((item) =>
             item.tags.some((t) => t.toLowerCase() === value.toLowerCase())
           );
+
           break;
         case Filter.Status:
           items = items.filter((item) => item.status === value.toLowerCase());
