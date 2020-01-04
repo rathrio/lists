@@ -3,6 +3,12 @@ export interface Image {
   url: string;
 }
 
+export enum ItemStatus {
+  Todo = 'todo',
+  Doing = 'doing',
+  Done = 'done'
+}
+
 export interface Item {
   id: number;
   list: string;
@@ -12,7 +18,7 @@ export interface Item {
   description: string;
   quantity: number;
   scraped: boolean;
-  status: 'todo' | 'doing' | 'done';
+  status: ItemStatus;
   human_status: string;
   tags: string[];
   user_id: number;
