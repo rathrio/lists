@@ -108,7 +108,7 @@ class OmniBar extends React.Component<Props> {
         />
 
         <input
-          style={{ zIndex: 1, color: '#b1b1b1' }}
+          style={{ zIndex: 1, color: 'rgb(109, 109, 109)' }}
           value={store.autoCompleteSuggestion}
           autoComplete="off"
           autoCorrect="off"
