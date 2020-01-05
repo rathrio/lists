@@ -503,7 +503,7 @@ class ItemStore {
 
           break;
         case Filter.Year:
-          items = items.filter((item) => item.year === parseInt(value, 10));
+          items = items.filter((item) => item.year.toString().startsWith(value));
           break;
         case Filter.Tag:
           items = items.filter((item) =>
