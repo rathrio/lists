@@ -7,10 +7,17 @@ enum Filter {
   Status = 'status',
   Year = 'year',
   Tag = 'tag',
-  Rating = 'rating'
+  Rating = 'rating',
+  RecommendedBy = 'rec'
 }
 
-const FILTERS = [Filter.Status, Filter.Year, Filter.Tag, Filter.Rating];
+const FILTERS = [
+  Filter.Status,
+  Filter.Year,
+  Filter.Tag,
+  Filter.Rating,
+  Filter.RecommendedBy
+];
 const FILTER_RGX = /\w+\s*=\s*([^\s]|(\s*&\s*))+/g;
 
 /**
@@ -399,6 +406,17 @@ class ItemStore {
   }
 
   @computed
+  get knownRecommenders(): string[] {
+    return _.chain(this.items)
+      .flatMap((item) =>
+        (item.recommended_by || '').split(',').map((rec) => rec.trim())
+      )
+      .uniq()
+      .value()
+      .sort();
+  }
+
+  @computed
   get autoCompleteSuggestion(): string {
     if (!this.query.length) {
       return '';
@@ -442,6 +460,19 @@ class ItemStore {
             valueSuggestion =
               this.knownTags.find((tag) =>
                 tag.toLowerCase().startsWith(value.toLowerCase())
+              ) || value;
+          }
+
+          break;
+        case Filter.RecommendedBy:
+          if (!value) {
+            valueSuggestion = (
+              _.sample(this.knownRecommenders) || ''
+            ).toString();
+          } else {
+            valueSuggestion =
+              this.knownRecommenders.find((rec) =>
+                rec.toLowerCase().startsWith(value.toLowerCase())
               ) || value;
           }
 
@@ -503,11 +534,21 @@ class ItemStore {
 
           break;
         case Filter.Year:
-          items = items.filter((item) => item.year.toString().startsWith(value));
+          items = items.filter((item) =>
+            item.year.toString().startsWith(value)
+          );
           break;
         case Filter.Tag:
           items = items.filter((item) =>
             item.tags.some((t) => t.toLowerCase() === value.toLowerCase())
+          );
+
+          break;
+        case Filter.RecommendedBy:
+          items = items.filter(
+            (item) =>
+              item.recommended_by &&
+              item.recommended_by.toLowerCase().includes(value.toLowerCase())
           );
 
           break;
