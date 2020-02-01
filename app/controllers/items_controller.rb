@@ -111,7 +111,8 @@ class ItemsController < ApplicationController
       :description,
       :date,
       :remote_image_url,
-      :rating
+      :rating,
+      :recommended_by
     )
   end
 end

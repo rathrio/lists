@@ -7,7 +7,6 @@ import ItemStore from '../stores/ItemStore';
 import { Item } from '..';
 import * as urls from '../../utils/external_item_urls';
 import ItemRating from './ItemRating';
-import NoteBoxes from './NoteBoxes';
 
 interface Props {
   store: ItemStore;
@@ -249,12 +248,26 @@ class ItemDetails extends React.Component<Props> {
                     <div className="control">
                       <textarea
                         name="description"
-                        rows={7}
+                        rows={4}
                         defaultValue={item.description}
                         onChange={this.handleFormChange}
                         className="textarea"
                         placeholder="Description"
                         autoFocus
+                      />
+                    </div>
+                  </div>
+
+                  <div className="field">
+                    <label className="label is-small">Recommended By</label>
+                    <div className="control">
+                      <input
+                        name="recommended_by"
+                        className="input"
+                        placeholder="Spongebob Squarepants"
+                        defaultValue={item.recommended_by}
+                        onChange={this.handleFormChange}
+                        required
                       />
                     </div>
                   </div>
@@ -276,7 +289,7 @@ class ItemDetails extends React.Component<Props> {
 
                   <div className="field">
                     <label className="label is-small">Image</label>
-                    <div className="control has-icon">
+                    <div className="control">
                       <input
                         name="remote_image_url"
                         type="url"
@@ -285,10 +298,6 @@ class ItemDetails extends React.Component<Props> {
                         defaultValue={item.remote_image_url}
                         onChange={this.handleFormChange}
                       />
-
-                      <span className="icon">
-                        <i className="fa fa-external-link" />
-                      </span>
                     </div>
                   </div>
                 </div>
@@ -350,8 +359,14 @@ class ItemDetails extends React.Component<Props> {
                   </div>
 
                   <p className="item-description">{item.description}</p>
-
-                  {/* <NoteBoxes item={item} store={store} style={{ marginTop: '1.5rem' }}/> */}
+                  {item.recommended_by && (
+                    <p
+                      className="item-recommended_by"
+                      style={{ marginTop: '1em' }}
+                    >
+                      <strong>Recommended by:</strong> {item.recommended_by}
+                    </p>
+                  )}
                 </div>
               )}
             </section>
