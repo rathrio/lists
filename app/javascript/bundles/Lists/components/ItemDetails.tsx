@@ -267,7 +267,6 @@ class ItemDetails extends React.Component<Props> {
                         placeholder="Spongebob Squarepants"
                         defaultValue={item.recommended_by}
                         onChange={this.handleFormChange}
-                        required
                       />
                     </div>
                   </div>
