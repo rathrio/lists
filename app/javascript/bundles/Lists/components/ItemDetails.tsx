@@ -235,7 +235,7 @@ class ItemDetails extends React.Component<Props> {
                         name="name"
                         defaultValue={item.name}
                         onChange={this.handleFormChange}
-                        className="input"
+                        className="input is-small"
                         type="text"
                         placeholder="Name"
                         required
@@ -248,10 +248,10 @@ class ItemDetails extends React.Component<Props> {
                     <div className="control">
                       <textarea
                         name="description"
-                        rows={4}
+                        rows={5}
                         defaultValue={item.description}
                         onChange={this.handleFormChange}
-                        className="textarea"
+                        className="textarea is-small"
                         placeholder="Description"
                         autoFocus
                       />
@@ -263,7 +263,7 @@ class ItemDetails extends React.Component<Props> {
                     <div className="control">
                       <input
                         name="recommended_by"
-                        className="input"
+                        className="input is-small"
                         placeholder="Spongebob Squarepants"
                         defaultValue={item.recommended_by}
                         onChange={this.handleFormChange}
@@ -278,7 +278,7 @@ class ItemDetails extends React.Component<Props> {
                       <input
                         name="date"
                         type="date"
-                        className="input"
+                        className="input is-small"
                         placeholder="Release Date"
                         defaultValue={item.date}
                         onChange={this.handleFormChange}
@@ -293,7 +293,7 @@ class ItemDetails extends React.Component<Props> {
                       <input
                         name="remote_image_url"
                         type="url"
-                        className="input"
+                        className="input is-small"
                         placeholder="Paste link to new image here"
                         defaultValue={item.remote_image_url}
                         onChange={this.handleFormChange}

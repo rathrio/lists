@@ -8,7 +8,7 @@ enum Filter {
   Year = 'year',
   Tag = 'tag',
   Rating = 'rating',
-  RecommendedBy = 'rec'
+  RecommendedBy = 'reco'
 }
 
 const FILTERS = [
@@ -18,7 +18,8 @@ const FILTERS = [
   Filter.Rating,
   Filter.RecommendedBy
 ];
-const FILTER_RGX = /\w+\s*=\s*([^\s]|(\s*&\s*))+/g;
+
+const FILTER_RGX = /\w+\s*=\s*[^\s]+/g;
 
 /**
  * State management for items.
@@ -187,29 +188,6 @@ class ItemStore {
   @action
   updateRating = (item: Item, rating: number) => {
     this.update(item, { rating });
-  };
-
-  @action
-  toggleItemStatusFilter = () => {
-    // TODO!
-    // this.doNotShowAllItems();
-    // const currentStatusTag = this.tags.find((tag) => tag.type === 'status');
-    // if (!currentStatusTag) {
-    //   this.tags.unshift({ value: 'todo', type: 'status', name: 'Todo' });
-    //   return;
-    // }
-    // switch (currentStatusTag.value) {
-    //   case 'todo':
-    //     Object.assign(currentStatusTag, { value: 'doing', name: 'Doing' });
-    //     break;
-    //   case 'doing':
-    //     Object.assign(currentStatusTag, { value: 'done', name: 'Done' });
-    //     break;
-    //   case 'done':
-    //     this.tags.remove(currentStatusTag);
-    //   default:
-    //     break;
-    // }
   };
 
   @action
@@ -397,19 +375,19 @@ class ItemStore {
   }
 
   @computed
-  get knownTags(): string[] {
+  get knownTagIdentifiers(): string[] {
     return _.chain(this.items)
-      .flatMap((item) => item.tags)
+      .flatMap((item) => item.tags.map(this.toIdentifier))
       .uniq()
       .value()
       .sort();
   }
 
   @computed
-  get knownRecommenders(): string[] {
+  get knownRecommenderIdentifiers(): string[] {
     return _.chain(this.items)
       .flatMap((item) =>
-        (item.recommended_by || '').split(',').map((rec) => rec.trim())
+        (item.recommended_by || '').split(',').map(this.toIdentifier)
       )
       .uniq()
       .value()
@@ -455,10 +433,12 @@ class ItemStore {
           break;
         case Filter.Tag:
           if (!value) {
-            valueSuggestion = (_.sample(this.knownTags) || '').toString();
+            valueSuggestion = (
+              _.sample(this.knownTagIdentifiers) || ''
+            ).toString();
           } else {
             valueSuggestion =
-              this.knownTags.find((tag) =>
+              this.knownTagIdentifiers.find((tag) =>
                 tag.toLowerCase().startsWith(value.toLowerCase())
               ) || value;
           }
@@ -467,11 +447,11 @@ class ItemStore {
         case Filter.RecommendedBy:
           if (!value) {
             valueSuggestion = (
-              _.sample(this.knownRecommenders) || ''
+              _.sample(this.knownRecommenderIdentifiers) || ''
             ).toString();
           } else {
             valueSuggestion =
-              this.knownRecommenders.find((rec) =>
+              this.knownRecommenderIdentifiers.find((rec) =>
                 rec.toLowerCase().startsWith(value.toLowerCase())
               ) || value;
           }
@@ -540,7 +520,9 @@ class ItemStore {
           break;
         case Filter.Tag:
           items = items.filter((item) =>
-            item.tags.some((t) => t.toLowerCase() === value.toLowerCase())
+            item.tags.some((t) =>
+              this.toIdentifier(t).includes(this.toIdentifier(value))
+            )
           );
 
           break;
@@ -548,7 +530,9 @@ class ItemStore {
           items = items.filter(
             (item) =>
               item.recommended_by &&
-              item.recommended_by.toLowerCase().includes(value.toLowerCase())
+              this.toIdentifier(item.recommended_by).includes(
+                this.toIdentifier(value)
+              )
           );
 
           break;
@@ -605,6 +589,16 @@ class ItemStore {
 
   isFocused = (item: Item) => {
     return this.focusedItem === item;
+  };
+
+  /**
+   * "Action & Adventure" -> "action-adventure"
+   */
+  private toIdentifier = (value: string): string => {
+    return value
+      .trim()
+      .replace(/[\W_]+/g, '-')
+      .toLowerCase();
   };
 }
 
