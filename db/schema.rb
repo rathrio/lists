@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_29_142709) do
+ActiveRecord::Schema.define(version: 2020_02_01_230110) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,10 +29,12 @@ ActiveRecord::Schema.define(version: 2018_05_29_142709) do
     t.integer "list_id"
     t.integer "status", default: 0
     t.float "rating"
+    t.string "recommended_by"
     t.index ["deleted_at"], name: "index_items_on_deleted_at"
     t.index ["list_id"], name: "index_items_on_list_id"
     t.index ["name"], name: "index_items_on_name"
     t.index ["rating"], name: "index_items_on_rating"
+    t.index ["recommended_by"], name: "index_items_on_recommended_by"
     t.index ["status"], name: "index_items_on_status"
     t.index ["user_id"], name: "index_items_on_user_id"
   end

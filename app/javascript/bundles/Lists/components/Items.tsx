@@ -32,15 +32,6 @@ class Items extends React.Component<Props> {
       this.store.showRandomItemDetails();
     });
 
-    Mousetrap.bind('t', (e) => {
-      if (this.store.detailsModalVisible) {
-        return;
-      }
-
-      e.preventDefault();
-      this.store.toggleItemStatusFilter();
-    });
-
     Mousetrap.bind('enter', (e) => {
       e.preventDefault();
       this.store.showFocusedItemDetails();
