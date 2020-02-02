@@ -31,6 +31,7 @@ export interface Item {
   date: string;
   image?: Image;
   remote_image_url?: string;
+  recommended_by?: string;
   notes: Note[];
 }
 
