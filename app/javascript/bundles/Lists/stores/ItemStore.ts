@@ -99,7 +99,8 @@ class ItemStore {
       this.query = this.query.replace(FILTER_RGX, '').trim();
     }
 
-    this.query = `${this.query} ${tag.type}=${tag.value || 0}`.trim();
+    const value = tag.value ? this.toIdentifier(tag.value.toString()) : 0;
+    this.query = `${this.query} ${tag.type}=${value}`.trim();
   };
 
   @action
