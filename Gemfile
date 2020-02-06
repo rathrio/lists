@@ -45,7 +45,7 @@ gem 'httparty'
 gem 'paranoia'
 
 # Background jobs
-gem 'sidekiq'
+# gem 'sidekiq'
 
 # For packing frontend libs
 gem 'webpacker', '>= 4.0.x'
@@ -79,12 +79,6 @@ group :development do
   gem 'foreman'
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '~> 3.0.5'
-
-  # For style reviews
-  gem 'pronto'
-  gem 'pronto-rubocop', require: false
-  gem 'pronto-scss', require: false
-  gem 'pronto-jshint', require: false
 
   # A documentation generation tool
   gem 'yard'

@@ -45,7 +45,6 @@ GEM
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     arel (9.0.0)
-    ast (2.4.0)
     bcrypt (3.1.13)
     bindex (0.7.0)
     builder (3.2.3)
@@ -84,17 +83,12 @@ GEM
     factory_bot_rails (5.0.2)
       factory_bot (~> 5.0.2)
       railties (>= 4.2.0)
-    faraday (0.15.4)
-      multipart-post (>= 1.2, < 3)
     ffaker (2.11.0)
     ffi (1.11.1)
     font-awesome-rails (4.7.0.5)
       railties (>= 3.2, < 6.1)
     foreman (0.85.0)
       thor (~> 0.19.1)
-    gitlab (3.6.1)
-      httparty
-      terminal-table
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     hiredis (0.6.3)
@@ -106,11 +100,6 @@ GEM
     image_processing (1.9.1)
       mini_magick (>= 4.9.3, < 5)
       ruby-vips (>= 2.0.13, < 3)
-    jaro_winkler (1.5.3)
-    jshintrb (0.3.0)
-      execjs
-      multi_json (>= 1.3)
-      rake
     listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -130,35 +119,14 @@ GEM
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
     minitest (5.11.3)
-    multi_json (1.13.1)
     multi_xml (0.6.0)
-    multipart-post (2.1.1)
     nio4r (2.5.2)
     nokogiri (1.10.5)
       mini_portile2 (~> 2.4.0)
-    octokit (4.14.0)
-      sawyer (~> 0.8.0, >= 0.5.3)
     oj (3.9.1)
-    parallel (1.17.0)
     paranoia (2.4.2)
       activerecord (>= 4.0, < 6.1)
-    parser (2.6.3.0)
-      ast (~> 2.4.0)
     pg (1.1.4)
-    pronto (0.6.0)
-      gitlab (~> 3.6, >= 3.4.0)
-      octokit (~> 4.3, >= 4.1.0)
-      rugged (~> 0.24, >= 0.23.0)
-      thor (~> 0.19.0)
-    pronto-jshint (0.6.1)
-      jshintrb (~> 0.3.0)
-      pronto (~> 0.6.0)
-    pronto-rubocop (0.6.2)
-      pronto (~> 0.6.0)
-      rubocop (~> 0.38, >= 0.35.0)
-    pronto-scss (0.6.0)
-      pronto (~> 0.6.0)
-      scss_lint (~> 0.43, >= 0.43.0)
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
@@ -174,8 +142,6 @@ GEM
     puma (4.3.1)
       nio4r (~> 2.0)
     rack (2.0.8)
-    rack-protection (2.0.5)
-      rack
     rack-proxy (0.6.5)
       rack
     rack-test (1.1.0)
@@ -221,18 +187,9 @@ GEM
       rails (>= 3.2)
       rainbow (~> 3.0)
     redis (4.1.3)
-    rubocop (0.72.0)
-      jaro_winkler (~> 1.5.1)
-      parallel (~> 1.10)
-      parser (>= 2.6)
-      rainbow (>= 2.2.2, < 4.0)
-      ruby-progressbar (~> 1.7)
-      unicode-display_width (>= 1.4.0, < 1.7)
     ruby-graphviz (1.2.4)
-    ruby-progressbar (1.10.1)
     ruby-vips (2.0.15)
       ffi (~> 1.9)
-    rugged (0.28.2)
     sass (3.7.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -247,17 +204,6 @@ GEM
     sassc (2.0.1)
       ffi (~> 1.9)
       rake
-    sawyer (0.8.2)
-      addressable (>= 2.3.5)
-      faraday (> 0.8, < 2.0)
-    scss_lint (0.58.0)
-      rake (>= 0.9, < 13)
-      sass (~> 3.5, >= 3.5.5)
-    sidekiq (5.2.7)
-      connection_pool (~> 2.2, >= 2.2.2)
-      rack (>= 1.5.0)
-      rack-protection (>= 1.5.0)
-      redis (>= 3.3.5, < 5)
     sprockets (3.7.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
@@ -265,8 +211,6 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    terminal-table (1.8.0)
-      unicode-display_width (~> 1.1, >= 1.1.1)
     thor (0.19.4)
     thread_safe (0.3.6)
     tilt (2.0.9)
@@ -275,7 +219,6 @@ GEM
     turbolinks-source (5.2.0)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    unicode-display_width (1.6.0)
     web-console (3.7.0)
       actionview (>= 5.0)
       activemodel (>= 5.0)
@@ -310,10 +253,6 @@ DEPENDENCIES
   oj
   paranoia
   pg
-  pronto
-  pronto-jshint
-  pronto-rubocop
-  pronto-scss
   pry-byebug
   pry-doc
   pry-rails
@@ -323,7 +262,6 @@ DEPENDENCIES
   react_on_rails
   redis
   sass-rails (~> 5)
-  sidekiq
   turbolinks (~> 5)
   tzinfo-data
   web-console (>= 3.3.0)

@@ -89,16 +89,6 @@ class ItemsController < ApplicationController
     render json: @item.to_json
   end
 
-  def scrape
-    begin
-      flash[:alert] = 'Could not scrape item' unless @item.lucky_scrape
-    rescue SocketError
-      flash[:alert] = 'No internet connection'
-    end
-
-    redirect_to action: :index, list_ids: current_list_id_params
-  end
-
   private
 
   def set_item

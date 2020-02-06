@@ -5,7 +5,6 @@
 bundle install
 
 # Shutdown first to free up memory
-bundle exec sidekiqctl stop tmp/pids/sidekiq.pid
 kill -9 $(cat /tmp/lists.pid)
 
 yarn install
@@ -14,5 +13,4 @@ rm -r public/packs
 bundle exec rake assets:precompile
 bundle exec rake db:migrate
 
-# bundle exec sidekiq -C config/sidekiq.yml
 bundle exec puma -C config/puma_production.rb
