@@ -37,12 +37,7 @@ Make sure postgres and redis servers are running.
 
 ## Running
 
-1. Run sidekiq for background jobs:
-    ```bash
-    ./bin/sidekiq -C config/sidekiq.yml
-    ```
-
-2. Run the application server:
+1. Run the application server:
     ```bash
     foreman start -f Procfile.dev-server
     ```
@@ -70,9 +65,4 @@ Make sure postgres and redis servers are running.
     ./bin/rails test
     ```
 
-6. Review changes and fix style
-    ```bash
-    ./bin/pronto run
-    ```
-
-7. Create new Pull Request (in your forked repository)
+6. Create new Pull Request (in your forked repository)

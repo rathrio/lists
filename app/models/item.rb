@@ -19,8 +19,6 @@ class Item < ApplicationRecord
   validates :name, presence: true
   validates :rating, inclusion: 0..5, allow_blank: true
 
-  after_create :scrape_in_background, unless: -> { Rails.env.test? || scraped? }
-
   # @param list_ids [Array<Integer>]
   def self.in_lists(list_ids)
     where(list_id: list_ids)
@@ -88,17 +86,6 @@ class Item < ApplicationRecord
     list&.default_scraper
   end
 
-  def lucky_scrape
-    scraper = default_scraper
-    return false if scraper.nil?
-
-    results = scraper.new(query: name).scrape
-    result = results.find { |r| r[:remote_image_url].present? }
-    result = results.first if result.nil?
-
-    update_from(result) if result
-  end
-
   def as_json(*)
     super.tap do |hash|
       hash['tags'] = tags.map(&:name)
@@ -109,11 +96,5 @@ class Item < ApplicationRecord
       hash['human_status'] = human_status
       hash['notes'] = notes
     end
-  end
-
-  private
-
-  def scrape_in_background
-    ScrapeJob.perform_later(id)
   end
 end
