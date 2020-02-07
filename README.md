@@ -4,7 +4,10 @@
 
 ![Screenshot](https://i.imgur.com/w5QObdq.png)
 
-Smart lists to keep track of media to consume.
+Lists to keep track of movies, TV shows, games, books and various other things.
+This project exists because I'd rather manage these in one self-hosted location
+instead of multiple third-party services, such as Letterboxd, Goodreads or the
+Steam Library.
 
 ## Prerequisites
 
@@ -66,3 +69,12 @@ Make sure postgres and redis servers are running.
     ```
 
 6. Create new Pull Request (in your forked repository)
+
+## API Credits
+
+Lists relies on the following APIs to scrape meta info:
+
+- Movies / TV Shows: [The Movie DB](https://www.themoviedb.org)
+- Video Games: [IGDB](https://www.igdb.com/discover)
+- Books: [Google Books](https://developers.google.com/books)
+- Recipes: [Edaman](https://www.edamam.com)
