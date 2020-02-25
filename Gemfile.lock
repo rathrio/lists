@@ -121,7 +121,7 @@ GEM
     minitest (5.11.3)
     multi_xml (0.6.0)
     nio4r (2.5.2)
-    nokogiri (1.10.5)
+    nokogiri (1.10.8)
       mini_portile2 (~> 2.4.0)
     oj (3.9.1)
     paranoia (2.4.2)
