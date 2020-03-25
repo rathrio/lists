@@ -21,6 +21,19 @@ const FILTERS = [
 
 const FILTER_RGX = /\w+\s*=\s*[^\s]+/g;
 
+interface FilterValue {
+  filter: Filter;
+  value: string;
+}
+
+/**
+ * The query from the omnibar with structured filters.
+ */
+interface Query {
+  query: string;
+  filterValues: FilterValue[];
+}
+
 /**
  * State management for items.
  */
@@ -43,7 +56,7 @@ class ItemStore {
   readonly scraperResults = observable<ScraperResult>([]);
 
   /**
-   * The query in the omnibar.
+   * The raw query in the omnibar.
    */
   @observable
   query = '';
@@ -497,15 +510,12 @@ class ItemStore {
    */
   @computed
   get allFilteredItems(): Item[] {
-    const filterMatches = this.query.match(FILTER_RGX) || [];
-    const query = this.query.replace(FILTER_RGX, '').trim();
-
+    const { query, filterValues } = this.buildQuery();
     let items = this.items.slice();
 
-    filterMatches.forEach((match) => {
-      const [filter, value] = match.split('=').map((str) => str.trim());
-
-      switch (filter) {
+    filterValues.forEach((filterValue) => {
+      const value = filterValue.value;
+      switch (filterValue.filter) {
         case Filter.Rating:
           if (value === '0') {
             items = items.filter((item) => !item.rating);
@@ -591,6 +601,19 @@ class ItemStore {
   isFocused = (item: Item) => {
     return this.focusedItem === item;
   };
+
+  private buildQuery = (): Query => {
+    const filterMatches = this.query.match(FILTER_RGX) || [];
+    const query = this.query.replace(FILTER_RGX, '').trim();
+
+    const filterValues: FilterValue[] = filterMatches.map((match) => {
+      const [filter, value] = match.split('=').map((str) => str.trim());
+
+      return { filter: filter as Filter, value };
+    });
+
+    return { query, filterValues };
+  }
 
   /**
    * "Action & Adventure" -> "action-adventure"
