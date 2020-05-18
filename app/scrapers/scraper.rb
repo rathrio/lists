@@ -61,10 +61,15 @@ module Scraper
     scraper.extend(ClassMethods)
   end
 
+  # @return [String]
   attr_reader :query
 
-  def initialize(query:)
+  # @return [Array<FilterValue>]
+  attr_reader :filter_values
+
+  def initialize(query:, filter_values: [])
     @query = query
+    @filter_values = filter_values
   end
 
   # Method called to perform actual scraping. No need to override this one.
