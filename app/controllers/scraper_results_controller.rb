@@ -3,9 +3,11 @@
 class ScraperResultsController < ApplicationController
   def index
     query = params[:query]
+    filter_values = params[:filter_values]
     scraper = current_list.default_scraper
-    results = scraper.new(query: query).scrape
+    results = scraper.new(query: query, filter_values: filter_values).scrape
     results = FuzzySubstringMatchFilter.new(results, query).matches
+
     render json: results.to_json
   end
 
