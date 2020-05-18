@@ -119,9 +119,9 @@ class ItemStore {
   @action
   scrape = () => {
     this.showSpinner();
-    const query = this.query;
+    const { query, filterValues } = this.buildQuery();
 
-    API.get('/scraper_results', { params: { query } }).then(
+    API.get('/scraper_results', { params: { query, filter_values: filterValues } }).then(
       (response) => {
         this.hideSpinner();
         this.scraperResults.replace(response.data);
