@@ -1,0 +1,21 @@
+---
+include:
+- "**/*.rb"
+exclude:
+- spec/fixtures/**/*
+- test/**/*
+- vendor/**/*
+- public/**/*
+- node_modules/**/*
+- storage/**/*
+- uploads/**/*
+- doc/**/*
+- db/migrate/**
+- ".bundle/**/*"
+require: []
+domains: []
+reporters:
+- rubocop
+- typecheck
+require_paths: []
+max_files: 1000
