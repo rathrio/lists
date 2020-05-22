@@ -12,7 +12,7 @@ class GameScraper
   end
 
   def search_results
-    igdb_client.search(query)
+    igdb_client.search(query, filter_values: filter_values)
   end
 
   def scrape_name(result)

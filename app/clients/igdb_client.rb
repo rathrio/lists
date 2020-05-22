@@ -14,10 +14,28 @@ class IgdbClient
     game.first_release_date
   ].freeze
 
-  def search(query)
+  # @param search [String]
+  # @param filter_values [Array<FilterValue>]
+  def search(query, filter_values:)
     apicalypse_query = +"fields #{FIELDS.join(',')};"
     apicalypse_query << %{search "#{query}";}
-    apicalypse_query << 'where game != null;'
+    apicalypse_query << 'where game != null'
+
+    filter_values.each do |filter_value|
+      filter = filter_value['filter']
+      value = filter_value['value']
+
+      case filter
+      when 'year'
+        year = value.to_i
+        start_time = Time.new(year).to_i
+        end_time = Time.new(year, 12, 31).to_i
+
+        apicalypse_query << "& game.first_release_date >= #{start_time} & game.first_release_date <= #{end_time}"
+      end
+    end
+
+    apicalypse_query << ';'
     response = self.class.get('/search', body: apicalypse_query)
     return [] if response.nil? || response.empty?
 
