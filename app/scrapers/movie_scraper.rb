@@ -10,8 +10,7 @@ class MovieScraper
   end
 
   def search_results
-    title = query.gsub(/\((\d{2,4})\)/, '').strip
-    moviedb_client.search(title, type: :movie, year: $1)['results'].to_a
+    moviedb_client.search(query, type: :movie, filter_values: filter_values)['results'].to_a
   end
 
   def scrape_name(result)
