@@ -48,7 +48,7 @@ gem 'paranoia'
 # gem 'sidekiq'
 
 # For packing frontend libs
-gem 'webpacker', '>= 4.0.x'
+gem 'webpacker', '>= 5.1.1'
 gem 'react_on_rails'
 # # For server-side react component rendering with react_on_rails
 # gem 'libv8'
