@@ -35,8 +35,20 @@ class MoviedbClient
     37 =>    "Western"
   }
 
-  def search(query, type: 'movie', year: nil)
-    params = { query: query, year: year, first_air_date_year: year }
+  def search(query, type: 'movie', filter_values:)
+    params = { query: query }
+
+    filter_values.each do |filter_value|
+      filter = filter_value['filter']
+      value = filter_value['value']
+
+      case filter
+      when 'year'
+        year = value.to_i
+        params.merge!(year: year, first_air_date_year: year)
+      end
+    end
+
     self.class.get("/search/#{type}", query: params)
   end
 end
