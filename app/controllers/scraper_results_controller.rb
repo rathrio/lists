@@ -4,6 +4,12 @@ class ScraperResultsController < ApplicationController
   def index
     query = params[:query]
     filter_values = params[:filter_values]
+    filter_values = if filter_values.present? 
+                      filter_values.map { |v| Oj.load(v) } 
+                    else
+                      []
+                    end
+
     scraper = current_list.default_scraper
     results = scraper.new(query: query, filter_values: filter_values).scrape
     results = FuzzySubstringMatchFilter.new(results, query).matches
