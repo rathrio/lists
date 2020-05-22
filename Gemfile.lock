@@ -267,7 +267,7 @@ DEPENDENCIES
   turbolinks (~> 5)
   tzinfo-data
   web-console (>= 3.3.0)
-  webpacker (>= 4.0.x)
+  webpacker (>= 5.1.1)
   yard
   yui-compressor (~> 0.12.0)
 
