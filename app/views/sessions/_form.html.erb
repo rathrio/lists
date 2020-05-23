@@ -1,21 +1,21 @@
 <%= form_for :session, url: session_path do |form| %>
   <div class="field">
-    <p class="control has-icon">
-      <%= form.text_field :email, type: 'email', class: 'input is-medium', placeholder: 'Email', autofocus: true %>
-      <%= icon :envelope %>
+    <p class="control has-icons-left">
+      <%= form.text_field :email, type: 'email', class: 'input', placeholder: 'Email', autofocus: true %>
+      <%= icon :envelope, span_class: 'icon is-left', size: 'small' %>
     </p>
   </div>
 
   <div class="field">
-    <p class="control has-icon">
-      <%= form.password_field :password, type: 'password', class: 'input is-medium', placeholder: 'Password' %>
-      <%= icon :lock %>
+    <p class="control has-icons-left">
+      <%= form.password_field :password, type: 'password', class: 'input', placeholder: 'Password' %>
+      <%= icon :lock, span_class: 'icon is-left', size: 'medium' %>
     </p>
   </div>
 
   <div class="field">
     <p class="control">
-      <%= form.submit 'Login', class: 'button is-success is-medium' %>
+      <%= form.submit 'Login', class: 'button is-success' %>
     </p>
   </div>
 <% end %>
