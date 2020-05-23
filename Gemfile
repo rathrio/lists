@@ -57,7 +57,7 @@ gem 'react_on_rails'
 
 # Frontend
 gem 'font-awesome-rails'
-gem 'bulma-rails', '~> 0.7.5'
+gem 'bulma-rails', '~> 0.8.2'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5'
 # Use Uglifier as compressor for JavaScript assets
