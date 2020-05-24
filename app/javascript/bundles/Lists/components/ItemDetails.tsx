@@ -212,7 +212,7 @@ class ItemDetails extends React.Component<Props> {
             </header>
 
             <section className="modal-card-body">
-              <div className="image-content">
+              <div className="image-content" style={{ marginBottom: '20px' }}>
                 <figure className="image is-2by3">
                   <img
                     src={item.image!.url}
@@ -227,7 +227,7 @@ class ItemDetails extends React.Component<Props> {
               </div>
 
               {this.editing ? (
-                <div className="fields">
+                <div className="fields" style={{ marginBottom: '20px' }}>
                   <div className="field">
                     <label className="label is-small">Name</label>
                     <p className="control">
@@ -301,7 +301,7 @@ class ItemDetails extends React.Component<Props> {
                   </div>
                 </div>
               ) : (
-                <div className="fields">
+                <div className="fields" style={{ marginBottom: '20px' }}>
                   <div className="tags">
                     <span className="tag is-rounded is-small">{item.year}</span>
 
@@ -361,7 +361,7 @@ class ItemDetails extends React.Component<Props> {
                   {item.recommended_by && (
                     <p
                       className="item-recommended_by"
-                      style={{ marginTop: '1em' }}
+                      style={{ marginTop: '20px' }}
                     >
                       <strong>Recommended by:</strong> {item.recommended_by}
                     </p>
