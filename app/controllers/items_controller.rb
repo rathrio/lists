@@ -55,9 +55,13 @@ class ItemsController < ApplicationController
   end
 
   def update
-    attributes = item_params.merge(
-      'tags' => item_params['tags'].split(',').map(&:strip)
-    )
+    attributes = item_params
+
+    if item_params['tags'].present?
+      attributes = item_params.merge(
+        'tags' => item_params['tags'].split(',').map(&:strip)
+      )
+    end
 
     if @item.update(attributes)
       render json: @item.to_json
@@ -104,6 +108,7 @@ class ItemsController < ApplicationController
       :name,
       :description,
       :date,
+      :first_done_at,
       :remote_image_url,
       :rating,
       :tags,
