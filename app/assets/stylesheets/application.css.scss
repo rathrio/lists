@@ -241,13 +241,20 @@
     margin-bottom: 0.5rem;
   }
 
+  @media (max-width: 500px) {
+    justify-content: start;
+  }
+
   .modal-card {
     width: 95vw;
     max-width: 1200px;
 
     @media (max-width: 500px) {
-      height: 100vh !important;
-      max-height: 100vh !important;
+      // Use as much vertical height as possible on mobile, but ensure that the
+      // modal footer does not take up the bottom 44px of the screen to avoid
+      // accidental iPhone fullscreen toolbar triggering.
+      height: 88vh !important;
+      max-height: 88vh !important;
       width: 100vw;
 
       .modal-card-head, .modal-card-foot {
