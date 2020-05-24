@@ -230,6 +230,7 @@ class ItemDetails extends React.Component<Props> {
                 <div className="fields" style={{ marginBottom: '20px' }}>
                   <div className="field">
                     <label className="label is-small">Name</label>
+
                     <p className="control">
                       <input
                         name="name"
@@ -282,6 +283,20 @@ class ItemDetails extends React.Component<Props> {
                         defaultValue={item.date}
                         onChange={this.handleFormChange}
                         required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="field">
+                    <label className="label is-small">First Completion</label>
+                    <div className="control">
+                      <input
+                        name="first_done_at"
+                        type="date"
+                        className="input is-small"
+                        placeholder="First Completion"
+                        defaultValue={item.first_done_at}
+                        onChange={this.handleFormChange}
                       />
                     </div>
                   </div>
