@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import ItemStore from '../stores/ItemStore';
 import ItemBox from './ItemBox';
-import ShowMoreItemsButton from './ShowMoreItemsButton';
+import ItemActions from './ItemActions';
 
 interface Props {
   store: ItemStore;
@@ -20,7 +20,7 @@ class ItemList extends React.Component<Props> {
     return (
       <div className="items-list">
         {itemBoxes}
-        <ShowMoreItemsButton store={store} />
+        <ItemActions store={store} />
       </div>
     );
   }
