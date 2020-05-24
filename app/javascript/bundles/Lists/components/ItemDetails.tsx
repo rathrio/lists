@@ -287,6 +287,19 @@ class ItemDetails extends React.Component<Props> {
                   </div>
 
                   <div className="field">
+                    <label className="label is-small">Tags</label>
+                    <div className="control">
+                      <input
+                        name="tags"
+                        className="input is-small"
+                        placeholder="e.g. Horror, Fiction"
+                        defaultValue={item.tags.join(', ')}
+                        onChange={this.handleFormChange}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="field">
                     <label className="label is-small">Image</label>
                     <div className="control">
                       <input

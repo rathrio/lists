@@ -14,7 +14,7 @@ class ProfileForm
       return false
     end
 
-    user.update_attributes(password: new_password)
+    user.update(password: new_password)
   end
 
   private
