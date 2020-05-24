@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { observable, action, computed } from 'mobx';
+import { observable, action, computed, toJS } from 'mobx';
 import * as Mousetrap from 'mousetrap';
 
 import ItemStore from '../stores/ItemStore';
@@ -25,6 +25,7 @@ class ItemDetails extends React.Component<Props> {
   @observable
   editing = false;
 
+  @observable
   formData: FormData = {};
 
   constructor(props: Props) {
@@ -104,7 +105,7 @@ class ItemDetails extends React.Component<Props> {
 
     if (this.hasFormDataChanges) {
       const item = this.props.store.activeItem!;
-      this.props.store.update(item, this.formData);
+      this.props.store.update(item, toJS(this.formData));
     }
 
     this.formData = {};
@@ -400,7 +401,10 @@ class ItemDetails extends React.Component<Props> {
 
             {this.editing ? (
               <footer className="modal-card-foot">
-                <button className="button is-primary">Update</button>
+                {this.hasFormDataChanges && (
+                  <button className="button is-primary">Update</button>
+                )}
+
                 <button onClick={this.onCancel} className="button">
                   Cancel
                 </button>
