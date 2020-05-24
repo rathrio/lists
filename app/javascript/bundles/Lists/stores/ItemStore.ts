@@ -254,6 +254,10 @@ class ItemStore {
   };
 
   @action
+  showNewItemDetails = () => {
+  }
+
+  @action
   showFocusedItemDetails = () => {
     if (!this.focusedItem) {
       return;
