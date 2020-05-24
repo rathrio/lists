@@ -55,7 +55,11 @@ class ItemsController < ApplicationController
   end
 
   def update
-    if @item.update_attributes(item_params)
+    attributes = item_params.merge(
+      'tags' => item_params['tags'].split(',').map(&:strip)
+    )
+
+    if @item.update(attributes)
       render json: @item.to_json
     else
       render json: { message: 'Validation failed', errors: @order.errors }, status: 400
@@ -64,13 +68,13 @@ class ItemsController < ApplicationController
 
   def toggle_status
     next_status_index = @item.next_status_index
-    @item.update_attributes!(status: next_status_index)
+    @item.update!(status: next_status_index)
     render json: @item.to_json
   end
 
   def update_rating
     rating = params.fetch(:rating)
-    @item.update_attributes!(rating: rating)
+    @item.update!(rating: rating)
     render json: @item.to_json
   end
 
@@ -102,6 +106,7 @@ class ItemsController < ApplicationController
       :date,
       :remote_image_url,
       :rating,
+      :tags,
       :recommended_by
     )
   end

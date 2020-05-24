@@ -20,6 +20,7 @@ class ScraperResultsController < ApplicationController
   def import
     item = Item.new(user: current_user)
     item.update_from(result_params.merge(list: current_list))
+
     render json: item.to_json
   end
 

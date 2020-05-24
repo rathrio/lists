@@ -60,13 +60,18 @@ class Item < ApplicationRecord
   end
 
   def update_from(scraper_result)
-    update_attributes!(scraper_result.merge(scraped: true))
+    update!(scraper_result.merge(scraped: true))
   end
 
+  # @param names [Array<String>], e.g. ["Horror", "Comedy"]
   def tags=(names)
-    names.each do |name|
-      tag = user.tags.find_or_create_by(name: name)
-      tags << tag unless tags.include?(tag)
+    Item.transaction(requires_new: true) do
+      tags.clear
+
+      names.each do |name|
+        tag = user.tags.find_or_create_by!(name: name)
+        tags << tag
+      end
     end
   end
 

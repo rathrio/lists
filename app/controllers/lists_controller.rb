@@ -6,7 +6,7 @@ class ListsController < ApplicationController
   def create
     @list = current_user.lists.new
 
-    if @list.update_attributes(list_params)
+    if @list.update(list_params)
       flash[:notice] = 'List successfully created'
     else
       flash[:alert] = 'Could not create list'
@@ -30,7 +30,7 @@ class ListsController < ApplicationController
   def update
     @list = current_user.lists.find(params[:id])
 
-    if @list.update_attributes(list_params)
+    if @list.update(list_params)
       flash[:notice] = 'List successfully updated'
       redirect_to edit_list_path(@list)
     else
