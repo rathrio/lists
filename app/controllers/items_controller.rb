@@ -57,6 +57,7 @@ class ItemsController < ApplicationController
   def update
     attributes = item_params
 
+    # "Horror, Comedy" => ["Horror", "Comedy"]
     if item_params['tags'].present?
       attributes = item_params.merge(
         'tags' => item_params['tags'].split(',').map(&:strip)
@@ -72,7 +73,15 @@ class ItemsController < ApplicationController
 
   def toggle_status
     next_status_index = @item.next_status_index
-    @item.update!(status: next_status_index)
+    attributes = {
+      status: next_status_index
+    }
+
+    if Item.statuses.key(next_status_index) == 'done' && @item.first_done_at.blank?
+      attributes[:first_done_at] = Date.today
+    end
+
+    @item.update!(attributes)
     render json: @item.to_json
   end
 

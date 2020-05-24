@@ -19,8 +19,6 @@ class Item < ApplicationRecord
   validates :name, presence: true
   validates :rating, inclusion: 0..5, allow_blank: true
 
-  before_save :set_first_done_at
-
   # @param list_ids [Array<Integer>]
   def self.in_lists(list_ids)
     where(list_id: list_ids)
@@ -103,13 +101,5 @@ class Item < ApplicationRecord
       hash['human_status'] = human_status
       hash['notes'] = notes
     end
-  end
-
-  private
-
-  def set_first_done_at
-    return unless done?
-
-    self.first_done_at = Date.today unless first_done_at.present?
   end
 end
