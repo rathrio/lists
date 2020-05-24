@@ -9,6 +9,12 @@ AllCops:
     - config/**
     - Gemfile
 
+Bundler/OrderedGems:
+  Enabled: false
+
+Style/SymbolArray:
+  Enabled: false
+
 Style/StringLiterals:
   Enabled: false
 
