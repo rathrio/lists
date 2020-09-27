@@ -43,7 +43,6 @@ on_worker_boot do
   ActiveRecord::Base.establish_connection if defined?(ActiveRecord)
 end
 
-daemonize true
 bind ENV.fetch('LISTS_SOCKET')
 pidfile ENV.fetch('LISTS_PIDFILE')
 
