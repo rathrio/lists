@@ -167,7 +167,7 @@ GEM
     pry-rails (0.3.9)
       pry (>= 0.10.4)
     public_suffix (4.0.6)
-    puma (5.0.0)
+    puma (4.3.6)
       nio4r (~> 2.0)
     rack (2.2.3)
     rack-proxy (0.6.5)
@@ -321,7 +321,7 @@ DEPENDENCIES
   pry-byebug
   pry-doc
   pry-rails
-  puma
+  puma (~> 4)
   rails (~> 6)
   rails-erd
   react_on_rails
