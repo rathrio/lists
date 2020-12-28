@@ -25,15 +25,19 @@ const ScraperResultBox = ({ result, onAdd }: Props) => {
           <div className="level-item">
             <figure className="image is-64x64">
               <img
-                src={thumbUrl}
-                style={{ width: '64px', height: '64px', objectFit: 'cover' }}
-                alt={result.name}
+                style={{
+                  width: '64px',
+                  height: '64px',
+                  objectFit: 'cover',
+                  backgroundImage: `url(${thumbUrl})`,
+                  backgroundSize: 'cover',
+                }}
               />
             </figure>
           </div>
 
           <div className="level-item">
-            <div className="subtitle is-4">{result.name}</div>
+            <div className="subtitle is-5">{result.name}</div>
           </div>
 
           <div className="level-item">
