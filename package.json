@@ -12,14 +12,15 @@
     "scroll-into-view-if-needed": "^2.2.24"
   },
   "devDependencies": {
+    "@prettier/plugin-ruby": "^1.2.1",
     "@types/lodash": "^4.14.152",
     "@types/mousetrap": "^1.6.3",
     "@types/react": "16.9.35",
     "awesome-typescript-loader": "^5.2.1",
+    "prettier": "^2.2.1",
     "tslint": "^6.1.2",
     "typescript": "^3.9.3",
     "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.11.0",
-    "prettier": "^2.2.1"
+    "webpack-dev-server": "^3.11.0"
   }
 }

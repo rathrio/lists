@@ -3,7 +3,7 @@
 class Item < ApplicationRecord
   acts_as_paranoid
 
-  enum status: %i(todo doing done)
+  enum status: %i[todo doing done]
 
   belongs_to :user
   belongs_to :list
@@ -59,8 +59,11 @@ class Item < ApplicationRecord
     list&.fa_icon
   end
 
-  def update_from(scraper_result)
-    update!(scraper_result.merge(scraped: true))
+  def update_from(scraper_result, fields: [])
+    attr = scraper_result.merge(scraped: true)
+    attr.slice!(*fields) if fields.present?
+
+    update!(attr)
   end
 
   # @param names [Array<String>], e.g. ["Horror", "Comedy"]
@@ -87,8 +90,21 @@ class Item < ApplicationRecord
     default_scraper&.human_status(status)
   end
 
+  # @return [Class]
   def default_scraper
     list&.default_scraper
+  end
+
+  def scrape
+    return if default_scraper.nil?
+
+    default_scraper
+      .new(
+        query: name,
+        filter_values: [{ 'filter' => 'year', 'value' => year }]
+      )
+      .scrape
+      .first
   end
 
   def as_json(*)

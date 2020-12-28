@@ -64,7 +64,7 @@ module Scraper
   # @return [String]
   attr_reader :query
 
-  # @return [Array<FilterValue>]
+  # @return [Array<Hash>]
   attr_reader :filter_values
 
   def initialize(query:, filter_values: [])

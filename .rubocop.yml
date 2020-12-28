@@ -46,7 +46,7 @@ Style/TrivialAccessors:
   AllowPredicates: true
 
 Layout/DotPosition:
-  EnforcedStyle: trailing
+  Enabled: false
 
 Style/Semicolon:
   AllowAsExpressionSeparator: true
