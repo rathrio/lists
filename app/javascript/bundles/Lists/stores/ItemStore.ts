@@ -247,11 +247,11 @@ class ItemStore {
 
   @action
   showRandomItemDetails = () => {
-    if (!this.itemsTodo.length) {
+    if (!this.allFilteredItems.length) {
       return;
     }
 
-    const item = _.sample(this.itemsTodo)!;
+    const item = _.sample(this.allFilteredItems)!;
     this.showItemDetails(item);
   };
 
@@ -561,11 +561,6 @@ class ItemStore {
 
     items = _.sortBy(items, (item) => ItemStore.statusRank[item.status]);
     return items;
-  }
-
-  @computed
-  get itemsTodo(): Item[] {
-    return this.items.filter((item) => item.status === 'todo');
   }
 
   /**
