@@ -127,7 +127,9 @@ class ItemStore {
         this.scraperResults.replace(response.data);
       },
       (error) => {
-        console.log(error);
+        this.hideSpinner();
+        console.error(error);
+        alert(error);
       }
     );
   };
