@@ -10,7 +10,7 @@ class TvScraper
   end
 
   def scrape_name(result)
-    result['name']
+    result['original_name']
   end
 
   def scrape_description(result)
