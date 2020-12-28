@@ -4,6 +4,6 @@
 
 ssh rathr.io 'bash --login -s' << "EOF"
   cd /var/www/lists/current
-  git pull --depth=1 origin master
+  git pull origin master
   ./bin/restart
 EOF
