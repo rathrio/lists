@@ -18,20 +18,6 @@ class ItemActions extends React.Component<Props> {
 
     return (
       <div style={{ display: 'flex', justifyContent: 'center' }}>
-        {store.query && (
-          <a
-            className="button is-rounded is-small"
-            onClick={store.showNewItemDetails}
-            style={{ marginRight: '1em' }}
-          >
-            <span className="icon">
-              <i className="fa fa-plus" />
-            </span>
-
-            <span>Create item from search</span>
-          </a>
-        )}
-
         {store.hasMoreFilteredItems && (
           <a
             className="button is-rounded is-small"
