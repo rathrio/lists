@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MoviedbClient
   include HTTParty
   base_uri 'https://api.themoviedb.org/3'
@@ -6,34 +8,34 @@ class MoviedbClient
   IMAGE_BASE_URI = 'https://image.tmdb.org/t/p/w500'
 
   GENRES = {
-    28 =>    "Action & Adventure",
-    12 =>    "Action & Adventure",
-    10759 => "Action & Adventure",
-    16 =>    "Animation",
-    35 =>    "Comedy",
-    80 =>    "Crime",
-    99 =>    "Documentary",
-    18 =>    "Drama",
-    10751 => "Family",
-    10762 => "Kids",
-    36 =>    "History",
-    27 =>    "Horror",
-    10402 => "Music",
-    9648 =>  "Mystery",
-    10763 => "News",
-    10764 => "Reality",
-    10749 => "Romance",
-    14 =>    "SciFi & Fantasy",
-    878 =>   "SciFi & Fantasy",
-    10765 => "SciFi & Fantasy",
-    10766 => "Soap",
+    28 => 'Action & Adventure',
+    12 => 'Action & Adventure',
+    10_759 => 'Action & Adventure',
+    16 => 'Animation',
+    35 => 'Comedy',
+    80 => 'Crime',
+    99 => 'Documentary',
+    18 => 'Drama',
+    10_751 => 'Family',
+    10_762 => 'Kids',
+    36 => 'History',
+    27 => 'Horror',
+    10_402 => 'Music',
+    9648 => 'Mystery',
+    10_763 => 'News',
+    10_764 => 'Reality',
+    10_749 => 'Romance',
+    14 => 'SciFi & Fantasy',
+    878 => 'SciFi & Fantasy',
+    10_765 => 'SciFi & Fantasy',
+    10_766 => 'Soap',
     # 10767 => "Talk",
-    53 =>    "Thriller",
-    10770 => "TV Movie",
-    10767 => "War & Politics",
-    10752 => "War",
-    37 =>    "Western"
-  }
+    53 => 'Thriller',
+    10_770 => 'TV Movie',
+    10_767 => 'War & Politics',
+    10_752 => 'War',
+    37 => 'Western'
+  }.freeze
 
   def search(query, type: 'movie', filter_values:)
     params = { query: query }
