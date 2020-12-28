@@ -14,7 +14,7 @@ class MovieScraper
   end
 
   def scrape_name(result)
-    result['title']
+    result['original_title']
   end
 
   def scrape_description(result)
