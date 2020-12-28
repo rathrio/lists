@@ -3,8 +3,9 @@
 # https://api-docs.igdb.com/
 class IgdbClient
   include HTTParty
-  base_uri 'https://api-v3.igdb.com'
-  headers 'user-key' => ENV['IGDB_API_KEY']
+
+  base_uri 'https://api.igdb.com/v4'
+  headers 'Client-ID': ENV['TWITCH_CLIENT_ID'], 'Authorization': TwitchAuthClient.auth_header
 
   FIELDS = %w[
     game.name
@@ -36,7 +37,7 @@ class IgdbClient
     end
 
     apicalypse_query << ';'
-    response = self.class.get('/search', body: apicalypse_query)
+    response = self.class.post('/search', body: apicalypse_query)
     return [] if response.nil? || response.empty?
 
     response.map { |hash| hash['game'] }.select { |hash| hash.is_a? Hash }
