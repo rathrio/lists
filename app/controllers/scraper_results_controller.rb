@@ -12,7 +12,6 @@ class ScraperResultsController < ApplicationController
 
     scraper = current_list.default_scraper
     results = scraper.new(query: query, filter_values: filter_values).scrape
-    results = FuzzySubstringMatchFilter.new(results, query).matches
 
     render json: results.to_json
   end
