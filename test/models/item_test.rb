@@ -10,6 +10,7 @@
 #  image          :string
 #  language       :string
 #  name           :string
+#  original_name  :string
 #  quantity       :integer          default(0)
 #  rating         :float
 #  recommended_by :string
@@ -27,6 +28,7 @@
 #  index_items_on_language        (language)
 #  index_items_on_list_id         (list_id)
 #  index_items_on_name            (name)
+#  index_items_on_original_name   (original_name)
 #  index_items_on_rating          (rating)
 #  index_items_on_recommended_by  (recommended_by)
 #  index_items_on_status          (status)

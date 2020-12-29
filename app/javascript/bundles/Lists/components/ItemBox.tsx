@@ -11,28 +11,28 @@ import { RATING_NAMES } from './StarRating';
 
 const RestoreActions = ({
   onRestoreClick,
-  onDeleteClick
+  onDeleteClick,
 }: {
-    onRestoreClick(e: React.MouseEvent): void;
-    onDeleteClick(e: React.MouseEvent): void;
-  }) => (
-    <Fragment>
-      <div className="level-item">
-        <a target="blank" href="#" onClick={onRestoreClick}>
-          <span className="icon is-medium" data-balloon="Restore">
-            <i className="fa fa-recycle fa-lg" />
-          </span>
-        </a>
-      </div>
-      <div className="level-item">
-        <a target="blank" href="#" onClick={onDeleteClick}>
-          <span className="icon is-medium" data-balloon="Delete for good">
-            <i className="fa fa-trash fa-lg" />
-          </span>
-        </a>
-      </div>
-    </Fragment>
-  );
+  onRestoreClick(e: React.MouseEvent): void;
+  onDeleteClick(e: React.MouseEvent): void;
+}) => (
+  <Fragment>
+    <div className="level-item">
+      <a target="blank" href="#" onClick={onRestoreClick}>
+        <span className="icon is-medium" data-balloon="Restore">
+          <i className="fa fa-recycle fa-lg" />
+        </span>
+      </a>
+    </div>
+    <div className="level-item">
+      <a target="blank" href="#" onClick={onDeleteClick}>
+        <span className="icon is-medium" data-balloon="Delete for good">
+          <i className="fa fa-trash fa-lg" />
+        </span>
+      </a>
+    </div>
+  </Fragment>
+);
 
 interface Props {
   item: Item;
@@ -78,7 +78,7 @@ class ItemBox extends React.Component<Props> {
 
     scrollIntoView(currentItemBoxDiv, {
       behavior: 'smooth',
-      scrollMode: 'if-needed'
+      scrollMode: 'if-needed',
     });
   }
 
@@ -101,17 +101,17 @@ class ItemBox extends React.Component<Props> {
 
     (itemRatingProps as any)['onClick'] = item.rating
       ? (e: React.MouseEvent) =>
-        this.onTagClick(e, {
-          name: `${item.rating}/5`,
-          value: item.rating,
-          type: 'rating'
-        })
+          this.onTagClick(e, {
+            name: `${item.rating}/5`,
+            value: item.rating,
+            type: 'rating',
+          })
       : (e: React.MouseEvent) =>
-        this.onTagClick(e, {
-          name: `Unrated`,
-          value: item.rating,
-          type: 'rating'
-        });
+          this.onTagClick(e, {
+            name: `Unrated`,
+            value: item.rating,
+            type: 'rating',
+          });
 
     return (
       <div
@@ -128,7 +128,9 @@ class ItemBox extends React.Component<Props> {
 
             <div className="level-item title-item item-name">
               <div className="subtitle is-5">
-                <a onClick={this.onItemNameClick}>{item.name}</a>
+                <a onClick={this.onItemNameClick} title={item.original_name}>
+                  {item.name}
+                </a>
               </div>
             </div>
 
@@ -139,7 +141,7 @@ class ItemBox extends React.Component<Props> {
                   this.onTagClick(e, {
                     name: item.year.toString(),
                     value: item.year,
-                    type: 'year'
+                    type: 'year',
                   })
                 }
                 data-balloon={`Show ${item.year} items`}
@@ -176,12 +178,12 @@ class ItemBox extends React.Component<Props> {
                 <span
                   className={`tag is-rounded is-small has-pointer ${
                     item.status === 'doing' ? 'is-warning' : 'is-success'
-                    }`}
+                  }`}
                   onClick={(e) =>
                     this.onTagClick(e, {
                       name: _.capitalize(item.status),
                       value: item.status,
-                      type: 'status'
+                      type: 'status',
                     })
                   }
                 >

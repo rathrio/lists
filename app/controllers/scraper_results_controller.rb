@@ -28,6 +28,7 @@ class ScraperResultsController < ApplicationController
   def result_params
     params.require(:scraper_results).permit(
       :name,
+      :original_name,
       :description,
       :remote_image_url,
       :date,

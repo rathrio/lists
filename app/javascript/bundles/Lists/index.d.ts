@@ -15,6 +15,7 @@ export interface Item {
   fa_icon: string;
   list_id: number;
   name: string;
+  original_name?: string;
   description: string;
   quantity: number;
   scraped: boolean;
@@ -30,7 +31,7 @@ export interface Item {
   deleted_at: string;
   date: string;
   language?: string;
-  first_done_at?: string
+  first_done_at?: string;
   image?: Image;
   remote_image_url?: string;
   recommended_by?: string;
