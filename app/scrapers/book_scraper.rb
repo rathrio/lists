@@ -42,6 +42,7 @@ class BookScraper
   def scrape_tags(result)
     categories = result['volumeInfo']['categories']
     return categories if categories.present?
+
     []
   end
 
@@ -49,6 +50,10 @@ class BookScraper
     [
       Link.new(url: result['volumeInfo']['canonicalVolumeLink'])
     ]
+  end
+
+  def scrape_language(result)
+    result['volumeInfo']['language']
   end
 
   private

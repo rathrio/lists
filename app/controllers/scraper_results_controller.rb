@@ -33,6 +33,7 @@ class ScraperResultsController < ApplicationController
       :date,
       :links,
       :scraped,
+      :language,
       tags: []
     )
   end
