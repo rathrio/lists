@@ -29,6 +29,7 @@ export interface Item {
   deleted: boolean;
   deleted_at: string;
   date: string;
+  language?: string;
   first_done_at?: string
   image?: Image;
   remote_image_url?: string;
