@@ -152,6 +152,7 @@ class Item < ApplicationRecord
       Rails.logger.warn(
         "Cannot update item #{self} because scraper result is nil"
       )
+      return
     end
 
     update_from(scraper_result, fields: fields)
