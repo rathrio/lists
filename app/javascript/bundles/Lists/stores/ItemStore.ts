@@ -1,14 +1,15 @@
-import { observable, computed, action } from 'mobx';
-import _ from 'lodash';
-import API from '../../utils/api';
-import { Item, ScraperResult, Tag } from '..';
+import { action, computed, observable } from "mobx";
+import _ from "lodash";
+import API from "../../utils/api";
+import { Item, ScraperResult, Tag } from "..";
 
 enum Filter {
   Status = 'status',
   Year = 'year',
   Tag = 'tag',
   Rating = 'rating',
-  RecommendedBy = 'reco'
+  RecommendedBy = 'reco',
+  Language = 'lang'
 }
 
 const FILTERS = [
@@ -16,7 +17,8 @@ const FILTERS = [
   Filter.Year,
   Filter.Tag,
   Filter.Rating,
-  Filter.RecommendedBy
+  Filter.RecommendedBy,
+  Filter.Language
 ];
 
 const FILTER_RGX = /\w+\s*=\s*[^\s]+/g;
@@ -411,6 +413,15 @@ class ItemStore {
   }
 
   @computed
+  get knownLanguages(): string[] {
+    return _.chain(this.items)
+      .map((item) => item.language)
+      .compact()
+      .uniq()
+      .value();
+  }
+
+  @computed
   get autoCompleteSuggestion(): string {
     if (!this.query.length) {
       return '';
@@ -433,8 +444,8 @@ class ItemStore {
           if (!value) {
             valueSuggestion = _.sample([0, 1, 2, 3, 4, 5])!.toString();
           }
-
           break;
+
         case Filter.Year:
           if (!value) {
             valueSuggestion = (_.sample(this.knownYears) || 1991).toString();
@@ -445,8 +456,8 @@ class ItemStore {
               ) || value
             ).toString();
           }
-
           break;
+
         case Filter.Tag:
           if (!value) {
             valueSuggestion = (
@@ -458,8 +469,8 @@ class ItemStore {
                 tag.toLowerCase().startsWith(value.toLowerCase())
               ) || value;
           }
-
           break;
+
         case Filter.RecommendedBy:
           if (!value) {
             valueSuggestion = (
@@ -471,22 +482,26 @@ class ItemStore {
                 rec.toLowerCase().startsWith(value.toLowerCase())
               ) || value;
           }
-
           break;
+
         case Filter.Status:
           valueSuggestion =
             ['todo', 'done', 'doing'].find((status) =>
               status.toLowerCase().startsWith(value.toLowerCase())
             ) || value;
-
           break;
+
+        case Filter.Language:
+          valueSuggestion =
+            this.knownLanguages.find((lang) =>
+              lang.toLowerCase().startsWith(value.toLowerCase())
+            ) || value;
       }
 
-      const suggestion = this.query.replace(
+      return this.query.replace(
         new RegExp(`${value}$`),
         valueSuggestion.replace(new RegExp(value, 'i'), value)
       );
-      return suggestion;
     }
 
     // Keyword, e.g. "tag="
@@ -524,21 +539,22 @@ class ItemStore {
           } else {
             items = items.filter((item) => item.rating === parseInt(value, 10));
           }
-
           break;
+
         case Filter.Year:
           items = items.filter((item) =>
             item.year.toString().startsWith(value)
           );
           break;
+
         case Filter.Tag:
           items = items.filter((item) =>
             item.tags.some((t) =>
               this.toIdentifier(t).includes(this.toIdentifier(value))
             )
           );
-
           break;
+
         case Filter.RecommendedBy:
           items = items.filter(
             (item) =>
@@ -547,10 +563,14 @@ class ItemStore {
                 this.toIdentifier(value)
               )
           );
-
           break;
+
         case Filter.Status:
           items = items.filter((item) => item.status === value.toLowerCase());
+          break;
+
+        case Filter.Language:
+          items = items.filter((item) => item.language === value.toLowerCase());
           break;
       }
     });

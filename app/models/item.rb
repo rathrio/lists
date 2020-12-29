@@ -145,12 +145,25 @@ class Item < ApplicationRecord
       .first
   end
 
+  # @param fields [Array<Symbol>]
+  def scrape_and_update(fields:)
+    scraper_result = scrape
+    if scraper_result.nil?
+      Rails.logger.warn(
+        "Cannot update item #{self} because scraper result is nil"
+      )
+    end
+
+    update_from(scraper_result, fields: fields)
+  end
+
   def as_json(*)
     super.tap do |hash|
       hash['tags'] = tags.map(&:name)
       hash['list'] = list_name
       hash['fa_icon'] = fa_icon
       hash['year'] = year
+      hash['language'] = language
       hash['deleted'] = deleted?
       hash['human_status'] = human_status
       hash['notes'] = notes
