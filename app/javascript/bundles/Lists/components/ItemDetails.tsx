@@ -280,7 +280,6 @@ class ItemDetails extends React.Component<Props> {
                       <input
                         name="original_name"
                         className="input is-small"
-                        placeholder="en"
                         defaultValue={item.original_name}
                         onChange={this.handleFormChange}
                       />
