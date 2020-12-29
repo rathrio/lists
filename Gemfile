@@ -87,6 +87,9 @@ group :development do
 
   # Generate Entity-Relationship Diagrams
   gem "rails-erd"
+
+  # For adding schema on top of model file as comment
+  gem 'annotate'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

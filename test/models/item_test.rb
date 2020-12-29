@@ -1,3 +1,24 @@
+# == Schema Information
+#
+# Table name: items
+#
+#  id             :integer          not null, primary key
+#  name           :string
+#  description    :string
+#  quantity       :integer          default(0)
+#  scraped        :boolean          default(FALSE)
+#  date           :date
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  image          :string
+#  deleted_at     :datetime
+#  user_id        :integer
+#  list_id        :integer
+#  status         :integer          default("todo")
+#  rating         :float
+#  recommended_by :string
+#  first_done_at  :date
+#
 require 'test_helper'
 
 class ItemTest < ActiveSupport::TestCase
