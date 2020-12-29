@@ -83,6 +83,11 @@ class OmniBar extends React.Component<Props> {
     return currentField;
   }
 
+  onAutocompleteButtonClick = () => {
+    this.props.store.autoComplete();
+    this.inputField.current!.focus();
+  };
+
   render() {
     const { store } = this.props;
 
@@ -108,6 +113,18 @@ class OmniBar extends React.Component<Props> {
           type="text"
           disabled
         />
+
+        {store.canAutoComplete && (
+          <button
+            className="button is-small autocomplete-button is-hidden-desktop"
+            style={{ marginLeft: 'auto', zIndex: 5 }}
+            onClick={this.onAutocompleteButtonClick}
+          >
+            <span className="icon is-medium">
+              <i className="fa fa-long-arrow-right fa-lg" />
+            </span>
+          </button>
+        )}
       </div>
     );
   }
