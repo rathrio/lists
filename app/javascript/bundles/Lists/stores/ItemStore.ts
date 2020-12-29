@@ -492,10 +492,14 @@ class ItemStore {
           break;
 
         case Filter.Language:
-          valueSuggestion =
-            this.knownLanguages.find((lang) =>
-              lang.toLowerCase().startsWith(value.toLowerCase())
-            ) || value;
+          if (!value) {
+            valueSuggestion = _.sample(this.knownLanguages) || '';
+          } else {
+            valueSuggestion =
+              this.knownLanguages.find((lang) =>
+                lang.toLowerCase().startsWith(value.toLowerCase())
+              ) || value;
+          }
       }
 
       return this.query.replace(
