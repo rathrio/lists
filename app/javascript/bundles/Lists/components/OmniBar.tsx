@@ -83,14 +83,6 @@ class OmniBar extends React.Component<Props> {
     return currentField;
   }
 
-  tagClass = (tag: Tag): string => {
-    if (tag.type !== 'status' || tag.value === 'todo') {
-      return '';
-    }
-
-    return tag.value === 'doing' ? 'is-warning' : 'is-success';
-  };
-
   render() {
     const { store } = this.props;
 
