@@ -85,7 +85,8 @@ module Scraper
         remote_image_url: scrape_image(result),
         date: scrape_date(result),
         links: scrape_links(result),
-        tags: scrape_tags(result)
+        tags: scrape_tags(result),
+        language: scrape_language(result)
       }
     end
   end
@@ -115,21 +116,36 @@ module Scraper
     EOS
   end
 
+  # @param result [Hash]
+  # @return [String, nil]
   def scrape_description(result)
   end
 
+  # @param result [Hash]
+  # @return [String, nil] a remote URL to a cover image
   def scrape_image(result)
   end
 
+  # @param result [Hash]
+  # @return [Date, nil]
   def scrape_date(result)
   end
 
+  # @param result [Hash]
   # @return [Array<Link>] list of links extracted from result.
   def scrape_links(result)
     []
   end
 
+  # @param result [Hash]
+  # @return [Array<String>]
   def scrape_tags(result)
     []
+  end
+
+  # @param result [Hash]
+  # @return [String, nil] The original language as a two letter language code (ISO 639-1),
+  #   nil if no language can be scraped.
+  def scrape_language(result)
   end
 end

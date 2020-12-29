@@ -33,6 +33,10 @@ class MovieScraper
     result['genre_ids'].map { |id| MoviedbClient::GENRES[id] }.uniq.compact
   end
 
+  def scrape_language(result)
+    result['original_language']
+  end
+
   private
 
   def moviedb_client
