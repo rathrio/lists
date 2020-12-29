@@ -172,44 +172,50 @@ class ItemDetails extends React.Component<Props> {
                 <i className={`fa fa-${item.fa_icon} fa-lg`} />
               </span>
 
-              <p className="modal-card-title" title={item.original_name}>{`${
-                item.name
-              } ${item.deleted ? ' (Archived)' : ''}`}</p>
+              <p className="modal-card-title">{`${item.name} ${
+                item.deleted ? ' (Archived)' : ''
+              }`}</p>
 
-              <span className="external-item-links hidden is-hidden-touch">
-                <a target="blank" href={urls.pirateSearchUrl(item)}>
-                  <span className="icon is-medium">
-                    <i className="fa fa-magnet fa-lg" />
-                  </span>
-                </a>
+              <code style={{ marginLeft: '0.5em' }} className="is-hidden-touch">
+                {item.original_name}
+              </code>
 
-                <a target="blank" href={urls.googleSearchUrl(item)}>
-                  <span className="icon is-medium">
-                    <i className="fa fa-google fa-lg" />
-                  </span>
-                </a>
+              <div className="header-actions">
+                <span className="external-item-links is-hidden-touch">
+                  <a target="blank" href={urls.pirateSearchUrl(item)}>
+                    <span className="icon is-medium">
+                      <i className="fa fa-magnet fa-lg" />
+                    </span>
+                  </a>
 
-                <a target="blank" href={urls.youtubeSearchUrl(item)}>
-                  <span className="icon is-medium">
-                    <i className="fa fa-youtube-play fa-lg" />
-                  </span>
-                </a>
+                  <a target="blank" href={urls.googleSearchUrl(item)}>
+                    <span className="icon is-medium">
+                      <i className="fa fa-google fa-lg" />
+                    </span>
+                  </a>
 
-                <a target="blank" href={urls.netflixSearchUrl(item)}>
-                  <span className="icon is-medium">
-                    <i className="fa fa-tv fa-lg" />
-                  </span>
-                </a>
-              </span>
+                  <a target="blank" href={urls.youtubeSearchUrl(item)}>
+                    <span className="icon is-medium">
+                      <i className="fa fa-youtube-play fa-lg" />
+                    </span>
+                  </a>
 
-              {!this.editing && (
-                <span
-                  className="icon is-medium edit-item-pencil"
-                  onClick={this.enableEditing}
-                >
-                  <i className="fa fa-pencil fa-lg" />
+                  <a target="blank" href={urls.netflixSearchUrl(item)}>
+                    <span className="icon is-medium">
+                      <i className="fa fa-tv fa-lg" />
+                    </span>
+                  </a>
                 </span>
-              )}
+
+                {!this.editing && (
+                  <span
+                    className="icon is-medium edit-item-pencil"
+                    onClick={this.enableEditing}
+                  >
+                    <i className="fa fa-pencil fa-lg" />
+                  </span>
+                )}
+              </div>
             </header>
 
             <section className="modal-card-body">
@@ -416,19 +422,22 @@ class ItemDetails extends React.Component<Props> {
 
                   {item.language && (
                     <p className="item-language" style={{ marginTop: '1em' }}>
-                      <strong>Language:</strong> <code>{item.language.toUpperCase()}</code>
+                      <strong>Language:</strong>{' '}
+                      <code>{item.language.toUpperCase()}</code>
                     </p>
                   )}
 
                   {item.original_name && (
                     <p className="item-original_name">
-                      <strong>Original name:</strong> <code>{item.original_name}</code>
+                      <strong>Original name:</strong>{' '}
+                      <code>{item.original_name}</code>
                     </p>
                   )}
 
                   {item.recommended_by && (
                     <p className="item-recommended_by">
-                      <strong>Recommended by:</strong> <code>{item.recommended_by}</code>
+                      <strong>Recommended by:</strong>{' '}
+                      <code>{item.recommended_by}</code>
                     </p>
                   )}
                 </div>
