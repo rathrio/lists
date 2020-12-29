@@ -121,7 +121,8 @@ class ItemsController < ApplicationController
       :remote_image_url,
       :rating,
       :tags,
-      :recommended_by
+      :recommended_by,
+      :language
     )
   end
 end

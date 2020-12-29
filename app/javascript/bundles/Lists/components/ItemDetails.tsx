@@ -221,7 +221,7 @@ class ItemDetails extends React.Component<Props> {
                     style={{
                       objectFit: 'cover',
                       borderRadius: '5px',
-                      maxHeight: 'auto'
+                      maxHeight: 'auto',
                     }}
                   />
                 </figure>
@@ -256,6 +256,20 @@ class ItemDetails extends React.Component<Props> {
                         className="textarea is-small"
                         placeholder="Description"
                         autoFocus
+                      />
+                    </div>
+                  </div>
+
+                  <div className="field">
+                    <label className="label is-small">Language</label>
+                    <div className="control">
+                      <input
+                        name="language"
+                        className="input is-small"
+                        placeholder="en"
+                        defaultValue={item.language}
+                        onChange={this.handleFormChange}
+                        pattern="[a-z]{2}"
                       />
                     </div>
                   </div>
@@ -387,10 +401,16 @@ class ItemDetails extends React.Component<Props> {
                   </div>
 
                   <p className="item-description">{item.description}</p>
+
+                  {item.language && (
+                    <p className="item-language" style={{ marginTop: '1em' }}>
+                      <strong>Language:</strong> {item.language.toUpperCase()}
+                    </p>
+                  )}
+
                   {item.recommended_by && (
                     <p
                       className="item-recommended_by"
-                      style={{ marginTop: '20px' }}
                     >
                       <strong>Recommended by:</strong> {item.recommended_by}
                     </p>
