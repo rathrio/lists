@@ -121,7 +121,7 @@
   }
 
   .level > .item-actions {
-    margin-right: 10px;
+    margin-right: 20px;
   }
 
   &:hover, &.is-focused {
@@ -190,13 +190,18 @@
 .item-details-modal {
   .modal-card-head {
     min-height: 58px;
-    .edit-item-pencil {
+
+    .header-actions {
       margin-left: auto;
+    }
+
+    .edit-item-pencil {
       cursor: pointer;
+      margin-left: 20px;
     }
 
     .external-item-links {
-      a {
+      a:not(:last-child) {
         margin-right: 20px;
       }
     }
@@ -211,6 +216,7 @@
 
     .modal-card-title {
       max-width: 75vw;
+      flex-grow: 0;
     }
   }
 
