@@ -10,6 +10,10 @@ class TvScraper
   end
 
   def scrape_name(result)
+    result['name']
+  end
+
+  def scrape_original_name(result)
     result['original_name']
   end
 

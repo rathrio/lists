@@ -172,9 +172,9 @@ class ItemDetails extends React.Component<Props> {
                 <i className={`fa fa-${item.fa_icon} fa-lg`} />
               </span>
 
-              <p className="modal-card-title">{`${item.name} ${
-                item.deleted ? ' (Archived)' : ''
-              }`}</p>
+              <p className="modal-card-title" title={item.original_name}>{`${
+                item.name
+              } ${item.deleted ? ' (Archived)' : ''}`}</p>
 
               <span className="external-item-links hidden is-hidden-touch">
                 <a target="blank" href={urls.pirateSearchUrl(item)}>
@@ -270,6 +270,19 @@ class ItemDetails extends React.Component<Props> {
                         defaultValue={item.language}
                         onChange={this.handleFormChange}
                         pattern="[a-z]{2}"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="field">
+                    <label className="label is-small">Original Name</label>
+                    <div className="control">
+                      <input
+                        name="original_name"
+                        className="input is-small"
+                        placeholder="en"
+                        defaultValue={item.original_name}
+                        onChange={this.handleFormChange}
                       />
                     </div>
                   </div>
@@ -404,15 +417,19 @@ class ItemDetails extends React.Component<Props> {
 
                   {item.language && (
                     <p className="item-language" style={{ marginTop: '1em' }}>
-                      <strong>Language:</strong> {item.language.toUpperCase()}
+                      <strong>Language:</strong> <code>{item.language.toUpperCase()}</code>
+                    </p>
+                  )}
+
+                  {item.original_name && (
+                    <p className="item-original_name">
+                      <strong>Original name:</strong> <code>{item.original_name}</code>
                     </p>
                   )}
 
                   {item.recommended_by && (
-                    <p
-                      className="item-recommended_by"
-                    >
-                      <strong>Recommended by:</strong> {item.recommended_by}
+                    <p className="item-recommended_by">
+                      <strong>Recommended by:</strong> <code>{item.recommended_by}</code>
                     </p>
                   )}
                 </div>

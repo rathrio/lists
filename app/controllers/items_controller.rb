@@ -115,6 +115,7 @@ class ItemsController < ApplicationController
   def item_params
     params.require(:item).permit(
       :name,
+      :original_name,
       :description,
       :date,
       :first_done_at,

@@ -81,6 +81,7 @@ module Scraper
     search_results.map do |result|
       {
         name: scrape_name(result),
+        original_name: scrape_original_name(result),
         description: scrape_description(result),
         remote_image_url: scrape_image(result),
         date: scrape_date(result),
@@ -100,6 +101,8 @@ module Scraper
     EOS
   end
 
+  # @param result [Hash]
+  # @return [String]
   def scrape_name(result)
     raise NotImplementedError, <<~EOS
       Implement #scrape_name(result) and extract the value from result that
@@ -114,6 +117,11 @@ module Scraper
         result[:title]
       end
     EOS
+  end
+
+  # @param result [Hash]
+  # @return [String, nil]
+  def scrape_original_name(result)
   end
 
   # @param result [Hash]

@@ -384,7 +384,10 @@ class ItemStore {
   };
 
   private matchItem = (item: Item, query: string) => {
-    return this.match(item.name, query);
+    return (
+      this.match(item.name, query) ||
+      this.match(item.original_name ?? '', query)
+    );
   };
 
   @computed
