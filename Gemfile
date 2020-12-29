@@ -20,11 +20,6 @@ gem 'turbolinks', '~> 5'
 # Use Redis adapter to run Action Cable in production
 gem 'hiredis'
 gem 'redis', require: ["redis", "redis/connection/hiredis"]
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
 
 # A fast JSON parser and Object marshaller.
 gem 'oj'

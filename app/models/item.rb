@@ -5,21 +5,38 @@
 # Table name: items
 #
 #  id             :integer          not null, primary key
-#  name           :string
-#  description    :string
-#  quantity       :integer          default(0)
-#  scraped        :boolean          default(FALSE)
 #  date           :date
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  image          :string
 #  deleted_at     :datetime
-#  user_id        :integer
-#  list_id        :integer
-#  status         :integer          default("todo")
+#  description    :string
+#  first_done_at  :date
+#  image          :string
+#  language       :string
+#  name           :string
+#  quantity       :integer          default(0)
 #  rating         :float
 #  recommended_by :string
-#  first_done_at  :date
+#  scraped        :boolean          default(FALSE)
+#  status         :integer          default("todo")
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  list_id        :integer
+#  user_id        :integer
+#
+# Indexes
+#
+#  index_items_on_deleted_at      (deleted_at)
+#  index_items_on_first_done_at   (first_done_at)
+#  index_items_on_language        (language)
+#  index_items_on_list_id         (list_id)
+#  index_items_on_name            (name)
+#  index_items_on_rating          (rating)
+#  index_items_on_recommended_by  (recommended_by)
+#  index_items_on_status          (status)
+#  index_items_on_user_id         (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
 #
 class Item < ApplicationRecord
   acts_as_paranoid
