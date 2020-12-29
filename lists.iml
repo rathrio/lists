@@ -41,6 +41,7 @@
     <orderEntry type="library" scope="PROVIDED" name="activestorage (v6.0.3.3, chruby: ruby-2.6.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="activesupport (v6.0.3.3, chruby: ruby-2.6.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="addressable (v2.7.0, chruby: ruby-2.6.1) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="annotate (v3.1.1, chruby: ruby-2.6.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="argon2 (v2.0.2, chruby: ruby-2.6.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ast (v2.4.1, chruby: ruby-2.6.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="backport (v1.1.2, chruby: ruby-2.6.1) [gem]" level="application" />
@@ -157,6 +158,7 @@
     <option name="generators">
       <list>
         <option value="active_record:application_record" />
+        <option value="annotate:install" />
         <option value="application_record" />
         <option value="assets" />
         <option value="channel" />
@@ -190,6 +192,7 @@
     <option name="myGenerators">
       <list>
         <option value="active_record:application_record" />
+        <option value="annotate:install" />
         <option value="application_record" />
         <option value="assets" />
         <option value="channel" />

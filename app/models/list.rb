@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: lists
+#
+#  id          :integer          not null, primary key
+#  name        :string
+#  description :string
+#  scraper     :string
+#  fa_icon     :string
+#  created_at  :datetime
+#  updated_at  :datetime
+#  user_id     :integer
+#
 class List < ApplicationRecord
   belongs_to :user
   has_many :items
