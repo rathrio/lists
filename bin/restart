@@ -2,7 +2,7 @@
 #
 # Migrate and restart services in production.
 
-bundle install
+bundle install --without development test
 
 # Shutdown first to free up memory
 kill -9 $(cat /tmp/lists.pid)
