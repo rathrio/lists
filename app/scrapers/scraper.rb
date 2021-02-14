@@ -79,9 +79,12 @@ module Scraper
   #   argument to Item#update_from(result).
   def scrape
     search_results.map do |result|
+      name = scrape_name(result)
+      original_name = scrape_original_name(result)
+
       {
-        name: scrape_name(result),
-        original_name: scrape_original_name(result),
+        name: name,
+        original_name: name == original_name ? nil : original_name,
         description: scrape_description(result),
         remote_image_url: scrape_image(result),
         date: scrape_date(result),
