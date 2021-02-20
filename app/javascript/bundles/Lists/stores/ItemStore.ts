@@ -8,8 +8,11 @@ enum Filter {
   Year = 'year',
   Tag = 'tag',
   Rating = 'rating',
-  RecommendedBy = 'reco',
-  Language = 'lang'
+  RecommendedBy = 'recommended_by',
+  Language = 'language',
+  ReleasedAt = 'released_at',
+  AddedAt = 'added_at',
+  DoneAt = 'done_at'
 }
 
 const FILTERS = [
@@ -18,7 +21,10 @@ const FILTERS = [
   Filter.Tag,
   Filter.Rating,
   Filter.RecommendedBy,
-  Filter.Language
+  Filter.Language,
+  Filter.ReleasedAt,
+  Filter.AddedAt,
+  Filter.DoneAt
 ];
 
 const FILTER_RGX = /\w+\s*=\s*[^\s]+/g;
@@ -425,6 +431,33 @@ class ItemStore {
   }
 
   @computed
+  get knownDoneAts(): string[] {
+    return _.chain(this.items)
+      .map((item) => item.first_done_at)
+      .compact()
+      .uniq()
+      .value();
+  }
+
+  @computed
+  get knownReleasedAts(): string[] {
+    return _.chain(this.items)
+      .map((item) => item.date)
+      .compact()
+      .uniq()
+      .value();
+  }
+
+  @computed
+  get knownAddedAts(): string[] {
+    return _.chain(this.items)
+      .map((item) => item.created_at.substring(0, 10))
+      .uniq()
+      .value();
+  }
+
+
+  @computed
   get autoCompleteSuggestion(): string {
     if (!this.query.length) {
       return '';
@@ -503,6 +536,40 @@ class ItemStore {
                 lang.toLowerCase().startsWith(value.toLowerCase())
               ) || value;
           }
+          break;
+
+        case Filter.AddedAt:
+          if (!value) {
+            valueSuggestion = _.sample(this.knownAddedAts) || '';
+          } else {
+            valueSuggestion =
+              this.knownAddedAts.find((addedAt) =>
+                addedAt.startsWith(value.toLowerCase())
+              ) || value;
+          }
+          break;
+
+        case Filter.ReleasedAt:
+          if (!value) {
+            valueSuggestion = _.sample(this.knownReleasedAts) || '';
+          } else {
+            valueSuggestion =
+              this.knownReleasedAts.find((releasedAt) =>
+                releasedAt.startsWith(value.toLowerCase())
+              ) || value;
+          }
+          break;
+
+        case Filter.DoneAt:
+          if (!value) {
+            valueSuggestion = _.sample(this.knownDoneAts) || '';
+          } else {
+            valueSuggestion =
+              this.knownDoneAts.find((doneAt) =>
+                doneAt.startsWith(value.toLowerCase())
+              ) || value;
+          }
+          break;
       }
 
       return this.query.replace(
@@ -578,6 +645,18 @@ class ItemStore {
 
         case Filter.Language:
           items = items.filter((item) => item.language === value.toLowerCase());
+          break;
+
+        case Filter.AddedAt:
+          items = items.filter((item) => item.created_at.startsWith(value));
+          break;
+
+        case Filter.DoneAt:
+          items = items.filter((item) => item.first_done_at?.startsWith(value));
+          break;
+
+        case Filter.ReleasedAt:
+          items = items.filter((item) => item.date?.startsWith(value));
           break;
       }
     });
