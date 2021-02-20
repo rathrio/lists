@@ -34,3 +34,5 @@ erd.pdf
 yarn-debug.log*
 .yarn-integrity
 yarn-error.log
+
+*.iml

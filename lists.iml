@@ -52,7 +52,7 @@
     <orderEntry type="library" scope="PROVIDED" name="bulma-rails (v0.9.1, chruby: ruby-2.6.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="bundler (v2.1.4, chruby: ruby-2.6.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="byebug (v11.1.3, chruby: ruby-2.6.1) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="carrierwave (v2.1.0, chruby: ruby-2.6.1) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="carrierwave (v2.1.1, chruby: ruby-2.6.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="choice (v0.2.0, chruby: ruby-2.6.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="clearance (v2.3.0, chruby: ruby-2.6.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="coderay (v1.1.3, chruby: ruby-2.6.1) [gem]" level="application" />
@@ -89,11 +89,11 @@
     <orderEntry type="library" scope="PROVIDED" name="mimemagic (v0.3.5, chruby: ruby-2.6.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mini_magick (v4.10.1, chruby: ruby-2.6.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mini_mime (v1.0.2, chruby: ruby-2.6.1) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="mini_portile2 (v2.4.0, chruby: ruby-2.6.1) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="mini_portile2 (v2.5.0, chruby: ruby-2.6.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="minitest (v5.14.3, chruby: ruby-2.6.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="multi_xml (v0.6.0, chruby: ruby-2.6.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="nio4r (v2.5.4, chruby: ruby-2.6.1) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="nokogiri (v1.10.10, chruby: ruby-2.6.1) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="nokogiri (v1.11.1, chruby: ruby-2.6.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="oj (v3.10.14, chruby: ruby-2.6.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="parallel (v1.19.2, chruby: ruby-2.6.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="paranoia (v2.4.2, chruby: ruby-2.6.1) [gem]" level="application" />
@@ -105,6 +105,7 @@
     <orderEntry type="library" scope="PROVIDED" name="pry-rails (v0.3.9, chruby: ruby-2.6.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="public_suffix (v4.0.6, chruby: ruby-2.6.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="puma (v4.3.6, chruby: ruby-2.6.1) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="racc (v1.5.2, chruby: ruby-2.6.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rack (v2.2.3, chruby: ruby-2.6.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rack-proxy (v0.6.5, chruby: ruby-2.6.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rack-test (v1.1.0, chruby: ruby-2.6.1) [gem]" level="application" />
@@ -273,6 +274,8 @@
               <RakeTaskImpl description="" fullCommand="active_storage:update" id="update" />
             </subtasks>
           </RakeTaskImpl>
+          <RakeTaskImpl description="Add schema information (as comments) to model and fixture files" fullCommand="annotate_models" id="annotate_models" />
+          <RakeTaskImpl description="Adds the route map to routes.rb" fullCommand="annotate_routes" id="annotate_routes" />
           <RakeTaskImpl id="app">
             <subtasks>
               <RakeTaskImpl description="Applies the template supplied by LOCATION=(/path/to/template) or URL" fullCommand="app:template" id="template" />
@@ -426,6 +429,8 @@
               <RakeTaskImpl description="Generate i18n javascript files" fullCommand="react_on_rails:locale" id="locale" />
             </subtasks>
           </RakeTaskImpl>
+          <RakeTaskImpl description="Remove schema information from model and fixture files" fullCommand="remove_annotation" id="remove_annotation" />
+          <RakeTaskImpl description="Removes the route map from routes.rb" fullCommand="remove_routes" id="remove_routes" />
           <RakeTaskImpl description="Restart app by touching tmp/restart.txt" fullCommand="restart" id="restart" />
           <RakeTaskImpl description="Generate a cryptographically secure secret key (this is typically used to generate a secret for cookie sessions)" fullCommand="secret" id="secret" />
           <RakeTaskImpl description="Report code statistics (KLOCs, etc) from the application or engine" fullCommand="stats" id="stats" />
