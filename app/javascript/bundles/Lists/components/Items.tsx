@@ -75,6 +75,15 @@ class Items extends React.Component<Props> {
       e.preventDefault();
       this.store.exportItems();
     });
+
+    Mousetrap.bind('g E', (e) => {
+      if (this.store.detailsModalVisible) {
+        return;
+      }
+
+      e.preventDefault();
+      this.store.exportItems('all');
+    });
   }
 
   componentDidMount() {

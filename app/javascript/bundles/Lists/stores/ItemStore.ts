@@ -50,7 +50,7 @@ class ItemStore {
   static statusRank = {
     doing: 0,
     todo: 1,
-    done: 2
+    done: 2,
   };
 
   /**
@@ -129,7 +129,9 @@ class ItemStore {
     this.showSpinner();
     const { query, filterValues } = this.buildQuery();
 
-    API.get('/scraper_results', { params: { query, filter_values: filterValues } }).then(
+    API.get('/scraper_results', {
+      params: { query, filter_values: filterValues },
+    }).then(
       (response) => {
         this.hideSpinner();
         this.scraperResults.replace(response.data);
@@ -358,8 +360,21 @@ class ItemStore {
    * https://letterboxd.com/about/importing-data/
    */
   @action
-  exportItems = () => {
-    const contents = encodeURI(this.toCsv(this.allFilteredItems));
+  exportItems = (format: 'letterboxd' | 'all' = 'letterboxd') => {
+    const newLineRgx = /(\r\n|\n|\r)/gm;
+    const quoteRgx = /"/gm;
+    let header = 'Title,Year,Rating';
+    let builder = (item: Item) =>
+      `"${item.name}","${item.year}","${item.rating}"`;
+
+    if (format === 'all') {
+      header = 'id,name,original_name,description,status,tags,year,rating,language,first_done_at,recommended_by';
+      builder = (item: Item) =>
+        `"${item.id}","${item.name}","${item.original_name}","${item.description.replace(quoteRgx, '""').replace(newLineRgx, '')}","${item.status}","${item.tags.join(';')}","${item.year}","${item.rating}","${item.language}","${item.first_done_at}","${item.recommended_by}"`;
+    }
+
+    const csv = this.toCsv(this.allFilteredItems, header, builder);
+    const contents = encodeURI(csv);
 
     const timestamp = new Date().toISOString().slice(0, 10);
     let filename = `${timestamp}-items`;
@@ -375,13 +390,14 @@ class ItemStore {
     link.click();
   };
 
-  private toCsv = (items: Item[]): string => {
+  private toCsv = (
+    items: Item[],
+    header: string,
+    rowBuilder: (item: Item) => string
+  ): string => {
     let contents = 'data:text/csv;charset=utf-8,';
-    const header = 'Title,Year,Rating\n';
-    contents += header;
-    contents += items
-      .map((item) => `"${item.name}","${item.year}","${item.rating}"`)
-      .join('\n');
+    contents += (header + '\n');
+    contents += items.map(rowBuilder).join('\n');
     return contents;
   };
 
@@ -455,7 +471,6 @@ class ItemStore {
       .uniq()
       .value();
   }
-
 
   @computed
   get autoCompleteSuggestion(): string {
@@ -716,7 +731,7 @@ class ItemStore {
     });
 
     return { query, filterValues };
-  }
+  };
 
   /**
    * "Action & Adventure" -> "action-adventure"
