@@ -13,3 +13,16 @@
 //= require rails-ujs
 //= require turbolinks
 //= require_tree .
+
+function scrollActiveTabIntoView() {
+  const activeTab = document.querySelector(".tabs .is-active");
+  if (!activeTab) {
+    return;
+  }
+
+  activeTab.scrollIntoViewIfNeeded();
+}
+
+document.addEventListener("turbolinks:load", function() {
+  scrollActiveTabIntoView();
+});
