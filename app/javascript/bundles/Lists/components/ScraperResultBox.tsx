@@ -17,7 +17,8 @@ const ScraperResultBox = ({ result, onAdd }: Props) => {
   return (
     <div
       className="box item-box scraper-result has-pointer"
-      data-balloon="Add to List"
+      aria-label="Add to List"
+      data-balloon-pos="down"
       onClick={onClick}
     >
       <div className="level is-mobile">

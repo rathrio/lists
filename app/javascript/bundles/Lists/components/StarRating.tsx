@@ -55,7 +55,7 @@ class StarRating extends React.Component<Props> {
     const className = `fa ${starIcon} fa-sm item-rating-star has-pointer`;
 
     const spanProps = {
-      'data-balloon': this.balloonMessage(rating)
+      'aria-label': this.balloonMessage(rating)
     };
 
     return (

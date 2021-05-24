@@ -19,14 +19,14 @@ const RestoreActions = ({
   <Fragment>
     <div className="level-item">
       <a target="blank" href="#" onClick={onRestoreClick}>
-        <span className="icon is-medium" data-balloon="Restore">
+        <span className="icon is-medium" aria-label="Restore" data-balloon-pos="down">
           <i className="fa fa-recycle fa-lg" />
         </span>
       </a>
     </div>
     <div className="level-item">
       <a target="blank" href="#" onClick={onDeleteClick}>
-        <span className="icon is-medium" data-balloon="Delete for good">
+        <span className="icon is-medium" aria-label="Delete for good" data-balloon-pos="down">
           <i className="fa fa-trash fa-lg" />
         </span>
       </a>
@@ -95,7 +95,7 @@ class ItemBox extends React.Component<Props> {
     }
 
     const itemRatingProps = { className: itemRatingClassName };
-    (itemRatingProps as any)['data-balloon'] = item.rating
+    (itemRatingProps as any)['aria-label'] = item.rating
       ? `Show items rated "${RATING_NAMES[item.rating - 1]}"`
       : 'Show unrated items';
 
@@ -118,7 +118,7 @@ class ItemBox extends React.Component<Props> {
         className={`box item-box ${store.isFocused(item) && 'is-focused'}`}
         ref={this.itemBoxDiv}
       >
-        <div className="level is-mobile" style={{ overflowX: 'clip' }}>
+        <div className="level is-mobile">
           <div className="level-left is-mobile">
             <div className="level-item">
               <figure className="image is-64x64">
@@ -144,7 +144,8 @@ class ItemBox extends React.Component<Props> {
                     type: 'year',
                   })
                 }
-                data-balloon={`Show ${item.year} items`}
+                aria-label={`Show ${item.year} items`}
+                data-balloon-pos="down"
               >
                 <span className="tag is-rounded is-light is-small">
                   {item.year}
@@ -167,7 +168,8 @@ class ItemBox extends React.Component<Props> {
                 onClick={(e) =>
                   this.onTagClick(e, { name: tag, value: tag, type: 'tag' })
                 }
-                data-balloon={`Show ${tag} items`}
+                aria-label={`Show ${tag} items`}
+                data-balloon-pos="down"
               >
                 <span className="tag is-rounded is-light is-small">{tag}</span>
               </div>
@@ -204,7 +206,7 @@ class ItemBox extends React.Component<Props> {
           <div className="level-right is-mobile item-actions hidden">
             <div className="level-item is-hidden-mobile">
               <a target="blank" href={urls.pirateSearchUrl(item)}>
-                <span className="icon is-medium" data-balloon="Search the Bay">
+                <span className="icon is-medium" aria-label="Search the Bay" data-balloon-pos="down">
                   <i className="fa fa-magnet fa-lg" />
                 </span>
               </a>
@@ -212,7 +214,7 @@ class ItemBox extends React.Component<Props> {
 
             <div className="level-item is-hidden-mobile">
               <a target="blank" href={urls.googleSearchUrl(item)}>
-                <span className="icon is-medium" data-balloon="Search Google">
+                <span className="icon is-medium" aria-label="Search Google" data-balloon-pos="down">
                   <i className="fa fa-google fa-lg" />
                 </span>
               </a>
@@ -220,7 +222,7 @@ class ItemBox extends React.Component<Props> {
 
             <div className="level-item is-hidden-mobile">
               <a target="blank" href={urls.youtubeSearchUrl(item)}>
-                <span className="icon is-medium" data-balloon="Search YouTube">
+                <span className="icon is-medium" aria-label="Search YouTube" data-balloon-pos="down">
                   <i className="fa fa-youtube-play fa-lg" />
                 </span>
               </a>
@@ -228,7 +230,7 @@ class ItemBox extends React.Component<Props> {
 
             <div className="level-item is-hidden-mobile">
               <a target="blank" href={urls.netflixSearchUrl(item)}>
-                <span className="icon is-medium" data-balloon="Search Netflix">
+                <span className="icon is-medium" aria-label="Search Netflix" data-balloon-pos="down">
                   <i className="fa fa-tv fa-lg" />
                 </span>
               </a>
