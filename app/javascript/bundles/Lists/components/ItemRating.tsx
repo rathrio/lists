@@ -74,7 +74,7 @@ class ItemRating extends React.Component<Props, State> {
 
     const spanProps = this.readonly
       ? {}
-      : { 'data-balloon': RATING_NAMES[n - 1], 'data-balloon-pos': 'down' };
+      : { 'aria-label': RATING_NAMES[n - 1], 'data-balloon-pos': 'down' };
 
     return (
       <span key={n} {...spanProps}>
