@@ -226,7 +226,21 @@
   }
 
   .modal-card-foot {
-    justify-content: flex-end;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-areas: "actions-left actions-right";
+
+    .actions-left {
+      display: flex;
+      justify-content: flex-start;
+      grid-area: actions-left;
+    }
+
+    .actions-right {
+      display: flex;
+      justify-content: flex-end;
+      grid-area: actions-right;
+    }
   }
 
   .image-content {

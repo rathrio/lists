@@ -63,7 +63,12 @@ class ItemDetails extends React.Component<Props> {
   };
 
   @action
-  enableEditing = () => {
+  enableEditing = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (this.props.store.activeItem?.deleted) {
+      return;
+    }
+
     this.editing = true;
   };
 
@@ -75,6 +80,10 @@ class ItemDetails extends React.Component<Props> {
 
   @action
   toggleEditing = () => {
+    if (this.props.store.activeItem?.deleted) {
+      return;
+    }
+
     this.editing = !this.editing;
   };
 
@@ -116,7 +125,11 @@ class ItemDetails extends React.Component<Props> {
     e.preventDefault();
     const { store } = this.props;
     const item = store.activeItem!;
-    store.archive(item);
+    const confirmedArchival = store.archive(item);
+
+    if (confirmedArchival) {
+      this.disableEditing();
+    }
   };
 
   onRestoreClick = (e: React.MouseEvent) => {
@@ -206,15 +219,6 @@ class ItemDetails extends React.Component<Props> {
                     </span>
                   </a>
                 </span>
-
-                {!this.editing && (
-                  <span
-                    className="icon is-medium edit-item-pencil"
-                    onClick={this.enableEditing}
-                  >
-                    <i className="fa fa-pencil fa-lg" />
-                  </span>
-                )}
               </div>
             </header>
 
@@ -390,32 +394,6 @@ class ItemDetails extends React.Component<Props> {
                         onUpdateRating={store.updateRating}
                       />
                     </span>
-
-                    {item.deleted ? (
-                      <a
-                        href="#"
-                        onClick={this.onRestoreClick}
-                        style={{ marginTop: '-10px', marginLeft: 'auto' }}
-                        aria-label="Restore"
-                        data-balloon-pos="down"
-                      >
-                        <span className="icon is-medium">
-                          <i className="fa fa-recycle fa-lg" />
-                        </span>
-                      </a>
-                    ) : (
-                      <a
-                        href="#"
-                        onClick={this.onArchiveClick}
-                        style={{ marginTop: '-10px', marginLeft: 'auto' }}
-                        aria-label="Archive"
-                        data-balloon-pos="down"
-                      >
-                        <span className="icon is-medium">
-                          <i className="fa fa-archive fa-lg" />
-                        </span>
-                      </a>
-                    )}
                   </div>
 
                   <p className="item-description">{item.description}</p>
@@ -446,19 +424,76 @@ class ItemDetails extends React.Component<Props> {
 
             {this.editing ? (
               <footer className="modal-card-foot">
-                {this.hasFormDataChanges && (
-                  <button className="button is-primary">Update</button>
-                )}
+                <div className="actions-left">
+                  <button
+                    type="button"
+                    tabIndex={-1}
+                    onClick={this.onArchiveClick}
+                    className="button is-danger"
+                  >
+                    <span className="icon">
+                      <i className="fa fa-archive" />
+                    </span>
 
-                <button onClick={this.onCancel} className="button">
-                  Cancel
-                </button>
+                    <span className="is-hidden-mobile">Archive</span>
+                  </button>
+                </div>
+
+                <div className="actions-right">
+                  {this.hasFormDataChanges && (
+                    <button className="button is-primary">
+                      <span className="icon">
+                        <i className="fa fa-save" />
+                      </span>
+                      <span>Update</span>
+                    </button>
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={this.onCancel}
+                    className="button"
+                  >
+                    Cancel
+                  </button>
+                </div>
               </footer>
             ) : (
               <footer className="modal-card-foot">
-                <button onClick={this.close} className="button">
-                  Close
-                </button>
+                {item.deleted && (
+                  <div className="actions-left">
+                    <button
+                      type="button"
+                      onClick={this.onRestoreClick}
+                      className="button is-primary"
+                    >
+                      <span className="icon">
+                        <i className="fa fa-recycle" />
+                      </span>
+
+                      <span className="is-hidden-mobile">Restore</span>
+                    </button>
+                  </div>
+                )}
+
+                <div className="actions-right">
+                  {!item.deleted && (
+                    <button
+                      type="button"
+                      onClick={this.enableEditing}
+                      className="button"
+                    >
+                      <span className="icon">
+                        <i className="fa fa-pencil" />
+                      </span>
+                      <span>Edit</span>
+                    </button>
+                  )}
+
+                  <button type="button" onClick={this.close} className="button">
+                    Close
+                  </button>
+                </div>
               </footer>
             )}
           </div>

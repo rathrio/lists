@@ -157,17 +157,29 @@ class ItemStore {
     );
   };
 
+  /**
+   * @return true when the user confirms archival
+   */
   @action
-  archive = (item: Item) => {
+  archive = (item: Item): boolean => {
+    if (!window.confirm('Are you sure?')) {
+      return false;
+    }
+
     API.delete(`/items/${item.id}`).then(
       (response) => {
         this.remove(item);
+        // Image in deleted response is no longer present. Let's keep the one we
+        // have in state here for now.
+        delete response.data.image;
         Object.assign(item, response.data);
       },
       (error) => {
         console.log(error);
       }
     );
+
+    return true;
   };
 
   @action
