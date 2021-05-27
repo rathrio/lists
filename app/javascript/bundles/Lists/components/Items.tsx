@@ -9,7 +9,7 @@ import { Item } from '..';
 import ItemStore from '../stores/ItemStore';
 import ScraperResultsContent from './ScraperResultsContent';
 import ItemDetails from './ItemDetails';
-import { googleSearchUrl } from '../../utils/external_item_urls';
+import { googleSearchUrl, pirateSearchUrl } from "../../utils/external_item_urls";
 
 interface Props {
   readonly items: Item[];
@@ -65,6 +65,16 @@ class Items extends React.Component<Props> {
       e.preventDefault();
       const item = this.store.focusedItem;
       window.open(googleSearchUrl(item), '_blank');
+    });
+
+    Mousetrap.bind('p', (e) => {
+      if (!this.store.focusedItem) {
+        return;
+      }
+
+      e.preventDefault();
+      const item = this.store.focusedItem;
+      window.open(pirateSearchUrl(item), '_blank');
     });
 
     Mousetrap.bind('g e', (e) => {
