@@ -17,6 +17,11 @@
 @import 'bulma';
 @import 'font-awesome';
 
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
 .tag {
   user-select: none;
 }
@@ -187,6 +192,10 @@
   }
 }
 
+.modal {
+  animation: fadein 200ms;
+}
+
 .item-details-modal {
   .modal-card-head {
     min-height: 58px;
@@ -271,7 +280,7 @@
       max-height: 88vh !important;
       width: 100vw;
 
-      .modal-card-head, .modal-card-foot {
+     .modal-card-head, .modal-card-foot {
         border-radius: 0px;
       }
     }
