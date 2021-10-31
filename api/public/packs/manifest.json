@@ -1,0 +1,14 @@
+{
+  "entrypoints": {
+    "lists-bundle": {
+      "js": [
+        "/packs/js/lists-bundle-75d5419867749adde11e.js"
+      ],
+      "js.map": [
+        "/packs/js/lists-bundle-75d5419867749adde11e.js.map"
+      ]
+    }
+  },
+  "lists-bundle.js": "/packs/js/lists-bundle-75d5419867749adde11e.js",
+  "lists-bundle.js.map": "/packs/js/lists-bundle-75d5419867749adde11e.js.map"
+}

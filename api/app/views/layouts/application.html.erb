@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Lists</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'lists-bundle' %>
+
+    <%= favicon_link_tag %>
+  </head>
+
+  <body>
+    <% if signed_in? %>
+      <div class="tabs is-medium is-fu<div class="tabs is-medium is-fullwidth topnav-tabs">
+    <ul>
+
+      <li class="is-active">
+        <a data-shortcut="1" href="/items?list_ids=1">
+          <span class="icon"><i class="fa fa-film"></i></span>
+          <span>Movies</span>
+        </a>            </li>
+
+      <li class="">
+        <a data-shortcut="2" href="/items?list_ids=4">
+          <span class="icon"><i class="fa fa-gamepad"></i></span>
+          <span>Games</span>
+        </a>            </li>
+
+      <li class="">
+        <a data-shortcut="3" href="/items?list_ids=49">
+          <span class="icon"><i class="fa fa-book"></i></span>
+          <span>Books</span>
+        </a>            </li>
+
+      <li class="">
+        <a data-shortcut="4" href="/items?list_ids=2">
+          <span class="icon"><i class="fa fa-television"></i></span>
+          <span>TV Shows</span>
+        </a>            </li>
+
+      <li class="">
+        <a href="/items?archived=true">
+          <span class="icon"><i class="fa fa-archive"></i></span>
+          <span>Archive</span>
+        </a>          </li>
+
+      <li>
+        <a href="/lists">
+          <span class="icon"><i class="fa fa-cog"></i></span>
+          <span>Settings</span>
+        </a>          </li>
+    </ul></div>llwidth topnav-tabs">
+        <ul>
+          <% current_user.lists.each_with_index do |list, index| %>
+            <% number = index + 1 %>
+            <% css_class = current_list_ids.include?(list.id) ? 'is-active' : '' %>
+            <% url = items_path(list_ids: list.id) %>
+
+            <li class="<%= css_class %>">
+              <%= link_to url, data: { shortcut: number } do %>
+                <%= icon list.fa_icon %>
+                <span><%= list.name %></span>
+              <% end %>
+            </li>
+          <% end %>
+
+          <% css_class = display_archived? ? 'is-active' : '' %>
+          <li class="<%= css_class %>">
+            <%= link_to items_path(archived: true) do %>
+              <%= icon :archive %>
+              <span>Archive</span>
+            <% end %>
+          </li>
+
+          <li>
+            <%= link_to lists_path do %>
+              <%= icon :cog %>
+              <span>Settings</span>
+            <% end %>
+          </li>
+      </div>
+    <% end %>
+
+    <% flash.each do |name, msg| %>
+      <%= content_tag :div, msg, class: "notification flash-notification is-#{name == 'notice' ? 'success' : 'danger'}" %>
+    <% end %>
+
+    <% css_class = signed_in? ? 'main-section' : '' %>
+    <section class="section <%= css_class %>">
+      <div class="container">
+        <%= yield %>
+      </div>
+    </section>
+
+    <div class="modal non-react-modal" id="shortcuts-modal">
+      <div class="modal-background non-react-modal-background"></div>
+
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Help</p>
+        </header>
+
+        <section class="modal-card-body">
+          <div class="content">
+            <p>Version: <%= link_to Lists.version, github_commit_url(Lists.version), target: :blank %></p>
+          </div>
+
+          <% cache 'shortcuts' do %>
+            <table class="table is-hoverable is-fullwidth">
+              <thead>
+                <tr>
+                  <th>Shortcut</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td><code>1</code>-<code>9</code></td>
+                  <td>Top navigation list shortcuts</td>
+                </tr>
+                <tr>
+                  <td><code>t</code></td>
+                  <td>Toggle todo filter</td>
+                </tr>
+                <tr>
+                  <td><code>/</code></td>
+                  <td>Focus search</td>
+                </tr>
+                <tr>
+                  <td><code>?</code></td>
+                  <td>Toggle help</td>
+                </tr>
+                <tr>
+                  <td><code>j</code> or <code>TAB</code></td>
+                  <td>Focus next item</td>
+                </tr>
+                <tr>
+                  <td><code>k</code> or <code>SHIFT + TAB</code></td>
+                  <td>Focus previous item</td>
+                </tr>
+                <tr>
+                  <td><code>l</code></td>
+                  <td>Search Google for focused item</td>
+                </tr>
+                <tr>
+                  <td><code>ENTER</code></td>
+                  <td>Show details for focused items</td>
+                </tr>
+                <tr>
+                  <td><code>r</code></td>
+                  <td>Show details for random item</td>
+                </tr>
+                <tr>
+                  <td><code>g h</code></td>
+                  <td>Go to home page (default list)</td>
+                </tr>
+                <tr>
+                  <td><code>g a</code></td>
+                  <td>Show archived items</td>
+                </tr>
+                <tr>
+                  <td><code>g s</code></td>
+                  <td>Go to settings page</td>
+                </tr>
+                <tr>
+                  <td><code>g e</code></td>
+                  <td>Export filtered items in Letterboxd import format</td>
+                </tr>
+                <tr>
+                  <td><code>e</code></td>
+                  <td>Toggle editing (when viewing item details)</td>
+                </tr>
+              </tbody>
+            </table>
+          <% end %>
+        </section>
+      </div>
+    </div>
+
+  </body>
+</html>
