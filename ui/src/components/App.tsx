@@ -1,4 +1,4 @@
-import React, { createContext } from 'react';
+import React from 'react';
 import TabNav from './TabNav';
 import MainSection from './MainSection';
 import RootStore from '../stores/RootStore';

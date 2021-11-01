@@ -11,10 +11,6 @@ interface Props {
   store: RootStore;
 }
 
-/**
- * Entry component for react on rails. Should not be a mobx observer. Handles
- * store and auth setup.
- */
 class Items extends React.Component<Props> {
   store: ItemStore;
 

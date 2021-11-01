@@ -21,7 +21,7 @@ tmp/*
 .byebug_history
 
 .env
-public/uploads/*
+public/uploads/**
 public/assets/
 
 # Do not push generated doc files

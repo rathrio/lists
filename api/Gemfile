@@ -27,6 +27,9 @@ gem 'oj'
 # CORS
 gem 'rack-cors'
 
+# Tokens
+gem 'jwt'
+
 # Authentication
 gem 'clearance'
 

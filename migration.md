@@ -2,5 +2,8 @@
 - [x] copy over styles
 - [x] copy over layout
 - [x] render list component
-- [ ] fix icons
-- [ ] all items actions
+- [x] fix icons
+- [x] all items actions
+
+- [x] https://www.thegreatcodeadventure.com/jwt-storage-in-rails-the-right-way/
+- [ ] https://stackoverflow.com/a/66945042

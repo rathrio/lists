@@ -40,8 +40,13 @@ class ListStore {
     this.lists.forEach((list, index) => {
       Mousetrap.bind((index + 1).toString(10), (e) => {
         e.preventDefault();
-        this.activateList(list);
+        this.rootStore.navStore.showList(list);
       })
+    })
+
+    Mousetrap.bind('g a', (e) => {
+      e.preventDefault();
+      this.rootStore.navStore.showList(ARCHIVE);
     })
   };
 }

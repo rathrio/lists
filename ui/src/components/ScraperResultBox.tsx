@@ -45,9 +45,9 @@ const ScraperResultBox = ({ result, onAdd }: Props) => {
             <span className="tag is-rounded is-light is-small">{year}</span>
           </div>
 
-          {tags.map((tag) => (
+          {tags.map((tag, index) => (
             <div
-              key={`scraper-result-tag-${tag}`}
+              key={`scraper-result-tag-${tag}-${index}`}
               className="level-item is-hidden-touch item-tag"
             >
               <span className="tag is-rounded is-light is-small">{tag}</span>
