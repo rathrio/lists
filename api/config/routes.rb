@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   # resource :session, controller: "clearance/sessions", only: [:create]
   # get "/sign_in" => "clearance/sessions#new", as: "sign_in"
   # delete "/sign_out" => "clearance/sessions#destroy", as: "sign_out"
+  post '/sign_in' => 'sessions#sign_in'
+  post '/sign_out' => 'sessions#sign_out'
 
   resources :lists do
     resources :items, only: [:index]

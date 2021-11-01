@@ -132,6 +132,7 @@ GEM
       mini_magick (>= 4.9.5, < 5)
       ruby-vips (>= 2.0.17, < 3)
     jaro_winkler (1.5.4)
+    jwt (2.3.0)
     kramdown (2.3.1)
       rexml
     kramdown-parser-gfm (1.1.0)
@@ -327,6 +328,7 @@ DEPENDENCIES
   foreman
   hiredis
   httparty
+  jwt
   listen (~> 3.0.5)
   mini_magick
   oj

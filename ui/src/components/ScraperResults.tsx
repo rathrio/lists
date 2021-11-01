@@ -8,9 +8,9 @@ interface Props {
 }
 
 const ScraperResults = ({ results, onAdd }: Props) => {
-  const resultsList = results.map((result) => (
+  const resultsList = results.map((result, index) => (
     <ScraperResultBox
-      key={`scraper-result-${result.name}-${result.date}`}
+      key={`scraper-result-${result.name}-${result.date}-${index}`}
       result={result}
       onAdd={onAdd}
     />
