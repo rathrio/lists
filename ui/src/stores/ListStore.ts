@@ -8,8 +8,8 @@ const ARCHIVE: List = {
   id: -1,
   name: 'Archive',
   fa_icon: 'archive',
-  description: 'Virtual List for display purposes'
-}
+  description: 'Virtual List for display purposes',
+};
 
 class ListStore {
   readonly lists = observable<List>([]);
@@ -21,14 +21,27 @@ class ListStore {
   constructor(rootStore: RootStore) {
     this.rootStore = rootStore;
 
-    API.get('/lists').then((response) => {
-      this.lists.replace(response.data.concat([ARCHIVE]));
-      this.updateShortcuts();
+    this.init();
+  }
 
-      if (this.lists.length) {
-        this.activeList = this.lists[0];
+  @action
+  init = () => {
+    API.get('/lists').then(
+      (response) => {
+        this.rootStore.sessionStore.setLoggedIn(true);
+        this.lists.replace(response.data.concat([ARCHIVE]));
+        this.updateShortcuts();
+
+        if (this.lists.length) {
+          this.activeList = this.lists[0];
+        }
+      },
+      (error) => {
+        if (error.response.status === 401) {
+          this.rootStore.sessionStore.setLoggedIn(false);
+        }
       }
-    });
+    );
   }
 
   @action
@@ -41,13 +54,13 @@ class ListStore {
       Mousetrap.bind((index + 1).toString(10), (e) => {
         e.preventDefault();
         this.rootStore.navStore.showList(list);
-      })
-    })
+      });
+    });
 
     Mousetrap.bind('g a', (e) => {
       e.preventDefault();
       this.rootStore.navStore.showList(ARCHIVE);
-    })
+    });
   };
 }
 
