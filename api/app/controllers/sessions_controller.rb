@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
     if user&.authenticated?(password)
       secret = Rails.application.secrets.secret_key_base
       token = JWT.encode({ user_id: user.id }, secret, "HS256")
-      cookies.signed[:jwt] = { value: token, httponly: true }
+      cookies.signed[:jwt] = { value: token, httponly: true, expires: 1.day }
       render json: { email: user.email }
     else
       render json: { message: 'Invalid credentials' }, status: 401
