@@ -14,7 +14,7 @@ class ItemsController < ApplicationController
     items = current_user.lists.find(params[:list_id]).items
 
     if stale?(items)
-      json = Rails.cache.fetch(items.cache_key) do
+      json = Rails.cache.fetch(items.cache_key, expires_in: 30.days) do
         items.includes(:list, :tags, :notes).to_json
       end
 
@@ -26,7 +26,7 @@ class ItemsController < ApplicationController
     items = current_user.items.only_deleted.order('deleted_at DESC')
 
     if stale?(items)
-      json = Rails.cache.fetch(items.cache_key) do
+      json = Rails.cache.fetch(items.cache_key, expires_in: 30.days) do
         items.includes(:list, :tags, :notes).to_json
       end
 
