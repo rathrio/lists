@@ -1,18 +1,4 @@
 module SessionHelper
-  JWT_ALGORITHM = 'HS256'
-
-  def jwt_secret
-    Rails.application.secrets.secret_key_base
-  end
-
-  def jwt_encode(user)
-    JWT.encode({ user_id: user.id }, jwt_secret, JWT_ALGORITHM)
-  end
-
-  def jwt_decode(token)
-    JWT.decode(token, jwt_secret, true, algorithm: JWT_ALGORITHM)
-  end
-
   def current_list_ids
     session[:list_ids] ||= []
   end
@@ -52,7 +38,7 @@ module SessionHelper
   # SessionsController#validate_token does the validation. Here we can assume everything is A-OK.
   def current_user
     token = cookies.signed[:jwt]
-    data = jwt_decode(token)
+    data = JwtService.decode(token)
     User.find(data.first['user_id'])
   end
 end
