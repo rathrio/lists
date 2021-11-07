@@ -6,4 +6,7 @@
 - [x] all items actions
 
 - [x] https://www.thegreatcodeadventure.com/jwt-storage-in-rails-the-right-way/
-- [ ] https://stackoverflow.com/a/66945042
+- [x] https://stackoverflow.com/a/66945042
+
+- [ ] remove unnecessary controller actions and other stuff from backend
+- [ ] deployment

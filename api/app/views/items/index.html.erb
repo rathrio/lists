@@ -1,3 +1,0 @@
-<% cache cache_key_for_items(@items) do %>
-  <%= react_component("Items", props: { items: @items.includes(:list, :tags, :notes) }, prerender: false) %>
-<% end %>

@@ -2,10 +2,8 @@
 
 class ItemsController < ApplicationController
   before_action :set_item, only: %i(
-    show
     update
     destroy
-    scrape
     really_destroy
     restore
     toggle_status
@@ -15,24 +13,6 @@ class ItemsController < ApplicationController
   def index
     items = current_user.lists.find(params[:list_id]).items
     render json: items.includes(:list, :tags, :notes)
-
-    # @items = if (list_ids = params[:list_ids]).present?
-    #            set_list_ids(list_ids)
-    #            current_user.items.in_lists(current_list_ids)
-    #          else
-    #            reset_list_ids
-    #            current_user.items
-    #          end
-    #
-    # if (tag_ids = params[:tag_ids]).present?
-    #   @items = @items.with_tags(tag_ids)
-    # end
-    #
-    # @items = if params[:archived]
-    #            @items.only_deleted.order('deleted_at DESC')
-    #          else
-    #            @items.reverse_order
-    #          end
   end
 
   def archived
@@ -68,12 +48,6 @@ class ItemsController < ApplicationController
     end
 
     @item.update!(attributes)
-    render json: @item.to_json
-  end
-
-  def update_rating
-    rating = params.fetch(:rating)
-    @item.update!(rating: rating)
     render json: @item.to_json
   end
 
