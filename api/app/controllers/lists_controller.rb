@@ -3,7 +3,7 @@ class ListsController < ApplicationController
     lists = current_user.lists
 
     if stale?(lists)
-      json = Rails.cache.fetch(lists.cache_key) do
+      json = Rails.cache.fetch(lists.cache_key, expires_in: 30.days) do
         lists.to_json
       end
 
