@@ -9,8 +9,12 @@ const rootStore = new RootStore();
 (window as any).store = rootStore;
 
 function App() {
-  const sessionStore = rootStore.sessionStore;
+  const listStore = rootStore.listStore;
+  if (!listStore.initialized) {
+    return <></>;
+  }
 
+  const sessionStore = rootStore.sessionStore;
   if (!sessionStore.isLoggedIn) {
     return <Login store={sessionStore} />;
   }

@@ -18,6 +18,9 @@ class ListStore {
   @observable
   activeList?: List;
 
+  @observable
+  initialized = false;
+
   constructor(rootStore: RootStore) {
     this.rootStore = rootStore;
 
@@ -41,7 +44,9 @@ class ListStore {
           this.rootStore.sessionStore.setLoggedIn(false);
         }
       })
-    );
+    ).finally(() => {
+      this.initialized = true;
+    });
   };
 
   @action
