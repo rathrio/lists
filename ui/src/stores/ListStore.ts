@@ -27,22 +27,23 @@ class ListStore {
   @action
   init = () => {
     API.get('/lists').then(
-      (response) => {
+      action((response) => {
         this.rootStore.sessionStore.setLoggedIn(true);
         this.lists.replace(response.data.concat([ARCHIVE]));
         this.updateShortcuts();
 
         if (this.lists.length) {
           this.activeList = this.lists[0];
+          this.rootStore.navStore.showList(this.activeList);
         }
-      },
+      }),
       (error) => {
         if (error.response.status === 401) {
           this.rootStore.sessionStore.setLoggedIn(false);
         }
       }
     );
-  }
+  };
 
   @action
   activateList(list: List) {
