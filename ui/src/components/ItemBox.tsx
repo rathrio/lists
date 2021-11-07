@@ -91,7 +91,7 @@ class ItemBox extends React.Component<Props> {
   render() {
     const { item, store } = this.props;
 
-    const thumbUrl = publicAssetsUrl(item!.image!.thumb.url);
+    const thumbUrl = item!.image?.thumb?.url ?? '';
 
     let itemRatingClassName =
       'level-item is-hidden-mobile item-rating show-on-hover has-pointer';
@@ -128,7 +128,11 @@ class ItemBox extends React.Component<Props> {
           <div className="level-left is-mobile">
             <div className="level-item">
               <figure className="image is-64x64">
-                <img src={thumbUrl} alt={item.name} className="item-cover" />
+                <img
+                  src={thumbUrl ? publicAssetsUrl(thumbUrl) : ''}
+                  alt={item.name}
+                  className="item-cover"
+                />
               </figure>
             </div>
 
