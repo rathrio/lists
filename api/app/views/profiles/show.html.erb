@@ -1,7 +1,7 @@
 <%= render 'settings/tabnav', active_tab: :profile %>
 
 <div class="password-form">
-  <h2 class="title is-4">Change Password</h1>
+  <h2 class="title is-4">Change Password</h2>
 
   <%= form_for @profile, url: profiles_path, method: :put do |f| %>
     <%= f.label 'Email', class: 'label' %>
