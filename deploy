@@ -1,0 +1,12 @@
+#! /bin/sh
+#
+# Stuff to run on server
+
+ssh rathr.io 'bash --login -s' << "EOF"
+  cd /var/www/lists/current
+  git pull
+  cd api
+  ./bin/restart
+  cd ../ui
+  REACT_APP_BACKEND_API_BASE_URL=https://lists.rathr.io/api yarn build
+EOF
