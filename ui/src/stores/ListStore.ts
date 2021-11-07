@@ -24,7 +24,6 @@ class ListStore {
     this.init();
   }
 
-  @action
   init = () => {
     API.get('/lists').then(
       action((response) => {
@@ -37,11 +36,11 @@ class ListStore {
           this.rootStore.navStore.showList(this.activeList);
         }
       }),
-      (error) => {
+      action((error) => {
         if (error.response.status === 401) {
           this.rootStore.sessionStore.setLoggedIn(false);
         }
-      }
+      })
     );
   };
 
