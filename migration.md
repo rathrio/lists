@@ -10,8 +10,10 @@
 
 - [x] remove unnecessary controller actions and other stuff from backend
 
-- [ ] deployment
+- [x] deployment
 
-- [ ] measure response times
-- [ ] caching / deploy
-- [ ] measure response times
+- [x] measure response times
+- [x] caching / deploy
+- [x] measure response times
+
+- [ ] loading indicator at startup
