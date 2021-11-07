@@ -7,5 +7,5 @@ bundle install --without development test
 # Shutdown first to free up memory
 kill -9 $(cat /tmp/lists.pid)
 
-bundle exec rake db:migrate
+bundle exec rails db:migrate
 bundle exec puma -C config/puma_production.rb

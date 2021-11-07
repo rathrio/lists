@@ -12,20 +12,26 @@ class ItemsController < ApplicationController
 
   def index
     items = current_user.lists.find(params[:list_id]).items
-    json = Rails.cache.fetch(items.cache_key) do
-      items.includes(:list, :tags, :notes).to_json
-    end
 
-    render json: json
+    if stale?(items)
+      json = Rails.cache.fetch(items.cache_key) do
+        items.includes(:list, :tags, :notes).to_json
+      end
+
+      render json: json
+    end
   end
 
   def archived
     items = current_user.items.only_deleted.order('deleted_at DESC')
-    json = Rails.cache.fetch(items.cache_key) do
-      items.includes(:list, :tags, :notes).to_json
-    end
 
-    render json: json
+    if stale?(items)
+      json = Rails.cache.fetch(items.cache_key) do
+        items.includes(:list, :tags, :notes).to_json
+      end
+
+      render json: json
+    end
   end
 
   def update
