@@ -16,4 +16,9 @@
 - [x] caching / deploy
 - [x] measure response times
 
-- [ ] loading indicator at startup
+- [x] loading indicator at startup
+
+- [ ] merge to master (after sanity check)
+
+- [ ] profile view (editing passwords)
+- [ ] proper routing with history
