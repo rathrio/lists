@@ -120,6 +120,7 @@ class ItemStore {
   private handleListChange = (activeList: List) => {
     this.query = '';
     this.scraperResults.clear();
+    this.doNotShowAllItems();
 
     if (activeList.name === 'Archive') {
       this.loadArchive();
