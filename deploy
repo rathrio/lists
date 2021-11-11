@@ -4,7 +4,7 @@
 
 ssh rathr.io 'bash --login -s' << "EOF"
   cd /var/www/lists/current
-  git pull
+  git pull origin master
   cd api
   ./bin/restart
   cd ../ui
