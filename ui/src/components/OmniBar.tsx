@@ -120,7 +120,7 @@ class OmniBar extends React.Component<Props> {
             onClick={this.onAutocompleteButtonClick}
           >
             <span className="icon is-medium">
-              <i className="fa fa-long-arrow-right fa-lg" />
+              <i className="fa fa-long-arrow-alt-right fa-lg" />
             </span>
           </button>
         )}
