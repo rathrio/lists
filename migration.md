@@ -9,7 +9,6 @@
 - [x] https://stackoverflow.com/a/66945042
 
 - [x] remove unnecessary controller actions and other stuff from backend
-
 - [x] deployment
 
 - [x] measure response times
@@ -17,8 +16,12 @@
 - [x] measure response times
 
 - [x] loading indicator at startup
+- [x] merge to master (after sanity check)
 
-- [ ] merge to master (after sanity check)
-
-- [ ] profile view (editing passwords)
+- [ ] fix autocomplete icon
 - [ ] proper routing with history
+- [ ] profile view (editing passwords)
+
+- [ ] Update mobx and migate away from decorators if feasible
+
+- [ ] grid view (should be more mobile friendly as well)
