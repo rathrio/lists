@@ -18,8 +18,8 @@
 - [x] loading indicator at startup
 - [x] merge to master (after sanity check)
 
-- [ ] fix autocomplete icon
-- [ ] proper routing with history
+- [x] fix autocomplete icon
+- [x] proper routing with history
 - [ ] profile view (editing passwords)
 
 - [ ] Update mobx and migate away from decorators if feasible

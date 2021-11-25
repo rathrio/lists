@@ -1,8 +1,9 @@
-import { action, observable } from 'mobx';
+import { action, computed, observable } from 'mobx';
 import Mousetrap from 'mousetrap';
 import { List } from '../interfaces';
 import API from '../utils/api';
 import RootStore from './RootStore';
+import slug from '../utils/slug';
 
 const ARCHIVE: List = {
   id: -1,
@@ -28,25 +29,37 @@ class ListStore {
   }
 
   init = () => {
-    API.get('/lists').then(
-      action((response) => {
-        this.rootStore.sessionStore.setLoggedIn(true);
-        this.lists.replace(response.data.concat([ARCHIVE]));
-        this.updateShortcuts();
+    API.get('/lists')
+      .then(
+        action((response) => {
+          this.rootStore.sessionStore.setLoggedIn(true);
+          this.lists.replace(response.data.concat([ARCHIVE]));
+          this.updateShortcuts();
+          this.rootStore.navStore.resolve();
+        }),
+        action((error) => {
+          if (error.response.status === 401) {
+            this.rootStore.sessionStore.setLoggedIn(false);
+          }
+        })
+      )
+      .finally(() => {
+        this.initialized = true;
+      });
+  };
 
-        if (this.lists.length) {
-          this.activeList = this.lists[0];
-          this.rootStore.navStore.showList(this.activeList);
-        }
-      }),
-      action((error) => {
-        if (error.response.status === 401) {
-          this.rootStore.sessionStore.setLoggedIn(false);
-        }
-      })
-    ).finally(() => {
-      this.initialized = true;
+  @computed
+  get listsBySlug(): Map<String, List> {
+    const map = new Map();
+    this.lists.forEach((list) => {
+      map.set(slug(list.name), list);
     });
+
+    return map;
+  }
+
+  getListBySlug = (slug: string): List | undefined => {
+    return this.listsBySlug.get(slug);
   };
 
   @action
@@ -65,6 +78,11 @@ class ListStore {
     Mousetrap.bind('g a', (e) => {
       e.preventDefault();
       this.rootStore.navStore.showList(ARCHIVE);
+    });
+
+    Mousetrap.bind(['g s', (this.lists.length + 1).toString(10)], (e) => {
+      e.preventDefault();
+      this.rootStore.navStore.showSettings();
     });
   };
 }
