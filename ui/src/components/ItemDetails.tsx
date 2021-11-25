@@ -5,7 +5,7 @@ import * as Mousetrap from 'mousetrap';
 
 import ItemStore from '../stores/ItemStore';
 import { Item } from '../interfaces';
-import * as urls from '../utils/external_item_urls';
+import * as urls from '../utils/externalItemUrls';
 import ItemRating from './ItemRating';
 import { publicAssetsUrl } from '../utils/api';
 

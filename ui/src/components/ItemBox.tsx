@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 import { Item, Tag } from '../interfaces';
 import ItemRating from './ItemRating';
-import * as urls from '../utils/external_item_urls';
+import * as urls from '../utils/externalItemUrls';
 import ItemStore from '../stores/ItemStore';
 import { RATING_NAMES } from './StarRating';
 import { publicAssetsUrl } from '../utils/api';

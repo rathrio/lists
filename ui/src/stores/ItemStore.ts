@@ -3,7 +3,7 @@ import _ from 'lodash';
 import API from '../utils/api';
 import { Item, List, ScraperResult, Tag } from '../interfaces';
 import RootStore from './RootStore';
-import { googleSearchUrl, pirateSearchUrl } from '../utils/external_item_urls';
+import { googleSearchUrl, pirateSearchUrl } from '../utils/externalItemUrls';
 import Mousetrap from 'mousetrap';
 
 enum Filter {
@@ -721,8 +721,8 @@ class ItemStore {
       }
 
       return this.query.replace(
-        new RegExp(`${value}$`),
-        valueSuggestion.replace(new RegExp(value, 'i'), value)
+        new RegExp(`${_.escapeRegExp(value)}$`),
+        valueSuggestion.replace(new RegExp(_.escapeRegExp(value), 'i'), value)
       );
     }
 
@@ -733,7 +733,7 @@ class ItemStore {
     }
 
     const kwSuggestion =
-      this.query.replace(new RegExp(`${lastToken}$`), kw) + '=';
+      this.query.replace(new RegExp(`${_.escapeRegExp(lastToken)}$`), kw) + '=';
     return kwSuggestion;
   }
 
