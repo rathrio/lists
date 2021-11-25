@@ -18,7 +18,7 @@ const RestoreActions = ({
   onDeleteClick(e: React.MouseEvent): void;
 }) => (
   <Fragment>
-    <div className="level-item">
+    <div className="level-item is-hidden-mobile">
       <a target="blank" href="#" onClick={onRestoreClick}>
         <span
           className="icon is-medium"
@@ -29,7 +29,7 @@ const RestoreActions = ({
         </span>
       </a>
     </div>
-    <div className="level-item">
+    <div className="level-item is-hidden-mobile">
       <a target="blank" href="#" onClick={onDeleteClick}>
         <span
           className="icon is-medium"
@@ -164,7 +164,7 @@ class ItemBox extends React.Component<Props> {
             )}
 
             {item.deleted && (
-              <div className="level-item has-pointer">
+              <div className="level-item has-pointer is-hidden-mobile">
                 <span className="tag is-rounded is-light is-small">
                   {item.list}
                 </span>
