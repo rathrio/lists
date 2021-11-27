@@ -1,24 +1,19 @@
-class ProfilesController < ApplicationController
-  def show
-    @profile = ProfileForm.new(user: current_user)
-  end
+# frozen_string_literal: true
 
+class ProfilesController < ApplicationController
   def update
     @profile = ProfileForm.new(profile_params.merge(user: current_user))
 
     if @profile.update
-      flash[:notice] = 'Profile successfully updated'
+      render status: :ok
     else
-      flash[:alert] = 'Could not update profile'
+      render status: 400
     end
-
-    redirect_to profile_path
   end
 
   private
 
   def profile_params
-    params.require(:profile_form).
-      permit(:current_password, :new_password, :new_password_confirmation)
+    params.permit(:current_password, :new_password, :new_password_confirmation)
   end
 end

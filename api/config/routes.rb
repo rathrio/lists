@@ -19,6 +19,5 @@ Rails.application.routes.draw do
     end
   end
 
-  # resource :profiles, only: [:update]
-  # get '/profile' => 'profiles#show'
+  resource :profiles, only: [:update]
 end
