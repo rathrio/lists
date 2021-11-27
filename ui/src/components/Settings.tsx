@@ -1,13 +1,26 @@
 import { observer } from 'mobx-react';
 import RootStore from '../stores/RootStore';
+import ChangePassword from './ChangePassword';
 
-// TODO: actual settings
-// TODO: password reset
-// TODO: options to hide default lists
 function Settings(props: { store: RootStore }) {
   const sessionStore = props.store.sessionStore;
   return (
-    <button className="button is-info" onClick={() => sessionStore.logout()}>Sign out</button>
+    <>
+      <div className="columns">
+        <div className="column is-half is-offset-one-quarter sign-in">
+          <ChangePassword store={sessionStore} />
+          <hr />
+          <div className="is-flex">
+            <button
+              className="button is-info"
+              onClick={() => sessionStore.logout()}
+            >
+              Sign out
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
 

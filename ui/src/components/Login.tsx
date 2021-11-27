@@ -55,7 +55,6 @@ function Login(props: { store: SessionStore }) {
                     name="commit"
                     value="Login"
                     className="button is-success"
-                    data-disable-with="Login"
                   />
                 </p>
               </div>

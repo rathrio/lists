@@ -21,7 +21,7 @@ class SessionStore {
   login = (email: string, password: string) => {
     API.post('/sign_in', { email: email, password: password }).then(
       (response) => {
-        this.setLoggedIn(true)
+        this.setLoggedIn(true);
         this.rootStore.listStore.init();
       },
       (error) => this.setLoggedIn(false) // TODO feedback
@@ -31,6 +31,18 @@ class SessionStore {
   @action
   logout = () => {
     API.post('/sign_out').then((response) => this.setLoggedIn(false));
+  };
+
+  updatePassword = (
+    currentPassword: string,
+    newPassword: string,
+    newPasswordConfirmation: string
+  ): Promise<any> => {
+    return API.put('/profiles', {
+      current_password: currentPassword,
+      new_password: newPassword,
+      new_password_confirmation: newPasswordConfirmation,
+    });
   };
 }
 
