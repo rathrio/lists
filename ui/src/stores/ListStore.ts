@@ -1,4 +1,4 @@
-import { action, computed, observable } from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 import Mousetrap from 'mousetrap';
 import { List } from '../interfaces';
 import API from '../utils/api';
@@ -23,6 +23,7 @@ class ListStore {
   initialized = false;
 
   constructor(rootStore: RootStore) {
+    makeObservable(this);
     this.rootStore = rootStore;
 
     this.init();
@@ -43,9 +44,11 @@ class ListStore {
           }
         })
       )
-      .finally(() => {
-        this.initialized = true;
-      });
+      .finally(
+        action(() => {
+          this.initialized = true;
+        })
+      );
   };
 
   @computed

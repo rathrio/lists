@@ -8,30 +8,27 @@ interface Props {
   store: ItemStore;
 }
 
-@observer
-class ScraperResultsContent extends React.Component<Props> {
-  render() {
-    const { store } = this.props;
+function ScraperResultsContent(props: Props) {
+  const { store } = props;
 
-    const scraperResults =
-      store.scraperResults.length > 0 ? (
-        <ScraperResults
-          results={store.scraperResults}
-          onAdd={store.importScraperResult}
-        />
-      ) : (
-          ''
-        );
-
-    const spinner = store.spinnerVisible ? <Spinner /> : '';
-
-    return (
-      <Fragment>
-        {spinner}
-        {scraperResults}
-      </Fragment>
+  const scraperResults =
+    store.scraperResults.length > 0 ? (
+      <ScraperResults
+        results={store.scraperResults}
+        onAdd={store.importScraperResult}
+      />
+    ) : (
+      ''
     );
-  }
+
+  const spinner = store.spinnerVisible ? <Spinner /> : '';
+
+  return (
+    <Fragment>
+      {spinner}
+      {scraperResults}
+    </Fragment>
+  );
 }
 
-export default ScraperResultsContent;
+export default observer(ScraperResultsContent);

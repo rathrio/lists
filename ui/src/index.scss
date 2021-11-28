@@ -344,12 +344,20 @@
   position: fixed;
   bottom: 50px;
   right: 50px;
+  z-index: 99;
 
   @media (max-width: 500px) {
     position: fixed;
     left: 0px;
-    bottom: -2px;
+    top: 0px;
     width: 100vw;
+    height: 65px;
+
+    .delete {
+      right: 1rem;
+      position: absolute;
+      top: 1.3rem;
+    }
   }
 }
 

@@ -26,6 +26,7 @@ const ScraperResultBox = ({ result, onAdd }: Props) => {
           <div className="level-item">
             <figure className="image is-64x64">
               <img
+                alt=""
                 style={{
                   width: '64px',
                   height: '64px',

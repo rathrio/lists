@@ -6,33 +6,27 @@ interface Props {
   store: ItemStore;
 }
 
-@observer
-class ItemActions extends React.Component<Props> {
-  render() {
-    const { store } = this.props;
+function ItemActions(props: Props) {
+  const { store } = props;
 
-    const moreItemsPrompt =
-      store.moreItemsToShow === 1
-        ? 'Show 1 more item'
-        : `Show ${store.moreItemsToShow} more items`;
+  const moreItemsPrompt =
+    store.moreItemsToShow === 1
+      ? 'Show 1 more item'
+      : `Show ${store.moreItemsToShow} more items`;
 
-    return (
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        {store.hasMoreFilteredItems && (
-          <a
-            className="button is-rounded is-small"
-            onClick={store.showAllItems}
-          >
-            <span className="icon">
-              <i className="fa fa-caret-down" />
-            </span>
+  return (
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
+      {store.hasMoreFilteredItems && (
+        <button className="button is-rounded is-small" onClick={store.showAllItems}>
+          <span className="icon">
+            <i className="fa fa-caret-down" />
+          </span>
 
-            <span>{moreItemsPrompt}</span>
-          </a>
-        )}
-      </div>
-    );
-  }
+          <span>{moreItemsPrompt}</span>
+        </button>
+      )}
+    </div>
+  );
 }
 
-export default ItemActions;
+export default observer(ItemActions);

@@ -1,4 +1,4 @@
-import { action, observable } from 'mobx';
+import { action, makeObservable, observable } from 'mobx';
 import RootStore from './RootStore';
 import API from '../utils/api';
 
@@ -9,6 +9,7 @@ class SessionStore {
   isLoggedIn: boolean = false;
 
   constructor(rootStore: RootStore) {
+    makeObservable(this);
     this.rootStore = rootStore;
   }
 
