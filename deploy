@@ -8,5 +8,6 @@ ssh rathr.io 'bash --login -s' << "EOF"
   cd api
   ./bin/restart
   cd ../ui
+  yarn
   REACT_APP_BACKEND_API_BASE_URL=https://lists.rathr.io/api yarn build
 EOF
