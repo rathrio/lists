@@ -4,10 +4,9 @@ import scrollIntoView from 'scroll-into-view-if-needed';
 import _ from 'lodash';
 
 import { Item, Tag } from '../interfaces';
-import ItemRating from './ItemRating';
+import ItemRating, { RATING_NAMES } from './ItemRating';
 import * as urls from '../utils/externalItemUrls';
 import ItemStore from '../stores/ItemStore';
-import { RATING_NAMES } from './StarRating';
 import { publicAssetsUrl } from '../utils/api';
 
 const RestoreActions = ({
@@ -19,7 +18,7 @@ const RestoreActions = ({
 }) => (
   <Fragment>
     <div className="level-item is-hidden-mobile">
-      <a target="blank" href="#" onClick={onRestoreClick}>
+      <button className="button is-primary" onClick={onRestoreClick}>
         <span
           className="icon is-medium"
           aria-label="Restore"
@@ -27,10 +26,10 @@ const RestoreActions = ({
         >
           <i className="fa fa-recycle fa-lg" />
         </span>
-      </a>
+      </button>
     </div>
     <div className="level-item is-hidden-mobile">
-      <a target="blank" href="#" onClick={onDeleteClick}>
+      <button className="button is-danger" onClick={onDeleteClick}>
         <span
           className="icon is-medium"
           aria-label="Delete for good"
@@ -38,7 +37,7 @@ const RestoreActions = ({
         >
           <i className="fa fa-trash fa-lg" />
         </span>
-      </a>
+      </button>
     </div>
   </Fragment>
 );
@@ -138,7 +137,7 @@ class ItemBox extends React.Component<Props> {
 
             <div className="level-item title-item item-name">
               <div className="subtitle is-5">
-                <a onClick={this.onItemNameClick} title={item.original_name}>
+                <a href="/" onClick={this.onItemNameClick} title={item.original_name}>
                   {item.name}
                 </a>
               </div>

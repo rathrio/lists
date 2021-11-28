@@ -21,8 +21,6 @@
 - [x] fix autocomplete icon
 - [x] proper routing with history
 - [x] profile view (editing passwords)
-- [ ] notifications
+- [x] notifications
 
-- [ ] Update mobx and migate away from decorators if feasible
-
-- [ ] grid view (should be more mobile friendly as well)
+- [x] Update mobx and migrate away from decorators if feasible

@@ -1,9 +1,10 @@
 import React, { Fragment } from 'react';
 import { observer } from 'mobx-react';
-import { observable, computed, action } from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 
 import { Item } from '../interfaces';
-import { RATING_NAMES } from './StarRating';
+
+export const RATING_NAMES = ['Abysmal', 'Poor', 'Good', 'Great', 'Masterful'];
 
 interface Props {
   item: Item;
@@ -15,10 +16,7 @@ interface State {
   rating: number;
 }
 
-/**
- * Item rating rendered in item overview and detail. Support a readonly mode.
- * TODO: Find a way to get rid of duplication with StarRating.
- */
+// TODO switch to functional component with state hooks instead of mobx observables.
 @observer
 class ItemRating extends React.Component<Props, State> {
   @observable
@@ -28,6 +26,7 @@ class ItemRating extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
+    makeObservable(this);
 
     if (props.readonly) {
       this.readonly = true;

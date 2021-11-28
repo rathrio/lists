@@ -1,4 +1,4 @@
-import { action, autorun, computed, observable } from 'mobx';
+import { action, autorun, computed, makeObservable, observable } from 'mobx';
 import _ from 'lodash';
 import API from '../utils/api';
 import { Item, List, ScraperResult, Tag } from '../interfaces';
@@ -105,6 +105,7 @@ class ItemStore {
   private rootStore: RootStore;
 
   constructor(rootStore: RootStore) {
+    makeObservable(this);
     this.rootStore = rootStore;
     this.setupShortcuts();
 
@@ -201,16 +202,20 @@ class ItemStore {
 
   @action
   private loadItems = (list: List) => {
-    API.get(`/lists/${list.id}/items`).then((response) => {
-      this.items.replace(response.data);
-    });
+    API.get(`/lists/${list.id}/items`).then(
+      action((response) => {
+        this.items.replace(response.data);
+      })
+    );
   };
 
   @action
   private loadArchive = () => {
-    API.get(`/items/archived`).then((response) => {
-      this.items.replace(response.data);
-    });
+    API.get(`/items/archived`).then(
+      action((response) => {
+        this.items.replace(response.data);
+      })
+    );
   };
 
   @action
@@ -243,15 +248,15 @@ class ItemStore {
     API.get(`/lists/${activeList.id}/scraper_results`, {
       params: { query, filter_values: filterValues },
     }).then(
-      (response) => {
+      action((response) => {
         this.hideSpinner();
         this.scraperResults.replace(response.data);
-      },
-      (error) => {
+      }),
+      action((error) => {
         this.hideSpinner();
         console.error(error);
         alert(error);
-      }
+      })
     );
   };
 
@@ -261,13 +266,11 @@ class ItemStore {
     API.post(`/lists/${activeList.id}/scraper_results/import`, {
       scraper_results: result,
     }).then(
-      (response) => {
+      action((response) => {
         this.scraperResults.remove(result);
         this.items.unshift(response.data);
-        this.notificationStore.showNotification(
-          `Imported "${result.name}"`
-        );
-      },
+        this.notificationStore.showNotification(`Imported "${result.name}"`);
+      }),
       (error) => {
         console.error(error);
         this.notificationStore.showNotification(
@@ -287,13 +290,13 @@ class ItemStore {
     }
 
     API.delete(`/items/${item.id}`).then(
-      (response) => {
+      action((response) => {
         this.remove(item);
         // Image in deleted response is no longer present. Let's keep the one we
         // have in state here for now.
         delete response.data.image;
         Object.assign(item, response.data);
-      },
+      }),
       (error) => {
         console.log(error);
       }
@@ -305,11 +308,13 @@ class ItemStore {
   @action
   restore = (item: Item) => {
     API.put(`/items/${item.id}/restore`).then(
-      (response) => {
+      action((response) => {
         this.remove(item);
         Object.assign(item, response.data);
-        this.notificationStore.showNotification(`Sent "${item.name}" back to "${item.list}"`)
-      },
+        this.notificationStore.showNotification(
+          `Sent "${item.name}" back to "${item.list}"`
+        );
+      }),
       (error) => {
         console.log(error);
       }
@@ -323,11 +328,16 @@ class ItemStore {
     }
 
     API.delete(`/items/${item.id}/really_destroy`).then(
-      (response) => {
+      action((response) => {
         this.remove(item);
-      },
+        this.notificationStore.showNotification(`Deleted "${item.name}"`);
+      }),
       (error) => {
         console.log(error);
+        this.notificationStore.showNotification(
+          `Could not delete "${item.name}"`,
+          'is-danger'
+        );
       }
     );
   };
@@ -335,9 +345,9 @@ class ItemStore {
   @action
   toggleStatus = (item: Item) => {
     API.put(`/items/${item.id}/toggle_status`).then(
-      (response) => {
+      action((response) => {
         Object.assign(item, response.data);
-      },
+      }),
       (error) => {
         console.log(error);
       }
@@ -478,9 +488,9 @@ class ItemStore {
   @action
   update = (item: Item, attributes: Partial<Item>) => {
     API.put(`/items/${item.id}`, { item: attributes }).then(
-      (response) => {
+      action((response) => {
         Object.assign(item, response.data);
-      },
+      }),
       (error) => {
         console.log(error);
       }

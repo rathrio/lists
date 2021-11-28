@@ -1,5 +1,5 @@
 import RootStore from './RootStore';
-import { action, computed, observable } from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 
 const EMPTY_NOTIFICATION = { message: '', notificationClass: '' };
 
@@ -11,6 +11,7 @@ class NotificationStore {
   notification = EMPTY_NOTIFICATION;
 
   constructor(rootStore: RootStore) {
+    makeObservable(this);
     this.rootStore = rootStore;
   }
 
@@ -29,7 +30,7 @@ class NotificationStore {
   showNotification = (
     message: string,
     notificationClass = 'is-success',
-    clearAfter = 3500
+    clearAfter = 4000
   ) => {
     this.clearTimeouts();
     this.notification = { message, notificationClass };

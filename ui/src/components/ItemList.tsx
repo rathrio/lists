@@ -8,22 +8,19 @@ interface Props {
   store: ItemStore;
 }
 
-@observer
-class ItemList extends React.Component<Props> {
-  render() {
-    const { store } = this.props;
+function ItemList(props: Props) {
+  const { store } = props;
 
-    const itemBoxes = store.filteredItems.map((i) => (
-      <ItemBox key={`item-${i.id}`} item={i} store={store} />
-    ));
+  const itemBoxes = store.filteredItems.map((i) => (
+    <ItemBox key={`item-${i.id}`} item={i} store={store} />
+  ));
 
-    return (
-      <div className="items-list">
-        {itemBoxes}
-        <ItemActions store={store} />
-      </div>
-    );
-  }
+  return (
+    <div className="items-list">
+      {itemBoxes}
+      <ItemActions store={store} />
+    </div>
+  );
 }
 
-export default ItemList;
+export default observer(ItemList);

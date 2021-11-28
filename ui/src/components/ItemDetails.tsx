@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { observable, action, computed, toJS } from 'mobx';
+import { observable, action, computed, toJS, makeObservable } from 'mobx';
 import * as Mousetrap from 'mousetrap';
 
 import ItemStore from '../stores/ItemStore';
@@ -31,6 +31,7 @@ class ItemDetails extends React.Component<Props> {
 
   constructor(props: Props) {
     super(props);
+    makeObservable(this);
 
     Mousetrap.bind('e', (e) => {
       if (!this.props.store.detailsModalVisible) {
@@ -437,7 +438,7 @@ class ItemDetails extends React.Component<Props> {
                       <i className="fa fa-archive" />
                     </span>
 
-                    <span className="is-hidden-mobile">Archive</span>
+                    <span>Archive</span>
                   </button>
                 </div>
 
@@ -473,7 +474,7 @@ class ItemDetails extends React.Component<Props> {
                         <i className="fa fa-recycle" />
                       </span>
 
-                      <span className="is-hidden-mobile">Restore</span>
+                      <span>Restore</span>
                     </button>
                   </div>
                 )}

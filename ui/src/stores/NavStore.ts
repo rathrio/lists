@@ -1,4 +1,4 @@
-import { action, observable } from 'mobx';
+import { action, makeObservable, observable } from 'mobx';
 import RootStore from './RootStore';
 import { List } from '../interfaces';
 import slug from '../utils/slug';
@@ -12,6 +12,7 @@ class NavStore {
   private rootStore: RootStore;
 
   constructor(rootStore: RootStore) {
+    makeObservable(this);
     this.rootStore = rootStore;
 
     window.addEventListener('popstate', (event) => {
