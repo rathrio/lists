@@ -268,7 +268,6 @@ class ItemDetails extends React.Component<Props> {
                         onChange={this.handleFormChange}
                         className="textarea is-small"
                         placeholder="Description"
-                        autoFocus
                       />
                     </div>
                   </div>
