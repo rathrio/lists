@@ -127,7 +127,7 @@ class ItemStore {
     } else {
       this.loadItems(activeList);
     }
-  }
+  };
 
   private setupShortcuts = () => {
     Mousetrap.bind('r', (e) => {
@@ -197,7 +197,7 @@ class ItemStore {
       e.preventDefault();
       this.exportItems('all');
     });
-  }
+  };
 
   @action
   private loadItems = (list: List) => {
@@ -264,9 +264,15 @@ class ItemStore {
       (response) => {
         this.scraperResults.remove(result);
         this.items.unshift(response.data);
+        this.notificationStore.showNotification(
+          `Imported "${result.name}"`
+        );
       },
       (error) => {
-        console.log(error);
+        console.error(error);
+        this.notificationStore.showNotification(
+          `Failed to import "${result.name}"`
+        );
       }
     );
   };
@@ -302,6 +308,7 @@ class ItemStore {
       (response) => {
         this.remove(item);
         Object.assign(item, response.data);
+        this.notificationStore.showNotification(`Sent "${item.name}" back to "${item.list}"`)
       },
       (error) => {
         console.log(error);
@@ -875,6 +882,10 @@ class ItemStore {
       .replace(/[\W_]+/g, '-')
       .toLowerCase();
   };
+
+  private get notificationStore() {
+    return this.rootStore.notificationStore;
+  }
 }
 
 export default ItemStore;

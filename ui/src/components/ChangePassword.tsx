@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import SessionStore from '../stores/SessionStore';
+import RootStore from '../stores/RootStore';
 
-function ChangePassword(props: { store: SessionStore }) {
-  const store = props.store;
-
+function ChangePassword(props: { store: RootStore }) {
+  const { sessionStore, notificationStore } = props.store;
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [newPasswordConfirmation, setNewPasswordConfirmation] = useState('');
@@ -17,14 +16,16 @@ function ChangePassword(props: { store: SessionStore }) {
 
   const onSubmit = (e: any) => {
     e.preventDefault();
-    store
+    sessionStore
       .updatePassword(currentPassword, newPassword, newPasswordConfirmation)
       .then(
         () => {
+          notificationStore.showNotification('Password successfully updated');
           setUpdateFailed(false);
           clearForm();
         },
         () => {
+          notificationStore.showNotification('Password update failed', 'is-danger');
           setUpdateFailed(true);
         }
       );

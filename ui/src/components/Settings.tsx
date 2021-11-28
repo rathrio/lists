@@ -8,7 +8,7 @@ function Settings(props: { store: RootStore }) {
     <>
       <div className="columns">
         <div className="column is-half is-offset-one-quarter sign-in">
-          <ChangePassword store={sessionStore} />
+          <ChangePassword store={props.store} />
           <hr />
           <div className="is-flex">
             <button

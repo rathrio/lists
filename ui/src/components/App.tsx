@@ -1,6 +1,7 @@
 import React from 'react';
 import TabNav from './TabNav';
 import MainSection from './MainSection';
+import Notification from './Notification';
 import RootStore from '../stores/RootStore';
 import Login from './Login';
 import { observer } from 'mobx-react';
@@ -23,6 +24,7 @@ function App() {
     <>
       <TabNav store={rootStore} />
       <MainSection store={rootStore} />
+      <Notification store={rootStore.notificationStore}/>
     </>
   );
 }

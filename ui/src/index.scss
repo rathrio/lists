@@ -3,6 +3,20 @@
   to   { opacity: 1; }
 }
 
+@keyframes fadeout {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+.fade-in {
+  animation: fadein 200ms;
+}
+
+.fade-out {
+  animation: fadeout 200ms;
+  opacity: 0;
+}
+
 .tag {
   user-select: none;
 }
@@ -131,6 +145,7 @@
       width: 180px;
       justify-content: flex-start;
 
+      font-size: 0.9rem;
       a {
         font-size: 0.9rem;
       }
@@ -323,3 +338,18 @@
     }
   }
 }
+
+.flash-notification {
+  @extend .fade-in;
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+
+  @media (max-width: 500px) {
+    position: fixed;
+    left: 0px;
+    bottom: -2px;
+    width: 100vw;
+  }
+}
+
