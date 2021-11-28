@@ -130,7 +130,7 @@ class ItemBox extends React.Component<Props> {
               <figure className="image is-64x64">
                 <img
                   src={thumbUrl ? publicAssetsUrl(thumbUrl) : ''}
-                  alt={item.name}
+                  alt=""
                   className="item-cover"
                 />
               </figure>

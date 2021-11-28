@@ -38,7 +38,7 @@ const ScraperResultBox = ({ result, onAdd }: Props) => {
           </div>
 
           <div className="level-item">
-            <div className="subtitle is-5">{result.name}</div>
+            <div className="subtitle is-5 item-name">{result.name}</div>
           </div>
 
           <div className="level-item">
