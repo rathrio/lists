@@ -4,6 +4,7 @@ import App from './components/App';
 import 'bulma/css/bulma.min.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import './index.scss';
+import './darkmode.scss';
 import './balloon.css';
 import reportWebVitals from './reportWebVitals';
 

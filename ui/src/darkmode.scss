@@ -1,0 +1,181 @@
+$dark-background-color: #1c1c1c;
+$background-color: #202020;
+$light-background-color: #2f2f2f;
+$lighter-background-color: #3e3e3e;
+$placeholder-color: #696969;
+$foreground-color: #c6c6c7;
+$light-foreground-color: #d9d9d9;
+
+// https://coolors.co/355070-6d597a-b56576-e56b6f-eaac8b
+$red-color: #e56b6f;
+$blue-color: #355070;
+$violet-color: #6d597a;
+$dark-red-color: #b56576;
+$yellow-color: #eaac8b;
+
+body.dark {
+  background-color: $background-color;
+  color: $foreground-color;
+
+  ::placeholder {
+    color: $placeholder-color;
+  }
+
+  ::selection {
+    color: $light-foreground-color;
+    background: $red-color;
+  }
+
+  a,
+  p,
+  strong {
+    color: $foreground-color;
+  }
+
+  .tabs {
+    background-color: $light-background-color;
+  }
+
+  .tabs a {
+    color: $light-foreground-color;
+    border-bottom-color: $background-color;
+  }
+
+  .label {
+    color: $foreground-color;
+  }
+
+  .title,
+  .subtitle,
+  .modal-card-title {
+    color: $light-foreground-color;
+  }
+
+  .tabs li.is-active a {
+    border-bottom-color: $red-color;
+    color: $red-color;
+  }
+
+  code {
+    background-color: $lighter-background-color;
+    color: $red-color;
+  }
+
+  .tag.is-light {
+    background-color: $lighter-background-color;
+    color: $foreground-color;
+  }
+
+  .tag.is-warning {
+    background-color: $yellow-color;
+    color: $dark-background-color;
+  }
+
+  .tag.is-success {
+    background-color: $blue-color;
+    color: $light-foreground-color;
+  }
+
+  img {
+    filter: brightness(0.8) contrast(1.2);
+  }
+
+  .modal-card-body {
+    background-color: $background-color;
+    color: $foreground-color;
+  }
+
+  .box,
+  .button,
+  .modal-card-head,
+  .modal-card-foot {
+    background-color: $light-background-color;
+    color: $foreground-color;
+  }
+
+  .button,
+  .modal-card-foot,
+  .modal-card-head {
+    border: none;
+  }
+
+  .modal-card-foot {
+    .button {
+      background-color: $lighter-background-color;
+      color: $foreground-color;
+    }
+  }
+
+  .item-box:hover,
+  .item-box.is-focused {
+    box-shadow: none;
+    // TODO: find a pretty way to highlight this
+  }
+
+  input,
+  input:hover,
+  textarea,
+  textarea:hover {
+    background-color: $dark-background-color;
+    border-color: $dark-background-color;
+    color: $foreground-color;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+    border: none;
+    box-shadow: none;
+  }
+
+  .omni-bar {
+    border: 1px solid $dark-background-color;
+    box-shadow: none;
+  }
+
+  .omni-bar {
+    input {
+      background-color: transparent;
+    }
+
+    .auto-suggestion-input {
+      background-color: $dark-background-color;
+      color: $placeholder-color;
+    }
+  }
+
+  hr {
+    background-color: $lighter-background-color;
+  }
+
+  .is-primary,
+  .is-primary:hover,
+  .is-success,
+  .is-success:hover {
+    background-color: $blue-color !important;
+    color: $light-foreground-color !important;
+  }
+
+  .is-danger,
+  .is-danger:hover {
+    background-color: $dark-red-color !important;
+    color: $light-foreground-color !important;
+  }
+
+  .is-info,
+  .is-info:hover {
+    background-color: $violet-color !important;
+    color: $light-foreground-color !important;
+  }
+
+  .notification {
+    &.is-danger {
+      background-color: $dark-red-color;
+    }
+
+    &.is-success {
+      background-color: $blue-color;
+    }
+  }
+}

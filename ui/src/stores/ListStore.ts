@@ -87,6 +87,12 @@ class ListStore {
       e.preventDefault();
       this.rootStore.navStore.showSettings();
     });
+
+    // TODO: move me somewhere more appropriate
+    Mousetrap.bind('b', (e) => {
+      e.preventDefault();
+      document.body.classList.toggle('dark');
+    });
   };
 }
 
