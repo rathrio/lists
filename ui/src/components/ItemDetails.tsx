@@ -167,6 +167,7 @@ class ItemDetails extends React.Component<Props> {
         statusTagClassName = 'is-success';
         break;
       default:
+        statusTagClassName = 'is-light';
         break;
     }
 
@@ -192,9 +193,11 @@ class ItemDetails extends React.Component<Props> {
                 item.deleted ? ' (Archived)' : ''
               }`}</p>
 
-              <code style={{ marginLeft: '0.5em' }} className="is-hidden-touch">
-                {item.original_name}
-              </code>
+              {item.original_name && (
+                <code style={{ marginLeft: '0.5em' }} className="is-hidden-touch">
+                  {item.original_name}
+                </code>
+              )}
 
               <div className="header-actions">
                 <span className="external-item-links is-hidden-touch">
@@ -370,10 +373,10 @@ class ItemDetails extends React.Component<Props> {
               ) : (
                 <div className="fields" style={{ marginBottom: '20px' }}>
                   <div className="tags">
-                    <span className="tag is-rounded is-small">{item.year}</span>
+                    <span className="tag is-rounded is-small is-light">{item.year}</span>
 
                     {item.tags.map((tag) => (
-                      <span key={tag} className="tag is-rounded is-small">
+                      <span key={tag} className="tag is-rounded is-small is-light">
                         {tag}
                       </span>
                     ))}
