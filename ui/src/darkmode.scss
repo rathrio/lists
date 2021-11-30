@@ -18,6 +18,10 @@ body.dark {
   background-color: $background-color;
   color: $foreground-color;
 
+  --balloon-color: #3e3e3e;
+  --balloon-text-color: #c6c6c7;
+  --balloon-border-radius: 6px;
+
   // Chrome calendar icon in date inputs
   ::-webkit-calendar-picker-indicator {
     filter: invert(1);
@@ -115,6 +119,13 @@ body.dark {
   .item-box:hover,
   .item-box.is-focused {
     box-shadow: 0 2px 3px 0 $dark-background-color;
+  }
+
+  .item-actions,
+  .external-item-links {
+    a {
+      color: $dark-red-color;
+    }
   }
 
   input,
