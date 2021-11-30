@@ -12,7 +12,7 @@ function Settings(props: { store: RootStore }) {
           <hr />
           <div className="is-flex">
             <button
-              className="button is-info"
+              className="button"
               onClick={() => sessionStore.logout()}
             >
               Sign out

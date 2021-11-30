@@ -8,6 +8,7 @@ $light-foreground-color: #d9d9d9;
 
 // https://coolors.co/355070-6d597a-b56576-e56b6f-eaac8b
 $red-color: #e56b6f;
+$red-shadow-color: rgba(229, 107, 111, 0.5);
 $blue-color: #355070;
 $violet-color: #6d597a;
 $dark-red-color: #b56576;
@@ -16,6 +17,11 @@ $yellow-color: #eaac8b;
 body.dark {
   background-color: $background-color;
   color: $foreground-color;
+
+  // Chrome calendar icon in date inputs
+  ::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }
 
   ::placeholder {
     color: $placeholder-color;
@@ -108,8 +114,7 @@ body.dark {
 
   .item-box:hover,
   .item-box.is-focused {
-    box-shadow: none;
-    // TODO: find a pretty way to highlight this
+    box-shadow: 0 2px 3px 0 $dark-background-color;
   }
 
   input,
@@ -132,14 +137,21 @@ body.dark {
   .omni-bar {
     border: 1px solid $dark-background-color;
     box-shadow: none;
-  }
 
-  .omni-bar {
     input {
+      border: none;
+      border-radius: 0;
+      -moz-appearance: none;
+      -webkit-appearance: none;
       background-color: transparent;
     }
 
     .auto-suggestion-input {
+      border: none;
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      opacity: 1;
+      -webkit-text-fill-color: $placeholder-color;
       background-color: $dark-background-color;
       color: $placeholder-color;
     }
@@ -167,15 +179,5 @@ body.dark {
   .is-info:hover {
     background-color: $violet-color !important;
     color: $light-foreground-color !important;
-  }
-
-  .notification {
-    &.is-danger {
-      background-color: $dark-red-color;
-    }
-
-    &.is-success {
-      background-color: $blue-color;
-    }
   }
 }
