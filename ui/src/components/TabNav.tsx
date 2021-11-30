@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react';
 import RootStore from '../stores/RootStore';
 import { useEffect, useRef } from 'react';
+import scrollIntoView from 'scroll-into-view-if-needed';
 
 interface TabLinkProps {
   onClick: () => void;
@@ -15,7 +16,7 @@ function TabLink(props: TabLinkProps) {
   useEffect(() => {
     const element = liRef.current as any;
     if (element?.className.includes('is-active')) {
-      element.scrollIntoViewIfNeeded(true);
+      scrollIntoView(element);
     }
   });
 
