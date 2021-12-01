@@ -1,6 +1,6 @@
 # Lists
 
-![Screenshot](https://i.imgur.com/w5QObdq.png)
+![Screenshot](https://i.imgur.com/FjAIctw.png)
 
 Lists to keep track of movies, TV shows, games, books and various other things.
 This project exists because I'd rather manage these in one self-hosted location
