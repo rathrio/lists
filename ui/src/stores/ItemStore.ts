@@ -506,9 +506,9 @@ class ItemStore {
   exportItems = (format: 'letterboxd' | 'all' = 'letterboxd') => {
     const newLineRgx = /(\r\n|\n|\r)/gm;
     const quoteRgx = /"/gm;
-    let header = 'Title,Year,Rating';
+    let header = 'Title,Year,Rating,WatchedDate';
     let builder = (item: Item) =>
-      `"${item.name}","${item.year}","${item.rating}"`;
+      `"${item.name}","${item.year}","${item.rating ?? ''}","${item.first_done_at ?? ''}"`;
 
     if (format === 'all') {
       header =
