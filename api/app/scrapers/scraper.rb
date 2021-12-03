@@ -90,7 +90,8 @@ module Scraper
         date: scrape_date(result),
         links: scrape_links(result),
         tags: scrape_tags(result),
-        language: scrape_language(result)
+        language: scrape_language(result),
+        metadata: scrape_metadata(result)
       }
     end
   end
@@ -158,5 +159,10 @@ module Scraper
   # @return [String, nil] The original language as a two letter language code (ISO 639-1),
   #   nil if no language can be scraped.
   def scrape_language(result)
+  end
+
+  # @param result [Hash]
+  def scrape_metadata(result)
+    {}
   end
 end

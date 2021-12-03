@@ -2,15 +2,15 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# This file is the source Rails uses to define your schema when running `rails
-# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
 # be faster and is potentially less error prone than running all of your
 # migrations from scratch. Old migrations may fail to apply correctly if those
 # migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_29_140145) do
+ActiveRecord::Schema.define(version: 2021_12_03_151659) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,10 +33,13 @@ ActiveRecord::Schema.define(version: 2020_12_29_140145) do
     t.date "first_done_at"
     t.string "language"
     t.string "original_name"
+    t.string "backdrop_image"
+    t.jsonb "metadata", default: {}
     t.index ["deleted_at"], name: "index_items_on_deleted_at"
     t.index ["first_done_at"], name: "index_items_on_first_done_at"
     t.index ["language"], name: "index_items_on_language"
     t.index ["list_id"], name: "index_items_on_list_id"
+    t.index ["metadata"], name: "index_items_on_metadata"
     t.index ["name"], name: "index_items_on_name"
     t.index ["original_name"], name: "index_items_on_original_name"
     t.index ["rating"], name: "index_items_on_rating"

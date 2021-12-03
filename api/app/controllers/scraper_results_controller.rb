@@ -31,11 +31,13 @@ class ScraperResultsController < ApplicationController
       :original_name,
       :description,
       :remote_image_url,
+      :remote_backdrop_image_url,
       :date,
       :links,
       :scraped,
       :language,
-      tags: []
+      tags: [],
+      metadata: {}
     )
   end
 end
