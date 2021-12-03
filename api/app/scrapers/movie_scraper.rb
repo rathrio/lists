@@ -41,6 +41,12 @@ class MovieScraper
     result['original_language']
   end
 
+  def scrape_metadata(result)
+    {
+      tmdb_id: result['id']
+    }
+  end
+
   private
 
   def moviedb_client

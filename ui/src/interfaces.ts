@@ -52,6 +52,7 @@ export interface ScraperResult {
   date: string;
   tags: string[];
   links?: string[];
+  metadata: object;
 }
 
 export interface Tag {

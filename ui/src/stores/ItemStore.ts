@@ -274,7 +274,8 @@ class ItemStore {
       (error) => {
         console.error(error);
         this.notificationStore.showNotification(
-          `Failed to import "${result.name}"`
+          `Failed to import "${result.name}"`,
+          'is-danger'
         );
       }
     );
@@ -508,7 +509,9 @@ class ItemStore {
     const quoteRgx = /"/gm;
     let header = 'Title,Year,Rating,WatchedDate';
     let builder = (item: Item) =>
-      `"${item.name}","${item.year}","${item.rating ?? ''}","${item.first_done_at ?? ''}"`;
+      `"${item.name}","${item.year}","${item.rating ?? ''}","${
+        item.first_done_at ?? ''
+      }"`;
 
     if (format === 'all') {
       header =

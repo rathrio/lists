@@ -5,12 +5,14 @@
 # Table name: items
 #
 #  id             :integer          not null, primary key
+#  backdrop_image :string
 #  date           :date
 #  deleted_at     :datetime
 #  description    :string
 #  first_done_at  :date
 #  image          :string
 #  language       :string
+#  metadata       :jsonb
 #  name           :string
 #  original_name  :string
 #  quantity       :integer          default(0)
@@ -29,6 +31,7 @@
 #  index_items_on_first_done_at   (first_done_at)
 #  index_items_on_language        (language)
 #  index_items_on_list_id         (list_id)
+#  index_items_on_metadata        (metadata)
 #  index_items_on_name            (name)
 #  index_items_on_original_name   (original_name)
 #  index_items_on_rating          (rating)
