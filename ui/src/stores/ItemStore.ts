@@ -517,9 +517,8 @@ class ItemStore {
         `"${item.id}","${item.name}","${item.original_name}","${item.description
           .replace(quoteRgx, '""')
           .replace(newLineRgx, '')}","${item.status}","${item.tags.join(
-          ';'
-        )}","${item.year}","${item.rating}","${item.language}","${
-          item.first_done_at
+            ';'
+          )}","${item.year}","${item.rating}","${item.language}","${item.first_done_at
         }","${item.recommended_by}"`;
     }
 
