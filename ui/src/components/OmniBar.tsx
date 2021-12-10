@@ -17,12 +17,22 @@ class OmniBar extends React.Component<Props> {
 
     Mousetrap.bind('/', (e) => {
       e.preventDefault();
-
-      this.props.store.hideDetailsModal();
-      this.searchField.focus();
+      this.hideModalsAndFocusOmniBar();
       this.searchField.select();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+
+    
+    Mousetrap.bind('f t', (e) => {
+      e.preventDefault();
+      this.hideModalsAndFocusOmniBar();
+      this.props.store.filter('tag=');
+    });
+  }
+
+  hideModalsAndFocusOmniBar = () => {
+    this.props.store.hideDetailsModal();
+    this.searchField.focus();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
