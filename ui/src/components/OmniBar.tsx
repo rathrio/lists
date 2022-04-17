@@ -21,7 +21,6 @@ class OmniBar extends React.Component<Props> {
       this.searchField.select();
     });
 
-    
     Mousetrap.bind('f t', (e) => {
       e.preventDefault();
       this.hideModalsAndFocusOmniBar();
@@ -33,7 +32,7 @@ class OmniBar extends React.Component<Props> {
     this.props.store.hideDetailsModal();
     this.searchField.focus();
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
+  };
 
   onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const { store } = this.props;
