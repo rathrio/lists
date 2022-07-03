@@ -25,7 +25,13 @@ class SessionStore {
         this.setLoggedIn(true);
         this.rootStore.listStore.init();
       },
-      (error) => this.setLoggedIn(false) // TODO feedback
+      (error) => {
+        this.setLoggedIn(false);
+        this.rootStore.notificationStore.showNotification(
+          'Invalid credentials',
+          'is-danger'
+        );
+      }
     );
   };
 

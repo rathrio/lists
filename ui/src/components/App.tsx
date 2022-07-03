@@ -15,16 +15,21 @@ function App() {
     return <></>;
   }
 
-  const sessionStore = rootStore.sessionStore;
+  const { sessionStore, notificationStore } = rootStore;
   if (!sessionStore.isLoggedIn) {
-    return <Login store={sessionStore} />;
+    return (
+      <>
+        <Login store={sessionStore} />
+        <Notification store={notificationStore} />
+      </>
+    );
   }
 
   return (
     <>
       <TabNav store={rootStore} />
       <MainSection store={rootStore} />
-      <Notification store={rootStore.notificationStore}/>
+      <Notification store={notificationStore} />
     </>
   );
 }
