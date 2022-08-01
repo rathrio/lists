@@ -29,6 +29,7 @@ module Lists
     # config.active_job.queue_adapter = :sidekiq
     config.api_only = true
     config.middleware.use ActionDispatch::Cookies
+    config.active_record.legacy_connection_handling = false
   end
 
   def self.version
