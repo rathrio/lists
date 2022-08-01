@@ -9,7 +9,7 @@ end
 gem 'net-smtp', require: false
 gem 'net-imap', require: false
 gem 'net-pop', require: false
-gem 'rails', '~> 6'
+gem 'rails', '~> 7'
 # Use postgres as the database for Active Record
 gem 'pg'
 # Use Puma as the app server
