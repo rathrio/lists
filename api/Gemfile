@@ -13,6 +13,7 @@ gem 'rails', '~> 6'
 # Use postgres as the database for Active Record
 gem 'pg'
 # Use Puma as the app server
+gem 'puma-daemon', require: false # TODO: migrate away from this
 gem 'puma', '~> 5'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
@@ -70,14 +71,11 @@ group :development do
   gem 'rubocop'
   gem 'solargraph'
   gem 'foreman'
-  gem 'web-console', '>= 3.3.0'
-  gem 'listen', '~> 3.0.5'
+  gem 'web-console', '~> 4.2'
+  gem 'listen', '~> 3'
 
   # A documentation generation tool
   gem 'yard'
-
-  # Generate Entity-Relationship Diagrams
-  gem "rails-erd"
 
   # For adding schema on top of model file as comment
   gem 'annotate'
