@@ -87,6 +87,7 @@ module Scraper
         original_name: name == original_name ? nil : original_name,
         description: scrape_description(result),
         remote_image_url: scrape_image(result),
+        remote_backdrop_image_url: scrape_backdrop_image(result),
         date: scrape_date(result),
         links: scrape_links(result),
         tags: scrape_tags(result),
@@ -136,6 +137,11 @@ module Scraper
   # @param result [Hash]
   # @return [String, nil] a remote URL to a cover image
   def scrape_image(result)
+  end
+
+  # @param result [Hash]
+  # @return [String, nil] a remote URL to a backdrop image
+  def scrape_backdrop_image(result)
   end
 
   # @param result [Hash]

@@ -5,7 +5,8 @@ class MoviedbClient
   base_uri 'https://api.themoviedb.org/3'
   default_params api_key: ENV['MOVIEDB_API_KEY']
 
-  IMAGE_BASE_URI = 'https://image.tmdb.org/t/p/w500'
+  POSTER_BASE_URI = 'https://image.tmdb.org/t/p/w500'
+  BACKDROP_BASE_URI = 'https://image.tmdb.org/t/p/w1280'
 
   GENRES = {
     28 => 'Action & Adventure',

@@ -22,7 +22,7 @@ class TvScraper
   end
 
   def scrape_image(result)
-    MoviedbClient::IMAGE_BASE_URI + result['poster_path'] if result['poster_path']
+    MoviedbClient::POSTER_BASE_URI + result['poster_path'] if result['poster_path']
   end
 
   def scrape_date(result)
