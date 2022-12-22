@@ -13,8 +13,7 @@ gem 'rails', '~> 7'
 # Use postgres as the database for Active Record
 gem 'pg'
 # Use Puma as the app server
-gem 'puma-daemon', require: false # TODO: migrate away from this
-gem 'puma', '~> 5'
+gem 'puma', '~> 6'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
@@ -51,12 +50,6 @@ gem 'paranoia'
 # Background jobs
 # gem 'sidekiq'
 
-# # For server-side react component rendering with react_on_rails
-# gem 'libv8'
-# gem 'therubyracer', platforms: :ruby
-# gem 'execjs'
-
-# Frontend
 group :development, :test do
   gem 'dotenv-rails'
   gem 'pry-rails'

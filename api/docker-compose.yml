@@ -1,0 +1,57 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    volumes:
+      - ./volumes/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  web:
+    image: rathrio/lists:latest
+    # build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./volumes/public/uploads:/lists/public/uploads
+    depends_on:
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    environment:
+      RAILS_ENV: production
+      RAILS_LOG_TO_STDOUT: "true"
+      RAILS_SERVE_STATIC_FILES: ${RAILS_SERVE_STATIC_FILES}
+      WEB_CONCURRENCY: ${WEB_CONCURRENCY}
+
+      DB_HOST: postgres
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+
+      REDIS_HOST: redis
+
+      TWITCH_CLIENT_ID: ${TWITCH_CLIENT_ID}
+      TWITCH_CLIENT_SECRET: ${TWITCH_CLIENT_SECRET}
+      MOVIEDB_API_KEY: ${MOVIEDB_API_KEY}
+      DISCOGS_API_KEY: ${DISCOGS_API_KEY}
+      DISCOGS_API_SECRET: ${DISCOGS_API_SECRET}
+      EDAMAM_API_ID: ${EDAMAM_API_ID}
+      EDAMAM_API_KEY: ${EDAMAM_API_KEY}
+      GOOGLE_BOOKS_API_KEY: ${GOOGLE_BOOKS_API_KEY}
