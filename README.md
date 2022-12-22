@@ -41,7 +41,7 @@ API (`cd api`):
        ```bash
        ./bin/rails db:migrate
        ```
-      
+
 UI (`cd ui`):
 
    1. Install dependencies:
@@ -89,7 +89,7 @@ yarn test
     ```bash
     # in api/
     ./bin/rails test
-   
+
     # in ui/
     yarn test
     ```
