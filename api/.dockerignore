@@ -1,0 +1,6 @@
+.git
+log
+tmp
+public/uploads
+volumes
+.env
