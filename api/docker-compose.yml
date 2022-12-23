@@ -23,8 +23,8 @@ services:
       retries: 5
 
   web:
-    # image: rathrio/lists:latest
-    build: .
+    image: rathrio/lists:latest
+    # build: .
     ports:
       - "3000:3000"
     volumes:
