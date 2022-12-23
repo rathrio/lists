@@ -14,6 +14,7 @@ RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 
 COPY . .
+
 EXPOSE 3000
 
 CMD ["bundle", "exec", "puma", "-C", "config/puma_production.rb"]
