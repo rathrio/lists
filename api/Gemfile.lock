@@ -121,7 +121,7 @@ GEM
       ffi (>= 1.0.0)
       rake
     foreman (0.87.2)
-    globalid (1.0.0)
+    globalid (1.0.1)
       activesupport (>= 5.0)
     hiredis (0.6.3)
     httparty (0.20.0)
@@ -154,7 +154,7 @@ GEM
     mime-types-data (3.2022.0105)
     mini_magick (4.11.0)
     mini_mime (1.1.2)
-    minitest (5.16.2)
+    minitest (5.17.0)
     multi_xml (0.6.0)
     net-imap (0.2.3)
       digest
@@ -172,6 +172,8 @@ GEM
       timeout
     nio4r (2.5.8)
     nokogiri (1.13.8-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.13.8-x86_64-linux)
       racc (~> 1.4)
     oj (3.13.19)
     parallel (1.22.1)
@@ -292,6 +294,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-21
+  x86_64-linux
 
 DEPENDENCIES
   annotate
