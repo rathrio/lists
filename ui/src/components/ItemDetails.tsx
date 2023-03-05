@@ -4,7 +4,7 @@ import { observable, action, computed, toJS, makeObservable } from 'mobx';
 import * as Mousetrap from 'mousetrap';
 
 import ItemStore from '../stores/ItemStore';
-import { Item } from '../interfaces';
+import { Item, ItemStatus } from '../interfaces';
 import * as urls from '../utils/externalItemUrls';
 import ItemRating from './ItemRating';
 import { publicAssetsUrl } from '../utils/api';
@@ -15,6 +15,22 @@ interface Props {
 
 interface FormData extends Partial<Item> {
   [key: string]: any;
+}
+
+export function statusTagClassName(itemStatus: ItemStatus): string {
+  let className = '';
+  switch (itemStatus) {
+    case 'doing':
+      className = 'is-warning';
+      break;
+    case 'done':
+      className = 'is-success';
+      break;
+    default:
+      className = 'is-light';
+      break;
+  }
+  return className;
 }
 
 @observer
@@ -158,18 +174,7 @@ class ItemDetails extends React.Component<Props> {
       return '';
     }
 
-    let statusTagClassName = '';
-    switch (item.status) {
-      case 'doing':
-        statusTagClassName = 'is-warning';
-        break;
-      case 'done':
-        statusTagClassName = 'is-success';
-        break;
-      default:
-        statusTagClassName = 'is-light';
-        break;
-    }
+    const statusClass = statusTagClassName(item.status);
 
     return (
       <div
@@ -194,7 +199,10 @@ class ItemDetails extends React.Component<Props> {
               }`}</p>
 
               {item.original_name && (
-                <code style={{ marginLeft: '0.5em' }} className="is-hidden-touch">
+                <code
+                  style={{ marginLeft: '0.5em' }}
+                  className="is-hidden-touch"
+                >
                   {item.original_name}
                 </code>
               )}
@@ -373,16 +381,21 @@ class ItemDetails extends React.Component<Props> {
               ) : (
                 <div className="fields" style={{ marginBottom: '20px' }}>
                   <div className="tags">
-                    <span className="tag is-rounded is-small is-light">{item.year}</span>
+                    <span className="tag is-rounded is-small is-light">
+                      {item.year}
+                    </span>
 
                     {item.tags.map((tag) => (
-                      <span key={tag} className="tag is-rounded is-small is-light">
+                      <span
+                        key={tag}
+                        className="tag is-rounded is-small is-light"
+                      >
                         {tag}
                       </span>
                     ))}
 
                     <span
-                      className={`tag is-rounded is-small ${statusTagClassName} has-pointer`}
+                      className={`tag is-rounded is-small ${statusClass} has-pointer`}
                       aria-label="Toggle status"
                       data-balloon-pos="down"
                       onClick={this.onStatusTagClick}

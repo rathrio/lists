@@ -127,6 +127,29 @@ body {
   margin-bottom: 1.5rem;
 }
 
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+}
+
+.items-grid {
+  .item {
+    img {
+      border-radius: 3px;
+    }
+  }
+
+  .status-tag {
+    position: absolute;
+    top: 0;
+    right: 0;
+    // opacity: 0.9;
+    font-size: 0.55rem;
+    border-radius: 0 3px 0 0;
+  }
+}
+
 .item-box {
   margin-bottom: 1rem !important;
   padding: 0;

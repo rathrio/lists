@@ -54,6 +54,8 @@ UI (`cd ui`):
 API (`cd api`):
 
 ```bash
+brew services start postgresql@14
+brew services start redis
 ./bin/rails server
 ```
 

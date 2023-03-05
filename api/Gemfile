@@ -20,8 +20,8 @@ gem 'puma', '~> 6'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
-gem 'hiredis'
-gem 'redis', require: ["redis", "redis/connection/hiredis"]
+# gem 'hiredis'
+gem 'redis'#, require: ["redis", "redis/connection/hiredis"]
 
 # A fast JSON parser and Object marshaller.
 gem 'oj'
