@@ -130,6 +130,32 @@ body {
 .items-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+
+  @media (min-width: 450px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (min-width: 550px) {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  @media (min-width: 650px) {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  @media (min-width: 750px) {
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  @media (min-width: 850px) {
+    grid-template-columns: repeat(8, 1fr);
+  }
+
+  @media (min-width: 950px) {
+    grid-template-columns: repeat(9, 1fr);
+  }
+
+
   grid-gap: 10px;
 }
 
@@ -138,14 +164,28 @@ body {
     img {
       border-radius: 3px;
     }
+
+    .item-info {
+      color: #b7b7b7;
+
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7em;
+      margin-top: 2px;
+
+      .item-rating {
+        font-size: 0.8em;
+        margin-top: 2px;
+      }
+    }
   }
 
   .status-tag {
+    pointer-events: none;
     position: absolute;
     top: 0;
     right: 0;
-    // opacity: 0.9;
-    font-size: 0.55rem;
+    font-size: 0.6rem;
     border-radius: 0 3px 0 0;
   }
 }
@@ -317,8 +357,10 @@ body {
       // Use as much vertical height as possible on mobile, but ensure that the
       // modal footer does not take up the bottom 44px of the screen to avoid
       // accidental iPhone fullscreen toolbar triggering.
-      height: 89vh !important;
-      max-height: 89vh !important;
+      // height: 89vh !important;
+      // max-height: 89vh !important;
+
+      height: 100vh;
       width: 100vw;
 
       .modal-card-head,

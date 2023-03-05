@@ -18,7 +18,7 @@ import { toIdentifier } from '../utils/toIdentifier';
  * State management for items.
  */
 class ItemStore {
-  static itemsToShow = 15;
+  static itemsToShow = 30;
   static statusRank = {
     doing: 0,
     todo: 1,

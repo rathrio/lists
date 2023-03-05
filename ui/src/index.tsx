@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import App from './components/App';
 import 'bulma/css/bulma.min.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
-import './index.scss';
-import './darkmode.scss';
-import './balloon.css';
+import './styles/index.scss';
+import './styles/darkmode.scss';
+import './styles/balloon.css';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
