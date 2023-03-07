@@ -15,9 +15,15 @@ function ItemActions(props: Props) {
       : `Show ${store.moreItemsToShow} more items`;
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div
+      style={{ display: 'flex', justifyContent: 'center' }}
+      className="item-actions"
+    >
       {store.hasMoreFilteredItems && (
-        <button className="button is-rounded is-small" onClick={store.showAllItems}>
+        <button
+          className="button is-rounded is-small"
+          onClick={store.showAllItems}
+        >
           <span className="icon">
             <i className="fa fa-caret-down" />
           </span>

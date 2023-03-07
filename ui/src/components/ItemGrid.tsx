@@ -45,20 +45,6 @@ function ItemInfo(props: { item: Item }) {
   );
 }
 
-const ShowAllBox = observer((props: { store: ItemStore }) => {
-  return (
-    <div className="show-all-box">
-      <span className="icon is-medium">
-        <i className="fas fa-eye fa-lg"></i>
-      </span>
-
-      <div style={{ marginTop: '2px' }}>
-        <p></p>
-      </div>
-    </div>
-  );
-});
-
 const ItemBox = observer((props: { item: Item; store: RootStore }) => {
   const { item, store } = props;
   const itemStore = store.itemStore;
@@ -108,10 +94,7 @@ function ItemGrid(props: Props) {
 
   return (
     <>
-      <div className="items-grid">
-        {itemBoxes}
-        {/* <ShowAllBox store={store} /> */}
-      </div>
+      <div className="items-grid">{itemBoxes}</div>
       <ItemActions store={store.itemStore} />
     </>
   );
