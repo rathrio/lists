@@ -2,14 +2,15 @@
 #
 # Table name: lists
 #
-#  id          :integer          not null, primary key
-#  description :string
-#  fa_icon     :string
-#  name        :string
-#  scraper     :string
-#  created_at  :datetime
-#  updated_at  :datetime
-#  user_id     :integer
+#  id                 :integer          not null, primary key
+#  cover_aspect_ratio :string
+#  description        :string
+#  fa_icon            :string
+#  name               :string
+#  scraper            :string
+#  created_at         :datetime
+#  updated_at         :datetime
+#  user_id            :integer
 #
 # Indexes
 #
@@ -27,12 +28,12 @@ class List < ApplicationRecord
 
   # @param user [User] for whom the default lists will be created.
   def self.create_defaults(user)
-    user.lists.find_or_create_by(name: 'Movies', scraper: 'MovieScraper', fa_icon: 'film')
-    user.lists.find_or_create_by(name: 'TV', scraper: 'TvScraper', fa_icon: 'tv')
-    user.lists.find_or_create_by(name: 'Music', scraper: 'AlbumScraper', fa_icon: 'music')
-    user.lists.find_or_create_by(name: 'Games', scraper: 'GameScraper', fa_icon: 'gamepad')
-    user.lists.find_or_create_by(name: 'Recipes', scraper: 'RecipeScraper', fa_icon: 'cutlery')
-    user.lists.find_or_create_by(name: 'Books', scraper: 'BookScraper', fa_icon: 'book')
+    user.lists.find_or_create_by(name: 'Movies', scraper: 'MovieScraper', fa_icon: 'film', cover_aspect_ratio: '2by3')
+    user.lists.find_or_create_by(name: 'TV', scraper: 'TvScraper', fa_icon: 'tv', cover_aspect_ratio: '2by3')
+    user.lists.find_or_create_by(name: 'Music', scraper: 'AlbumScraper', fa_icon: 'music', cover_aspect_ratio: '1by1')
+    user.lists.find_or_create_by(name: 'Games', scraper: 'GameScraper', fa_icon: 'gamepad', cover_aspect_ratio: '3by4')
+    user.lists.find_or_create_by(name: 'Recipes', scraper: 'RecipeScraper', fa_icon: 'cutlery', cover_aspect_ratio: '2by3')
+    user.lists.find_or_create_by(name: 'Books', scraper: 'BookScraper', fa_icon: 'book', cover_aspect_ratio: '2by3')
   end
 
   def default_scraper

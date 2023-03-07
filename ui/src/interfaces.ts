@@ -6,14 +6,18 @@ export interface Image {
 export enum ItemStatus {
   Todo = 'todo',
   Doing = 'doing',
-  Done = 'done'
+  Done = 'done',
 }
+
+// https://bulma.io/documentation/elements/image/#responsive-images-with-ratios
+export type CoverAspectRatio = '2by3' | '3by4';
 
 export interface List {
   id: number;
   name: string;
   description: string;
   fa_icon: string;
+  cover_aspect_ratio: CoverAspectRatio;
 }
 
 export interface Item {

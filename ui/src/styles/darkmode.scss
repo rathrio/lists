@@ -116,6 +116,12 @@ body.dark {
     }
   }
 
+  .item.is-focused {
+    figure {
+      box-shadow: 0 0 7px $red-color;
+    }
+  }
+
   .item-box:hover,
   .item-box.is-focused {
     box-shadow: 0 2px 3px 0 $dark-background-color;

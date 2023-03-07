@@ -6,9 +6,10 @@ import { publicAssetsUrl } from '../utils/api';
 import { Item, ItemStatus } from '../interfaces';
 import { statusTagClassName } from './ItemDetails';
 import ItemActions from './ItemActions';
+import RootStore from '../stores/RootStore';
 
 interface Props {
-  store: ItemStore;
+  store: RootStore;
 }
 
 function renderStar(currentRating: number, n: number) {
@@ -44,18 +45,41 @@ function ItemInfo(props: { item: Item }) {
   );
 }
 
-function ItemBox(props: { item: Item; store: ItemStore }) {
+const ShowAllBox = observer((props: { store: ItemStore }) => {
+  return (
+    <div className="show-all-box">
+      <span className="icon is-medium">
+        <i className="fas fa-eye fa-lg"></i>
+      </span>
+
+      <div style={{ marginTop: '2px' }}>
+        <p></p>
+      </div>
+    </div>
+  );
+});
+
+const ItemBox = observer((props: { item: Item; store: RootStore }) => {
   const { item, store } = props;
+  const itemStore = store.itemStore;
 
   function onItemClick(item: Item) {
-    store.focusItem(item);
-    store.showItemDetails(item);
+    itemStore.focusItem(item);
+    itemStore.showItemDetails(item);
   }
 
   const thumbUrl = item.image?.url ?? '';
+  const coverAspectRatio = store.listStore.activeList!.cover_aspect_ratio;
+
   return (
-    <div className="item" style={{ position: 'relative' }}>
-      <figure className="image is-2by3 has-pointer" onClick={() => onItemClick(item)}>
+    <div
+      className={`item ${itemStore.isFocused(item) && 'is-focused'}`}
+      style={{ position: 'relative' }}
+    >
+      <figure
+        className={`image is-${coverAspectRatio} has-pointer`}
+        onClick={() => onItemClick(item)}
+      >
         <img src={publicAssetsUrl(thumbUrl)} alt="" />
       </figure>
 
@@ -73,25 +97,23 @@ function ItemBox(props: { item: Item; store: ItemStore }) {
       <ItemInfo item={item} />
     </div>
   );
-}
+});
 
 function ItemGrid(props: Props) {
   const { store } = props;
 
-  const itemBoxes = store.filteredItems.map((item, index) => {
+  const itemBoxes = store.itemStore.filteredItems.map((item, index) => {
     return <ItemBox item={item} store={store} key={index} />;
   });
 
   return (
     <>
-      <div className="items-grid">{itemBoxes}</div>
-      <ItemActions store={store} />
+      <div className="items-grid">
+        {itemBoxes}
+        {/* <ShowAllBox store={store} /> */}
+      </div>
+      <ItemActions store={store.itemStore} />
     </>
-
-    // <div className="items-list">
-    //   {itemBoxes}
-    //   <ItemActions store={store} />
-    // </div>
   );
 }
 
