@@ -87,7 +87,7 @@ body.dark {
   }
 
   img {
-    filter: brightness(0.8) contrast(1.2);
+    filter: brightness(0.9) contrast(1.1);
   }
 
   .modal-card-body {
@@ -118,7 +118,11 @@ body.dark {
 
   .item.is-focused {
     figure {
-      box-shadow: 0 0 7px $red-color;
+      box-shadow: 0 0 7px 5px $red-color;
+
+      img {
+        filter: brightness(1) contrast(1);
+      }
     }
   }
 
