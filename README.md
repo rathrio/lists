@@ -1,6 +1,6 @@
 # Lists
 
-![Screenshot](https://i.imgur.com/FjAIctw.png)
+![Screenshot](./screenshots/2023-03-ipad-iphone.png)
 
 Lists to keep track of movies, TV shows, games, books and various other things.
 This project exists because I'd rather manage these in one self-hosted location
@@ -80,23 +80,6 @@ UI (`cd ui`):
 ```bash
 yarn test
 ```
-
-## Contributing
-
-1. Fork this repository
-2. Create your feature branch `git checkout -b my-new-feature`
-3. Commit your changes `git commit -am "Add some feature"`
-4. Push to the branch `git push origin my-new-feature`
-5. Run tests
-    ```bash
-    # in api/
-    ./bin/rails test
-
-    # in ui/
-    yarn test
-    ```
-
-6. Create new Pull Request (in your forked repository)
 
 ## API Credits
 
