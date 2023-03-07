@@ -10,6 +10,7 @@ scp -r build rathr.io:/var/www/lists-docker/ui
 
 ssh rathr.io 'bash --login -s' << "EOF"
   cd /var/www/lists-docker
+  docker-compose down
   docker-compose pull
-  docker-compose restart
+  docker-compose up -d
 EOF
