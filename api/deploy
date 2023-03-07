@@ -1,0 +1,11 @@
+#! /bin/sh
+
+scp docker-compose.yml rathr.io:/var/www/lists-docker
+./build_and_push.sh
+
+ssh rathr.io 'bash --login -s' << "EOF"
+  cd /var/www/lists-docker
+  docker-compose down
+  docker-compose pull
+  docker-compose up -d
+EOF
