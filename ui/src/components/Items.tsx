@@ -14,7 +14,7 @@ function Items(props: { store: RootStore }) {
     <Fragment>
       <OmniBar store={itemStore} />
       {/* <ItemList store={itemStore} /> */}
-      <ItemGrid store={itemStore} />
+      <ItemGrid store={props.store} />
       <ScraperResultsContent store={itemStore} />
       <ItemDetails store={itemStore} />
     </Fragment>

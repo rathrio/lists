@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_03_151659) do
-
+ActiveRecord::Schema[7.0].define(version: 2023_03_07_183922) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,10 +20,10 @@ ActiveRecord::Schema.define(version: 2021_12_03_151659) do
     t.integer "quantity", default: 0
     t.boolean "scraped", default: false
     t.date "date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "image"
-    t.datetime "deleted_at"
+    t.datetime "deleted_at", precision: nil
     t.integer "user_id"
     t.integer "list_id"
     t.integer "status", default: 0
@@ -59,8 +58,8 @@ ActiveRecord::Schema.define(version: 2021_12_03_151659) do
     t.string "name"
     t.string "url"
     t.integer "item_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["item_id"], name: "index_links_on_item_id"
   end
 
@@ -69,32 +68,33 @@ ActiveRecord::Schema.define(version: 2021_12_03_151659) do
     t.string "description"
     t.string "scraper"
     t.string "fa_icon"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "user_id"
+    t.string "cover_aspect_ratio"
     t.index ["user_id"], name: "index_lists_on_user_id"
   end
 
   create_table "notes", id: :serial, force: :cascade do |t|
     t.text "text"
     t.integer "item_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["item_id"], name: "index_notes_on_item_id"
   end
 
   create_table "tags", id: :serial, force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "user_id"
     t.index ["name"], name: "index_tags_on_name"
     t.index ["user_id"], name: "index_tags_on_user_id"
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "email", null: false
     t.string "encrypted_password", limit: 128, null: false
     t.string "confirmation_token", limit: 128
