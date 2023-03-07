@@ -18,7 +18,7 @@ import { toIdentifier } from '../utils/toIdentifier';
  * State management for items.
  */
 class ItemStore {
-  static itemsToShow = 30;
+  static itemsToShow = 40;
   static statusRank = {
     doing: 0,
     todo: 1,
@@ -87,9 +87,10 @@ class ItemStore {
     });
   }
 
-  private handleListChange = (activeList: List) => {
+  private handleListChange = action((activeList: List) => {
     this.query = '';
     this.scraperResults.clear();
+    this.items.clear();
     this.doNotShowAllItems();
 
     if (activeList.name === 'Archive') {
@@ -97,7 +98,7 @@ class ItemStore {
     } else {
       this.loadItems(activeList);
     }
-  };
+  });
 
   private setupShortcuts = () => {
     Mousetrap.bind('r', (e) => {

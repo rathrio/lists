@@ -3,14 +3,14 @@ import { observer } from 'mobx-react';
 import { observable, action, computed, toJS, makeObservable } from 'mobx';
 import * as Mousetrap from 'mousetrap';
 
-import ItemStore from '../stores/ItemStore';
 import { Item, ItemStatus } from '../interfaces';
 import * as urls from '../utils/externalItemUrls';
 import ItemRating from './ItemRating';
 import { publicAssetsUrl } from '../utils/api';
+import RootStore from '../stores/RootStore';
 
 interface Props {
-  store: ItemStore;
+  store: RootStore;
 }
 
 interface FormData extends Partial<Item> {
@@ -50,7 +50,7 @@ class ItemDetails extends React.Component<Props> {
     makeObservable(this);
 
     Mousetrap.bind('e', (e) => {
-      if (!this.props.store.detailsModalVisible) {
+      if (!this.props.store.itemStore.detailsModalVisible) {
         return;
       }
 
@@ -71,7 +71,8 @@ class ItemDetails extends React.Component<Props> {
   @computed
   get isClosed() {
     return (
-      !this.props.store.activeItem || !this.props.store.detailsModalVisible
+      !this.props.store.itemStore.activeItem ||
+      !this.props.store.itemStore.detailsModalVisible
     );
   }
 
@@ -83,7 +84,7 @@ class ItemDetails extends React.Component<Props> {
   @action
   enableEditing = (e: React.MouseEvent) => {
     e.preventDefault();
-    if (this.props.store.activeItem?.deleted) {
+    if (this.props.store.itemStore.activeItem?.deleted) {
       return;
     }
 
@@ -98,7 +99,7 @@ class ItemDetails extends React.Component<Props> {
 
   @action
   toggleEditing = () => {
-    if (this.props.store.activeItem?.deleted) {
+    if (this.props.store.itemStore.activeItem?.deleted) {
       return;
     }
 
@@ -118,7 +119,7 @@ class ItemDetails extends React.Component<Props> {
     }
 
     this.disableEditing();
-    this.props.store.hideDetailsModal();
+    this.props.store.itemStore.hideDetailsModal();
   };
 
   handleFormChange = (
@@ -131,8 +132,8 @@ class ItemDetails extends React.Component<Props> {
     e.preventDefault();
 
     if (this.hasFormDataChanges) {
-      const item = this.props.store.activeItem!;
-      this.props.store.update(item, toJS(this.formData));
+      const item = this.props.store.itemStore.activeItem!;
+      this.props.store.itemStore.update(item, toJS(this.formData));
     }
 
     this.formData = {};
@@ -142,8 +143,8 @@ class ItemDetails extends React.Component<Props> {
   onArchiveClick = (e: React.MouseEvent) => {
     e.preventDefault();
     const { store } = this.props;
-    const item = store.activeItem!;
-    const confirmedArchival = store.archive(item);
+    const item = store.itemStore.activeItem!;
+    const confirmedArchival = store.itemStore.archive(item);
 
     if (confirmedArchival) {
       this.disableEditing();
@@ -153,20 +154,20 @@ class ItemDetails extends React.Component<Props> {
   onRestoreClick = (e: React.MouseEvent) => {
     e.preventDefault();
     const { store } = this.props;
-    const item = store.activeItem!;
-    store.restore(item);
+    const item = store.itemStore.activeItem!;
+    store.itemStore.restore(item);
   };
 
   onStatusTagClick = (e: React.MouseEvent) => {
     e.preventDefault();
     const { store } = this.props;
-    const item = store.activeItem!;
-    store.toggleStatus(item);
+    const item = store.itemStore.activeItem!;
+    store.itemStore.toggleStatus(item);
   };
 
   render() {
     const { store } = this.props;
-    const item = store.activeItem;
+    const item = store.itemStore.activeItem;
 
     // Render nothing if there's no active item. Guard is necessary because
     // this component is always mounted.
@@ -175,11 +176,12 @@ class ItemDetails extends React.Component<Props> {
     }
 
     const statusClass = statusTagClassName(item.status);
+    const coverAspectRatio = store.listStore.activeList!.cover_aspect_ratio;
 
     return (
       <div
         className={`modal item-details-modal ${
-          store.detailsModalVisible ? 'is-active' : ''
+          store.itemStore.detailsModalVisible ? 'is-active' : ''
         }`}
       >
         <div onClick={this.close} className="modal-background" />
@@ -238,7 +240,7 @@ class ItemDetails extends React.Component<Props> {
 
             <section className="modal-card-body">
               <div className="image-content" style={{ marginBottom: '20px' }}>
-                <figure className="image is-2by3">
+                <figure className={`image is-${coverAspectRatio}`}>
                   <img
                     src={publicAssetsUrl(item.image!.url)}
                     alt={item.name}
@@ -409,7 +411,7 @@ class ItemDetails extends React.Component<Props> {
                     >
                       <ItemRating
                         item={item}
-                        onUpdateRating={store.updateRating}
+                        onUpdateRating={store.itemStore.updateRating}
                       />
                     </span>
                   </div>

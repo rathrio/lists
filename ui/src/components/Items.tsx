@@ -16,7 +16,7 @@ function Items(props: { store: RootStore }) {
       {/* <ItemList store={itemStore} /> */}
       <ItemGrid store={props.store} />
       <ScraperResultsContent store={itemStore} />
-      <ItemDetails store={itemStore} />
+      <ItemDetails store={props.store} />
     </Fragment>
   );
 }
