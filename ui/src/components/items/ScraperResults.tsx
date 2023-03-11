@@ -16,6 +16,8 @@ const ScraperResultBox = ({ result, store }: ScraperResultBoxProps) => {
   return (
     <CoverBox
       coverUrl={thumbUrl}
+      isCoverMissing={!thumbUrl}
+      title={result.name}
       coverAspectRatio={coverAspectRatio}
       onClick={() => store.itemStore.importScraperResult(result)}
       balloonMessage="Add to List"

@@ -49,6 +49,8 @@ const ItemBox = observer((props: { item: Item; store: RootStore }) => {
   return (
     <CoverBox
       coverUrl={publicAssetsUrl(thumbUrl)}
+      isCoverMissing={!thumbUrl}
+      title={item.name}
       coverAspectRatio={coverAspectRatio}
       isFocused={itemStore.isFocused(item)}
       onClick={() => onItemClick(item)}
