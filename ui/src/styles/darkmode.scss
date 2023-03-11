@@ -118,7 +118,7 @@ body.dark {
 
   .item.is-focused {
     figure {
-      box-shadow: 0 0 7px 5px $red-color;
+      box-shadow: 0 0 3px 3px $red-color;
 
       img {
         filter: brightness(1) contrast(1);

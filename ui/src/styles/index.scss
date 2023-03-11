@@ -129,6 +129,7 @@ body {
 
 .items-grid {
   display: grid;
+  grid-gap: 1rem;
   grid-template-columns: repeat(3, 1fr);
 
   @media (min-width: 450px) {
@@ -151,17 +152,13 @@ body {
     grid-template-columns: repeat(8, 1fr);
   }
 
-  grid-gap: 1rem;
-}
-
-.items-grid {
-  .item {
+  .cover-box {
     img {
       border-radius: 3px;
       object-fit: cover;
     }
 
-    .item-info {
+    .cover-box-info {
       color: #b7b7b7;
 
       display: flex;
@@ -244,14 +241,6 @@ body {
       width: 120px;
       justify-content: flex-start;
     }
-  }
-}
-
-.image {
-  .scraper-result-image {
-    width: 64px;
-    height: 64px;
-    object-fit: cover;
   }
 }
 

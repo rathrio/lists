@@ -1,26 +1,51 @@
 import React from 'react';
 import { ScraperResult } from '../interfaces';
-import ScraperResultBox from './ScraperResultBox';
+import RootStore from '../stores/RootStore';
+import CoverBox from './CoverBox';
 
-interface Props {
-  results: ScraperResult[];
-  onAdd(result: ScraperResult): void;
+interface ScraperResultBoxProps {
+  result: ScraperResult;
+  store: RootStore;
 }
 
-const ScraperResults = ({ results, onAdd }: Props) => {
-  const resultsList = results.map((result, index) => (
+const ScraperResultBox = ({ result, store }: ScraperResultBoxProps) => {
+  const thumbUrl = result.remote_image_url;
+  const date = result.date;
+  const year = new Date(date).getFullYear();
+  const coverAspectRatio = store.listStore.activeList!.cover_aspect_ratio;
+
+  return (
+    <CoverBox
+      coverUrl={thumbUrl}
+      coverAspectRatio={coverAspectRatio}
+      onClick={() => store.itemStore.importScraperResult(result)}
+      balloonMessage="Add to List"
+    >
+      <p>{year}</p>
+    </CoverBox>
+  );
+};
+
+interface Props {
+  store: RootStore;
+}
+
+const ScraperResults = ({ store }: Props) => {
+  const resultsList = store.itemStore.scraperResults.map((result, index) => (
     <ScraperResultBox
       key={`scraper-result-${result.name}-${result.date}-${index}`}
       result={result}
-      onAdd={onAdd}
+      store={store}
     />
   ));
 
   return (
-    <div className="scraper-results">
-      <h4 className="subtitle is-4">Found on the interwebs</h4>
-      {resultsList}
-    </div>
+    <>
+      <h4 className="subtitle is-4" style={{ marginTop: '1.5rem' }}>
+        Found on the interwebs
+      </h4>
+      <div className="items-grid">{resultsList}</div>
+    </>
   );
 };
 

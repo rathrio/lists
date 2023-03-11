@@ -1,27 +1,24 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import { observer } from 'mobx-react';
-import ItemStore from '../stores/ItemStore';
 import Spinner from './Spinner';
 import ScraperResults from './ScraperResults';
+import RootStore from '../stores/RootStore';
 
 interface Props {
-  store: ItemStore;
+  store: RootStore;
 }
 
 function ScraperResultsContent(props: Props) {
   const { store } = props;
 
   const scraperResults =
-    store.scraperResults.length > 0 ? (
-      <ScraperResults
-        results={store.scraperResults}
-        onAdd={store.importScraperResult}
-      />
+    store.itemStore.scraperResults.length > 0 ? (
+      <ScraperResults store={store} />
     ) : (
       ''
     );
 
-  const spinner = store.spinnerVisible ? <Spinner /> : '';
+  const spinner = store.itemStore.spinnerVisible ? <Spinner /> : '';
 
   return (
     <Fragment>

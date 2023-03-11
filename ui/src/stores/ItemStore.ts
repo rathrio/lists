@@ -239,7 +239,7 @@ class ItemStore {
       action((response) => {
         this.scraperResults.remove(result);
         this.items.unshift(response.data);
-        this.notificationStore.showNotification(`Imported "${result.name}"`);
+        this.notificationStore.showNotification(`Added "${result.name}"`);
       }),
       (error) => {
         console.error(error);
