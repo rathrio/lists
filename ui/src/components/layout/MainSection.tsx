@@ -1,7 +1,7 @@
-import Items from './Items';
-import RootStore from '../stores/RootStore';
 import { observer } from 'mobx-react';
-import Settings from './Settings';
+import RootStore from '../../stores/RootStore';
+import Items from '../items/Items';
+import Settings from '../settings/Settings';
 
 function MainSection(props: { store: RootStore }) {
   const currentView = props.store.navStore.currentView;
@@ -9,8 +9,8 @@ function MainSection(props: { store: RootStore }) {
   return (
     <section className="section main-section">
       <div className="container">
-        {currentView === 'items' && <Items store={props.store}/>}
-        {currentView === 'settings' && <Settings store={props.store}/>}
+        {currentView === 'items' && <Items store={props.store} />}
+        {currentView === 'settings' && <Settings store={props.store} />}
       </div>
     </section>
   );

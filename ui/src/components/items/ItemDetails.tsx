@@ -3,11 +3,11 @@ import { observer } from 'mobx-react';
 import { observable, action, computed, toJS, makeObservable } from 'mobx';
 import * as Mousetrap from 'mousetrap';
 
-import { Item, ItemStatus } from '../interfaces';
-import * as urls from '../utils/externalItemUrls';
+import { Item, ItemStatus } from '../../interfaces';
+import * as urls from '../../utils/externalItemUrls';
 import ItemRating from './ItemRating';
-import { publicAssetsUrl } from '../utils/api';
-import RootStore from '../stores/RootStore';
+import { publicAssetsUrl } from '../../utils/api';
+import RootStore from '../../stores/RootStore';
 
 interface Props {
   store: RootStore;

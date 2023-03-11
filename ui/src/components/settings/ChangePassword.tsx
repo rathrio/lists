@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import RootStore from '../stores/RootStore';
+import RootStore from '../../stores/RootStore';
 
 function ChangePassword(props: { store: RootStore }) {
   const { sessionStore, notificationStore } = props.store;

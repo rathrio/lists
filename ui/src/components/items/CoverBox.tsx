@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { CoverAspectRatio } from '../interfaces';
+import { CoverAspectRatio } from '../../interfaces';
 
 interface Props {
   coverUrl: string;

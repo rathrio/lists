@@ -1,11 +1,11 @@
 import { observer } from 'mobx-react';
 
-import { Item, ItemStatus } from '../interfaces';
+import { Item, ItemStatus } from '../../interfaces';
 import { statusTagClassName } from './ItemDetails';
 import ItemActions from './ItemActions';
-import RootStore from '../stores/RootStore';
+import RootStore from '../../stores/RootStore';
 import CoverBox from './CoverBox';
-import { publicAssetsUrl } from '../utils/api';
+import { publicAssetsUrl } from '../../utils/api';
 
 interface Props {
   store: RootStore;

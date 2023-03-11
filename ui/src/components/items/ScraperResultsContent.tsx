@@ -1,8 +1,8 @@
 import { Fragment } from 'react';
 import { observer } from 'mobx-react';
-import Spinner from './Spinner';
 import ScraperResults from './ScraperResults';
-import RootStore from '../stores/RootStore';
+import RootStore from '../../stores/RootStore';
+import Spinner from '../elements/Spinner';
 
 interface Props {
   store: RootStore;

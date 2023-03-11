@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react';
-import RootStore from '../stores/RootStore';
+import RootStore from '../../stores/RootStore';
 import ChangePassword from './ChangePassword';
 
 function Settings(props: { store: RootStore }) {
@@ -11,10 +11,7 @@ function Settings(props: { store: RootStore }) {
           <ChangePassword store={props.store} />
           <hr />
           <div className="is-flex">
-            <button
-              className="button"
-              onClick={() => sessionStore.logout()}
-            >
+            <button className="button" onClick={() => sessionStore.logout()}>
               Sign out
             </button>
           </div>

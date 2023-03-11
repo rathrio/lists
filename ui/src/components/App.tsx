@@ -1,9 +1,8 @@
-import React from 'react';
-import TabNav from './TabNav';
-import MainSection from './MainSection';
-import Notification from './Notification';
+import TabNav from './layout/TabNav';
+import Notification from './layout/Notification';
+import MainSection from './layout/MainSection';
 import RootStore from '../stores/RootStore';
-import Login from './Login';
+import Login from './login/Login';
 import { observer } from 'mobx-react';
 
 const rootStore = new RootStore();

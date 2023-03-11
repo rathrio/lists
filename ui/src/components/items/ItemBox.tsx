@@ -3,11 +3,11 @@ import { observer } from 'mobx-react';
 import scrollIntoView from 'scroll-into-view-if-needed';
 import _ from 'lodash';
 
-import { Item, Tag } from '../interfaces';
+import { Item, Tag } from '../../interfaces';
 import ItemRating, { RATING_NAMES } from './ItemRating';
-import * as urls from '../utils/externalItemUrls';
-import ItemStore from '../stores/ItemStore';
-import { publicAssetsUrl } from '../utils/api';
+import * as urls from '../../utils/externalItemUrls';
+import ItemStore from '../../stores/ItemStore';
+import { publicAssetsUrl } from '../../utils/api';
 
 const RestoreActions = ({
   onRestoreClick,
@@ -137,7 +137,11 @@ class ItemBox extends React.Component<Props> {
 
             <div className="level-item title-item item-name">
               <div className="subtitle is-5">
-                <a href="/" onClick={this.onItemNameClick} title={item.original_name}>
+                <a
+                  href="/"
+                  onClick={this.onItemNameClick}
+                  title={item.original_name}
+                >
                   {item.name}
                 </a>
               </div>
