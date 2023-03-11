@@ -2,7 +2,7 @@
 
 ![Screenshot](./screenshots/2023-03-ipad-iphone.png)
 
-Lists to keep track of movies, TV shows, games, books and various other things.
+App that keeps track of movies, TV shows, games, books and various other things.
 This project exists because I'd rather manage these in one self-hosted location
 instead of multiple third-party services, such as Letterboxd, Goodreads or the
 Steam Library.

@@ -1,12 +1,11 @@
-import React from 'react';
 import { observer } from 'mobx-react';
-import ItemStore from '../stores/ItemStore';
 
-import { publicAssetsUrl } from '../utils/api';
 import { Item, ItemStatus } from '../interfaces';
 import { statusTagClassName } from './ItemDetails';
 import ItemActions from './ItemActions';
 import RootStore from '../stores/RootStore';
+import CoverBox from './CoverBox';
+import { publicAssetsUrl } from '../utils/api';
 
 interface Props {
   store: RootStore;
@@ -35,16 +34,6 @@ function ItemRating(props: { item: Item }) {
   return <div className="item-rating">{stars}</div>;
 }
 
-function ItemInfo(props: { item: Item }) {
-  const { item } = props;
-  return (
-    <div className="item-info">
-      <p>{item.year}</p>
-      <ItemRating item={item} />
-    </div>
-  );
-}
-
 const ItemBox = observer((props: { item: Item; store: RootStore }) => {
   const { item, store } = props;
   const itemStore = store.itemStore;
@@ -58,30 +47,17 @@ const ItemBox = observer((props: { item: Item; store: RootStore }) => {
   const coverAspectRatio = store.listStore.activeList!.cover_aspect_ratio;
 
   return (
-    <div
-      className={`item ${itemStore.isFocused(item) && 'is-focused'}`}
-      style={{ position: 'relative' }}
+    <CoverBox
+      coverUrl={publicAssetsUrl(thumbUrl)}
+      coverAspectRatio={coverAspectRatio}
+      isFocused={itemStore.isFocused(item)}
+      onClick={() => onItemClick(item)}
+      tag={item.status !== ItemStatus.Todo ? item.human_status : undefined}
+      tagClass={statusTagClassName(item.status)}
     >
-      <figure
-        className={`image is-${coverAspectRatio} has-pointer`}
-        onClick={() => onItemClick(item)}
-      >
-        <img src={publicAssetsUrl(thumbUrl)} alt="" />
-      </figure>
-
-      {item.status !== ItemStatus.Todo && (
-        <span
-          className={`status-tag tag is-small ${statusTagClassName(
-            item.status
-          )}`}
-          data-balloon-pos="down"
-        >
-          {item.human_status}
-        </span>
-      )}
-
-      <ItemInfo item={item} />
-    </div>
+      <p>{item.year}</p>
+      <ItemRating item={item} />
+    </CoverBox>
   );
 });
 

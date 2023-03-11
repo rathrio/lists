@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 
 import OmniBar from './OmniBar';
-import ItemList from './ItemList';
 import ScraperResultsContent from './ScraperResultsContent';
 import ItemDetails from './ItemDetails';
 import RootStore from '../stores/RootStore';
@@ -15,7 +14,7 @@ function Items(props: { store: RootStore }) {
       <OmniBar store={itemStore} />
       {/* <ItemList store={itemStore} /> */}
       <ItemGrid store={props.store} />
-      <ScraperResultsContent store={itemStore} />
+      <ScraperResultsContent store={props.store} />
       <ItemDetails store={props.store} />
     </Fragment>
   );
