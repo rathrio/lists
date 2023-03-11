@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import SessionStore from '../stores/SessionStore';
+import SessionStore from '../../stores/SessionStore';
 
 function Login(props: { store: SessionStore }) {
   const store = props.store;

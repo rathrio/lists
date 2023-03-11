@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import ItemStore from '../stores/ItemStore';
+import ItemStore from '../../stores/ItemStore';
 
 interface Props {
   store: ItemStore;

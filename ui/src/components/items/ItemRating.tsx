@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { observer } from 'mobx-react';
 import { action, computed, makeObservable, observable } from 'mobx';
 
-import { Item } from '../interfaces';
+import { Item } from '../../interfaces';
 
 export const RATING_NAMES = ['Abysmal', 'Poor', 'Good', 'Great', 'Masterful'];
 

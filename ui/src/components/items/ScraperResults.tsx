@@ -1,6 +1,5 @@
-import React from 'react';
-import { ScraperResult } from '../interfaces';
-import RootStore from '../stores/RootStore';
+import { ScraperResult } from '../../interfaces';
+import RootStore from '../../stores/RootStore';
 import CoverBox from './CoverBox';
 
 interface ScraperResultBoxProps {
