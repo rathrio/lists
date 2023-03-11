@@ -116,19 +116,21 @@ body.dark {
     }
   }
 
-  .item.is-focused {
-    figure {
-      box-shadow: 0 0 3px 3px $red-color;
+  .cover-box {
+    &.is-focused {
+      figure {
+        box-shadow: 0 0 3px 3px $red-color;
 
-      img {
-        filter: brightness(1) contrast(1);
+        img {
+          filter: brightness(1) contrast(1);
+        }
       }
     }
-  }
 
-  .item-box:hover,
-  .item-box.is-focused {
-    box-shadow: 0 2px 3px 0 $dark-background-color;
+    figure.is-placeholder {
+      background-color: $light-background-color;
+      border-radius: 3px;
+    }
   }
 
   .item-actions,

@@ -109,6 +109,7 @@ class OmniBar extends React.Component<Props> {
           onKeyDown={this.onKeyDown}
           placeholder="Search"
           autoComplete="off"
+          spellCheck={false}
           type="text"
         />
 
