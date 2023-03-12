@@ -229,7 +229,7 @@ class ItemDetails extends React.Component<Props> {
                     </span>
                   </a>
 
-                  <a target="blank" href={urls.netflixSearchUrl(item)}>
+                  <a target="blank" href={urls.bflixSearchUrl(item)}>
                     <span className="icon is-medium">
                       <i className="fas fa-tv fa-lg" />
                     </span>
