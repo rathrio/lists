@@ -129,7 +129,7 @@ body {
 
 .items-grid {
   display: grid;
-  grid-gap: 1rem;
+  grid-gap: 0.6rem;
   grid-template-columns: repeat(3, 1fr);
 
   @media (min-width: 450px) {

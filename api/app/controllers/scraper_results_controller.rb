@@ -4,8 +4,8 @@ class ScraperResultsController < ApplicationController
   def index
     query = params[:query]
     filter_values = params[:filter_values]
-    filter_values = if filter_values.present? 
-                      filter_values.map { |v| Oj.load(v) } 
+    filter_values = if filter_values.present?
+                      filter_values.map { |v| Oj.load(v) }
                     else
                       []
                     end
