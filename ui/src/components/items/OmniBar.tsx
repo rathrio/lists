@@ -37,8 +37,8 @@ class OmniBar extends React.Component<Props> {
   onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const { store } = this.props;
 
-    switch (e.keyCode) {
-      case 9: // Tab to autoComplete or focus first filtered item
+    switch (e.code) {
+      case 'Tab':
         e.preventDefault();
         if (store.canAutoComplete) {
           store.autoComplete();
@@ -48,7 +48,7 @@ class OmniBar extends React.Component<Props> {
         }
 
         return false;
-      case 39: // Right arrow
+      case 'ArrowRight':
         if (store.canAutoComplete) {
           e.preventDefault();
           store.autoComplete();
@@ -56,7 +56,7 @@ class OmniBar extends React.Component<Props> {
         }
 
         return true;
-      case 69: // "e" key
+      case 'KeyE':
         if (e.ctrlKey && store.canAutoComplete) {
           e.preventDefault();
           store.autoComplete();
@@ -64,7 +64,7 @@ class OmniBar extends React.Component<Props> {
         }
 
         return true;
-      case 13: // ENTER
+      case 'Enter':
         this.onSubmit(e);
 
         return false;
