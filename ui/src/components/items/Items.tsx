@@ -12,7 +12,6 @@ function Items(props: { store: RootStore }) {
   return (
     <Fragment>
       <OmniBar store={itemStore} />
-      {/* <ItemList store={itemStore} /> */}
       <ItemGrid store={props.store} />
       <ScraperResultsContent store={props.store} />
       <ItemDetails store={props.store} />
