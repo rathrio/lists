@@ -11,32 +11,35 @@ interface Props {
   tag?: string;
   tagClass?: string;
   balloonMessage?: string;
+  disablePointer?: boolean;
+  className?: string;
   onClick: () => void;
 }
 
 const CoverBox = observer((props: React.PropsWithChildren<Props>) => {
   return (
     <div
-      className={`cover-box${props.isFocused ? ' is-focused' : ''}`}
+      className={`cover-box${props.isFocused ? ' is-focused' : ''} ${
+        props.className
+      }`}
       style={{ position: 'relative' }}
       aria-label={props.balloonMessage}
       data-balloon-pos="down"
     >
       <figure
-        className={`image is-${props.coverAspectRatio} has-pointer ${
-          props.isCoverMissing ? 'is-placeholder' : ''
-        }`}
+        className={`image is-${props.coverAspectRatio} ${
+          props.disablePointer ? '' : 'has-pointer'
+        } ${props.isCoverMissing ? 'is-placeholder' : ''}`}
         onClick={props.onClick}
       >
         {props.isCoverMissing ? (
-          <p className='placeholder-title'>{props.title}</p>
+          <p className="placeholder-title">{props.title}</p>
         ) : (
-        <img
-          src={props.coverUrl}
-          alt="TODO: Fix me and render a title instead of an img"
-        />
+          <img
+            src={props.coverUrl}
+            alt="TODO: Fix me and render a title instead of an img"
+          />
         )}
-
       </figure>
 
       {props.tag && (

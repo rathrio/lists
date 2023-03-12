@@ -133,6 +133,77 @@ body.dark {
     }
   }
 
+  .placeholder-grid {
+    .cover-box {
+      figure {
+        background-color: $light-background-color;
+        animation-name: color;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+      }
+
+      @keyframes color {
+        0% {
+          background-color: #222;
+        }
+        50% {
+          background-color: $light-background-color;
+        }
+        100% {
+          background-color: #222;
+        }
+      }
+    }
+
+    .cover-box.i0 {
+      figure {
+        animation-delay: 0ms;
+      }
+    }
+
+    .cover-box.i1 {
+      figure {
+        animation-delay: 30ms;
+      }
+    }
+
+    .cover-box.i2 {
+      figure {
+        animation-delay: 60ms;
+      }
+    }
+
+    .cover-box.i3 {
+      figure {
+        animation-delay: 90ms;
+      }
+    }
+
+    .cover-box.i4 {
+      figure {
+        animation-delay: 120ms;
+      }
+    }
+
+    .cover-box.i5 {
+      figure {
+        animation-delay: 150ms;
+      }
+    }
+
+    .cover-box.i6 {
+      figure {
+        animation-delay: 180ms;
+      }
+    }
+
+    .cover-box.i7 {
+      figure {
+        animation-delay: 210ms;
+      }
+    }
+  }
+
   .item-actions,
   .external-item-links {
     a {

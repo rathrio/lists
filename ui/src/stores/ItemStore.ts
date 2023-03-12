@@ -14,11 +14,12 @@ import {
 } from '../utils/filter';
 import { toIdentifier } from '../utils/toIdentifier';
 
+export const ITEMS_TO_SHOW = 36;
+
 /**
  * State management for items.
  */
 class ItemStore {
-  static itemsToShow = 40;
   static statusRank = {
     doing: 0,
     todo: 1,
@@ -750,7 +751,7 @@ class ItemStore {
       return this.allFilteredItems;
     }
 
-    return this.allFilteredItems.slice(0, ItemStore.itemsToShow);
+    return this.allFilteredItems.slice(0, ITEMS_TO_SHOW);
   }
 
   @computed
