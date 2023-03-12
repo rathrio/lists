@@ -36,9 +36,9 @@ module Scraper
   module ClassMethods
     def human_status_names
       @human_status_names ||= {
-        todo: 'Todo',
-        doing: 'Doing',
-        done: 'Done'
+        todo: "Todo",
+        doing: "Doing",
+        done: "Done",
       }
     end
 
@@ -92,9 +92,9 @@ module Scraper
         links: scrape_links(result),
         tags: scrape_tags(result),
         language: scrape_language(result),
-        metadata: scrape_metadata(result)
+        metadata: scrape_metadata(result),
       }
-    end
+    end.select { |result| result[:remote_image_url].present? }
   end
 
   # @return [Array] an Array of objects most likely retrieved via an API call.
@@ -102,26 +102,26 @@ module Scraper
   #   extract the desired data.
   def search_results
     raise NotImplementedError, <<~EOS
-      Implement #search_results and make it return an array or results.
-    EOS
+            Implement #search_results and make it return an array or results.
+          EOS
   end
 
   # @param result [Hash]
   # @return [String]
   def scrape_name(result)
     raise NotImplementedError, <<~EOS
-      Implement #scrape_name(result) and extract the value from result that
-      correspond with the name of an item.
+            Implement #scrape_name(result) and extract the value from result that
+            correspond with the name of an item.
 
-      result is one element of whatever #search_results returns.
+            result is one element of whatever #search_results returns.
 
-      Example:
+            Example:
 
-      # Assuming #search_results returns an array of hashes with key :title
-      def scrape_name(result)
-        result[:title]
-      end
-    EOS
+            # Assuming #search_results returns an array of hashes with key :title
+            def scrape_name(result)
+              result[:title]
+            end
+          EOS
   end
 
   # @param result [Hash]
