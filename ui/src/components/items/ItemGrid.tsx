@@ -6,7 +6,7 @@ import ItemActions from './ItemActions';
 import RootStore from '../../stores/RootStore';
 import CoverBox from './CoverBox';
 import { publicAssetsUrl } from '../../utils/api';
-import Spinner from '../elements/Spinner';
+import { ITEMS_TO_SHOW } from '../../stores/ItemStore';
 
 interface Props {
   store: RootStore;
@@ -64,14 +64,31 @@ const ItemBox = observer((props: { item: Item; store: RootStore }) => {
   );
 });
 
+const PlaceholderGrid = observer((props: Props) => {
+  const { store } = props;
+  const coverAspectRatio = store.listStore.activeList!.cover_aspect_ratio;
+
+  const placeholders = [...Array(ITEMS_TO_SHOW)].map((_, i) => (
+    <CoverBox
+      coverUrl={''}
+      isCoverMissing={true}
+      title={''}
+      coverAspectRatio={coverAspectRatio}
+      disablePointer={true}
+      onClick={() => {}}
+      className={`i${i % 8}`}
+    >
+      <p>&nbsp;</p>
+    </CoverBox>
+  ));
+
+  return <div className="items-grid placeholder-grid">{placeholders}</div>;
+});
+
 function ItemGrid(props: Props) {
   const { store } = props;
   if (store.itemStore.isLoading) {
-    return (
-      <div style={{ marginTop: '5rem' }}>
-        <Spinner />
-      </div>
-    );
+    return <PlaceholderGrid {...props} />;
   }
 
   const itemBoxes = store.itemStore.filteredItems.map((item, index) => {

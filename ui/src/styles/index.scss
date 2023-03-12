@@ -144,8 +144,12 @@ body {
     grid-template-columns: repeat(7, 1fr);
   }
 
-  @media (min-width: 1250px) {
+  @media (min-width: 1050px) {
     grid-template-columns: repeat(8, 1fr);
+  }
+
+  @media (min-width: 1250px) {
+    grid-template-columns: repeat(9, 1fr);
   }
 
   .cover-box {
