@@ -26,9 +26,12 @@ class ItemStore {
   };
 
   /**
-   * All items provided by Rails.
+   * All items provided by the backend.
    */
   readonly items = observable<Item>([]);
+
+  @observable
+  isLoading = false;
 
   /**
    * Results rendered when searching the web.
@@ -172,11 +175,15 @@ class ItemStore {
 
   @action
   private loadItems = (list: List) => {
-    API.get(`/lists/${list.id}/items`).then(
-      action((response) => {
-        this.items.replace(response.data);
-      })
-    );
+    this.isLoading = true;
+
+    API.get(`/lists/${list.id}/items`)
+      .then(
+        action((response) => {
+          this.items.replace(response.data);
+        })
+      )
+      .finally(() => (this.isLoading = false));
   };
 
   @action

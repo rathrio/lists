@@ -6,6 +6,7 @@ import ItemActions from './ItemActions';
 import RootStore from '../../stores/RootStore';
 import CoverBox from './CoverBox';
 import { publicAssetsUrl } from '../../utils/api';
+import Spinner from '../elements/Spinner';
 
 interface Props {
   store: RootStore;
@@ -65,6 +66,13 @@ const ItemBox = observer((props: { item: Item; store: RootStore }) => {
 
 function ItemGrid(props: Props) {
   const { store } = props;
+  if (store.itemStore.isLoading) {
+    return (
+      <div style={{ marginTop: '5rem' }}>
+        <Spinner />
+      </div>
+    );
+  }
 
   const itemBoxes = store.itemStore.filteredItems.map((item, index) => {
     return <ItemBox item={item} store={store} key={index} />;
