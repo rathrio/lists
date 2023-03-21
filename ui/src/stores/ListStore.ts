@@ -10,7 +10,7 @@ const ARCHIVE: List = {
   name: 'Archive',
   fa_icon: 'archive',
   description: 'Virtual List for display purposes',
-  cover_aspect_ratio: '3by4',
+  cover_aspect_ratio: '2by3',
 };
 
 class ListStore {

@@ -76,7 +76,7 @@ const PlaceholderGrid = observer((props: Props) => {
       coverAspectRatio={coverAspectRatio}
       disablePointer={true}
       onClick={() => {}}
-      className={`i${i % 8}`}
+      className={`i${i % 9}`}
     >
       <p>&nbsp;</p>
     </CoverBox>
