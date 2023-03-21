@@ -138,7 +138,7 @@ body.dark {
       figure {
         background-color: $light-background-color;
         animation-name: color;
-        animation-duration: 2s;
+        animation-duration: 750ms;
         animation-iteration-count: infinite;
       }
 
@@ -163,43 +163,49 @@ body.dark {
 
     .cover-box.i1 {
       figure {
-        animation-delay: 30ms;
+        animation-delay: 10ms;
       }
     }
 
     .cover-box.i2 {
       figure {
-        animation-delay: 60ms;
+        animation-delay: 20ms;
       }
     }
 
     .cover-box.i3 {
       figure {
-        animation-delay: 90ms;
+        animation-delay: 30ms;
       }
     }
 
     .cover-box.i4 {
       figure {
-        animation-delay: 120ms;
+        animation-delay: 40ms;
       }
     }
 
     .cover-box.i5 {
       figure {
-        animation-delay: 150ms;
+        animation-delay: 50ms;
       }
     }
 
     .cover-box.i6 {
       figure {
-        animation-delay: 180ms;
+        animation-delay: 60ms;
       }
     }
 
     .cover-box.i7 {
       figure {
-        animation-delay: 210ms;
+        animation-delay: 70ms;
+      }
+    }
+
+    .cover-box.i8 {
+      figure {
+        animation-delay: 80ms;
       }
     }
   }
