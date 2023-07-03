@@ -158,6 +158,13 @@ class ItemDetails extends React.Component<Props> {
     store.itemStore.restore(item);
   };
 
+  onDeleteClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const { store } = this.props;
+    const item = store.itemStore.activeItem!;
+    store.itemStore.delete(item);
+  };
+
   onStatusTagClick = (e: React.MouseEvent) => {
     e.preventDefault();
     const { store } = this.props;
@@ -492,6 +499,18 @@ class ItemDetails extends React.Component<Props> {
                       </span>
 
                       <span>Restore</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={this.onDeleteClick}
+                      className="button is-danger"
+                    >
+                      <span className="icon">
+                        <i className="fa fa-trash" />
+                      </span>
+
+                      <span>Delete</span>
                     </button>
                   </div>
                 )}
