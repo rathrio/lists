@@ -302,7 +302,7 @@ class ItemStore {
 
   @action
   delete = (item: Item) => {
-    if (!window.confirm('Are you sure?')) {
+    if (!window.confirm('Are you sure you want to delete this item for real real this time?')) {
       return;
     }
 
