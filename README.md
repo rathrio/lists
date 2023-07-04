@@ -81,7 +81,17 @@ UI (`cd ui`):
 yarn test
 ```
 
-## API Credits
+## OPS
+
+The top level directory contains some convenience scripts to help with deploying
+and spawning remote shells.
+
+- `deploy`: Builds and deploys backend and frontend to rathr.io
+- `redis`: Spawns a `redis-cli` in the redis container
+- `postgres`: Spawns a `psql` shell in the postgres container
+- `web`: Spawns a shell in the web container
+
+## APIs used
 
 Lists relies on the following APIs to scrape meta info:
 

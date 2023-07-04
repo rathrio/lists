@@ -1,0 +1,5 @@
+#! /bin/bash
+
+# Open shell in remote web container where one can run `ralis console` for instance
+
+ssh -t rathr.io 'docker exec -it lists-docker-web-1 /bin/sh'
