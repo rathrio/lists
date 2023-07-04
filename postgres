@@ -1,0 +1,5 @@
+#! /bin/bash
+
+# Run remote psql shell
+
+ssh -t rathr.io 'docker exec -it lists-docker-postgres-1 psql -d lists_production'
