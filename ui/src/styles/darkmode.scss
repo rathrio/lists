@@ -226,6 +226,10 @@ body.dark {
     color: $foreground-color;
   }
 
+  i.fa {
+    color: $foreground-color;
+  }
+
   input:focus,
   textarea:focus,
   select:focus {

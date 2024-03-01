@@ -1,5 +1,7 @@
 #! /bin/bash
 
+set -e
+
 scp docker-compose.yml rathr.io:/var/www/lists-docker
 ./build_and_push.sh
 

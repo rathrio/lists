@@ -1,4 +1,6 @@
 #! /bin/bash
 
+set -e
+
 REACT_APP_BACKEND_API_BASE_URL=https://lists.rathr.io/api yarn build
 rsync -rv --delete build/ rathr.io:/var/www/lists-docker/ui/
