@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
@@ -6,14 +6,14 @@ git_source(:github) do |repo_name|
 end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'net-smtp', require: false
-gem 'net-imap', require: false
-gem 'net-pop', require: false
-gem 'rails', '~> 7'
+gem "net-smtp", require: false
+gem "net-imap", require: false
+gem "net-pop", require: false
+gem "rails", "~> 7"
 # Use postgres as the database for Active Record
-gem 'pg'
+gem "pg"
 # Use Puma as the app server
-gem 'puma', '~> 6'
+gem "puma", "~> 6"
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
@@ -21,58 +21,54 @@ gem 'puma', '~> 6'
 # gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
 # gem 'hiredis'
-gem 'redis'#, require: ["redis", "redis/connection/hiredis"]
+gem "redis" #, require: ["redis", "redis/connection/hiredis"]
 
 # A fast JSON parser and Object marshaller.
-gem 'oj'
+gem "oj"
 
 # CORS
-gem 'rack-cors'
+gem "rack-cors"
 
 # Tokens
-gem 'jwt'
+gem "jwt"
 
 # Authentication
-gem 'clearance'
+gem "clearance"
 
 # For attachments
-gem 'carrierwave'
+gem "carrierwave"
 
 # Imagemagick interface
-gem 'mini_magick'
+gem "mini_magick"
 
 # HTTP client
-gem 'httparty'
+gem "httparty"
 
 # Softdelete
-gem 'paranoia'
+gem "paranoia"
 
 # Background jobs
 # gem 'sidekiq'
 
 group :development, :test do
-  gem 'dotenv-rails'
-  gem 'pry-rails'
-  gem 'pry-doc'
-  gem 'pry-byebug'
-
-  gem 'factory_bot_rails'
-  gem 'ffaker'
+  gem "dotenv-rails"
+  gem "factory_bot_rails"
+  gem "ffaker"
 end
 
 group :development do
-  gem 'rubocop'
-  gem 'solargraph'
-  gem 'foreman'
-  gem 'web-console', '~> 4.2'
-  gem 'listen', '~> 3'
+  gem "rubocop"
+  gem "solargraph"
+  gem "foreman"
+  gem "web-console", "~> 4.2"
+  gem "listen", "~> 3"
 
   # A documentation generation tool
-  gem 'yard'
+  gem "yard"
 
   # For adding schema on top of model file as comment
-  gem 'annotate'
+  gem "annotate"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
