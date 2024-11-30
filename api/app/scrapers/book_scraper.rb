@@ -13,7 +13,7 @@ class BookScraper
 
   def search_results
     title = query.strip.tr(' ', '+')
-    google_books_client.search(title)['items']
+    google_books_client.search(title, filter_values:)['items']
   end
 
   def scrape_name(result)
