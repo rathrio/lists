@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class JwtService
-  JWT_ALGORITHM = 'HS256'
+  JWT_ALGORITHM = "HS256"
 
   def self.secret
     Rails.application.secrets.secret_key_base

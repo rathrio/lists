@@ -9,8 +9,8 @@ class ApplicationController < ActionController::API
   def validate_token
     token = cookies.signed[:jwt]
     data = JwtService.decode(token)
-    data.first['user_id'].present?
+    data.first["user_id"].present?
   rescue JWT::DecodeError
-    render json: { message: 'Invalid or missing token' }, status: 401
+    render json: { message: "Invalid or missing token" }, status: 401
   end
 end
