@@ -36,3 +36,7 @@ yarn-debug.log*
 yarn-error.log
 
 *.iml
+
+/config/master.key
+
+/config/credentials/development.key
