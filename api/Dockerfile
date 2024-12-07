@@ -1,6 +1,6 @@
 FROM ruby:3-alpine
 
-RUN apk add --update build-base gcompat postgresql-dev tzdata imagemagick
+RUN apk add --update build-base gcompat postgresql-dev tzdata imagemagick imagemagick-libs libjpeg-turbo
 
 WORKDIR /lists
 
