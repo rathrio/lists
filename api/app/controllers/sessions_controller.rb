@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
-  skip_before_action :validate_token
+  skip_before_action :validate_token, only: [:sign_in, :sign_out]
 
   TOKEN_EXPIRATION_DAYS = 7.days
 

@@ -20,7 +20,7 @@ require "rails/test_unit/railtie"
 Bundler.require(*Rails.groups)
 
 # Load dotenv only in development or test environment
-if ['development', 'test'].include? ENV['RAILS_ENV']
+if ["development", "test"].include? ENV["RAILS_ENV"]
   Dotenv::Railtie.load
 end
 
@@ -33,7 +33,9 @@ module Lists
     # config.active_job.queue_adapter = :sidekiq
     config.api_only = true
     config.middleware.use ActionDispatch::Cookies
-    config.active_record.legacy_connection_handling = false
+
+    # https://guides.rubyonrails.org/upgrading_ruby_on_rails.html#autoloaded-paths-are-no-longer-in-$load-path
+    config.add_autoload_paths_to_load_path = true
   end
 
   def self.version
