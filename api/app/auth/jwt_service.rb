@@ -4,7 +4,7 @@ class JwtService
   JWT_ALGORITHM = "HS256"
 
   def self.secret
-    Rails.application.credentials.secret_key_base
+    ENV["SECRET_KEY_BASE"] || Rails.application.credentials.secret_key_base
   end
 
   # @param user [User]

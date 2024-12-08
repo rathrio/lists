@@ -9,6 +9,10 @@ end
 gem "net-smtp", require: false
 gem "net-imap", require: false
 gem "net-pop", require: false
+
+# https://github.com/socketry/nio4r/issues/323
+gem "nio4r", "~> 2.7", ">= 2.7.4"
+
 gem "rails", "~> 7.2"
 # Use postgres as the database for Active Record
 gem "pg"
