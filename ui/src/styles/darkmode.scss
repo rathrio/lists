@@ -61,9 +61,12 @@ body.dark {
     color: $light-foreground-color;
   }
 
-  .tabs li.is-active a {
-    border-bottom-color: $red-color;
-    color: $red-color;
+  .tabs li.is-active {
+    a,
+    i {
+      border-bottom-color: $red-color;
+      color: $red-color;
+    }
   }
 
   code {
