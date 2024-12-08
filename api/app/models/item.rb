@@ -46,7 +46,7 @@
 class Item < ApplicationRecord
   acts_as_paranoid
 
-  enum status: %i[todo doing done]
+  enum :status, %i[todo doing done]
 
   belongs_to :user
   belongs_to :list
