@@ -13,7 +13,9 @@ gem "net-pop", require: false
 # https://github.com/socketry/nio4r/issues/323
 gem "nio4r", "~> 2.7", ">= 2.7.4"
 
-gem "rails", "~> 7.2"
+# /Users/radi/.gem/ruby/3.3.4/gems/minitest-5.17.0/lib/minitest.rb:3: warning: mutex_m was loaded from the standard library, but will no longer be part of the default gems since Ruby 3.4.0. Add mutex_m to your Gemfile or gemspec. Also contact author of minitest-5.17.0 to add mutex_m into its gemspec.
+gem "mutex_m"
+gem "rails", "~> 8.0"
 # Use postgres as the database for Active Record
 gem "pg"
 # Use Puma as the app server
@@ -46,6 +48,7 @@ gem "carrierwave"
 gem "mini_magick"
 
 # HTTP client
+gem "csv"
 gem "httparty"
 
 # Softdelete
@@ -56,6 +59,7 @@ gem "paranoia"
 
 group :development, :test do
   gem "dotenv-rails"
+  gem "observer"
   gem "factory_bot_rails"
   gem "ffaker"
 end
