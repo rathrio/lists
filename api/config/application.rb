@@ -36,6 +36,11 @@ module Lists
 
     # https://guides.rubyonrails.org/upgrading_ruby_on_rails.html#autoloaded-paths-are-no-longer-in-$load-path
     config.add_autoload_paths_to_load_path = true
+
+    # DEPRECATION WARNING: `to_time` will always preserve the receiver timezone
+    # rather than system local time in Rails 8.1. To opt in to the new behavior,
+    # set `config.active_support.to_time_preserves_timezone = :zone`.
+    config.active_support.to_time_preserves_timezone = :zone
   end
 
   def self.version
