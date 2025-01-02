@@ -86,7 +86,7 @@ yarn test
 The top level directory contains some convenience scripts to help with deploying
 and spawning remote shells.
 
-- `deploy`: Builds and deploys backend and frontend to rathr.io
+- `deploy`: Builds and deploys backend and frontend to lists.rathr.io
 - `redis`: Spawns a `redis-cli` in the redis container
 - `postgres`: Spawns a `psql` shell in the postgres container
 - `web`: Spawns a shell in the web container
