@@ -2,4 +2,4 @@
 
 # Open shell in remote web container where one can run `rails console` for instance
 
-ssh -t rathr.io 'docker exec -it lists-docker-web-1 /bin/sh'
+ssh -t lists.rathr.io 'docker exec -it lists-web-1 /bin/sh'

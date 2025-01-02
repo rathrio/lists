@@ -2,12 +2,12 @@
 
 set -e
 
-scp docker-compose.yml rathr.io:/var/www/lists-docker
+scp docker-compose.yml lists.rathr.io:/var/www/lists
 ./build_and_push.sh
 
-ssh rathr.io 'bash --login -s' << "EOF"
-  cd /var/www/lists-docker
-  docker-compose down
-  docker-compose pull
-  docker-compose up -d
+ssh lists.rathr.io 'bash --login -s' << "EOF"
+  cd /var/www/lists
+  docker compose down
+  docker compose pull
+  docker compose up -d
 EOF

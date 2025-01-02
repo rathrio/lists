@@ -2,4 +2,4 @@
 
 # Run remote redis-cli
 
-ssh -t rathr.io 'docker exec -it lists-docker-redis-1 redis-cli'
+ssh -t lists.rathr.io 'docker exec -it lists-redis-1 redis-cli'
