@@ -3,23 +3,20 @@
 # Table name: lists
 #
 #  id                 :integer          not null, primary key
-#  cover_aspect_ratio :string
-#  description        :string
-#  fa_icon            :string
 #  name               :string
+#  description        :string
 #  scraper            :string
+#  fa_icon            :string
 #  created_at         :datetime
 #  updated_at         :datetime
 #  user_id            :integer
+#  cover_aspect_ratio :string
 #
 # Indexes
 #
 #  index_lists_on_user_id  (user_id)
 #
-# Foreign Keys
-#
-#  fk_rails_...  (user_id => users.id)
-#
+
 class List < ApplicationRecord
   belongs_to :user
   has_many :items
