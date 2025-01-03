@@ -52,7 +52,6 @@ class Item < ApplicationRecord
   belongs_to :list
 
   has_many :links
-  has_many :notes
 
   has_and_belongs_to_many :tags
 
@@ -85,7 +84,6 @@ class Item < ApplicationRecord
   # model.
   def really_destroy!
     links.delete_all
-    notes.delete_all
     super
   end
 
@@ -145,7 +143,7 @@ class Item < ApplicationRecord
     default_scraper
       .new(
         query: name,
-        filter_values: [{ 'filter' => 'year', 'value' => year }]
+        filter_values: [{ "filter" => "year", "value" => year }],
       )
       .scrape
       .first
@@ -166,14 +164,14 @@ class Item < ApplicationRecord
 
   def as_json(*)
     super.tap do |hash|
-      hash['tags'] = tags.map(&:name)
-      hash['list'] = list_name
-      hash['fa_icon'] = fa_icon
-      hash['year'] = year
-      hash['language'] = language
-      hash['deleted'] = deleted?
-      hash['human_status'] = human_status
-      hash['notes'] = notes
+      hash["tags"] = tags.map(&:name)
+      hash["list"] = list_name
+      hash["fa_icon"] = fa_icon
+      hash["year"] = year
+      hash["language"] = language
+      hash["deleted"] = deleted?
+      hash["human_status"] = human_status
+      hash["notes"] = notes
     end
   end
 end
