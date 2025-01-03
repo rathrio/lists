@@ -171,7 +171,6 @@ class Item < ApplicationRecord
       hash["language"] = language
       hash["deleted"] = deleted?
       hash["human_status"] = human_status
-      hash["notes"] = notes
     end
   end
 end

@@ -46,7 +46,7 @@ export interface Item {
   image?: Image;
   remote_image_url?: string;
   recommended_by?: string;
-  notes: Note[];
+  notes?: string;
 }
 
 export interface ScraperResult {
@@ -70,11 +70,4 @@ export interface Tag {
    */
   value?: string | number;
   type: 'tag' | 'status' | 'list' | 'year' | 'rating';
-}
-
-export interface Note {
-  id: number;
-  list_id: number;
-  text: string;
-  created_at: string;
 }
