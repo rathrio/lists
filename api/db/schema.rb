@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2023_03_07_183922) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_03_084314) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -34,6 +34,7 @@ ActiveRecord::Schema[8.0].define(version: 2023_03_07_183922) do
     t.string "original_name"
     t.string "backdrop_image"
     t.jsonb "metadata", default: {}
+    t.string "notes"
     t.index ["deleted_at"], name: "index_items_on_deleted_at"
     t.index ["first_done_at"], name: "index_items_on_first_done_at"
     t.index ["language"], name: "index_items_on_language"

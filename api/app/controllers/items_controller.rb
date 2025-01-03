@@ -15,7 +15,7 @@ class ItemsController < ApplicationController
 
     if stale?(items)
       json = Rails.cache.fetch(items.cache_key, expires_in: 30.days) do
-        items.includes(:list, :tags, :notes).to_json
+        items.includes(:list, :tags).to_json
       end
 
       render json: json
@@ -27,7 +27,7 @@ class ItemsController < ApplicationController
 
     if stale?(items)
       json = Rails.cache.fetch(items.cache_key, expires_in: 30.days) do
-        items.includes(:list, :tags, :notes).to_json
+        items.includes(:list, :tags).to_json
       end
 
       render json: json
@@ -97,7 +97,8 @@ class ItemsController < ApplicationController
       :rating,
       :tags,
       :recommended_by,
-      :language
+      :language,
+      :notes
     )
   end
 end

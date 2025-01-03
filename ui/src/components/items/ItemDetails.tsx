@@ -270,7 +270,7 @@ class ItemDetails extends React.Component<Props> {
                         name="name"
                         defaultValue={item.name}
                         onChange={this.handleFormChange}
-                        className="input is-small"
+                        className="input"
                         type="text"
                         placeholder="Name"
                         required
@@ -293,11 +293,25 @@ class ItemDetails extends React.Component<Props> {
                   </div>
 
                   <div className="field">
+                    <label className="label is-small">Notes</label>
+                    <div className="control">
+                      <textarea
+                        name="notes"
+                        rows={5}
+                        defaultValue={item.notes}
+                        onChange={this.handleFormChange}
+                        className="textarea is-small"
+                        placeholder="Notes"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="field">
                     <label className="label is-small">Language</label>
                     <div className="control">
                       <input
                         name="language"
-                        className="input is-small"
+                        className="input"
                         placeholder="en"
                         defaultValue={item.language}
                         onChange={this.handleFormChange}
@@ -311,7 +325,7 @@ class ItemDetails extends React.Component<Props> {
                     <div className="control">
                       <input
                         name="original_name"
-                        className="input is-small"
+                        className="input"
                         defaultValue={item.original_name}
                         onChange={this.handleFormChange}
                       />
@@ -323,7 +337,7 @@ class ItemDetails extends React.Component<Props> {
                     <div className="control">
                       <input
                         name="recommended_by"
-                        className="input is-small"
+                        className="input"
                         placeholder="Spongebob Squarepants"
                         defaultValue={item.recommended_by}
                         onChange={this.handleFormChange}
@@ -337,7 +351,7 @@ class ItemDetails extends React.Component<Props> {
                       <input
                         name="date"
                         type="date"
-                        className="input is-small"
+                        className="input"
                         placeholder="Release Date"
                         defaultValue={item.date}
                         onChange={this.handleFormChange}
@@ -352,7 +366,7 @@ class ItemDetails extends React.Component<Props> {
                       <input
                         name="first_done_at"
                         type="date"
-                        className="input is-small"
+                        className="input"
                         placeholder="First Completion"
                         defaultValue={item.first_done_at}
                         onChange={this.handleFormChange}
@@ -365,7 +379,7 @@ class ItemDetails extends React.Component<Props> {
                     <div className="control">
                       <input
                         name="tags"
-                        className="input is-small"
+                        className="input"
                         placeholder="e.g. Horror, Fiction"
                         defaultValue={item.tags.join(', ')}
                         onChange={this.handleFormChange}
@@ -379,7 +393,7 @@ class ItemDetails extends React.Component<Props> {
                       <input
                         name="remote_image_url"
                         type="url"
-                        className="input is-small"
+                        className="input"
                         placeholder="Paste link to new image here"
                         defaultValue={item.remote_image_url}
                         onChange={this.handleFormChange}
@@ -424,6 +438,12 @@ class ItemDetails extends React.Component<Props> {
                   </div>
 
                   <p className="item-description">{item.description}</p>
+
+                  {item.notes && (
+                    <p className="item-notes" style={{ marginTop: '1em' }}>
+                      <strong>Notes:</strong> {item.notes}
+                    </p>
+                  )}
 
                   {item.language && (
                     <p className="item-language" style={{ marginTop: '1em' }}>
