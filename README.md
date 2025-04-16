@@ -96,6 +96,7 @@ and spawning remote shells.
 Lists relies on the following APIs to scrape meta info:
 
 - Movies / TV Shows: [The Movie DB](https://www.themoviedb.org)
+   - https://developer.themoviedb.org/reference/intro/getting-started
 - Video Games: [IGDB](https://www.igdb.com/discover)
 - Books: [Google Books](https://developers.google.com/books)
 - Recipes: [Edaman](https://www.edamam.com)

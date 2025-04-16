@@ -8,6 +8,8 @@ class MoviedbClient
   POSTER_BASE_URI = "https://image.tmdb.org/t/p/w500"
   BACKDROP_BASE_URI = "https://image.tmdb.org/t/p/w1280"
 
+  ALLOWED_TYPES = Set.new(["movie", "tv"]).freeze
+
   GENRES = {
     28 => "Action & Adventure",
     12 => "Action & Adventure",
@@ -38,7 +40,7 @@ class MoviedbClient
     37 => "Western",
   }.freeze
 
-  def search(query, type: "movie", filter_values:)
+  def search(query, filter_values:, type: "movie")
     params = { query: }
 
     filter_values.each do |filter_value|
@@ -53,5 +55,12 @@ class MoviedbClient
     end
 
     self.class.get("/search/#{type}", query: params)
+  end
+
+  # @param type [String] either "movie" or "tv"
+  def details(id, type:)
+    raise ArgumentError, "type must be one of #{ALLOWED_TYPES}" unless ALLOWED_TYPES.include?(type)
+
+    self.class.get("/#{type}/#{id}")
   end
 end
