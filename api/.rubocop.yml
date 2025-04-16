@@ -107,3 +107,9 @@ Naming/MemoizedInstanceVariableName:
 
 Naming/HeredocDelimiterNaming:
   Enabled: false
+
+Style/WordArray:
+  Enabled: false
+
+Style/TrailingCommaInHashLiteral:
+  Enabled: false
