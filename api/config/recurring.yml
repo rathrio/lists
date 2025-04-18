@@ -1,0 +1,22 @@
+# production:
+#   periodic_cleanup:
+#     class: CleanSoftDeletedRecordsJob
+#     queue: background
+#     args: [ 1000, { batch_size: 500 } ]
+#     schedule: every hour
+#   periodic_command:
+#     command: "SoftDeletedRecord.due.delete_all"
+#     priority: 2
+#     schedule: at 5am every day
+
+development:
+  notify_user_about_new_episodes_job:
+    class: NotifyUserAboutNewEpisodesJob
+    queue: background
+    schedule: every 15 minutes
+
+production:
+  notify_user_about_new_episodes_job:
+    class: NotifyUserAboutNewEpisodesJob
+    queue: background
+    schedule: every day at noon

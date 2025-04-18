@@ -1,11 +1,5 @@
-require "sidekiq/web" # require the web UI
-
-# Configure Sidekiq-specific session middleware
-Sidekiq::Web.use ActionDispatch::Cookies
-Sidekiq::Web.use ActionDispatch::Session::CookieStore, key: "_interslice_session"
-
 Rails.application.routes.draw do
-  mount Sidekiq::Web => "/sidekiq" # access it at http://localhost:3000/sidekiq
+  mount MissionControl::Jobs::Engine, at: "/jobs"
 
   post "/sign_in" => "sessions#sign_in"
   post "/sign_out" => "sessions#sign_out"

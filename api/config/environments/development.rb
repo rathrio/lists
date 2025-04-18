@@ -13,12 +13,12 @@ Rails.application.configure do
   config.consider_all_requests_local = true
 
   # Enable/disable caching. By default caching is disabled.
-  if Rails.root.join('tmp/caching-dev.txt').exist?
+  if Rails.root.join("tmp/caching-dev.txt").exist?
     config.action_controller.perform_caching = true
 
     config.cache_store = :redis_cache_store
     config.public_file_server.headers = {
-      'Cache-Control' => 'public, max-age=172800'
+      "Cache-Control" => "public, max-age=172800",
     }
   else
     config.action_controller.perform_caching = false
@@ -45,4 +45,8 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   config.debug_exception_response_format = :default
+
+  # Use a real queuing backend for Active Job (and separate queues per environment)
+  config.active_job.queue_adapter = :solid_queue
+  # config.active_job.queue_name_prefix = "lists_#{Rails.env}"
 end

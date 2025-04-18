@@ -30,7 +30,6 @@ module Lists
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
-    config.active_job.queue_adapter = :sidekiq
     config.api_only = true
     config.middleware.use ActionDispatch::Cookies
 
@@ -54,6 +53,8 @@ module Lists
       open_timeout: 5,
       read_timeout: 5,
     }
+
+    config.mission_control.jobs.base_controller_class = "AdminController"
   end
 
   def self.version
