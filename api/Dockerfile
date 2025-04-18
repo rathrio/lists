@@ -10,7 +10,6 @@ COPY Gemfile.lock /lists/Gemfile.lock
 
 RUN bundle install
 
-
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
