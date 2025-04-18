@@ -43,7 +43,7 @@ class NotifyUserAboutNewEpisodes
   end
 
   def self.send_email(notification)
-    NotificationMailer.with(notification:).email.deliver_later
+    NotificationMailer.with(notification:).email.deliver_now
     notification.update!(email_status: :success)
   rescue StandardError => e
     Rails.logger.error(
