@@ -41,18 +41,9 @@ class TvScraper
 
   def scrape_metadata(result)
     tmdb_id = result["id"]
-    details_response = moviedb_client.details(tmdb_id, type: "tv")
-    return { tmdb_id: } unless details_response.success?
+    return if tmdb_id.blank?
 
-    seasons = details_response["seasons"]
-    last_episode_to_air = details_response["last_episode_to_air"]
-    next_episode_to_air = details_response["next_episode_to_air"]
-    {
-      tmdb_id:,
-      seasons:,
-      last_episode_to_air:,
-      next_episode_to_air:,
-    }
+    { tmdb_id: }.merge(moviedb_client.tv_show_season_metadata(tmdb_id))
   end
 
   private

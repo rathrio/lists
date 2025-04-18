@@ -14,9 +14,17 @@ development:
     class: NotifyUserAboutNewEpisodesJob
     queue: background
     schedule: every 15 minutes
+  refresh_season_metadata_job:
+    class: RefreshSeasonMetadataJob
+    queue: background
+    schedule: every 10 minutes
 
 production:
   notify_user_about_new_episodes_job:
     class: NotifyUserAboutNewEpisodesJob
     queue: background
     schedule: every day at noon
+  refresh_season_metadata_job:
+    class: RefreshSeasonMetadataJob
+    queue: background
+    schedule: every day at 3am

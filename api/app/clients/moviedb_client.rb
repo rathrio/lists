@@ -59,8 +59,24 @@ class MoviedbClient
 
   # @param type [String] either "movie" or "tv"
   def details(id, type:)
-    raise ArgumentError, "type must be one of #{ALLOWED_TYPES}" unless ALLOWED_TYPES.include?(type)
+    raise ArgumentError, "type must be one of #{ALLOWED_TYPES}" unless ALLOWED_TYPES.include?(type.to_s)
 
     self.class.get("/#{type}/#{id}")
+  end
+
+  # @param id [String] TMDB ID of the TV show
+  # @return [Hash]
+  def tv_show_season_metadata(id)
+    response = details(id, type: "tv")
+    unless response.success?
+      Rails.logger.error("Failed to fetch details for TMDB ID #{id}: #{response}")
+      return {}
+    end
+
+    {
+      "seasons" => response["seasons"],
+      "last_episode_to_air" => response["last_episode_to_air"],
+      "next_episode_to_air" => response["next_episode_to_air"],
+    }
   end
 end
