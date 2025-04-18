@@ -1,48 +1,5 @@
 # frozen_string_literal: true
 
-# == Schema Information
-#
-# Table name: items
-#
-#  id             :integer          not null, primary key
-#  backdrop_image :string
-#  date           :date
-#  deleted_at     :datetime
-#  description    :string
-#  first_done_at  :date
-#  image          :string
-#  language       :string
-#  metadata       :jsonb
-#  name           :string
-#  original_name  :string
-#  quantity       :integer          default(0)
-#  rating         :float
-#  recommended_by :string
-#  scraped        :boolean          default(FALSE)
-#  status         :integer          default("todo")
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  list_id        :integer
-#  user_id        :integer
-#
-# Indexes
-#
-#  index_items_on_deleted_at      (deleted_at)
-#  index_items_on_first_done_at   (first_done_at)
-#  index_items_on_language        (language)
-#  index_items_on_list_id         (list_id)
-#  index_items_on_metadata        (metadata)
-#  index_items_on_name            (name)
-#  index_items_on_original_name   (original_name)
-#  index_items_on_rating          (rating)
-#  index_items_on_recommended_by  (recommended_by)
-#  index_items_on_status          (status)
-#  index_items_on_user_id         (user_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (user_id => users.id)
-#
 require "test_helper"
 
 class ItemTest < ActiveSupport::TestCase
