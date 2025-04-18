@@ -31,7 +31,7 @@ class NotifyUserAboutNewEpisodes
 
   # @return [Enumerable<Item>]
   def self.tv_shows_with_new_episodes(user)
-    tv_list = user.lists.find_by(name: "TV")
+    tv_list = user.lists.find_by(scraper: "TvScraper")
     return [] if tv_list.nil?
 
     tv_shows = tv_list.items.doing
@@ -43,7 +43,7 @@ class NotifyUserAboutNewEpisodes
   end
 
   def self.send_email(notification)
-    NotificationMailer.with(notification:).deliver
+    NotificationMailer.with(notification:).email.deliver_later
     notification.update!(email_status: :success)
   rescue StandardError => e
     Rails.logger.error(

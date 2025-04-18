@@ -54,8 +54,11 @@ gem "httparty"
 # Softdelete
 gem "paranoia"
 
-# Background jobs
-gem "sidekiq"
+# Active Job backend
+gem "solid_queue", "~> 1.1"
+# Dashboard for active jobs
+gem "propshaft"
+gem "mission_control-jobs", "~> 1.0"
 
 group :development, :test do
   gem "dotenv-rails"

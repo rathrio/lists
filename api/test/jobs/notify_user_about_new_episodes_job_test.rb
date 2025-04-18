@@ -1,6 +1,6 @@
 require "test_helper"
 
-class TvShowsWithNewEpisodesJobTest < ActiveJob::TestCase
+class NotifyUserAboutNewEpisodesJobTest < ActiveJob::TestCase
   # test "the truth" do
   #   assert true
   # end
