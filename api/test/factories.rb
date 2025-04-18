@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :item do
     name { FFaker::Movie.title }
@@ -6,12 +8,12 @@ FactoryBot.define do
   end
 
   factory :list do
-    name { 'Movies' }
+    name { "Movies" }
     user
   end
 
   factory :tag do
-    name { 'Action' }
+    name { "Action" }
     user
   end
 
