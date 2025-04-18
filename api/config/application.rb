@@ -30,7 +30,7 @@ module Lists
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
-    # config.active_job.queue_adapter = :sidekiq
+    config.active_job.queue_adapter = :sidekiq
     config.api_only = true
     config.middleware.use ActionDispatch::Cookies
 
@@ -41,6 +41,19 @@ module Lists
     # rather than system local time in Rails 8.1. To opt in to the new behavior,
     # set `config.active_support.to_time_preserves_timezone = :zone`.
     config.active_support.to_time_preserves_timezone = :zone
+
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      address: "smtp.gmail.com",
+      port: 587,
+      domain: "lists.io",
+      user_name: ENV["SMTP_USERNAME"],
+      password: ENV["SMTP_PASSWORD"],
+      authentication: "plain",
+      enable_starttls: true,
+      open_timeout: 5,
+      read_timeout: 5,
+    }
   end
 
   def self.version

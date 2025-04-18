@@ -55,7 +55,7 @@ gem "httparty"
 gem "paranoia"
 
 # Background jobs
-# gem 'sidekiq'
+gem "sidekiq"
 
 group :development, :test do
   gem "dotenv-rails"
@@ -72,9 +72,6 @@ group :development do
 
   # A documentation generation tool
   gem "yard"
-
-  # For adding schema on top of model file as comment
-  gem "annotate"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
