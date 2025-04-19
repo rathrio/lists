@@ -1,0 +1,17 @@
+<div style="text-align: center;">
+  <img src="<%= @cover_url %>" alt="<%= @item.name %>" style="object-fit: cover; border-radius: 5px;">
+</div>
+
+<p>
+  <strong>Description:</strong> <span><%= @item.description %></span>
+</p>
+
+<% if @item.notes.present? %>
+  <p>
+    <strong>Notes:</strong> <span><%= @item.notes %></span>
+  </p>
+<% end %>
+
+<p>
+  <strong>Tags:</strong> <span><%= @item.tags.join(", ") %></span>
+</p>
