@@ -9,17 +9,7 @@
 #     priority: 2
 #     schedule: at 5am every day
 
-development:
-  notify_user_about_new_episodes_job:
-    class: NotifyUserAboutNewEpisodesJob
-    queue: background
-    schedule: every 15 minutes
-  refresh_season_metadata_job:
-    class: RefreshSeasonMetadataJob
-    queue: background
-    schedule: every 10 minutes
-
-production:
+production: &production
   notify_user_about_new_episodes_job:
     class: NotifyUserAboutNewEpisodesJob
     queue: background
@@ -28,3 +18,10 @@ production:
     class: RefreshSeasonMetadataJob
     queue: background
     schedule: every day at 3am
+  random_recommendation_reminder_job:
+    class: RandomRecommendationReminderJob
+    queue: background
+    schedule: every day at 8pm
+
+development:
+  <<: *production
