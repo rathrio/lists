@@ -119,6 +119,11 @@ class Item < ApplicationRecord
     update_from(scraper_result, fields:)
   end
 
+  def public_image_url
+    url = image&.url
+    Rails.env.production? ? "https://lists.rathr.io/api/#{url}" : "http://localhost:3000/#{url}"
+  end
+
   def as_json(*)
     super.tap do |hash|
       hash["tags"] = tags.map(&:name)

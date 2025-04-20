@@ -1,0 +1,29 @@
+<div style="text-align: center;">
+  <h2>Remember the <%= @item.year %> <%= @item.list.name.downcase.singularize %> "<%= @item.name %>"?</h2>
+
+  <img src="<%= @cover_url %>" alt="<%= @item.name %>" style="object-fit: cover; border-radius: 5px;">
+
+  <% if @item.first_done_at.present? %>
+    <p>You <%= @item.rating == 5 ? 'loved' : 'enjoyed'%> it in <%= @item.first_done_at.strftime("%B %Y") %>.</p>
+  <% end %>
+
+  <% if @item.notes.present? %>
+    <p>
+      <strong>Notes:</strong> <span><%= @item.notes %></span>
+    </p>
+  <% end %>
+
+  <% if @item.recommended_by.present? %>
+    <p>
+      <strong>Recommended by:</strong> <span><%= @item.recommended_by %></span>
+    </p>
+  <% end %>
+
+  <% if @item.rating.present? %>
+    <p>
+      <strong>Rating:</strong> <span><%= @item.rating %></span>
+    </p>
+  <% end %>
+
+  <p>Revisit it on <a href="https://lists.rathr.io">Lists</a>.</p>
+</div>
