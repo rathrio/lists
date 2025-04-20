@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_18_115536) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_19_141943) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -39,7 +39,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_18_115536) do
     t.index ["first_done_at"], name: "index_items_on_first_done_at"
     t.index ["language"], name: "index_items_on_language"
     t.index ["list_id"], name: "index_items_on_list_id"
-    t.index ["metadata"], name: "index_items_on_metadata"
     t.index ["name"], name: "index_items_on_name"
     t.index ["original_name"], name: "index_items_on_original_name"
     t.index ["rating"], name: "index_items_on_rating"
