@@ -56,6 +56,8 @@ module Lists
 
     config.mission_control.jobs.base_controller_class = "AdminController"
     config.mission_control.jobs.http_basic_auth_enabled = false
+
+    config.solid_queue.silence_polling = true
   end
 
   def self.version
