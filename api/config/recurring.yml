@@ -26,6 +26,11 @@ production: &production
     class: FavoriteReminderJob
     queue: background
     schedule: every monday at 6am
+  release_reminder_job:
+    class: ReleaseReminderJob
+    queue: background
+    schedule: every day at 6am
+
 
 development:
   <<: *production

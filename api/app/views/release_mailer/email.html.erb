@@ -1,0 +1,19 @@
+<div style="text-align: center;">
+  <h2>The <%= @item.list.name.downcase.singularize %> "<%= @item.name %>" is out now!</h2>
+
+  <img src="<%= @cover_url %>" alt="<%= @item.name %>" style="object-fit: cover; border-radius: 5px;">
+
+  <p>
+    <strong>Description:</strong> <span><%= @item.description %></span>
+  </p>
+
+  <% if @item.notes.present? %>
+    <p>
+      <strong>Notes:</strong> <span><%= @item.notes %></span>
+    </p>
+  <% end %>
+
+  <p>
+    <strong>Tags:</strong> <span><%= @item.tags.join(", ") %></span>
+  </p>
+</div>
