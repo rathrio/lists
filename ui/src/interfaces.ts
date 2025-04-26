@@ -47,6 +47,7 @@ export interface Item {
   remote_image_url?: string;
   recommended_by?: string;
   notes?: string;
+  metadata?: object;
 }
 
 export interface ScraperResult {

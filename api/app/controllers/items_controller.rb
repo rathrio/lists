@@ -2,6 +2,7 @@
 
 class ItemsController < ApplicationController
   before_action :set_item, only: %i(
+                             metadata
                              update
                              destroy
                              really_destroy
@@ -15,11 +16,15 @@ class ItemsController < ApplicationController
 
     if stale?(items)
       json = Rails.cache.fetch(items.cache_key, expires_in: 30.days) do
-        items.includes(:list, :tags).to_json
+        items.includes(:list, :tags).to_json(except: :metadata)
       end
 
       render json: json
     end
+  end
+
+  def metadata
+    render json: @item.metadata
   end
 
   def archived
@@ -27,7 +32,7 @@ class ItemsController < ApplicationController
 
     if stale?(items)
       json = Rails.cache.fetch(items.cache_key, expires_in: 30.days) do
-        items.includes(:list, :tags).to_json
+        items.includes(:list, :tags).to_json(except: :metadata)
       end
 
       render json: json

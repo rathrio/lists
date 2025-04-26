@@ -301,7 +301,8 @@ body {
     grid-template-areas: 'image fields';
     height: 100%;
 
-    .item-description {
+    .item-description,
+    .item-notes {
       white-space: pre-wrap;
       border-radius: 4px;
     }

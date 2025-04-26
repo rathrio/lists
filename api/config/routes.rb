@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   resources :lists, only: [:index] do
     resources :items, only: [:index, :update, :destroy], shallow: true do
+      get :metadata, on: :member
       put :scrape, on: :member
       put :restore, on: :member
       put :toggle_status, on: :member
