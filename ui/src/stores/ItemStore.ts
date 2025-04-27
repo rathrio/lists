@@ -1,7 +1,7 @@
 import { action, autorun, computed, makeObservable, observable } from 'mobx';
 import _ from 'lodash';
 import API from '../utils/api';
-import { Item, List, ScraperResult, Tag } from '../interfaces';
+import { Item, List, ScraperResult, Season, Tag } from '../interfaces';
 import RootStore from './RootStore';
 import { googleSearchUrl, pirateSearchUrl } from '../utils/externalItemUrls';
 import Mousetrap from 'mousetrap';
@@ -15,6 +15,22 @@ import {
 import { toIdentifier } from '../utils/toIdentifier';
 
 export const ITEMS_TO_SHOW = 36;
+
+function parseSeasons(metadata: any): Season[] {
+  if (!metadata || !metadata['seasons']) {
+    console.info('Invalid metadata format or missing seasons data:', metadata);
+    return [];
+  }
+
+  return metadata['seasons'].map((season: any) => ({
+    id: season['id'],
+    name: season['name'],
+    overview: season['overview'],
+    air_date: season['air_date'],
+    episode_count: season['episode_count'],
+    season_number: season['season_number'],
+  }));
+}
 
 /**
  * State management for items.
@@ -302,7 +318,11 @@ class ItemStore {
 
   @action
   delete = (item: Item) => {
-    if (!window.confirm('Are you sure you want to delete this item for real real this time?')) {
+    if (
+      !window.confirm(
+        'Are you sure you want to delete this item for real real this time?'
+      )
+    ) {
       return;
     }
 
@@ -374,7 +394,28 @@ class ItemStore {
   @action
   showItemDetails = (item: Item) => {
     this.activeItem = item;
+    this.fetchMetadata();
+
     this.showDetailsModal();
+  };
+
+  fetchMetadata = () => {
+    if (!this.activeItem) {
+      return;
+    }
+
+    API.get(`/items/${this.activeItem.id}/metadata`).then(
+      action((response) => {
+        if (this.activeItem) {
+          this.activeItem.metadata = response.data;
+          this.activeItem.seasons = parseSeasons(response.data);
+          (window as any).activeItem = this.activeItem;
+        }
+      }),
+      (error) => {
+        console.error(error);
+      }
+    );
   };
 
   @action

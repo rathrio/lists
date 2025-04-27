@@ -465,6 +465,13 @@ class ItemDetails extends React.Component<Props> {
                       <code>{item.recommended_by}</code>
                     </p>
                   )}
+
+                  {item.metadata && (
+                    <p className="item-metadata">
+                      <strong>Metadata:</strong>{' '}
+                      <code>{JSON.stringify(item.metadata)}</code>
+                    </p>
+                  )}
                 </div>
               )}
             </section>
