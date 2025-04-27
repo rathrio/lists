@@ -48,6 +48,16 @@ export interface Item {
   recommended_by?: string;
   notes?: string;
   metadata?: object;
+  seasons?: Season[];
+}
+
+export interface Season {
+  id: number;
+  name: string;
+  overview: string;
+  air_date: string;
+  episode_count: number;
+  season_number: number;
 }
 
 export interface ScraperResult {
