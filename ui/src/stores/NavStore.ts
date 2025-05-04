@@ -71,7 +71,7 @@ class NavStore {
       window.history.pushState(
         { list: list.name },
         list.name,
-        slug(list.name)
+        `/${slug(list.name)}`
       );
     }
   };
