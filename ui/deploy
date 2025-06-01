@@ -2,5 +2,5 @@
 
 set -e
 
-REACT_APP_BACKEND_API_BASE_URL=https://lists.rathr.io/api yarn build
-rsync -rv --delete build/ lists.rathr.io:/var/www/lists/ui/
+VITE_BACKEND_API_BASE_URL=https://lists.rathr.io/api npm run build
+rsync -rv --delete dist/ lists.rathr.io:/var/www/lists/ui/

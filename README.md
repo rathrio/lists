@@ -17,8 +17,7 @@ API:
    - [Imagemagick >= 7](https://www.imagemagick.org/script/index.php)
 
 UI:
-   - [Node >= 16](https://nodejs.org/en/)
-   - [Yarn](https://yarnpkg.com/en/docs/install)
+   - [Node >= 22](https://nodejs.org/en/)
 
 Ensure that postgres and redis servers are running (listening to default ports).
 
@@ -29,7 +28,6 @@ API (`cd api`):
    1. Install dependencies:
        ```bash
        bundle install
-       yarn install
        ```
 
    2. Setup database:
@@ -46,7 +44,7 @@ UI (`cd ui`):
 
    1. Install dependencies:
       ```bash
-      yarn install
+      npm install
       ```
 
 ## Running
@@ -62,7 +60,7 @@ brew services start redis
 UI (`cd ui`):
 
 ```bash
-yarn start
+npm run dev
 ```
 
 Then visit http://localhost:3001.
@@ -78,7 +76,7 @@ API (`cd api`):
 UI (`cd ui`):
 
 ```bash
-yarn test
+npm run test
 ```
 
 ## OPS
