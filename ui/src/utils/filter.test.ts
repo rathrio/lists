@@ -1,3 +1,4 @@
+import { test, expect } from 'vitest';
 import { buildQuery } from './filter';
 
 test('buildQuery without filters', () => {
