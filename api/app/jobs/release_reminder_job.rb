@@ -4,6 +4,10 @@ class ReleaseReminderJob < ApplicationJob
   queue_as :default
 
   def perform
-    ReleaseReminder.run(User.find(1))
+    user = User.find(1)
+
+    user.items.where(date: Date.today).each do |item|
+      ReleaseMailer.with(item:).email.deliver_now
+    end
   end
 end
