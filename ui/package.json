@@ -16,12 +16,12 @@
     "bulma": "^0.9.3",
     "lodash": "^4.17.19",
     "mobx": "^6.8.0",
-    "mobx-react": "^7.6.0",
+    "mobx-react": "^9.2.0",
     "mousetrap": "^1.6.5",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "sass": "^1.43.4",
-    "scroll-into-view-if-needed": "^2.2.24"
+    "sass": "^1.92.1",
+    "scroll-into-view-if-needed": "^3.1.0"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.18.6",
