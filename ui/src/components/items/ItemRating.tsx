@@ -33,7 +33,6 @@ class ItemRating extends React.Component<Props, State> {
     }
   }
 
-  @computed
   get currentRating(): number {
     return this.rating || this.props.item.rating || 0;
   }
