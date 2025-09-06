@@ -11,7 +11,7 @@
     "test:ui": "vitest --ui"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.15.4",
+    "@fortawesome/fontawesome-free": "^7.0.1",
     "axios": "^1.11.0",
     "bulma": "^0.9.3",
     "lodash": "^4.17.19",
