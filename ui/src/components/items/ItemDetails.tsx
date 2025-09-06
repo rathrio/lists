@@ -466,12 +466,12 @@ class ItemDetails extends React.Component<Props> {
                     </p>
                   )}
 
-                  {item.metadata && (
+                  {/* {item.metadata && (
                     <p className="item-metadata">
                       <strong>Metadata:</strong>{' '}
                       <code>{JSON.stringify(item.metadata)}</code>
                     </p>
-                  )}
+                  )} */}
                 </div>
               )}
             </section>

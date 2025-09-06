@@ -13,7 +13,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^7.0.1",
     "axios": "^1.11.0",
-    "bulma": "^0.9.3",
+    "bulma": "^1.0.4",
     "lodash": "^4.17.19",
     "mobx": "^6.8.0",
     "mobx-react": "^9.2.0",

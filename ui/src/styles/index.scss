@@ -1,3 +1,5 @@
+@import 'bulma/css/bulma.css';
+
 @keyframes fadein {
   from {
     opacity: 0;
@@ -203,6 +205,8 @@ body {
   .modal-card-head {
     min-height: 58px;
 
+    box-shadow: none;
+
     .header-actions {
       margin-left: auto;
     }
@@ -254,6 +258,10 @@ body {
       display: flex;
       justify-content: flex-end;
       grid-area: actions-right;
+    }
+
+    .button:not(:last-child) {
+      margin-right: 0.5em;
     }
   }
 

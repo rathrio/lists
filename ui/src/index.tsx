@@ -1,6 +1,5 @@
 import { createRoot } from 'react-dom/client';
 import App from './components/App';
-import 'bulma/css/bulma.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './styles/index.scss';
 import './styles/darkmode.scss';
