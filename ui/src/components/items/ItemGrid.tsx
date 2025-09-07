@@ -70,6 +70,7 @@ const PlaceholderGrid = observer((props: Props) => {
 
   const placeholders = [...Array(ITEMS_TO_SHOW)].map((_, i) => (
     <CoverBox
+      key={`box-${i}`}
       coverUrl={''}
       isCoverMissing={true}
       title={''}

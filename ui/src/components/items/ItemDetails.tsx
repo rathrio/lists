@@ -8,6 +8,7 @@ import * as urls from '../../utils/externalItemUrls';
 import ItemRating from './ItemRating';
 import { publicAssetsUrl } from '../../utils/api';
 import RootStore from '../../stores/RootStore';
+import Seasons from './Seasons';
 
 interface Props {
   store: RootStore;
@@ -466,12 +467,7 @@ class ItemDetails extends React.Component<Props> {
                     </p>
                   )}
 
-                  {/* {item.metadata && (
-                    <p className="item-metadata">
-                      <strong>Metadata:</strong>{' '}
-                      <code>{JSON.stringify(item.metadata)}</code>
-                    </p>
-                  )} */}
+                  <Seasons item={item} />
                 </div>
               )}
             </section>
