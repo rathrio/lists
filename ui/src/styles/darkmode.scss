@@ -97,6 +97,10 @@ body.dark {
   .table {
     background-color: $background-color;
     color: $foreground-color;
+
+    th, td {
+      color: $foreground-color;
+    }
   }
 
   .box,

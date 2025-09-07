@@ -9,7 +9,7 @@ class RefreshSeasonMetadataJob < ApplicationJob
     tv_list = user.lists.find_by(scraper: "TvScraper")
     return [] if tv_list.nil?
 
-    tv_shows = tv_list.items.doing
+    tv_shows = tv_list.items
     tv_shows.each do |tv_show|
       refresh_season_metadata(tv_show)
     end
