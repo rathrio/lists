@@ -107,8 +107,15 @@ body.dark {
   .button,
   .modal-card-head,
   .modal-card-foot {
-    background-color: $light-background-color;
     color: $foreground-color;
+  }
+
+  .modal-card-head {
+    background-color: $background-color;
+  }
+
+  .modal-card-foot {
+    background-color: $light-background-color;
   }
 
   .button,
