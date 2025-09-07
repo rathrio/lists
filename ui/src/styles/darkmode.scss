@@ -93,7 +93,8 @@ body.dark {
     filter: brightness(0.9) contrast(1.1);
   }
 
-  .modal-card-body {
+  .modal-card-body,
+  .table {
     background-color: $background-color;
     color: $foreground-color;
   }

@@ -200,7 +200,7 @@ class ItemStore {
           this.items.replace(response.data);
         })
       )
-      .finally(() => (this.isLoading = false));
+      .finally(action(() => (this.isLoading = false)));
   };
 
   @action
