@@ -196,6 +196,7 @@ GEM
       racc (~> 1.4)
     observer (0.1.2)
     oj (3.14.2)
+    ostruct (0.6.3)
     parallel (1.22.1)
     paranoia (3.0.0)
       activerecord (>= 6, < 8.1)
@@ -345,6 +346,7 @@ DEPENDENCIES
   nio4r (~> 2.7, >= 2.7.4)
   observer
   oj
+  ostruct
   paranoia
   pg
   propshaft
