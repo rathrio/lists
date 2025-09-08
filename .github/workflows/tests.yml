@@ -38,28 +38,8 @@ jobs:
           bundler-cache: true # This will cache bundle install
           working-directory: ./api
 
-      - name: Cache apt packages
-        uses: actions/cache@v3
-        with:
-          path: /var/cache/apt/archives
-          key: ${{ runner.os }}-apt-cache-${{ hashFiles('.github/workflows/tests.yml') }}
-
-      - name: Install apt-fast
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y software-properties-common
-          sudo add-apt-repository -y ppa:apt-fast/stable
-          sudo apt-get update
-          echo debconf apt-fast/maxdownloads string 16 | sudo debconf-set-selections
-          echo debconf apt-fast/dlflag boolean true | sudo debconf-set-selections
-          echo debconf apt-fast/aptmanager string apt-get | sudo debconf-set-selections
-          sudo apt-get install -y apt-fast
-
       - name: Install ImageMagick
-        run: |
-          sudo apt-fast install -y --no-install-recommends imagemagick
-          sudo apt-get clean
-          sudo rm -rf /var/lib/apt/lists/*
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends imagemagick
 
       - name: Setup database
         working-directory: ./api
