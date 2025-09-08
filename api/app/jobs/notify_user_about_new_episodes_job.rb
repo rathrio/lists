@@ -4,7 +4,7 @@ class NotifyUserAboutNewEpisodesJob < ApplicationJob
   queue_as :default
 
   def perform
-    user = User.find(1)
+    user = User.first
 
     tv_shows_with_new_episodes(user).each do |tv_show|
       metadata = tv_show.metadata["last_episode_to_air"]
