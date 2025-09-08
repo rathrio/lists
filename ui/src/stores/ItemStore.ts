@@ -13,6 +13,7 @@ import {
   FILTER_RGX,
 } from '../utils/filter';
 import { toIdentifier } from '../utils/toIdentifier';
+import { AxiosResponse } from 'axios';
 
 export const ITEMS_TO_SHOW = 36;
 
@@ -121,6 +122,11 @@ class ItemStore {
   });
 
   private setupShortcuts = () => {
+    Mousetrap.bind('R', (e) => {
+      e.preventDefault();
+      this.refreshMetadata();
+    });
+
     Mousetrap.bind('r', (e) => {
       e.preventDefault();
       this.showRandomItemDetails();
@@ -399,22 +405,39 @@ class ItemStore {
     this.showDetailsModal();
   };
 
-  fetchMetadata = () => {
-    if (!this.activeItem) {
-      return;
-    }
-
-    API.get(`/items/${this.activeItem.id}/metadata`).then(
+  updateActiveItemMetadataFromPromise(
+    promise: Promise<AxiosResponse<any, any>>
+  ) {
+    promise.then(
       action((response) => {
         if (this.activeItem) {
           this.activeItem.metadata = response.data;
           this.activeItem.seasons = parseSeasons(response.data);
-          (window as any).activeItem = this.activeItem;
         }
       }),
       (error) => {
         console.error(error);
       }
+    );
+  }
+
+  fetchMetadata = () => {
+    if (!this.activeItem) {
+      return;
+    }
+
+    this.updateActiveItemMetadataFromPromise(
+      API.get(`/items/${this.activeItem.id}/metadata`)
+    );
+  };
+
+  refreshMetadata = () => {
+    if (!this.activeItem) {
+      return;
+    }
+
+    this.updateActiveItemMetadataFromPromise(
+      API.post(`/items/${this.activeItem.id}/refresh_metadata`)
     );
   };
 

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   resources :lists, only: [:index] do
     resources :items, only: [:index, :update, :destroy], shallow: true do
+      post :refresh_metadata, on: :member
       get :metadata, on: :member
       put :scrape, on: :member
       put :restore, on: :member
