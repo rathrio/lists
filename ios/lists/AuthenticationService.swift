@@ -48,7 +48,7 @@ class AuthenticationService: ObservableObject {
 
     // MARK: - Login
     func login(email: String, password: String) -> AnyPublisher<Void, Error> {
-        guard let url = URL(string: "\(baseURL)/api/v1/mobile/sign_in") else {
+        guard let url = URL(string: "\(baseURL)/mobile/sign_in") else {
             return Fail(error: URLError(.badURL))
                 .eraseToAnyPublisher()
         }
@@ -109,7 +109,7 @@ class AuthenticationService: ObservableObject {
 
     // MARK: - Logout
     func logout() -> AnyPublisher<Void, Error> {
-        guard let url = URL(string: "\(baseURL)/api/v1/mobile/sign_out") else {
+        guard let url = URL(string: "\(baseURL)/mobile/sign_out") else {
             return Fail(error: URLError(.badURL))
                 .eraseToAnyPublisher()
         }

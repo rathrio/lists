@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::V1::Mobile::SessionsController < ApplicationController
+class Mobile::SessionsController < ApplicationController
   skip_before_action :validate_token, only: [:sign_in, :sign_out]
 
   def sign_in
