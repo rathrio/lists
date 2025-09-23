@@ -53,7 +53,7 @@ struct ItemListView: View {
     }
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Group {
                 if viewModel.isLoading && viewModel.items.isEmpty {
                     ProgressView("Loading...")
@@ -64,6 +64,8 @@ struct ItemListView: View {
                     ItemGridView(items: filteredItems)
                 }
             }
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("")
             .background(Color.themeDarkBackground)
             .searchable(text: $searchText)
             .refreshable {
