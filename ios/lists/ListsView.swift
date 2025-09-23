@@ -61,7 +61,6 @@ struct ItemListView: View {
                     ItemGridView(items: filteredItems)
                 }
             }
-            .navigationTitle(list.name)
             .searchable(text: $searchText)
             .refreshable {
                 viewModel.loadItems(for: list.id)
@@ -107,19 +106,19 @@ struct ItemGridView: View {
 
     var body: some View {
         ScrollView {
-            LazyVGrid(columns: columns, spacing: 8) {
+            LazyVGrid(columns: columns, spacing: 0) {
                 ForEach(items) { item in
                     ItemCard(item: item)
                 }
             }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 8)
+            .padding(.horizontal, 4)
+            .padding(.vertical, 2)
         }
     }
 
     private var columns: [GridItem] {
-        // 3 equal columns with reduced spacing
-        return Array(repeating: GridItem(.flexible(), spacing: 8), count: 3)
+        // 3 equal columns with minimal spacing
+        return Array(repeating: GridItem(.flexible(), spacing: 0), count: 3)
     }
 }
 
@@ -128,7 +127,7 @@ struct ItemCard: View {
     @EnvironmentObject var viewModel: ListsViewModel
 
     var body: some View {
-        VStack(spacing: 4) {
+        VStack(spacing: 0) {
             // FIXED SIZE image container with proper aspect ratios
             ZStack {
                 // Fixed size background with correct aspect ratio
@@ -213,17 +212,17 @@ struct ItemCard: View {
 
     // Fixed dimensions based on aspect ratios from React app
     private var imageWidth: CGFloat {
-        return 100 // Base width for all types
+        return 110 // Base width for all types
     }
 
     private var imageHeight: CGFloat {
         switch item.list {
         case "Music":
-            return 100 // 1:1 ratio (square)
+            return 110 // 1:1 ratio (square)
         case "Games":
-            return 133 // 3:4 ratio (100 * 4/3 = 133.33)
+            return 147 // 3:4 ratio (110 * 4/3 = 146.67)
         default:
-            return 150 // 2:3 ratio (100 * 3/2 = 150)
+            return 165 // 2:3 ratio (110 * 3/2 = 165)
         }
     }
 
