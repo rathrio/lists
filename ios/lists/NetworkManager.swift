@@ -13,6 +13,7 @@ class NetworkManager: ObservableObject {
 
     private let baseURL = "http://localhost:3000"
     private let session = URLSession.shared
+    private let authService = AuthenticationService.shared
 
     private init() {}
 
@@ -23,7 +24,10 @@ class NetworkManager: ObservableObject {
                 .eraseToAnyPublisher()
         }
 
-        return session.dataTaskPublisher(for: url)
+        var request = URLRequest(url: url)
+        addAuthorizationHeader(to: &request)
+
+        return session.dataTaskPublisher(for: request)
             .map(\.data)
             .decode(type: [ListModel].self, decoder: JSONDecoder())
             .receive(on: DispatchQueue.main)
@@ -37,7 +41,10 @@ class NetworkManager: ObservableObject {
                 .eraseToAnyPublisher()
         }
 
-        return session.dataTaskPublisher(for: url)
+        var request = URLRequest(url: url)
+        addAuthorizationHeader(to: &request)
+
+        return session.dataTaskPublisher(for: request)
             .map(\.data)
             .decode(type: [ItemModel].self, decoder: JSONDecoder())
             .receive(on: DispatchQueue.main)
@@ -54,11 +61,19 @@ class NetworkManager: ObservableObject {
         var request = URLRequest(url: url)
         request.httpMethod = "PUT"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        addAuthorizationHeader(to: &request)
 
         return session.dataTaskPublisher(for: request)
             .map(\.data)
             .decode(type: ItemModel.self, decoder: JSONDecoder())
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
+    }
+
+    // MARK: - Helper Methods
+    private func addAuthorizationHeader(to request: inout URLRequest) {
+        if let authHeader = authService.getAuthorizationHeader() {
+            request.setValue(authHeader, forHTTPHeaderField: "Authorization")
+        }
     }
 }

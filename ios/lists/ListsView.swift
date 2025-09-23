@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import Combine
 
 struct ListsView: View {
     @StateObject private var viewModel = ListsViewModel()
+    @StateObject private var authService = AuthenticationService.shared
 
     var body: some View {
         TabView {
@@ -20,6 +22,13 @@ struct ListsView: View {
                     }
                     .tag(list.id)
             }
+
+            SettingsView()
+                .tabItem {
+                    Image(systemName: "gearshape")
+                    Text("Settings")
+                }
+                .tag(999)
         }
         .preferredColorScheme(.dark)
         .accentColor(.themeRed)
@@ -247,6 +256,62 @@ struct ItemCard: View {
         case .doing: return "play.fill"
         case .done: return "checkmark"
         }
+    }
+}
+
+struct SettingsView: View {
+    @StateObject private var authService = AuthenticationService.shared
+    @State private var cancellables = Set<AnyCancellable>()
+
+    var body: some View {
+        NavigationStack {
+            VStack(spacing: 20) {
+                Spacer()
+
+                VStack(spacing: 16) {
+                    Image(systemName: "person.circle")
+                        .font(.system(size: 60))
+                        .foregroundColor(.themeForeground)
+
+                    Text("Settings")
+                        .font(.title)
+                        .foregroundColor(.themeForeground)
+                }
+
+                Spacer()
+
+                // Logout Button
+                Button(action: handleLogout) {
+                    HStack {
+                        Image(systemName: "arrow.right.square")
+                        Text("Sign Out")
+                    }
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 50)
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(.red)
+                    )
+                }
+                .padding(.horizontal, 40)
+
+                Spacer()
+            }
+            .background(Color.themeDarkBackground)
+            .navigationTitle("")
+            .navigationBarTitleDisplayMode(.inline)
+        }
+    }
+
+    private func handleLogout() {
+        authService.logout()
+            .sink(
+                receiveCompletion: { _ in },
+                receiveValue: { }
+            )
+            .store(in: &cancellables)
     }
 }
 

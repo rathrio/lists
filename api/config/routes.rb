@@ -3,6 +3,15 @@ Rails.application.routes.draw do
 
   post "/sign_in" => "sessions#sign_in"
   post "/sign_out" => "sessions#sign_out"
+
+  namespace :api do
+    namespace :v1 do
+      namespace :mobile do
+        post "/sign_in" => "sessions#sign_in"
+        post "/sign_out" => "sessions#sign_out"
+      end
+    end
+  end
   get "/items/archived" => "items#archived"
 
   resources :lists, only: [:index] do

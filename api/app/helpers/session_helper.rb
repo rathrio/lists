@@ -37,9 +37,18 @@ module SessionHelper
 
   # SessionsController#validate_token does the validation. Here we can assume everything is A-OK.
   def current_user
-    User.find(1)
-    # token = cookies.signed[:jwt]
-    # data = JwtService.decode(token)
-    # User.find(data.first['user_id'])
+    # User.find(1)
+    token = extract_token
+    data = JwtService.decode(token)
+    User.find(data.first['user_id'])
+  end
+
+  def extract_token
+    # Try Bearer token first (mobile), then cookie (web)
+    if request.headers['Authorization'].present?
+      request.headers['Authorization'].split(' ').last
+    else
+      cookies.signed[:jwt]
+    end
   end
 end

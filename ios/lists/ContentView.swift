@@ -8,8 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var authService = AuthenticationService.shared
+
     var body: some View {
-        ListsView()
+        Group {
+            if authService.isAuthenticated {
+                ListsView()
+            } else {
+                LoginView()
+            }
+        }
+        .onAppear {
+            authService.checkAuthenticationStatus()
+        }
     }
 }
 
