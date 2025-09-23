@@ -173,22 +173,26 @@ struct ItemCard: View {
                     }
                 }
 
-                // Status dot
-                VStack {
-                    HStack {
+                // Status icon (only when relevant)
+                if item.status != .todo {
+                    VStack {
+                        HStack {
+                            Spacer()
+                            Image(systemName: statusIcon)
+                                .font(.system(size: 12, weight: .bold))
+                                .foregroundColor(.white)
+                                .background(
+                                    Circle()
+                                        .fill(Color.black.opacity(0.7))
+                                        .frame(width: 20, height: 20)
+                                )
+                                .padding(6)
+                        }
                         Spacer()
-                        Circle()
-                            .fill(statusColor)
-                            .frame(width: 10, height: 10)
-                            .padding(6)
                     }
-                    Spacer()
                 }
             }
             .cornerRadius(6)
-            .onTapGesture {
-                viewModel.toggleItemStatus(item)
-            }
 
             // Year and rating - positioned exactly like the image
             HStack {
@@ -211,6 +215,7 @@ struct ItemCard: View {
                 }
             }
             .frame(width: imageWidth, height: 16) // Exact same width and fixed height
+            .padding(.bottom, 8) // Add space after year/rating
         }
         .frame(width: imageWidth) // Force the entire card to be exactly image width
     }
@@ -236,11 +241,11 @@ struct ItemCard: View {
         }
     }
 
-    private var statusColor: Color {
+    private var statusIcon: String {
         switch item.status {
-        case .todo: return .themePlaceholder
-        case .doing: return .themeBlue
-        case .done: return .themeRed
+        case .todo: return "" // No icon for todo
+        case .doing: return "play.fill"
+        case .done: return "checkmark"
         }
     }
 }
