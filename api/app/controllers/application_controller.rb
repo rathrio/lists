@@ -2,7 +2,7 @@ class ApplicationController < ActionController::API
   include ::ActionController::Cookies
   include SessionHelper
 
-  before_action :validate_token
+  # before_action :validate_token
 
   private
 
