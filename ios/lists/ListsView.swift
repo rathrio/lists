@@ -21,6 +21,8 @@ struct ListsView: View {
                     .tag(list.id)
             }
         }
+        .preferredColorScheme(.dark)
+        .accentColor(.themeRed)
         .environmentObject(viewModel)
     }
 
@@ -55,12 +57,14 @@ struct ItemListView: View {
             Group {
                 if viewModel.isLoading && viewModel.items.isEmpty {
                     ProgressView("Loading...")
+                        .foregroundColor(.themeForeground)
                 } else if filteredItems.isEmpty {
                     EmptyStateView(list: list)
                 } else {
                     ItemGridView(items: filteredItems)
                 }
             }
+            .background(Color.themeDarkBackground)
             .searchable(text: $searchText)
             .refreshable {
                 viewModel.loadItems(for: list.id)
@@ -71,6 +75,7 @@ struct ItemListView: View {
                 }
             }
         }
+        .background(Color.themeDarkBackground)
     }
 }
 
@@ -81,12 +86,14 @@ struct EmptyStateView: View {
         VStack(spacing: 16) {
             Image(systemName: systemIconName(for: list.faIcon))
                 .font(.system(size: 60))
-                .foregroundColor(.gray.opacity(0.6))
+                .foregroundColor(.themePlaceholder)
 
             Text("No \(list.name.lowercased()) found")
                 .font(.title2)
-                .foregroundColor(.secondary)
+                .foregroundColor(.themeForeground)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.themeDarkBackground)
     }
 
     private func systemIconName(for faIcon: String) -> String {
@@ -114,6 +121,7 @@ struct ItemGridView: View {
             .padding(.horizontal, 4)
             .padding(.vertical, 2)
         }
+        .background(Color.themeDarkBackground)
     }
 
     private var columns: [GridItem] {
@@ -132,7 +140,7 @@ struct ItemCard: View {
             ZStack {
                 // Fixed size background with correct aspect ratio
                 Rectangle()
-                    .fill(Color.gray.opacity(0.2))
+                    .fill(Color.themeLightBackground)
                     .frame(width: imageWidth, height: imageHeight)
 
                 // Image that fills container without stretching
@@ -148,10 +156,10 @@ struct ItemCard: View {
                         VStack(spacing: 4) {
                             Image(systemName: "photo")
                                 .font(.title2)
-                                .foregroundColor(.gray)
+                                .foregroundColor(.themePlaceholder)
                             Text(item.name)
                                 .font(.caption2)
-                                .foregroundColor(.gray)
+                                .foregroundColor(.themeForeground)
                                 .multilineTextAlignment(.center)
                                 .lineLimit(2)
                                 .padding(.horizontal, 4)
@@ -185,7 +193,7 @@ struct ItemCard: View {
                 if let year = item.year {
                     Text(String(year))
                         .font(.caption2)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(.themeForeground)
                 }
 
                 Spacer()
@@ -195,7 +203,7 @@ struct ItemCard: View {
                         ForEach(1...5, id: \.self) { star in
                             Image(systemName: star <= Int(rating) ? "star.fill" : "star")
                                 .font(.system(size: 8))
-                                .foregroundColor(.yellow)
+                                .foregroundColor(.themeYellow)
                         }
                     }
                 }
@@ -228,9 +236,9 @@ struct ItemCard: View {
 
     private var statusColor: Color {
         switch item.status {
-        case .todo: return .gray
-        case .doing: return .blue
-        case .done: return .green
+        case .todo: return .themePlaceholder
+        case .doing: return .themeBlue
+        case .done: return .themeRed
         }
     }
 }
