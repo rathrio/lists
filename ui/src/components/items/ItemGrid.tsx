@@ -78,7 +78,16 @@ function getColumnCount(width: number): number {
 function ItemGrid(props: Props) {
   const { store } = props;
   const parentRef = useRef<HTMLDivElement>(null);
-  const [columnCount, setColumnCount] = useState(3);
+
+  // Initialize with a better default based on window width
+  const getInitialColumnCount = () => {
+    if (typeof window !== 'undefined') {
+      return getColumnCount(window.innerWidth);
+    }
+    return 6; // Reasonable default for SSR
+  };
+
+  const [columnCount, setColumnCount] = useState(getInitialColumnCount());
 
   const items = store.itemStore.filteredItems;
 
@@ -129,10 +138,32 @@ function ItemGrid(props: Props) {
   });
 
   if (store.itemStore.isLoading) {
+    const coverAspectRatio = store.listStore.activeList?.cover_aspect_ratio || '2by3';
+    const placeholderCount = 36;
+
+    const placeholders = [...Array(placeholderCount)].map((_, i) => (
+      <CoverBox
+        key={`placeholder-${i}`}
+        coverUrl={''}
+        isCoverMissing={true}
+        title={''}
+        coverAspectRatio={coverAspectRatio}
+        disablePointer={true}
+        onClick={() => {}}
+        className={`i${i % 9}`}
+      >
+        <p>&nbsp;</p>
+      </CoverBox>
+    ));
+
     return (
-      <div className="items-grid placeholder-grid" style={{ minHeight: '80vh' }}>
-        {/* Simple loading state */}
-        <div style={{ textAlign: 'center', padding: '2rem' }}>Loading...</div>
+      <div
+        className="items-grid placeholder-grid"
+        style={{
+          gridTemplateColumns: `repeat(${columnCount}, 1fr)`,
+        }}
+      >
+        {placeholders}
       </div>
     );
   }
