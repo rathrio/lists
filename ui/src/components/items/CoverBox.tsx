@@ -37,7 +37,9 @@ const CoverBox = observer((props: React.PropsWithChildren<Props>) => {
         ) : (
           <img
             src={props.coverUrl}
-            alt="TODO: Fix me and render a title instead of an img"
+            alt={props.title}
+            loading="lazy"
+            decoding="async"
           />
         )}
       </figure>
