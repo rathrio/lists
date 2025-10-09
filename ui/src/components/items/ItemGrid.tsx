@@ -1,12 +1,12 @@
 import { observer } from 'mobx-react';
+import { useVirtualizer } from '@tanstack/react-virtual';
+import { useRef, useState, useLayoutEffect } from 'react';
 
 import { Item, ItemStatus } from '../../interfaces';
 import { statusTagClassName } from './ItemDetails';
-import ItemActions from './ItemActions';
 import RootStore from '../../stores/RootStore';
 import CoverBox from './CoverBox';
 import { publicAssetsUrl } from '../../utils/api';
-import { ITEMS_TO_SHOW } from '../../stores/ItemStore';
 
 interface Props {
   store: RootStore;
@@ -64,43 +64,125 @@ const ItemBox = observer((props: { item: Item; store: RootStore }) => {
   );
 });
 
-const PlaceholderGrid = observer((props: Props) => {
-  const { store } = props;
-  const coverAspectRatio = store.listStore.activeList!.cover_aspect_ratio;
-
-  const placeholders = [...Array(ITEMS_TO_SHOW)].map((_, i) => (
-    <CoverBox
-      key={`box-${i}`}
-      coverUrl={''}
-      isCoverMissing={true}
-      title={''}
-      coverAspectRatio={coverAspectRatio}
-      disablePointer={true}
-      onClick={() => {}}
-      className={`i${i % 9}`}
-    >
-      <p>&nbsp;</p>
-    </CoverBox>
-  ));
-
-  return <div className="items-grid placeholder-grid">{placeholders}</div>;
-});
+// Calculate columns based on viewport width (matching CSS media queries)
+function getColumnCount(width: number): number {
+  if (width >= 1250) return 9;
+  if (width >= 1050) return 8;
+  if (width >= 950) return 7;
+  if (width >= 750) return 6;
+  if (width >= 650) return 5;
+  if (width >= 450) return 4;
+  return 3;
+}
 
 function ItemGrid(props: Props) {
   const { store } = props;
-  if (store.itemStore.isLoading) {
-    return <PlaceholderGrid {...props} />;
-  }
+  const parentRef = useRef<HTMLDivElement>(null);
+  const [columnCount, setColumnCount] = useState(3);
 
-  const itemBoxes = store.itemStore.filteredItems.map((item, index) => {
-    return <ItemBox item={item} store={store} key={index} />;
+  const items = store.itemStore.filteredItems;
+
+  // Update column count on resize
+  useLayoutEffect(() => {
+    const element = parentRef.current;
+    if (!element) {
+      // Retry on next tick if element isn't ready yet
+      const timer = setTimeout(() => {
+        if (parentRef.current) {
+          const width = parentRef.current.offsetWidth;
+          const newColumnCount = getColumnCount(width);
+          setColumnCount(newColumnCount);
+        }
+      }, 0);
+      return () => clearTimeout(timer);
+    }
+
+    const updateColumnCount = () => {
+      if (parentRef.current) {
+        const width = parentRef.current.offsetWidth;
+        const newColumnCount = getColumnCount(width);
+        setColumnCount(newColumnCount);
+      }
+    };
+
+    // Initial calculation
+    updateColumnCount();
+
+    // Listen for resize
+    const resizeObserver = new ResizeObserver(updateColumnCount);
+    resizeObserver.observe(element);
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [store.itemStore.isLoading]);
+
+  // Calculate rows needed for virtual grid
+  const rowCount = Math.ceil(items.length / columnCount);
+
+  const rowVirtualizer = useVirtualizer({
+    count: rowCount,
+    getScrollElement: () => typeof window !== 'undefined' ? window.document.body : null,
+    estimateSize: () => 300, // Row height (cover + info + gap)
+    overscan: 2, // Render 2 extra rows above/below viewport
+    measureElement: (element) => element.getBoundingClientRect().height,
   });
 
+  if (store.itemStore.isLoading) {
+    return (
+      <div className="items-grid placeholder-grid" style={{ minHeight: '80vh' }}>
+        {/* Simple loading state */}
+        <div style={{ textAlign: 'center', padding: '2rem' }}>Loading...</div>
+      </div>
+    );
+  }
+
   return (
-    <>
-      <div className="items-grid">{itemBoxes}</div>
-      <ItemActions store={store.itemStore} />
-    </>
+    <div ref={parentRef}>
+      <div
+        style={{
+          height: `${rowVirtualizer.getTotalSize()}px`,
+          width: '100%',
+          position: 'relative',
+        }}
+      >
+        {rowVirtualizer.getVirtualItems().map((virtualRow) => {
+          const startIndex = virtualRow.index * columnCount;
+          const rowItems = items.slice(startIndex, startIndex + columnCount);
+
+          return (
+            <div
+              key={virtualRow.key}
+              data-index={virtualRow.index}
+              ref={rowVirtualizer.measureElement}
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                transform: `translateY(${virtualRow.start}px)`,
+                paddingBottom: '0.8rem', // Gap between rows
+              }}
+            >
+              <div
+                className="items-grid"
+                style={{
+                  gridTemplateColumns: `repeat(${columnCount}, 1fr)`,
+                }}
+              >
+                {rowItems.map((item, idx) => (
+                  <ItemBox
+                    item={item}
+                    store={store}
+                    key={`${virtualRow.index}-${idx}`}
+                  />
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 }
 

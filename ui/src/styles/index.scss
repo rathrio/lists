@@ -127,7 +127,7 @@ body {
 
 .items-grid {
   display: grid;
-  grid-gap: 0.6rem;
+  grid-gap: 0.8rem;
   grid-template-columns: repeat(3, 1fr);
 
   @media (min-width: 450px) {
@@ -202,6 +202,13 @@ body {
 }
 
 .item-details-modal {
+  .modal-background {
+    backdrop-filter: blur(8px);
+    background-color: rgba(10, 10, 10, 0.7);
+    will-change: backdrop-filter;
+    transform: translateZ(0);
+  }
+
   .modal-card-head {
     min-height: 58px;
 
