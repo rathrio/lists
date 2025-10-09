@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^7.0.1",
+    "@tanstack/react-virtual": "^3.13.12",
     "axios": "^1.11.0",
     "bulma": "^1.0.4",
     "lodash": "^4.17.19",

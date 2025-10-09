@@ -15,8 +15,6 @@ import {
 import { toIdentifier } from '../utils/toIdentifier';
 import { AxiosResponse } from 'axios';
 
-export const ITEMS_TO_SHOW = 36;
-
 function parseSeasons(metadata: any): Season[] {
   if (!metadata || !metadata['seasons']) {
     console.info('Invalid metadata format or missing seasons data:', metadata);
@@ -86,12 +84,6 @@ class ItemStore {
   @observable
   spinnerVisible = false;
 
-  /**
-   * Whether we should render all filter matches.
-   */
-  @observable
-  allItemsVisible = false;
-
   private rootStore: RootStore;
 
   constructor(rootStore: RootStore) {
@@ -112,7 +104,6 @@ class ItemStore {
     this.query = '';
     this.scraperResults.clear();
     this.items.clear();
-    this.doNotShowAllItems();
 
     if (activeList.name === 'Archive') {
       this.loadArchive();
@@ -229,8 +220,6 @@ class ItemStore {
 
   @action
   addTagFilter = (tag: Tag, { append = false }) => {
-    this.doNotShowAllItems();
-
     if (!append) {
       this.query = this.query.replace(FILTER_RGX, '').trim();
     }
@@ -366,7 +355,6 @@ class ItemStore {
 
   @action
   filter = (query: string) => {
-    this.doNotShowAllItems();
     this.resetScraperResults();
     this.unfocusItem();
     this.query = query.toString();
@@ -377,16 +365,6 @@ class ItemStore {
 
   @action
   hideSpinner = () => (this.spinnerVisible = false);
-
-  /**
-   * Show all *filtered* items, because by default only the first 15 matches
-   * are rendered for fast rerendering.
-   */
-  @action
-  showAllItems = () => (this.allItemsVisible = true);
-
-  @action
-  doNotShowAllItems = () => (this.allItemsVisible = false);
 
   @action
   showDetailsModal = () => (this.detailsModalVisible = true);
@@ -806,31 +784,13 @@ class ItemStore {
   }
 
   /**
-   * Only a subset of this.allFilteredItems by default (speeds up re-rendering).
+   * Alias for allFilteredItems (virtualization handles rendering optimization).
    *
    * @see allFilteredItems
    */
   @computed
   get filteredItems(): Item[] {
-    if (this.allItemsVisible) {
-      return this.allFilteredItems;
-    }
-
-    return this.allFilteredItems.slice(0, ITEMS_TO_SHOW);
-  }
-
-  @computed
-  get hasMoreFilteredItems() {
-    return this.allFilteredItems.length > this.filteredItems.length;
-  }
-
-  @computed
-  get moreItemsToShow(): number {
-    if (!this.hasMoreFilteredItems) {
-      return 0;
-    }
-
-    return this.allFilteredItems.length - this.filteredItems.length;
+    return this.allFilteredItems;
   }
 
   isActive = (item: Item) => {
