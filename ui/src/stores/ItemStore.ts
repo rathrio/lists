@@ -801,7 +801,8 @@ class ItemStore {
   @computed
   get allFilteredItems(): Item[] {
     const filtered = filter(this.query, this.items);
-    return _.sortBy(filtered, (item) => ItemStore.statusRank[item.status]);
+    const shuffled = _.shuffle(filtered);
+    return _.sortBy(shuffled, (item) => ItemStore.statusRank[item.status]);
   }
 
   /**
