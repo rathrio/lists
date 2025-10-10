@@ -421,11 +421,11 @@ class ItemStore {
 
   @action
   showRandomItemDetails = () => {
-    if (!this.allFilteredItems.length) {
+    if (!this.filteredItems.length) {
       return;
     }
 
-    const item = _.sample(this.allFilteredItems)!;
+    const item = _.sample(this.filteredItems)!;
     this.showItemDetails(item);
   };
 
@@ -546,7 +546,7 @@ class ItemStore {
         }","${item.recommended_by}"`;
     }
 
-    const csv = this.toCsv(this.allFilteredItems, header, builder);
+    const csv = this.toCsv(this.filteredItems, header, builder);
     const contents = encodeURI(csv);
 
     const timestamp = new Date().toISOString().slice(0, 10);
@@ -777,20 +777,10 @@ class ItemStore {
    * @see filteredItems
    */
   @computed
-  get allFilteredItems(): Item[] {
+  get filteredItems(): Item[] {
     const filtered = filter(this.query, this.items);
     const shuffled = _.shuffle(filtered);
     return _.sortBy(shuffled, (item) => ItemStore.statusRank[item.status]);
-  }
-
-  /**
-   * Alias for allFilteredItems (virtualization handles rendering optimization).
-   *
-   * @see allFilteredItems
-   */
-  @computed
-  get filteredItems(): Item[] {
-    return this.allFilteredItems;
   }
 
   isActive = (item: Item) => {
