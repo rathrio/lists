@@ -117,14 +117,16 @@ function ItemGrid(props: Props) {
 
   const rowVirtualizer = useVirtualizer({
     count: rowCount,
-    getScrollElement: () => typeof window !== 'undefined' ? window.document.body : null,
+    getScrollElement: () =>
+      typeof window !== 'undefined' ? window.document.body : null,
     estimateSize: () => 240, // Row height (cover + info + gap)
     overscan: 8,
     measureElement: (element) => element.getBoundingClientRect().height,
   });
 
   if (store.itemStore.isLoading) {
-    const coverAspectRatio = store.listStore.activeList?.cover_aspect_ratio || '2by3';
+    const coverAspectRatio =
+      store.listStore.activeList?.cover_aspect_ratio || '2by3';
     const placeholderCount = 36;
 
     const placeholders = [...Array(placeholderCount)].map((_, i) => (
