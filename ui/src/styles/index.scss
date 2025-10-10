@@ -18,6 +18,17 @@
   }
 }
 
+@keyframes modalBlurIn {
+  0% {
+    backdrop-filter: blur(0px);
+    opacity: 0;
+  }
+  100% {
+    backdrop-filter: blur(8px);
+    opacity: 1;
+  }
+}
+
 .fade-in {
   animation: fadein 200ms;
 }
@@ -128,31 +139,6 @@ body {
 .items-grid {
   display: grid;
   grid-gap: 0.8rem;
-  grid-template-columns: repeat(3, 1fr);
-
-  @media (min-width: 450px) {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  @media (min-width: 650px) {
-    grid-template-columns: repeat(5, 1fr);
-  }
-
-  @media (min-width: 750px) {
-    grid-template-columns: repeat(6, 1fr);
-  }
-
-  @media (min-width: 950px) {
-    grid-template-columns: repeat(7, 1fr);
-  }
-
-  @media (min-width: 1050px) {
-    grid-template-columns: repeat(8, 1fr);
-  }
-
-  @media (min-width: 1250px) {
-    grid-template-columns: repeat(9, 1fr);
-  }
 
   .cover-box {
     img {
@@ -220,10 +206,12 @@ body {
 
 .item-details-modal {
   .modal-background {
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(0px);
     background-color: rgba(10, 10, 10, 0.7);
-    will-change: backdrop-filter;
+    will-change: backdrop-filter, opacity;
     transform: translateZ(0);
+    opacity: 0;
+    animation: modalBlurIn 0.25s ease-out forwards;
   }
 
   .modal-card-head {

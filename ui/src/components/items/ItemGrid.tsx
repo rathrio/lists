@@ -79,15 +79,9 @@ function ItemGrid(props: Props) {
   const { store } = props;
   const parentRef = useRef<HTMLDivElement>(null);
 
-  // Initialize with a better default based on window width
-  const getInitialColumnCount = () => {
-    if (typeof window !== 'undefined') {
-      return getColumnCount(window.innerWidth);
-    }
-    return 6; // Reasonable default for SSR
-  };
-
-  const [columnCount, setColumnCount] = useState(getInitialColumnCount());
+  const [columnCount, setColumnCount] = useState(() =>
+    getColumnCount(window.innerWidth)
+  );
 
   const items = store.itemStore.filteredItems;
 
@@ -95,15 +89,7 @@ function ItemGrid(props: Props) {
   useLayoutEffect(() => {
     const element = parentRef.current;
     if (!element) {
-      // Retry on next tick if element isn't ready yet
-      const timer = setTimeout(() => {
-        if (parentRef.current) {
-          const width = parentRef.current.offsetWidth;
-          const newColumnCount = getColumnCount(width);
-          setColumnCount(newColumnCount);
-        }
-      }, 0);
-      return () => clearTimeout(timer);
+      return;
     }
 
     const updateColumnCount = () => {
@@ -132,8 +118,8 @@ function ItemGrid(props: Props) {
   const rowVirtualizer = useVirtualizer({
     count: rowCount,
     getScrollElement: () => typeof window !== 'undefined' ? window.document.body : null,
-    estimateSize: () => 300, // Row height (cover + info + gap)
-    overscan: 2, // Render 2 extra rows above/below viewport
+    estimateSize: () => 240, // Row height (cover + info + gap)
+    overscan: 8,
     measureElement: (element) => element.getBoundingClientRect().height,
   });
 
