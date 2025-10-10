@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import { observer } from 'mobx-react';
 import RootStore from '../../stores/RootStore';
 import { useEffect, useRef } from 'react';

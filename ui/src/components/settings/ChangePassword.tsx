@@ -25,7 +25,10 @@ function ChangePassword(props: { store: RootStore }) {
           clearForm();
         },
         () => {
-          notificationStore.showNotification('Password update failed', 'is-danger');
+          notificationStore.showNotification(
+            'Password update failed',
+            'is-danger'
+          );
           setUpdateFailed(true);
         }
       );

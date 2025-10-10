@@ -1,4 +1,3 @@
-
 import { test, expect } from 'vitest';
 import { toIdentifier } from './toIdentifier';
 

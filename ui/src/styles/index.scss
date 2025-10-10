@@ -55,7 +55,9 @@ body {
 .hidden {
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0s 0.2s, opacity 0.2s linear;
+  transition:
+    visibility 0s 0.2s,
+    opacity 0.2s linear;
 }
 
 .has-pointer {
