@@ -17,7 +17,7 @@ import { AxiosResponse } from 'axios';
 
 function parseSeasons(metadata: any): Season[] {
   if (!metadata || !metadata['seasons']) {
-    console.info('Invalid metadata format or missing seasons data:', metadata);
+    console.error('Invalid metadata format or missing seasons data:', metadata);
     return [];
   }
 
@@ -288,7 +288,7 @@ class ItemStore {
         Object.assign(item, response.data);
       }),
       (error) => {
-        console.log(error);
+        console.error(error);
       }
     );
 
@@ -306,7 +306,7 @@ class ItemStore {
         );
       }),
       (error) => {
-        console.log(error);
+        console.error(error);
       }
     );
   };
@@ -327,7 +327,7 @@ class ItemStore {
         this.notificationStore.showNotification(`Deleted "${item.name}"`);
       }),
       (error) => {
-        console.log(error);
+        console.error(error);
         this.notificationStore.showNotification(
           `Could not delete "${item.name}"`,
           'is-danger'
@@ -343,7 +343,7 @@ class ItemStore {
         Object.assign(item, response.data);
       }),
       (error) => {
-        console.log(error);
+        console.error(error);
       }
     );
   };
@@ -513,7 +513,7 @@ class ItemStore {
         Object.assign(item, response.data);
       }),
       (error) => {
-        console.log(error);
+        console.error(error);
       }
     );
   };

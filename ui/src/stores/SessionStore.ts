@@ -21,11 +21,11 @@ class SessionStore {
   @action
   login = (email: string, password: string) => {
     API.post('/sign_in', { email: email, password: password }).then(
-      (response) => {
+      (_response) => {
         this.setLoggedIn(true);
         this.rootStore.listStore.init();
       },
-      (error) => {
+      (_error) => {
         this.setLoggedIn(false);
         this.rootStore.notificationStore.showNotification(
           'Invalid credentials',
@@ -37,7 +37,7 @@ class SessionStore {
 
   @action
   logout = () => {
-    API.post('/sign_out').then((response) => this.setLoggedIn(false));
+    API.post('/sign_out').then((_response) => this.setLoggedIn(false));
   };
 
   updatePassword = (

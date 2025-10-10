@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { observer } from 'mobx-react';
-import { action, computed, makeObservable, observable } from 'mobx';
+import { action, makeObservable, observable } from 'mobx';
 
 import { Item } from '../../interfaces';
 
@@ -47,7 +47,7 @@ class ItemRating extends React.Component<Props, State> {
   };
 
   @action
-  onStarLeave = (rating: number) => {
+  onStarLeave = (_rating: number) => {
     if (this.readonly) {
       return;
     }

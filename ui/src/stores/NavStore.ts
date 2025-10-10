@@ -15,7 +15,7 @@ class NavStore {
     makeObservable(this);
     this.rootStore = rootStore;
 
-    window.addEventListener('popstate', (event) => {
+    window.addEventListener('popstate', (_event) => {
       this.resolveFromPathname();
     });
   }
@@ -50,7 +50,7 @@ class NavStore {
       case 'settings':
         this.showSettings(false);
         return true;
-      default:
+      default: {
         const list = this.rootStore.listStore.getListBySlug(pathname);
         if (!list) {
           console.error(`Could not resolve list "${pathname}"`);
@@ -58,6 +58,7 @@ class NavStore {
         }
         this.showList(list, false);
         return true;
+      }
     }
   };
 
