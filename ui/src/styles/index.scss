@@ -396,8 +396,6 @@ body {
       animation: fadeIn 300ms ease-in forwards;
 
       // Safari image loading optimizations
-      image-rendering: -webkit-optimize-contrast;
-      image-rendering: crisp-edges;
       transform: translateZ(0);
       will-change: opacity;
     }
