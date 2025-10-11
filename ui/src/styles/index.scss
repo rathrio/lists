@@ -1,12 +1,18 @@
 @import 'bulma/css/bulma.css';
 
 :root {
-  --bulma-scheme-main: #202020;
+  // #202020
+  --bulma-scheme-h: 0deg;
+  --bulma-scheme-s: 0%;
+  --bulma-scheme-main-l: 13%;
+
   --bulma-scheme-main-bis: #1c1c1c;
   --bulma-scheme-main-ter: #2f2f2f;
   --bulma-scheme-lighter: #3e3e3e;
   --bulma-background: #202020;
   --bulma-text: #c6c6c7;
+  // For input fields to pick it up
+  --bulma-text-strong-l: 77%;
   --bulma-text-strong: #d9d9d9;
   --bulma-primary: #355070;
   --bulma-danger: #b56576;
@@ -17,6 +23,11 @@
   --bulma-border: #1c1c1c;
   --bulma-placeholder-color: #696969;
   --bulma-loading-color: #222;
+
+  // Same as link color, but in hsl
+  --bulma-link-h: 357deg;
+  --bulma-link-s: 69%;
+  --bulma-link-l: 67%;
 }
 
 // Dark theme customizations
@@ -30,57 +41,14 @@ body {
     filter: invert(1);
   }
 
-  ::selection {
-    color: var(--bulma-text-strong);
-    background: var(--bulma-link);
-  }
-
   // Image adjustments for dark mode
   img {
     filter: brightness(0.9) contrast(1.1);
   }
 
-  .input,
-  .textarea,
-  .select select,
-  input,
-  textarea,
-  select {
-    background-color: var(--bulma-scheme-main-bis) !important;
-    border-color: var(--bulma-scheme-main-bis) !important;
-    color: var(--bulma-text) !important;
-    font-size: 1rem !important;
-
-    &:hover {
-      background-color: var(--bulma-scheme-main-bis) !important;
-      border-color: var(--bulma-scheme-main-bis) !important;
-    }
-
-    &:focus,
-    &:active {
-      outline: none !important;
-      border-color: var(--bulma-scheme-main-bis) !important;
-      box-shadow: none !important;
-      background-color: var(--bulma-scheme-main-bis) !important;
-    }
-  }
-
-  ::placeholder {
-    color: var(--bulma-placeholder-color);
-  }
-
   .tabs li.is-active {
-    a,
     i {
-      border-bottom-color: var(--bulma-link);
       color: var(--bulma-link);
-    }
-  }
-
-  .item-actions,
-  .external-item-links {
-    a {
-      color: var(--bulma-danger);
     }
   }
 
@@ -476,6 +444,10 @@ body {
     .external-item-links {
       a:not(:last-child) {
         margin-right: 20px;
+      }
+
+      a {
+        color: var(--bulma-danger);
       }
     }
 
