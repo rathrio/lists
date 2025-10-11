@@ -64,7 +64,8 @@ body {
   .cover-box {
     &.is-focused {
       figure {
-        box-shadow: 0 0 3px 3px var(--bulma-link);
+        border-radius: 3px;
+        box-shadow: 0 0 10px 3px var(--bulma-link);
 
         img {
           filter: brightness(1) contrast(1);
