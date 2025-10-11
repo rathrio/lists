@@ -64,7 +64,10 @@ const ItemBox = observer((props: { item: Item; store: RootStore }) => {
   );
 });
 
-// Calculate columns based on viewport width (matching CSS media queries)
+// Calculate columns based on viewport width (matching CSS media queries).
+// Should be kept in sync with .items-grid config in css. The css version is
+// used for the scraper results and this for the virtualized grid. I should
+// probably consolidate this at some point.
 function getColumnCount(width: number): number {
   if (width >= 1250) return 9;
   if (width >= 1050) return 8;
