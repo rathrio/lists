@@ -52,6 +52,15 @@ body {
     }
   }
 
+  .input,
+  .textarea,
+  .select select,
+  input,
+  textarea,
+  select {
+    background-color: var(--bulma-scheme-main-bis) !important;
+  }
+
   .cover-box {
     &.is-focused {
       figure {
