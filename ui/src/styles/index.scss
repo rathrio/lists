@@ -1,5 +1,252 @@
 @import 'bulma/css/bulma.css';
 
+:root {
+  --bulma-scheme-main: #202020;
+  --bulma-scheme-main-bis: #1c1c1c;
+  --bulma-scheme-main-ter: #2f2f2f;
+  --bulma-scheme-lighter: #3e3e3e;
+  --bulma-background: #202020;
+  --bulma-text: #c6c6c7;
+  --bulma-text-strong: #d9d9d9;
+  --bulma-primary: #355070;
+  --bulma-danger: #b56576;
+  --bulma-warning: #eaac8b;
+  --bulma-info: #6d597a;
+  --bulma-success: #355070;
+  --bulma-link: #e56b6f;
+  --bulma-border: #1c1c1c;
+  --bulma-placeholder-color: #696969;
+  --bulma-loading-color: #222;
+}
+
+// Dark theme customizations
+body {
+  --balloon-color: var(--bulma-scheme-lighter);
+  --balloon-text-color: var(--bulma-text);
+  --balloon-border-radius: 6px;
+
+  // Chrome calendar icon in date inputs
+  ::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }
+
+  ::selection {
+    color: var(--bulma-text-strong);
+    background: var(--bulma-link);
+  }
+
+  // Image adjustments for dark mode
+  img {
+    filter: brightness(0.9) contrast(1.1);
+  }
+
+  .input,
+  .textarea,
+  .select select,
+  input,
+  textarea,
+  select {
+    background-color: var(--bulma-scheme-main-bis) !important;
+    border-color: var(--bulma-scheme-main-bis) !important;
+    color: var(--bulma-text) !important;
+    font-size: 1rem !important;
+
+    &:hover {
+      background-color: var(--bulma-scheme-main-bis) !important;
+      border-color: var(--bulma-scheme-main-bis) !important;
+    }
+
+    &:focus,
+    &:active {
+      outline: none !important;
+      border-color: var(--bulma-scheme-main-bis) !important;
+      box-shadow: none !important;
+      background-color: var(--bulma-scheme-main-bis) !important;
+    }
+  }
+
+  ::placeholder {
+    color: var(--bulma-placeholder-color);
+  }
+
+  .tabs li.is-active {
+    a,
+    i {
+      border-bottom-color: var(--bulma-link);
+      color: var(--bulma-link);
+    }
+  }
+
+  .item-actions,
+  .external-item-links {
+    a {
+      color: var(--bulma-danger);
+    }
+  }
+
+  .cover-box {
+    &.is-focused {
+      figure {
+        box-shadow: 0 0 3px 3px var(--bulma-link);
+
+        img {
+          filter: brightness(1) contrast(1);
+        }
+      }
+    }
+
+    figure.is-placeholder {
+      background-color: var(--bulma-scheme-main-ter);
+      border-radius: 3px;
+    }
+  }
+
+  .placeholder-grid {
+    .cover-box {
+      figure {
+        background-color: var(--bulma-scheme-main-ter);
+        animation-name: color;
+        animation-duration: 750ms;
+        animation-iteration-count: infinite;
+      }
+
+      @keyframes color {
+        0% {
+          background-color: var(--bulma-loading-color);
+        }
+        50% {
+          background-color: var(--bulma-scheme-main-ter);
+        }
+        100% {
+          background-color: var(--bulma-loading-color);
+        }
+      }
+    }
+
+    @for $i from 0 through 8 {
+      .cover-box.i#{$i} {
+        figure {
+          animation-delay: #{$i * 10}ms;
+        }
+      }
+    }
+  }
+
+  a,
+  p,
+  strong {
+    color: var(--bulma-text);
+  }
+
+  .tabs {
+    background-color: var(--bulma-scheme-main-ter);
+  }
+
+  .tabs a {
+    color: var(--bulma-text-strong);
+    border-bottom-color: var(--bulma-scheme-main);
+  }
+
+  .label {
+    color: var(--bulma-text);
+  }
+
+  .title,
+  .subtitle,
+  .modal-card-title {
+    color: var(--bulma-text-strong);
+  }
+
+  code {
+    background-color: var(--bulma-scheme-lighter);
+    color: var(--bulma-link);
+  }
+
+  .tag.is-light {
+    background-color: var(--bulma-scheme-lighter);
+    color: var(--bulma-text);
+  }
+
+  .tag.is-warning {
+    background-color: var(--bulma-warning);
+    color: var(--bulma-scheme-main-bis);
+  }
+
+  .tag.is-success {
+    background-color: var(--bulma-success);
+    color: var(--bulma-text-strong);
+  }
+
+  .modal-card-body,
+  .table {
+    background-color: var(--bulma-background);
+    color: var(--bulma-text);
+
+    th,
+    td {
+      color: var(--bulma-text);
+    }
+  }
+
+  .button {
+    background-color: var(--bulma-scheme-main-ter);
+  }
+
+  .box,
+  .button,
+  .modal-card-head,
+  .modal-card-foot {
+    color: var(--bulma-text);
+  }
+
+  .modal-card-head {
+    background-color: var(--bulma-background);
+  }
+
+  .modal-card-foot {
+    background-color: var(--bulma-scheme-main-ter);
+  }
+
+  .button,
+  .modal-card-foot,
+  .modal-card-head {
+    border: none;
+  }
+
+  .modal-card-foot .button {
+    background-color: var(--bulma-scheme-lighter);
+    color: var(--bulma-text);
+  }
+
+  i.fa {
+    color: var(--bulma-text);
+  }
+
+  hr {
+    background-color: var(--bulma-scheme-lighter);
+  }
+
+  .is-primary,
+  .is-primary:hover,
+  .is-success,
+  .is-success:hover {
+    background-color: var(--bulma-primary) !important;
+    color: var(--bulma-text-strong) !important;
+  }
+
+  .is-danger,
+  .is-danger:hover {
+    background-color: var(--bulma-danger) !important;
+    color: var(--bulma-text-strong) !important;
+  }
+
+  .is-info,
+  .is-info:hover {
+    background-color: var(--bulma-info) !important;
+    color: var(--bulma-text-strong) !important;
+  }
+}
+
 @keyframes fadein {
   from {
     opacity: 0;
@@ -84,9 +331,9 @@ body {
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
-  background-color: white;
-  color: #363636;
-  box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1);
+  background-color: var(--bulma-scheme-main-bis);
+  color: var(--bulma-text);
+  box-shadow: none;
   max-width: 100%;
   width: 100%;
   height: 2.25em;
@@ -96,18 +343,9 @@ body {
   padding-left: calc(0.625em - 1px);
   padding-right: calc(0.625em - 1px);
   padding-top: calc(0.375em - 1px);
-  border: 1px solid #dbdbdb;
+  border: 1px solid var(--bulma-scheme-main-bis);
   border-radius: 4px;
   margin-bottom: 1.5rem;
-
-  &:hover {
-    border-color: #b5b5b5;
-  }
-
-  &:focus-within {
-    border: 1px solid rgb(146, 178, 235);
-    box-shadow: inset 0 1px 2px -webkit-focus-ring-color;
-  }
 
   input {
     border: none;
@@ -119,6 +357,9 @@ body {
     height: 100%;
     font-size: inherit;
     color: inherit;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
 
     &:focus {
       outline: 0;
@@ -134,7 +375,9 @@ body {
 
   .auto-suggestion-input {
     z-index: 1;
-    color: rgb(109, 109, 109);
+    opacity: 1;
+    -webkit-text-fill-color: var(--bulma-placeholder-color);
+    color: var(--bulma-placeholder-color);
   }
 }
 
@@ -166,7 +409,7 @@ body {
     }
 
     .cover-box-info {
-      color: #b7b7b7;
+      color: var(--bulma-text);
 
       display: flex;
       justify-content: space-between;

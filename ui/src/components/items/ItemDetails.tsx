@@ -427,10 +427,7 @@ class ItemDetails extends React.Component<Props> {
                       {item.human_status}
                     </span>
 
-                    <span
-                      className="item-rating"
-                      style={{ marginTop: '-10px', marginLeft: '3px' }}
-                    >
+                    <span className="item-rating">
                       <ItemRating
                         item={item}
                         onUpdateRating={store.itemStore.updateRating}
