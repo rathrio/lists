@@ -12,11 +12,14 @@ interface Props {
   tagClass?: string;
   balloonMessage?: string;
   disablePointer?: boolean;
+  isLoading?: boolean;
   className?: string;
   onClick: () => void;
 }
 
 const CoverBox = observer((props: React.PropsWithChildren<Props>) => {
+  const isDisabled = props.disablePointer || props.isLoading;
+
   return (
     <div
       className={`cover-box${props.isFocused ? ' is-focused' : ''} ${
@@ -28,8 +31,12 @@ const CoverBox = observer((props: React.PropsWithChildren<Props>) => {
     >
       <figure
         className={`image is-${props.coverAspectRatio} ${
-          props.disablePointer ? '' : 'has-pointer'
+          isDisabled ? '' : 'has-pointer'
         } ${props.isCoverMissing ? 'is-placeholder' : ''}`}
+        style={{
+          opacity: props.isLoading ? 0.6 : 1,
+          cursor: props.isLoading ? 'not-allowed' : undefined,
+        }}
         onClick={props.onClick}
       >
         {props.isCoverMissing ? (
