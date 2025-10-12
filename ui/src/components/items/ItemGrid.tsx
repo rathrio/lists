@@ -7,6 +7,7 @@ import { statusTagClassName } from './ItemDetails';
 import RootStore from '../../stores/RootStore';
 import CoverBox from './CoverBox';
 import { publicAssetsUrl } from '../../utils/api';
+import PlaceholderGrid from './PlaceholderGrid';
 
 interface Props {
   store: RootStore;
@@ -132,30 +133,11 @@ function ItemGrid(props: Props) {
       store.listStore.activeList?.cover_aspect_ratio || '2by3';
     const placeholderCount = 36;
 
-    const placeholders = [...Array(placeholderCount)].map((_, i) => (
-      <CoverBox
-        key={`placeholder-${i}`}
-        coverUrl={''}
-        isCoverMissing={true}
-        title={''}
-        coverAspectRatio={coverAspectRatio}
-        disablePointer={true}
-        onClick={() => {}}
-        className={`i${i % 9}`}
-      >
-        <p>&nbsp;</p>
-      </CoverBox>
-    ));
-
     return (
-      <div
-        className="items-grid placeholder-grid"
-        style={{
-          gridTemplateColumns: `repeat(${columnCount}, 1fr)`,
-        }}
-      >
-        {placeholders}
-      </div>
+      <PlaceholderGrid
+        aspectRatio={coverAspectRatio}
+        numBoxes={placeholderCount}
+      />
     );
   }
 
