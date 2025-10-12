@@ -250,9 +250,9 @@ class ItemStore {
   };
 
   @action
-  importScraperResult = (result: ScraperResult) => {
+  importScraperResult = (result: ScraperResult): Promise<void> => {
     const activeList = this.rootStore.listStore.activeList!;
-    API.post(`/lists/${activeList.id}/scraper_results/import`, {
+    return API.post(`/lists/${activeList.id}/scraper_results/import`, {
       scraper_results: result,
     }).then(
       action((response) => {

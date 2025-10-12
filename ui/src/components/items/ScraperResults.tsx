@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { ScraperResult } from '../../interfaces';
 import RootStore from '../../stores/RootStore';
 import CoverBox from './CoverBox';
@@ -8,10 +9,13 @@ interface ScraperResultBoxProps {
 }
 
 const ScraperResultBox = ({ result, store }: ScraperResultBoxProps) => {
+  const [isImporting, setIsImporting] = useState(false);
+
   const thumbUrl = result.remote_image_url;
   const date = result.date;
   const year = new Date(date).getFullYear();
-  const coverAspectRatio = store.listStore.activeList!.cover_aspect_ratio;
+  const coverAspectRatio =
+    store.listStore.activeList?.cover_aspect_ratio ?? '2by3';
 
   return (
     <CoverBox
@@ -19,7 +23,14 @@ const ScraperResultBox = ({ result, store }: ScraperResultBoxProps) => {
       isCoverMissing={!thumbUrl}
       title={result.name}
       coverAspectRatio={coverAspectRatio}
-      onClick={() => store.itemStore.importScraperResult(result)}
+      isLoading={isImporting}
+      onClick={() => {
+        if (isImporting) return;
+        setIsImporting(true);
+        store.itemStore.importScraperResult(result).finally(() => {
+          setIsImporting(false);
+        });
+      }}
       balloonMessage="Add to List"
     >
       <p>{year}</p>
