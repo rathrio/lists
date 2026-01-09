@@ -535,9 +535,11 @@ class ItemStore {
 
     if (format === 'all') {
       header =
-        'id,name,original_name,description,status,tags,year,rating,language,first_done_at,recommended_by';
+        'id,name,original_name,description,notes,status,tags,year,rating,language,first_done_at,recommended_by';
       builder = (item: Item) =>
         `"${item.id}","${item.name}","${item.original_name}","${item.description
+          .replace(quoteRgx, '""')
+          .replace(newLineRgx, '')}","${(item.notes ?? '')
           .replace(quoteRgx, '""')
           .replace(newLineRgx, '')}","${item.status}","${item.tags.join(
           ';'
