@@ -1,0 +1,36 @@
+#!/bin/bash
+set -e
+
+REMOTE="lists.rathr.io"
+REMOTE_UPLOADS="/var/www/lists/volumes/public/uploads"
+LOCAL_UPLOADS="api/public/uploads"
+BACKUP_DIR="backup"
+
+# Load local env vars from api/.env
+if [ -f api/.env ]; then
+  export $(grep -v '^#' api/.env | xargs)
+fi
+
+# Production database credentials
+PROD_DB_USER="${LISTS_PROD_DB_USER:-root}"
+PROD_DB_PASS="${LISTS_PROD_DB_PASS:?Error: LISTS_PROD_DB_PASS environment variable must be set}"
+
+# Local database credentials (from api/.env)
+LOCAL_DB_USER="${POSTGRES_USER}"
+LOCAL_DB_PASS="${POSTGRES_PASSWORD}"
+
+# 1. Dump production database via SSH + Docker
+echo "Dumping production database..."
+ssh $REMOTE "docker exec -e PGPASSWORD='$PROD_DB_PASS' lists-postgres-1 pg_dump -U $PROD_DB_USER lists_production" > $BACKUP_DIR/lists_production.sql
+
+# 2. Drop and recreate local database, then restore
+echo "Restoring to local database..."
+PGPASSWORD="$LOCAL_DB_PASS" dropdb -h localhost -U "$LOCAL_DB_USER" --if-exists lists_development
+PGPASSWORD="$LOCAL_DB_PASS" createdb -h localhost -U "$LOCAL_DB_USER" lists_development
+PGPASSWORD="$LOCAL_DB_PASS" psql -h localhost -U "$LOCAL_DB_USER" lists_development < $BACKUP_DIR/lists_production.sql
+
+# 3. Sync uploads (mirror mode - deletes local files not in production)
+echo "Syncing uploads..."
+rsync -avz --delete --progress $REMOTE:$REMOTE_UPLOADS/ $LOCAL_UPLOADS/
+
+echo "Done!"
