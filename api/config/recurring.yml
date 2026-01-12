@@ -10,11 +10,11 @@ production: &production
   random_recommendation_reminder_job:
     class: RandomRecommendationReminderJob
     queue: background
-    schedule: every other thursday at 6pm
+    schedule: every thursday at 6pm
   favorite_reminder_job:
     class: FavoriteReminderJob
     queue: background
-    schedule: every 1st monday at 6am
+    schedule: every monday at 6am
   release_reminder_job:
     class: ReleaseReminderJob
     queue: background
