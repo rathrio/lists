@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   post "/sign_in" => "sessions#sign_in"
   post "/sign_out" => "sessions#sign_out"
   get "/items/archived" => "items#archived"
+  get "/items/journal" => "items#journal"
 
   resources :lists, only: [:index] do
     resources :items, only: [:index, :update, :destroy], shallow: true do

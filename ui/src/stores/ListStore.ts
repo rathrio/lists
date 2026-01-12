@@ -5,6 +5,14 @@ import API from '../utils/api';
 import RootStore from './RootStore';
 import slug from '../utils/slug';
 
+const JOURNAL: List = {
+  id: -2,
+  name: 'Journal',
+  fa_icon: 'calendar',
+  description: 'Completed items in chronological order',
+  cover_aspect_ratio: '2by3',
+};
+
 const ARCHIVE: List = {
   id: -1,
   name: 'Archive',
@@ -35,7 +43,7 @@ class ListStore {
       .then(
         action((response) => {
           this.rootStore.sessionStore.setLoggedIn(true);
-          this.lists.replace(response.data.concat([ARCHIVE]));
+          this.lists.replace(response.data.concat([JOURNAL, ARCHIVE]));
           this.updateShortcuts();
           this.rootStore.navStore.resolve();
         }),
@@ -79,6 +87,11 @@ class ListStore {
       });
     });
 
+    Mousetrap.bind('g j', (e) => {
+      e.preventDefault();
+      this.rootStore.navStore.showList(JOURNAL);
+    });
+
     Mousetrap.bind('g a', (e) => {
       e.preventDefault();
       this.rootStore.navStore.showList(ARCHIVE);
@@ -98,3 +111,4 @@ class ListStore {
 }
 
 export default ListStore;
+export { JOURNAL };
