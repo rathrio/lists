@@ -107,6 +107,8 @@ class ItemStore {
 
     if (activeList.name === 'Archive') {
       this.loadArchive();
+    } else if (activeList.name === 'Journal') {
+      this.loadJournal();
     } else {
       this.loadItems(activeList);
     }
@@ -207,6 +209,19 @@ class ItemStore {
         this.items.replace(response.data);
       })
     );
+  };
+
+  @action
+  private loadJournal = () => {
+    this.isLoading = true;
+
+    API.get(`/items/journal`)
+      .then(
+        action((response) => {
+          this.items.replace(response.data);
+        })
+      )
+      .finally(action(() => (this.isLoading = false)));
   };
 
   @action

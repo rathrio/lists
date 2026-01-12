@@ -45,6 +45,21 @@ class ItemsController < ApplicationController
     end
   end
 
+  def journal
+    items = current_user.items
+      .where(status: Item.statuses[:done])
+      .where.not(first_done_at: nil)
+      .order("first_done_at DESC")
+
+    if stale?(items)
+      json = Rails.cache.fetch(items.cache_key, expires_in: 30.days) do
+        items.includes(:list, :tags).to_json(except: :metadata)
+      end
+
+      render json: json
+    end
+  end
+
   def update
     attributes = item_params
 

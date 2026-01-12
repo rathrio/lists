@@ -13,6 +13,53 @@ interface Props {
   store: RootStore;
 }
 
+interface ItemGroup {
+  label: string;
+  items: Item[];
+}
+
+function groupItemsByMonth(items: Item[]): ItemGroup[] {
+  const groups = new Map<string, Item[]>();
+
+  items.forEach((item) => {
+    if (!item.first_done_at) return;
+
+    const date = new Date(item.first_done_at);
+    const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+
+    if (!groups.has(key)) {
+      groups.set(key, []);
+    }
+    groups.get(key)!.push(item);
+  });
+
+  return Array.from(groups.entries())
+    .sort((a, b) => b[0].localeCompare(a[0]))
+    .map(([_, items]) => ({
+      label: new Date(items[0].first_done_at!).toLocaleString('default', {
+        month: 'long',
+        year: 'numeric',
+      }),
+      items,
+    }));
+}
+
+function GroupHeader(props: { label: string }) {
+  return (
+    <div
+      style={{
+        padding: '1rem 0 0.5rem 0',
+        fontSize: '1.5rem',
+        fontWeight: 'bold',
+        borderBottom: '1px solid #dbdbdb',
+        marginBottom: '1rem',
+      }}
+    >
+      {props.label}
+    </div>
+  );
+}
+
 function renderStar(currentRating: number, n: number) {
   const starIcon = n <= currentRating ? 'fas fa-star' : 'far fa-star';
   const className = `${starIcon} fa-sm item-rating-star`;
@@ -88,6 +135,8 @@ function ItemGrid(props: Props) {
   );
 
   const items = store.itemStore.filteredItems;
+  const isJournal = store.listStore.activeList?.name === 'Journal';
+  const itemGroups = isJournal ? groupItemsByMonth(items) : null;
 
   // Update column count on resize
   useLayoutEffect(() => {
@@ -138,6 +187,29 @@ function ItemGrid(props: Props) {
         aspectRatio={coverAspectRatio}
         numBoxes={placeholderCount}
       />
+    );
+  }
+
+  // Render grouped view for Journal
+  if (isJournal && itemGroups) {
+    return (
+      <div ref={parentRef}>
+        {itemGroups.map((group) => (
+          <div key={group.label} style={{ marginBottom: '2rem' }}>
+            <GroupHeader label={group.label} />
+            <div
+              className="items-grid"
+              style={{
+                gridTemplateColumns: `repeat(${columnCount}, 1fr)`,
+              }}
+            >
+              {group.items.map((item) => (
+                <ItemBox item={item} store={store} key={item.id} />
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
     );
   }
 
