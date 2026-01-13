@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import { useRef, useState, useLayoutEffect } from 'react';
+import { useRef, useState, useLayoutEffect, useMemo } from 'react';
 
 import { Item, ItemStatus } from '../../interfaces';
 import { statusTagClassName } from './ItemDetails';
@@ -17,6 +17,10 @@ interface ItemGroup {
   label: string;
   items: Item[];
 }
+
+type VirtualRow =
+  | { type: 'header'; label: string }
+  | { type: 'items'; items: Item[] };
 
 function groupItemsByMonth(items: Item[]): ItemGroup[] {
   const groups = new Map<string, Item[]>();
@@ -42,6 +46,23 @@ function groupItemsByMonth(items: Item[]): ItemGroup[] {
       }),
       items,
     }));
+}
+
+function flattenGroupsToRows(
+  groups: ItemGroup[],
+  columnCount: number
+): VirtualRow[] {
+  const rows: VirtualRow[] = [];
+  for (const group of groups) {
+    rows.push({ type: 'header', label: group.label });
+    for (let i = 0; i < group.items.length; i += columnCount) {
+      rows.push({
+        type: 'items',
+        items: group.items.slice(i, i + columnCount),
+      });
+    }
+  }
+  return rows;
 }
 
 function GroupHeader(props: { label: string }) {
@@ -138,6 +159,12 @@ function ItemGrid(props: Props) {
   const isJournal = store.listStore.activeList?.name === 'Journal';
   const itemGroups = isJournal ? groupItemsByMonth(items) : null;
 
+  // Flatten grouped items into virtual rows for journal view
+  const virtualRows = useMemo(() => {
+    if (!itemGroups) return null;
+    return flattenGroupsToRows(itemGroups, columnCount);
+  }, [itemGroups, columnCount]);
+
   // Update column count on resize
   useLayoutEffect(() => {
     const element = parentRef.current;
@@ -166,13 +193,21 @@ function ItemGrid(props: Props) {
   }, [store.itemStore.isLoading]);
 
   // Calculate rows needed for virtual grid
-  const rowCount = Math.ceil(items.length / columnCount);
+  const rowCount = virtualRows
+    ? virtualRows.length
+    : Math.ceil(items.length / columnCount);
 
   const rowVirtualizer = useVirtualizer({
     count: rowCount,
     getScrollElement: () =>
       typeof window !== 'undefined' ? window.document.body : null,
-    estimateSize: () => 240, // Row height (cover + info + gap)
+    estimateSize: (index) => {
+      // For journal view, headers are shorter than item rows
+      if (virtualRows && virtualRows[index]?.type === 'header') {
+        return 60;
+      }
+      return 240; // Row height (cover + info + gap)
+    },
     overscan: 8,
     measureElement: (element) => element.getBoundingClientRect().height,
   });
@@ -190,29 +225,7 @@ function ItemGrid(props: Props) {
     );
   }
 
-  // Render grouped view for Journal
-  if (isJournal && itemGroups) {
-    return (
-      <div ref={parentRef}>
-        {itemGroups.map((group) => (
-          <div key={group.label} style={{ marginBottom: '2rem' }}>
-            <GroupHeader label={group.label} />
-            <div
-              className="items-grid"
-              style={{
-                gridTemplateColumns: `repeat(${columnCount}, 1fr)`,
-              }}
-            >
-              {group.items.map((item) => (
-                <ItemBox item={item} store={store} key={item.id} />
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-    );
-  }
-
+  // Render virtualized grid (for both journal and regular views)
   return (
     <div ref={parentRef}>
       <div
@@ -222,22 +235,74 @@ function ItemGrid(props: Props) {
           position: 'relative',
         }}
       >
-        {rowVirtualizer.getVirtualItems().map((virtualRow) => {
-          const startIndex = virtualRow.index * columnCount;
+        {rowVirtualizer.getVirtualItems().map((virtualItem) => {
+          // Journal view: render from flattened virtual rows
+          if (virtualRows) {
+            const row = virtualRows[virtualItem.index];
+
+            if (row.type === 'header') {
+              return (
+                <div
+                  key={virtualItem.key}
+                  data-index={virtualItem.index}
+                  ref={rowVirtualizer.measureElement}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    transform: `translateY(${virtualItem.start}px)`,
+                  }}
+                >
+                  <GroupHeader label={row.label} />
+                </div>
+              );
+            }
+
+            return (
+              <div
+                key={virtualItem.key}
+                data-index={virtualItem.index}
+                ref={rowVirtualizer.measureElement}
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  transform: `translateY(${virtualItem.start}px)`,
+                  paddingBottom: '0.8rem',
+                }}
+              >
+                <div
+                  className="items-grid"
+                  style={{
+                    gridTemplateColumns: `repeat(${columnCount}, 1fr)`,
+                  }}
+                >
+                  {row.items.map((item) => (
+                    <ItemBox item={item} store={store} key={item.id} />
+                  ))}
+                </div>
+              </div>
+            );
+          }
+
+          // Regular view: compute row items from flat items array
+          const startIndex = virtualItem.index * columnCount;
           const rowItems = items.slice(startIndex, startIndex + columnCount);
 
           return (
             <div
-              key={virtualRow.key}
-              data-index={virtualRow.index}
+              key={virtualItem.key}
+              data-index={virtualItem.index}
               ref={rowVirtualizer.measureElement}
               style={{
                 position: 'absolute',
                 top: 0,
                 left: 0,
                 width: '100%',
-                transform: `translateY(${virtualRow.start}px)`,
-                paddingBottom: '0.8rem', // Gap between rows
+                transform: `translateY(${virtualItem.start}px)`,
+                paddingBottom: '0.8rem',
               }}
             >
               <div
@@ -250,7 +315,7 @@ function ItemGrid(props: Props) {
                   <ItemBox
                     item={item}
                     store={store}
-                    key={`${virtualRow.index}-${idx}`}
+                    key={`${virtualItem.index}-${idx}`}
                   />
                 ))}
               </div>
