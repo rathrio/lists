@@ -9,6 +9,7 @@ import ItemRating from './ItemRating';
 import { publicAssetsUrl } from '../../utils/api';
 import RootStore from '../../stores/RootStore';
 import Seasons from './Seasons';
+import TorrentLinks from './TorrentLinks';
 
 interface Props {
   store: RootStore;
@@ -465,6 +466,7 @@ class ItemDetails extends React.Component<Props> {
                   )}
 
                   <Seasons item={item} />
+                  <TorrentLinks item={item} store={store.itemStore} />
                 </div>
               )}
             </section>

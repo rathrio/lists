@@ -119,6 +119,18 @@ class Item < ApplicationRecord
     update_from(scraper_result, fields:)
   end
 
+  def refresh_torrents
+    return unless supports_torrents?
+
+    type = list.tv? ? :tv : :movie
+    links = ProwlarrClient.new.magnet_links(name, year: year, type: type)
+    update!(torrent_links: links)
+  end
+
+  def supports_torrents?
+    list.movies? || list.tv?
+  end
+
   def public_image_url
     url = image&.url
     Rails.env.production? ? "https://lists.rathr.io/api/#{url}" : "http://localhost:3000/#{url}"
@@ -133,6 +145,7 @@ class Item < ApplicationRecord
       hash["language"] = language
       hash["deleted"] = deleted?
       hash["human_status"] = human_status
+      hash["supports_torrents"] = supports_torrents?
     end
   end
 end

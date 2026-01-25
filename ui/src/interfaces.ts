@@ -49,6 +49,8 @@ export interface Item {
   notes?: string;
   metadata?: object;
   seasons?: Season[];
+  torrent_links?: TorrentLink[];
+  supports_torrents?: boolean;
 }
 
 export interface Season {
@@ -58,6 +60,15 @@ export interface Season {
   air_date: string;
   episode_count: number;
   season_number: number;
+}
+
+export interface TorrentLink {
+  title: string;
+  size: string;
+  seeders: number;
+  leechers: number;
+  quality: number;
+  magnet: string;
 }
 
 export interface ScraperResult {
