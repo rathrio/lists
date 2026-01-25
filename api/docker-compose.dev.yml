@@ -25,3 +25,18 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    ports:
+      - "9696:9696"
+    volumes:
+      - ./volumes/prowlarr:/config
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Zurich
+    deploy:
+      resources:
+        limits:
+          memory: 256M
