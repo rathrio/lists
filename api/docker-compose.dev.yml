@@ -26,12 +26,6 @@ services:
       timeout: 5s
       retries: 5
 
-  byparr:
-    image: ghcr.io/thephaseless/byparr:latest
-    restart: always
-    ports:
-      - "8191:8191"
-
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
     restart: always
@@ -43,8 +37,6 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Zurich
-    depends_on:
-      - byparr
     deploy:
       resources:
         limits:
