@@ -84,6 +84,12 @@ class ItemStore {
   @observable
   spinnerVisible = false;
 
+  /**
+   * Whether torrents are currently being refreshed.
+   */
+  @observable
+  isRefreshingTorrents = false;
+
   private rootStore: RootStore;
 
   constructor(rootStore: RootStore) {
@@ -393,19 +399,19 @@ class ItemStore {
   @action
   showItemDetails = (item: Item) => {
     this.activeItem = item;
-    this.fetchMetadata();
-
+    this.fetchDetails();
     this.showDetailsModal();
   };
 
-  updateActiveItemMetadataFromPromise(
-    promise: Promise<AxiosResponse<any, any>>
-  ) {
+  /**
+   * @param promise a promise for a response that returns an Item
+   */
+  updateActiveItemFromPromise(promise: Promise<AxiosResponse<any, any>>) {
     promise.then(
       action((response) => {
         if (this.activeItem) {
-          this.activeItem.metadata = response.data;
-          this.activeItem.seasons = parseSeasons(response.data);
+          this.activeItem = response.data as Item;
+          this.activeItem.seasons = parseSeasons(this.activeItem.metadata);
         }
       }),
       (error) => {
@@ -414,14 +420,12 @@ class ItemStore {
     );
   }
 
-  fetchMetadata = () => {
+  fetchDetails = () => {
     if (!this.activeItem) {
       return;
     }
 
-    this.updateActiveItemMetadataFromPromise(
-      API.get(`/items/${this.activeItem.id}/metadata`)
-    );
+    this.updateActiveItemFromPromise(API.get(`/items/${this.activeItem.id}`));
   };
 
   refreshMetadata = () => {
@@ -429,9 +433,37 @@ class ItemStore {
       return;
     }
 
-    this.updateActiveItemMetadataFromPromise(
+    this.updateActiveItemFromPromise(
       API.post(`/items/${this.activeItem.id}/refresh_metadata`)
     );
+  };
+
+  @action
+  refreshTorrents = () => {
+    if (!this.activeItem) {
+      return;
+    }
+
+    this.isRefreshingTorrents = true;
+    API.post(`/items/${this.activeItem.id}/refresh_torrents`, null, {
+      timeout: 120000,
+    })
+      .then(
+        action((response) => {
+          if (this.activeItem) {
+            this.activeItem = response.data as Item;
+            this.activeItem.seasons = parseSeasons(this.activeItem.metadata);
+          }
+        })
+      )
+      .catch((error) => {
+        console.error(error);
+      })
+      .finally(
+        action(() => {
+          this.isRefreshingTorrents = false;
+        })
+      );
   };
 
   @action

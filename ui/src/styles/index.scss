@@ -166,6 +166,10 @@ body {
     }
   }
 
+  .collapsible-content .table {
+    background-color: transparent;
+  }
+
   .button {
     background-color: var(--bulma-scheme-main-ter);
   }

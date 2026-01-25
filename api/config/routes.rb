@@ -7,9 +7,9 @@ Rails.application.routes.draw do
   get "/items/journal" => "items#journal"
 
   resources :lists, only: [:index] do
-    resources :items, only: [:index, :update, :destroy], shallow: true do
+    resources :items, only: [:index, :show, :update, :destroy], shallow: true do
       post :refresh_metadata, on: :member
-      get :metadata, on: :member
+      post :refresh_torrents, on: :member
       put :scrape, on: :member
       put :restore, on: :member
       put :toggle_status, on: :member

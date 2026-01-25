@@ -1,6 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { Item } from '../../interfaces';
+import CollapsibleSection from './CollapsibleSection';
 
 interface Props {
   item: Item;
@@ -13,24 +14,26 @@ const Seasons = observer((props: React.PropsWithChildren<Props>) => {
   }
 
   return (
-    <table className="table is-narrow is-fullwidth mt-5">
-      <thead>
-        <tr>
-          <th>Season</th>
-          <th>Air date</th>
-          <th> Episode count</th>
-        </tr>
-      </thead>
-      <tbody>
-        {item.seasons?.map((season, index) => (
-          <tr key={index}>
-            <td>{season.name}</td>
-            <td>{season.air_date}</td>
-            <td>{season.episode_count}</td>
+    <CollapsibleSection title="Seasons">
+      <table className="table is-narrow is-fullwidth">
+        <thead>
+          <tr>
+            <th>Season</th>
+            <th>Air date</th>
+            <th>Episode count</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {item.seasons?.map((season, index) => (
+            <tr key={index}>
+              <td>{season.name}</td>
+              <td>{season.air_date}</td>
+              <td>{season.episode_count}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </CollapsibleSection>
   );
 });
 

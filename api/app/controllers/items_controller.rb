@@ -2,7 +2,9 @@
 
 class ItemsController < ApplicationController
   before_action :set_item, only: %i(
+                             show
                              refresh_metadata
+                             refresh_torrents
                              metadata
                              update
                              destroy
@@ -24,13 +26,20 @@ class ItemsController < ApplicationController
     end
   end
 
-  def metadata
-    render json: @item.metadata
+  def show
+    if stale?(@item)
+      render json: @item
+    end
   end
 
   def refresh_metadata
     @item.scrape_and_update(fields: [:metadata])
-    render json: @item.metadata
+    render json: @item
+  end
+
+  def refresh_torrents
+    @item.refresh_torrents
+    render json: @item
   end
 
   def archived

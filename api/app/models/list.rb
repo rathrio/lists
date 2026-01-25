@@ -17,6 +17,14 @@ class List < ApplicationRecord
     scraper.constantize if scraper.present?
   end
 
+  def tv?
+    scraper == 'TvScraper'
+  end
+
+  def movies?
+    scraper == 'MovieScraper'
+  end
+
   def to_s
     name
   end

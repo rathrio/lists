@@ -22,6 +22,24 @@ services:
       timeout: 5s
       retries: 5
 
+  byparr:
+    image: ghcr.io/thephaseless/byparr:latest
+    restart: always
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    restart: always
+    ports:
+      - "9696:9696"  # Remove after setup
+    volumes:
+      - ./volumes/prowlarr:/config
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: Europe/Zurich
+    depends_on:
+      - byparr
+
   web:
     image: rathrio/lists:latest
     restart: always
@@ -63,3 +81,6 @@ services:
 
       ADMIN_USERNAME: ${ADMIN_USERNAME}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+
+      PROWLARR_HOST: http://prowlarr:9696
+      PROWLARR_API_KEY: ${PROWLARR_API_KEY}
