@@ -1,0 +1,50 @@
+# cloud-config
+
+users:
+  - name: radi
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4WBtx1KZDCpVjozh0FKQMyJu35MzSxq+BLTD/Ni2kvhA8Qv5a8bBuGzgW6Za2dHlASOUwWMJogvoovp9nshO2uPX0tXjBnkbLH1WETHufdID50QycKjvlMEpxdvczhAbEYvdK5F8QioK/5S7fR4eA4Znket3uRPvUKwU6tyexne8xxUu76D+o6W2q8fT6EOQP60n9qTBwUx1LvE/bJdl4ptCMljm7ScDaQQpbtG24bGK9IPgDNgDDq7p/4LGqa+kIkEi4sTW+KA+hNYrYCuEZFZYwlDr/nEq5ON0Ax0eRh5AuExW6WanLeRCPxMYFTBkBdFUO93HZsQPCdQSqv8j/ rad.iyadurai@gmail.com
+
+# Disable root login and password auth
+ssh_pwauth: false
+disable_root: true
+
+# Install packages
+packages:
+  - ufw
+  - unattended-upgrades
+  - docker.io
+  - docker-compose
+  - fail2ban
+
+# Commands to run on first boot
+runcmd:
+  # Firewall setup
+  - ufw allow 22/tcp
+  - ufw allow 80/tcp
+  - ufw allow 443/tcp
+  - ufw --force enable
+
+  # Enable unattended security upgrades
+  - systemctl enable unattended-upgrades
+  - systemctl start unattended-upgrades
+
+  # Add user to docker group
+  - usermod -aG docker radi
+
+  # Start and enable docker
+  - systemctl enable docker
+  - systemctl start docker
+
+  # Enable fail2ban for SSH brute-force protection
+  - systemctl enable fail2ban
+  - systemctl start fail2ban
+
+# Update and upgrade on first boot
+package_update: true
+package_upgrade: true
+
+# Reboot if required after upgrades
+package_reboot_if_required: true
