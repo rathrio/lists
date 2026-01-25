@@ -281,6 +281,26 @@ body {
   user-select: none;
 }
 
+.collapsible-section {
+  .collapsible-trigger {
+    .icon i {
+      transition: transform 0.2s linear;
+    }
+  }
+
+  &.is-expanded {
+    .collapsible-trigger .icon i {
+      transform: rotate(180deg);
+    }
+  }
+
+  .collapsible-content-wrapper {
+    overflow: hidden;
+    transition: height 0.2s ease;
+    /* Height will be handled by JS */
+  }
+}
+
 .hidden {
   visibility: hidden;
   opacity: 0;
@@ -550,6 +570,9 @@ body {
   .modal-card {
     width: 95vw;
     max-width: 1200px;
+    transition:
+      height 0.2s ease,
+      max-height 0.2s ease;
 
     @media (max-width: 500px) {
       // Use as much vertical height as possible on mobile, but ensure that the
