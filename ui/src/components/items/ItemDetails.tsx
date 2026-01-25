@@ -220,12 +220,6 @@ class ItemDetails extends React.Component<Props> {
 
               <div className="header-actions">
                 <span className="external-item-links is-hidden-touch">
-                  <a target="blank" href={urls.pirateSearchUrl(item)}>
-                    <span className="icon is-medium">
-                      <i className="fas fa-magnet fa-lg" />
-                    </span>
-                  </a>
-
                   <a target="blank" href={urls.googleSearchUrl(item)}>
                     <span className="icon is-medium">
                       <i className="fab fa-google fa-lg" />
@@ -235,12 +229,6 @@ class ItemDetails extends React.Component<Props> {
                   <a target="blank" href={urls.youtubeSearchUrl(item)}>
                     <span className="icon is-medium">
                       <i className="fab fa-youtube fa-lg" />
-                    </span>
-                  </a>
-
-                  <a target="blank" href={urls.bflixSearchUrl(item)}>
-                    <span className="icon is-medium">
-                      <i className="fas fa-tv fa-lg" />
                     </span>
                   </a>
                 </span>
