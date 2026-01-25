@@ -16,7 +16,7 @@ const TorrentLinks = observer((props: React.PropsWithChildren<Props>) => {
     return null;
   }
 
-  const hasLinks = item.torrent_links && item.torrent_links.length > 0;
+  const hasLinks = !!item.torrent_links?.length;
   const isLoading = store.isRefreshingTorrents;
 
   const onRefreshClick = (e: React.MouseEvent) => {
