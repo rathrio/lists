@@ -154,9 +154,13 @@ class ProwlarrClient
              end
 
     sorted.first(limit).map do |r|
-      magnet = r["magnetUrl"]
+      # Priority: direct magnet > resolved magnet > built from info_hash
+      # Always validate that the result is actually a magnet link
+      magnet = r["magnetUrl"] if r["magnetUrl"]&.start_with?("magnet:")
       magnet ||= r["downloadUrl"] if r["downloadUrl"]&.start_with?("magnet:")
       magnet ||= resolve_magnet(r["downloadUrl"]) if r["downloadUrl"]
+      # Fallback: build from info_hash (always works if hash is present)
+      magnet ||= build_magnet(r["infoHash"], r["title"])
 
       {
         title: r["title"],
@@ -171,6 +175,24 @@ class ProwlarrClient
         info_hash: r["infoHash"]
       }
     end
+  end
+
+  # Common public trackers to improve peer discovery
+  PUBLIC_TRACKERS = [
+    "udp://tracker.opentrackr.org:1337/announce",
+    "udp://open.demonii.com:1337/announce",
+    "udp://tracker.openbittorrent.com:6969/announce",
+    "udp://exodus.desync.com:6969/announce"
+  ].freeze
+
+  # Build magnet link from info_hash and title
+  def build_magnet(info_hash, title = nil)
+    return nil unless info_hash
+
+    magnet = "magnet:?xt=urn:btih:#{info_hash}"
+    magnet += "&dn=#{URI.encode_www_form_component(title)}" if title
+    PUBLIC_TRACKERS.each { |tr| magnet += "&tr=#{URI.encode_www_form_component(tr)}" }
+    magnet
   end
 
   # Follow Prowlarr download URL to get actual magnet
@@ -190,11 +212,9 @@ class ProwlarrClient
       response["location"]
     elsif response.body&.start_with?("magnet:")
       response.body
-    else
-      download_url # Return original as fallback
     end
-  rescue StandardError => e
-    download_url
+  rescue StandardError
+    nil
   end
 
   private
