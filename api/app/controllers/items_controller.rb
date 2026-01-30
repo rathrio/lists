@@ -128,6 +128,7 @@ class ItemsController < ApplicationController
       :description,
       :date,
       :first_done_at,
+      :image,
       :remote_image_url,
       :rating,
       :tags,

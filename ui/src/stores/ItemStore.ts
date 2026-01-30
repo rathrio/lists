@@ -565,6 +565,28 @@ class ItemStore {
     );
   };
 
+  @action
+  updateWithFile = (item: Item, attributes: Partial<Item>, file: File) => {
+    const formData = new FormData();
+    formData.append('item[image]', file);
+    Object.entries(attributes).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        formData.append(`item[${key}]`, String(value));
+      }
+    });
+
+    API.put(`/items/${item.id}`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    }).then(
+      action((response) => {
+        Object.assign(item, response.data);
+      }),
+      (error) => {
+        console.error(error);
+      }
+    );
+  };
+
   /**
    * To sync with letterboxd from time to time.
    *

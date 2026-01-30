@@ -47,6 +47,17 @@ class ItemDetails extends React.Component<Props> {
   @observable
   formData: FormData = {};
 
+  @observable
+  isDraggingOver = false;
+
+  @observable
+  imageFile: File | null = null;
+
+  @observable
+  imagePreviewUrl: string | null = null;
+
+  fileInputRef = React.createRef<HTMLInputElement>();
+
   constructor(props: Props) {
     super(props);
     makeObservable(this);
@@ -96,6 +107,9 @@ class ItemDetails extends React.Component<Props> {
   @action
   disableEditing = () => {
     this.formData = {};
+    this.imageFile = null;
+    this.imagePreviewUrl = null;
+    this.isDraggingOver = false;
     this.editing = false;
   };
 
@@ -109,7 +123,7 @@ class ItemDetails extends React.Component<Props> {
   };
 
   get hasFormDataChanges() {
-    return Object.keys(this.formData).length !== 0;
+    return Object.keys(this.formData).length !== 0 || this.imageFile !== null;
   }
 
   @action
@@ -130,15 +144,66 @@ class ItemDetails extends React.Component<Props> {
     this.formData[e.target.name] = e.target.value;
   };
 
+  @action
+  handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (this.editing) {
+      this.isDraggingOver = true;
+    }
+  };
+
+  @action
+  handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    this.isDraggingOver = false;
+  };
+
+  @action
+  handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    this.isDraggingOver = false;
+
+    if (!this.editing) return;
+
+    const files = e.dataTransfer.files;
+    if (files.length > 0 && files[0].type.startsWith('image/')) {
+      this.imageFile = files[0];
+      this.imagePreviewUrl = URL.createObjectURL(files[0]);
+    }
+  };
+
+  @action
+  handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0 && files[0].type.startsWith('image/')) {
+      this.imageFile = files[0];
+      this.imagePreviewUrl = URL.createObjectURL(files[0]);
+    }
+  };
+
+  handleChooseFileClick = () => {
+    this.fileInputRef.current?.click();
+  };
+
   onSave = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (this.hasFormDataChanges) {
       const item = this.props.store.itemStore.activeItem!;
-      this.props.store.itemStore.update(item, toJS(this.formData));
+      if (this.imageFile) {
+        this.props.store.itemStore.updateWithFile(
+          item,
+          toJS(this.formData),
+          this.imageFile
+        );
+      } else {
+        this.props.store.itemStore.update(item, toJS(this.formData));
+      }
     }
 
-    this.formData = {};
     this.disableEditing();
   };
 
@@ -236,18 +301,78 @@ class ItemDetails extends React.Component<Props> {
             </header>
 
             <section className="modal-card-body">
-              <div className="image-content" style={{ marginBottom: '20px' }}>
-                <figure className={`image is-${coverAspectRatio}`}>
+              <div
+                className="image-content"
+                style={{ marginBottom: '20px', position: 'relative' }}
+                onDragOver={this.handleDragOver}
+                onDragLeave={this.handleDragLeave}
+                onDrop={this.handleDrop}
+              >
+                <figure
+                  className={`image is-${coverAspectRatio}`}
+                  style={{
+                    border:
+                      this.editing && this.isDraggingOver
+                        ? '2px dashed hsl(0, 0%, 71%)'
+                        : '2px dashed transparent',
+                    borderRadius: '5px',
+                    transition: 'border-color 0.15s ease',
+                  }}
+                >
                   <img
-                    src={publicAssetsUrl(item.image!.url)}
+                    src={
+                      this.imagePreviewUrl ?? publicAssetsUrl(item.image!.url)
+                    }
                     alt={item.name}
                     style={{
                       objectFit: 'cover',
                       borderRadius: '5px',
                       maxHeight: 'auto',
+                      opacity: this.isDraggingOver ? 0.5 : 1,
+                      transition: 'opacity 0.15s ease',
                     }}
                   />
+                  {this.editing && this.isDraggingOver && (
+                    <div
+                      style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        color: 'white',
+                        fontWeight: 500,
+                        pointerEvents: 'none',
+                        backgroundColor: 'hsla(0, 0%, 0%, 0.5)',
+                        padding: '0.5em 1em',
+                        borderRadius: '4px',
+                      }}
+                    >
+                      Drop image
+                    </div>
+                  )}
                 </figure>
+                {this.editing && (
+                  <>
+                    <input
+                      ref={this.fileInputRef}
+                      type="file"
+                      accept="image/*"
+                      style={{ display: 'none' }}
+                      onChange={this.handleFileInputChange}
+                    />
+                    <button
+                      type="button"
+                      onClick={this.handleChooseFileClick}
+                      className="button is-small is-fullwidth"
+                      style={{ marginTop: '0.5rem' }}
+                    >
+                      <span className="icon is-small">
+                        <i className="fa fa-upload" />
+                      </span>
+                      <span>Choose file</span>
+                    </button>
+                  </>
+                )}
               </div>
 
               {this.editing ? (
