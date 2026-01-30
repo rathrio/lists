@@ -72,6 +72,7 @@ group :development, :test do
   gem "observer"
   gem "factory_bot_rails"
   gem "ffaker"
+  gem "minitest", "~> 5.0"
 end
 
 group :development do
