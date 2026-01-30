@@ -113,7 +113,7 @@ const ItemBox = observer((props: { item: Item; store: RootStore }) => {
     itemStore.showItemDetails(item);
   }
 
-  const thumbUrl = item.image?.url ?? '';
+  const thumbUrl = item.image?.thumb?.url ?? item.image?.url ?? '';
   const coverAspectRatio = store.listStore.activeList!.cover_aspect_ratio;
 
   return (
