@@ -202,7 +202,7 @@ class ItemStore {
     API.get(`/lists/${list.id}/items`)
       .then(
         action((response) => {
-          this.items.replace(response.data);
+          this.items.replace(_.shuffle(response.data));
         })
       )
       .finally(action(() => (this.isLoading = false)));
@@ -212,7 +212,7 @@ class ItemStore {
   private loadArchive = () => {
     API.get(`/items/archived`).then(
       action((response) => {
-        this.items.replace(response.data);
+        this.items.replace(_.shuffle(response.data));
       })
     );
   };
@@ -224,7 +224,7 @@ class ItemStore {
     API.get(`/items/journal`)
       .then(
         action((response) => {
-          this.items.replace(response.data);
+          this.items.replace(_.shuffle(response.data));
         })
       )
       .finally(action(() => (this.isLoading = false)));
@@ -850,8 +850,7 @@ class ItemStore {
   @computed
   get filteredItems(): Item[] {
     const filtered = filter(this.query, this.items);
-    const shuffled = _.shuffle(filtered);
-    return _.sortBy(shuffled, (item) => ItemStore.statusRank[item.status]);
+    return _.sortBy(filtered, (item) => ItemStore.statusRank[item.status]);
   }
 
   isActive = (item: Item) => {
