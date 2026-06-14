@@ -78,7 +78,7 @@ Style/NumericLiterals:
 Style/EmptyMethod:
   Enabled: false
 
-Metrics/LineLength:
+Layout/LineLength:
   Max: 100
 
 Metrics/ClassLength:
