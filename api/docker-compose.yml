@@ -22,18 +22,6 @@ services:
       timeout: 5s
       retries: 5
 
-  prowlarr:
-    image: lscr.io/linuxserver/prowlarr:latest
-    restart: always
-    ports:
-      - "9696:9696"  # Remove after setup
-    volumes:
-      - ./volumes/prowlarr:/config
-    environment:
-      PUID: 1000
-      PGID: 1000
-      TZ: Europe/Zurich
-
   web:
     image: rathrio/lists:latest
     restart: always
@@ -76,5 +64,17 @@ services:
       ADMIN_USERNAME: ${ADMIN_USERNAME}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
 
-      PROWLARR_HOST: http://prowlarr:9696
-      PROWLARR_API_KEY: ${PROWLARR_API_KEY}
+      # Tailnet IPs — dialled by the Rails process, which can't resolve
+      # tailnet names (--accept-dns=false). JELLYFIN_WEB_URL is handed to the
+      # browser instead, which needs the MagicDNS name.
+      JELLYSEERR_HOST: http://100.112.176.48:5055
+      JELLYSEERR_API_KEY: ${JELLYSEERR_API_KEY}
+      JELLYFIN_HOST: http://100.123.18.96:8096
+      JELLYFIN_API_KEY: ${JELLYFIN_API_KEY}
+      JELLYFIN_USER_ID: ${JELLYFIN_USER_ID}
+      JELLYFIN_WEB_URL: https://jellyfin.tail2bbb4f.ts.net
+      JELLYFIN_SERVER_ID: b873182bec604a2b9c33ccc9daaf0a52
+      LISTS_SYNC_USER_ID: 1
+      # Watch sync runs dry (log-only) until this is "true" — review the
+      # first run's [JellyfinWatchSync] log lines before enabling.
+      JELLYFIN_WATCH_SYNC_ENABLED: ${JELLYFIN_WATCH_SYNC_ENABLED}

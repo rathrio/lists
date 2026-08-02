@@ -119,16 +119,19 @@ class Item < ApplicationRecord
     update_from(scraper_result, fields:)
   end
 
-  def refresh_torrents
-    return unless supports_torrents?
-
-    type = list.tv? ? :tv : :movie
-    links = ProwlarrClient.new.magnet_links(name, year: year, type: type)
-    update!(torrent_links: links)
+  # TMDB id from scraped metadata — the join key towards Jellyseerr and
+  # Jellyfin. Unscraped items don't have one and can't be matched.
+  def tmdb_id
+    metadata&.dig("tmdb_id")
   end
 
-  def supports_torrents?
-    list.movies? || list.tv?
+  # @return [Symbol] :movie or :tv
+  def media_type
+    list.tv? ? :tv : :movie
+  end
+
+  def requestable?
+    (list.movies? || list.tv?) && tmdb_id.present?
   end
 
   def public_image_url
@@ -145,7 +148,6 @@ class Item < ApplicationRecord
       hash["language"] = language
       hash["deleted"] = deleted?
       hash["human_status"] = human_status
-      hash["supports_torrents"] = supports_torrents?
     end
   end
 end

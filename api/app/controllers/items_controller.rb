@@ -4,7 +4,8 @@ class ItemsController < ApplicationController
   before_action :set_item, only: %i(
                              show
                              refresh_metadata
-                             refresh_torrents
+                             availability
+                             request_download
                              metadata
                              update
                              destroy
@@ -37,9 +38,35 @@ class ItemsController < ApplicationController
     render json: @item
   end
 
-  def refresh_torrents
-    @item.refresh_torrents
-    render json: @item
+  # Jellyseerr availability of the item, looked up live over the tailnet.
+  # 204 means "nothing to show" — either the item can't be matched (no TMDB
+  # id) or Jellyseerr is unreachable. Neither is an error the UI should
+  # surface.
+  def availability
+    return head :no_content unless @item.requestable?
+
+    payload = Rails.cache.fetch(availability_cache_key, expires_in: 2.minutes) do
+      media = JellyseerrClient.new.media_info(@item.tmdb_id, type: @item.media_type)
+      availability_payload(media)
+    end
+
+    render json: payload
+  rescue StandardError => e
+    Rails.logger.warn("Jellyseerr availability for item #{@item.id} failed: #{e.message}")
+    head :no_content
+  end
+
+  def request_download
+    return head :no_content unless @item.requestable?
+
+    media = JellyseerrClient.new.request_media(@item.tmdb_id, type: @item.media_type)
+    payload = availability_payload(media)
+    Rails.cache.write(availability_cache_key, payload, expires_in: 2.minutes)
+
+    render json: payload
+  rescue StandardError => e
+    Rails.logger.error("Jellyseerr request for item #{@item.id} failed: #{e.message}")
+    render json: { message: "Request failed" }, status: 502
   end
 
   def archived
@@ -116,6 +143,32 @@ class ItemsController < ApplicationController
   end
 
   private
+
+  def availability_cache_key
+    "jellyseerr/availability/#{@item.media_type}/#{@item.tmdb_id}"
+  end
+
+  # @param media [Hash, nil] Jellyseerr's media hash — "mediaInfo" on GET,
+  #   "media" on POST. nil means the title was never requested.
+  def availability_payload(media)
+    payload = { status: media&.fetch("status", nil) }
+    return payload if media.nil?
+
+    payload.merge(
+      watch_url: watch_url(media["jellyfinMediaId"]),
+      seasons: media["seasons"],
+      available_since: media["mediaAddedAt"],
+    ).compact
+  end
+
+  # Built by hand instead of using Jellyseerr's mediaUrl, which points at the
+  # LAN address of Jellyfin and is dead from anywhere but home.
+  def watch_url(jellyfin_media_id)
+    return nil if jellyfin_media_id.blank?
+
+    "#{ENV.fetch("JELLYFIN_WEB_URL")}/web/index.html#!/details" \
+      "?id=#{jellyfin_media_id}&serverId=#{ENV.fetch("JELLYFIN_SERVER_ID")}"
+  end
 
   def set_item
     @item = current_user.items.with_deleted.find(params[:id])

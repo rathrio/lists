@@ -49,8 +49,6 @@ export interface Item {
   notes?: string;
   metadata?: object;
   seasons?: Season[];
-  torrent_links?: TorrentLink[];
-  supports_torrents?: boolean;
 }
 
 export interface Season {
@@ -62,13 +60,21 @@ export interface Season {
   season_number: number;
 }
 
-export interface TorrentLink {
-  title: string;
-  size: string;
-  seeders: number;
-  leechers: number;
-  quality: number;
-  magnet: string;
+export interface AvailabilitySeason {
+  seasonNumber: number;
+  status: number;
+}
+
+/**
+ * Jellyseerr availability of an item, fetched via /items/:id/availability.
+ * status: null = never requested · 2 pending · 3 processing ·
+ * 4 partially available · 5 available
+ */
+export interface Availability {
+  status: number | null;
+  watch_url?: string;
+  seasons?: AvailabilitySeason[];
+  available_since?: string;
 }
 
 export interface ScraperResult {

@@ -9,7 +9,8 @@ Rails.application.routes.draw do
   resources :lists, only: [:index] do
     resources :items, only: [:index, :show, :update, :destroy], shallow: true do
       post :refresh_metadata, on: :member
-      post :refresh_torrents, on: :member
+      get :availability, on: :member
+      post "request", action: :request_download, on: :member
       put :scrape, on: :member
       put :restore, on: :member
       put :toggle_status, on: :member

@@ -19,6 +19,10 @@ production: &production
     class: ReleaseReminderJob
     queue: background
     schedule: every day at 6am
+  jellyfin_watch_sync_job:
+    class: JellyfinWatchSyncJob
+    queue: background
+    schedule: every 15 minutes
 
 
 development:

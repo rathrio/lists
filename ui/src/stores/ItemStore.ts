@@ -1,7 +1,14 @@
 import { action, autorun, computed, makeObservable, observable } from 'mobx';
 import _ from 'lodash';
 import API from '../utils/api';
-import { Item, List, ScraperResult, Season, Tag } from '../interfaces';
+import {
+  Availability,
+  Item,
+  List,
+  ScraperResult,
+  Season,
+  Tag,
+} from '../interfaces';
 import RootStore from './RootStore';
 import { googleSearchUrl, pirateSearchUrl } from '../utils/externalItemUrls';
 import Mousetrap from 'mousetrap';
@@ -85,10 +92,18 @@ class ItemStore {
   spinnerVisible = false;
 
   /**
-   * Whether torrents are currently being refreshed.
+   * Jellyseerr availability of the active item. undefined means unknown
+   * (not fetched yet, no TMDB id, or Jellyseerr unreachable) — nothing is
+   * rendered then.
    */
   @observable
-  isRefreshingTorrents = false;
+  availability?: Availability;
+
+  @observable
+  availabilityError?: string;
+
+  @observable
+  isRequestingDownload = false;
 
   private rootStore: RootStore;
 
@@ -393,6 +408,8 @@ class ItemStore {
   @action
   hideDetailsModal = () => {
     this.activeItem = undefined;
+    this.availability = undefined;
+    this.availabilityError = undefined;
     this.detailsModalVisible = false;
   };
 
@@ -400,6 +417,7 @@ class ItemStore {
   showItemDetails = (item: Item) => {
     this.activeItem = item;
     this.fetchDetails();
+    this.fetchAvailability();
     this.showDetailsModal();
   };
 
@@ -407,7 +425,7 @@ class ItemStore {
    * @param promise a promise for a response that returns an Item
    */
   updateActiveItemFromPromise(promise: Promise<AxiosResponse<any, any>>) {
-    promise.then(
+    return promise.then(
       action((response) => {
         if (this.activeItem) {
           this.activeItem = response.data as Item;
@@ -435,33 +453,68 @@ class ItemStore {
 
     this.updateActiveItemFromPromise(
       API.post(`/items/${this.activeItem.id}/refresh_metadata`)
-    );
+    ).then(() => this.fetchAvailability());
   };
 
+  /**
+   * Looks up Jellyseerr availability for the active item. A 204 means
+   * there's nothing to show (no TMDB id, or Jellyseerr unreachable) —
+   * deliberately not an error state.
+   */
   @action
-  refreshTorrents = () => {
+  fetchAvailability = () => {
     if (!this.activeItem) {
       return;
     }
 
-    this.isRefreshingTorrents = true;
-    API.post(`/items/${this.activeItem.id}/refresh_torrents`, null, {
-      timeout: 120000,
-    })
+    const itemId = this.activeItem.id;
+    this.availability = undefined;
+    this.availabilityError = undefined;
+
+    API.get(`/items/${itemId}/availability`)
       .then(
         action((response) => {
-          if (this.activeItem) {
-            this.activeItem = response.data as Item;
-            this.activeItem.seasons = parseSeasons(this.activeItem.metadata);
+          if (this.activeItem?.id !== itemId || !response.data) {
+            return;
+          }
+
+          this.availability = response.data as Availability;
+        })
+      )
+      .catch(() => {
+        // Unreachable is not an error — render nothing.
+      });
+  };
+
+  @action
+  requestDownload = () => {
+    if (!this.activeItem) {
+      return;
+    }
+
+    const itemId = this.activeItem.id;
+    this.isRequestingDownload = true;
+    this.availabilityError = undefined;
+
+    API.post(`/items/${itemId}/request`)
+      .then(
+        action((response) => {
+          if (this.activeItem?.id === itemId) {
+            this.availability = response.data as Availability;
           }
         })
       )
-      .catch((error) => {
-        console.error(error);
-      })
+      .catch(
+        action((error) => {
+          console.error(error);
+          if (this.activeItem?.id === itemId) {
+            this.availabilityError = 'Request failed — try again later';
+          }
+        })
+      )
       .finally(
         action(() => {
-          this.isRefreshingTorrents = false;
+          this.isRequestingDownload = false;
         })
       );
   };
