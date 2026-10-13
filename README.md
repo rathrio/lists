@@ -96,31 +96,76 @@ The API exposes a read-only [MCP](https://modelcontextprotocol.io) endpoint at
 Claude Desktop can search lists, read the journal, compute stats and check
 Jellyfin availability on behalf of a user.
 
-Requests authenticate with a per-user bearer token. Only its digest is stored,
-so it's shown once on generation; generating a new one revokes the old one:
+Requests authenticate with a per-user bearer token. Generate one under
+**Settings > API Token** in the web app (or with
+`bin/rails 'api_token:generate[me@example.com]'`). Only its digest is stored, so
+it's shown once; regenerating it revokes the old one.
 
-```sh
-bin/rails 'api_token:generate[me@example.com]'
-bin/rails 'api_token:revoke[me@example.com]'
-```
+### Claude Desktop
 
-Claude Desktop (`~/Library/Application Support/Claude/claude_desktop_config.json`)
-connects through [`mcp-remote`](https://www.npmjs.com/package/mcp-remote):
+Claude Desktop talks to the remote endpoint through
+[`mcp-remote`](https://github.com/geelen/mcp-remote), a small local bridge that
+adds the token header. It needs Node.js (`node --version`).
 
-```json
-{
-  "mcpServers": {
-    "lists": {
-      "command": "npx",
-      "args": [
-        "-y", "mcp-remote", "https://lists.rathr.io/api/mcp",
-        "--header", "Authorization: Bearer ${LISTS_API_TOKEN}"
-      ],
-      "env": { "LISTS_API_TOKEN": "lists_..." }
-    }
-  }
-}
-```
+1. Generate a token under **Settings > API Token** and copy it.
+2. In Claude Desktop, open **Settings > Developer > Edit Config**. This opens
+   `~/Library/Application Support/Claude/claude_desktop_config.json`
+   (`%APPDATA%\Claude\claude_desktop_config.json` on Windows). Add a `lists`
+   entry to `mcpServers`, keeping any other servers in there:
+
+   ```json
+   {
+     "mcpServers": {
+       "lists": {
+         "command": "npx",
+         "args": [
+           "-y", "mcp-remote", "https://lists.rathr.io/api/mcp",
+           "--header", "Authorization: Bearer ${LISTS_API_TOKEN}"
+         ],
+         "env": { "LISTS_API_TOKEN": "lists_..." }
+       }
+     }
+   }
+   ```
+
+3. Quit Claude Desktop completely (Cmd+Q) and start it again.
+4. Check that **lists** shows up under **+ > Connectors** in the chat input,
+   then ask something like "What did I watch last month?" or "Recommend a movie
+   from my watchlist I'd probably like". Claude asks for approval the first
+   time it uses a tool.
+
+Troubleshooting:
+
+- Logs are in `~/Library/Logs/Claude/`: `mcp.log` for connection problems and
+  `mcp-server-lists.log` for the bridge's output
+  (`tail -f ~/Library/Logs/Claude/mcp*.log`).
+- `spawn npx ENOENT`: Claude Desktop doesn't see your shell's `PATH`. Use the
+  absolute path from `which npx` (e.g. `/opt/homebrew/bin/npx`) as `command`.
+- `401`: the token is wrong or was regenerated. Generate a new one and update
+  `LISTS_API_TOKEN`.
+- Check the token outside Claude:
+
+  ```sh
+  curl https://lists.rathr.io/api/mcp \
+    -H "Authorization: Bearer $LISTS_API_TOKEN" \
+    -H 'Content-Type: application/json' \
+    -H 'Accept: application/json, text/event-stream' \
+    -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+  ```
+
+For local development, point it at `http://localhost:3000/mcp` and add
+`"--allow-http"` to `args`.
+
+### Claude web and mobile
+
+These connect from Anthropic's servers via a custom connector on your
+claude.ai account, which then also shows up in the mobile apps. Custom
+connectors expect OAuth, which Lists doesn't implement. Sending a fixed bearer
+token through [request headers](https://claude.com/docs/connectors/custom/remote-mcp#authenticate-with-request-headers)
+is in limited beta. If your account has it: **Customize > Connectors > Add
+custom connector**, URL `https://lists.rathr.io/api/mcp`, authentication **No
+sign-in**, and under **Request headers** add `authorization` with the value
+`Bearer lists_...` (including `Bearer `).
 
 ## APIs used
 
