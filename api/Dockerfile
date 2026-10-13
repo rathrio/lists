@@ -1,4 +1,4 @@
-FROM ruby:3.4-alpine
+FROM ruby:4.0-alpine
 
 RUN apk update
 RUN apk add --update build-base gcompat postgresql-dev tzdata imagemagick imagemagick-libs libjpeg-turbo yaml-dev libwebp libwebp-dev
