@@ -42,6 +42,9 @@ gem "rack-cors"
 # Tokens
 gem "jwt"
 
+# Model Context Protocol server for AI clients, e.g. Claude Desktop
+gem "mcp", "~> 1.7"
+
 # Authentication
 gem "clearance"
 

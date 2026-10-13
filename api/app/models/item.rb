@@ -134,6 +134,28 @@ class Item < ApplicationRecord
     (list.movies? || list.tv?) && tmdb_id.present?
   end
 
+  # Jellyseerr availability, looked up live over the tailnet and briefly
+  # cached. Only call this on requestable items.
+  #
+  # @return [Hash] { status:, watch_url:, seasons:, available_since: } where
+  #   status is Jellyseerr's media status — nil = never requested ·
+  #   2 pending · 3 processing · 4 partially available · 5 available.
+  def availability
+    Rails.cache.fetch(availability_cache_key, expires_in: 2.minutes) do
+      availability_payload(JellyseerrClient.new.media_info(tmdb_id, type: media_type))
+    end
+  end
+
+  # Requests the item on Jellyseerr. Only call this on requestable items.
+  #
+  # @return [Hash] see #availability
+  def request_download!
+    media = JellyseerrClient.new.request_media(tmdb_id, type: media_type)
+    availability_payload(media).tap do |payload|
+      Rails.cache.write(availability_cache_key, payload, expires_in: 2.minutes)
+    end
+  end
+
   def public_image_url
     url = image&.url
     Rails.env.production? ? "https://lists.rathr.io/api/#{url}" : "http://localhost:3000/#{url}"
@@ -149,5 +171,33 @@ class Item < ApplicationRecord
       hash["deleted"] = deleted?
       hash["human_status"] = human_status
     end
+  end
+
+  private
+
+  def availability_cache_key
+    "jellyseerr/availability/#{media_type}/#{tmdb_id}"
+  end
+
+  # @param media [Hash, nil] Jellyseerr's media hash — "mediaInfo" on GET,
+  #   "media" on POST. nil means the title was never requested.
+  def availability_payload(media)
+    payload = { status: media&.fetch("status", nil) }
+    return payload if media.nil?
+
+    payload.merge(
+      watch_url: watch_url(media["jellyfinMediaId"]),
+      seasons: media["seasons"],
+      available_since: media["mediaAddedAt"],
+    ).compact
+  end
+
+  # Built by hand instead of using Jellyseerr's mediaUrl, which points at the
+  # LAN address of Jellyfin and is dead from anywhere but home.
+  def watch_url(jellyfin_media_id)
+    return nil if jellyfin_media_id.blank?
+
+    "#{ENV.fetch("JELLYFIN_WEB_URL")}/web/index.html#!/details" \
+      "?id=#{jellyfin_media_id}&serverId=#{ENV.fetch("JELLYFIN_SERVER_ID")}"
   end
 end

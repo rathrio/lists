@@ -89,6 +89,39 @@ and spawning remote shells.
 - `postgres`: Spawns a `psql` shell in the postgres container
 - `web`: Spawns a shell in the web container
 
+## MCP server
+
+The API exposes a read-only [MCP](https://modelcontextprotocol.io) endpoint at
+`/mcp` (`https://lists.rathr.io/api/mcp` in production) so that clients such as
+Claude Desktop can search lists, read the journal, compute stats and check
+Jellyfin availability on behalf of a user.
+
+Requests authenticate with a per-user bearer token. Only its digest is stored,
+so it's shown once on generation; generating a new one revokes the old one:
+
+```sh
+bin/rails 'api_token:generate[me@example.com]'
+bin/rails 'api_token:revoke[me@example.com]'
+```
+
+Claude Desktop (`~/Library/Application Support/Claude/claude_desktop_config.json`)
+connects through [`mcp-remote`](https://www.npmjs.com/package/mcp-remote):
+
+```json
+{
+  "mcpServers": {
+    "lists": {
+      "command": "npx",
+      "args": [
+        "-y", "mcp-remote", "https://lists.rathr.io/api/mcp",
+        "--header", "Authorization: Bearer ${LISTS_API_TOKEN}"
+      ],
+      "env": { "LISTS_API_TOKEN": "lists_..." }
+    }
+  }
+}
+```
+
 ## APIs used
 
 Lists relies on the following APIs to scrape meta info:
