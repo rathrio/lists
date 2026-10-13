@@ -51,6 +51,20 @@ class SessionStore {
       new_password_confirmation: newPasswordConfirmation,
     });
   };
+
+  hasApiToken = (): Promise<boolean> => {
+    return API.get('/api_token').then((response) => response.data.active);
+  };
+
+  // Replaces any previous token. The plaintext token is only ever returned
+  // here, the API just keeps a digest.
+  generateApiToken = (): Promise<string> => {
+    return API.post('/api_token').then((response) => response.data.token);
+  };
+
+  revokeApiToken = (): Promise<unknown> => {
+    return API.delete('/api_token');
+  };
 }
 
 export default SessionStore;

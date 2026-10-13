@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   end
 
   resource :profiles, only: [:update]
+  resource :api_token, only: [:show, :create, :destroy]
 
   match "/mcp" => "mcp#handle", via: [:get, :post, :delete]
 end

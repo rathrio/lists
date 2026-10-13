@@ -1,5 +1,6 @@
 import { observer } from 'mobx-react';
 import RootStore from '../../stores/RootStore';
+import ApiToken from './ApiToken';
 import ChangePassword from './ChangePassword';
 
 function Settings(props: { store: RootStore }) {
@@ -9,6 +10,8 @@ function Settings(props: { store: RootStore }) {
       <div className="columns">
         <div className="column is-half is-offset-one-quarter sign-in">
           <ChangePassword store={props.store} />
+          <hr />
+          <ApiToken store={props.store} />
           <hr />
           <div className="is-flex">
             <button className="button" onClick={() => sessionStore.logout()}>
