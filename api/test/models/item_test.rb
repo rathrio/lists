@@ -75,4 +75,15 @@ class ItemTest < ActiveSupport::TestCase
     item.really_destroy!
     assert_empty Link.where(item_id: item.id)
   end
+
+  test "becoming done sets first_done_at once" do
+    item = create(:item, status: :todo)
+
+    item.update!(status: :done)
+    assert_equal Date.today, item.first_done_at
+
+    item.update!(status: :todo, first_done_at: Date.new(2020, 1, 1))
+    item.update!(status: :done)
+    assert_equal Date.new(2020, 1, 1), item.first_done_at
+  end
 end

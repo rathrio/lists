@@ -75,10 +75,17 @@ module Scraper
   # Method called to perform actual scraping. No need to override this one.
   # Override the scrape_<attribute> template methods.
   #
+  # Results without a cover image are skipped.
+  #
+  # @param limit [Integer, nil] stop after this many results. Saves the
+  #   per-result API calls some scrapers make (e.g. TV season metadata).
   # @return [Array<Hash>] list of result Hashes that can be passed as an
   #   argument to Item#update_from(result).
-  def scrape
-    search_results.map do |result|
+  def scrape(limit: nil)
+    results = search_results.lazy.filter_map do |result|
+      image = scrape_image(result)
+      next if image.blank?
+
       name = scrape_name(result)
       original_name = scrape_original_name(result)
 
@@ -86,7 +93,7 @@ module Scraper
         name: name,
         original_name: name == original_name ? nil : original_name,
         description: scrape_description(result),
-        remote_image_url: scrape_image(result),
+        remote_image_url: image,
         remote_backdrop_image_url: scrape_backdrop_image(result),
         date: scrape_date(result),
         links: scrape_links(result),
@@ -94,7 +101,9 @@ module Scraper
         language: scrape_language(result),
         metadata: scrape_metadata(result),
       }
-    end.select { |result| result[:remote_image_url].present? }
+    end
+
+    limit ? results.first(limit) : results.to_a
   end
 
   # @return [Array] an Array of objects most likely retrieved via an API call.

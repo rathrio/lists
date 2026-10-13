@@ -81,6 +81,75 @@ class McpTool < MCP::Tool
     },
   }.freeze
 
+  # JSON schema properties of the item attributes add_item and update_item
+  # can set, see .item_attributes. Nullable ones can be cleared on update.
+  ITEM_PROPERTIES = {
+    status: {
+      type: "string",
+      enum: Item.statuses.keys,
+      description: "todo = backlog/watchlist, doing = in progress, done = finished. " \
+                   "Becoming done sets done_on to today unless it's already set.",
+    },
+    rating: {
+      type: %w[number null],
+      minimum: 0,
+      maximum: 5,
+      description: "The user's rating from 0 to 5. Only set what the user said.",
+    },
+    notes: {
+      type: %w[string null],
+      description: "Personal notes, written in the user's voice.",
+    },
+    recommended_by: {
+      type: %w[string null],
+      description: "Who or what recommended the item, e.g. a friend's name or \"Reddit\".",
+    },
+    tags: {
+      type: "array",
+      items: { type: "string" },
+      description: "Tags, mostly genres. Reuse existing tag names where they fit.",
+    },
+    done_on: {
+      type: %w[string null],
+      format: "date",
+      description: "When the user first finished the item (YYYY-MM-DD), i.e. its " \
+                   "journal date. Only needed when it wasn't today.",
+    },
+    name: {
+      type: "string",
+      description: "Display name, usually the English title. Music is \"Artist - Album\".",
+    },
+    original_name: {
+      type: %w[string null],
+      description: "Title in the original language, if it differs from name.",
+    },
+    description: {
+      type: %w[string null],
+      description: "Short synopsis.",
+    },
+    release_date: {
+      type: %w[string null],
+      format: "date",
+      description: "YYYY-MM-DD. Use year instead when only the year is known.",
+    },
+    year: {
+      type: "integer",
+      description: "Release year, if the exact release_date is unknown.",
+    },
+    image_url: {
+      type: "string",
+      format: "uri",
+      description: "URL of a cover image (poster, book cover, album art) to download.",
+    },
+    language: {
+      type: %w[string null],
+      description: "ISO 639-1 original language code, e.g. \"ja\".",
+    },
+  }.freeze
+
+  # External ids in scraped metadata identifying the same title for sure.
+  EXTERNAL_IDS = %w[tmdb_id mbid].freeze
+
   PAGINATION_PROPERTIES = {
     limit: {
       type: "integer",
@@ -98,6 +167,8 @@ class McpTool < MCP::Tool
       error(e.message)
     rescue ActiveRecord::RecordNotFound => e
       error("#{e.model} #{e.id} not found")
+    rescue ActiveRecord::RecordInvalid => e
+      error(e.record.errors.full_messages.to_sentence)
     end
 
     private
@@ -208,6 +279,92 @@ class McpTool < MCP::Tool
         archived: (true if item.deleted?),
         notes: item.notes&.truncate(NOTES_PREVIEW_LENGTH).presence,
       }.compact
+    end
+
+    # Everything about an item, as returned by get_item.
+    def details(item)
+      summarize(item).merge(
+        human_status: item.human_status,
+        release_date: item.date,
+        description: item.description.presence,
+        notes: item.notes.presence,
+        links: item.links.map { |link| { name: link.name, url: link.url } }.presence,
+        tmdb_id: item.tmdb_id,
+        tv: tv_metadata(item),
+        archived_on: item.deleted_at&.to_date,
+      ).compact
+    end
+
+    # Scraped TV metadata minus the bulky bits (posters, overviews).
+    def tv_metadata(item)
+      metadata = item.metadata || {}
+      return nil if metadata["seasons"].blank?
+
+      episode = ->(e) { e&.slice("name", "air_date", "season_number", "episode_number") }
+      {
+        seasons: metadata["seasons"].map do |s|
+          s.slice("season_number", "name", "air_date", "episode_count")
+        end,
+        last_episode_to_air: episode.call(metadata["last_episode_to_air"]),
+        next_episode_to_air: episode.call(metadata["next_episode_to_air"]),
+      }.compact
+    end
+
+    # Translates ITEM_PROPERTIES arguments into Item attributes. Only given
+    # keys are touched; nil clears.
+    #
+    # @return [Hash]
+    def item_attributes(fields)
+      fields = fields.slice(*ITEM_PROPERTIES.keys)
+      year = fields.delete(:year)
+      fields[:release_date] = "#{year}-01-01" if year && !fields.key?(:release_date)
+
+      fields.to_h do |key, value|
+        case key
+        when :release_date then [:date, value && parse_date(value)]
+        when :done_on then [:first_done_at, value && parse_date(value)]
+        when :image_url then [:remote_image_url, value]
+        else [key, value]
+        end
+      end
+    end
+
+    # Reuses the spelling of the user's existing tags ("horror" => "Horror"),
+    # since Item#tags= creates tags by exact name.
+    #
+    # @return [Array<String>]
+    def normalize_tags(user, names)
+      known = user.tags.pluck(:name).index_by(&:downcase)
+      names.map { |name| known.fetch(name.strip.downcase, name.strip) }.uniq(&:downcase)
+    end
+
+    # The item of list that most likely is the same title, archived ones
+    # included. Matches on external ids of scraped metadata, falling back to
+    # the name (or original name) and release year.
+    #
+    # @return [Item, nil]
+    def find_existing(list, name:, date: nil, metadata: nil)
+      items = list.items.with_deleted
+      metadata = (metadata || {}).stringify_keys
+
+      EXTERNAL_IDS.each do |key|
+        next if metadata[key].blank?
+
+        match = items.find_by("items.metadata ->> ? = ?", key, metadata[key].to_s)
+        return match if match
+      end
+
+      matches = items.where(
+        "LOWER(items.name) = LOWER(:name) OR LOWER(items.original_name) = LOWER(:name)",
+        name:,
+      )
+      matches = matches.where(date: nil).or(matches.where(date: date.all_year)) if date
+      matches.first
+    end
+
+    def describe_existing(item)
+      "#{item.list_name} item #{item.id} (#{item.name}, #{item.year || "no year"}, " \
+        "status #{item.status}#{", archived" if item.deleted?})"
     end
   end
 end

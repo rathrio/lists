@@ -91,10 +91,12 @@ and spawning remote shells.
 
 ## MCP server
 
-The API exposes a read-only [MCP](https://modelcontextprotocol.io) endpoint at
+The API exposes an [MCP](https://modelcontextprotocol.io) endpoint at
 `/mcp` (`https://lists.rathr.io/api/mcp` in production) so that clients such as
 Claude Desktop can search lists, read the journal, compute stats and check
-Jellyfin availability on behalf of a user.
+Jellyfin availability on behalf of a user. It can also add items (looked up in
+the list's catalog, e.g. TMDB, or entered by hand) and update their status,
+rating, notes and recommendations. It can't archive or delete items.
 
 Requests authenticate with a per-user bearer token. Generate one under
 **Settings > API Token** in the web app (or with

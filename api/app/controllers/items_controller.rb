@@ -105,16 +105,7 @@ class ItemsController < ApplicationController
   end
 
   def toggle_status
-    next_status_index = @item.next_status_index
-    attributes = {
-      status: next_status_index,
-    }
-
-    if Item.statuses.key(next_status_index) == "done" && @item.first_done_at.blank?
-      attributes[:first_done_at] = Date.today
-    end
-
-    @item.update!(attributes)
+    @item.update!(status: @item.next_status_index)
     render json: @item.to_json
   end
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Model Context Protocol endpoint giving MCP clients (e.g. Claude Desktop)
-# read access to the library of the user owning the bearer API token. See
+# access to the library of the user owning the bearer API token. See
 # `rails api_token:generate` for issuing one.
 #
 # Stateless: every POST builds a fresh server scoped to the authenticated
@@ -13,11 +13,14 @@ class McpController < ActionController::API
     JournalTool,
     GetItemTool,
     StatsTool,
-    CheckAvailabilityTool
+    CheckAvailabilityTool,
+    SearchCatalogTool,
+    AddItemTool,
+    UpdateItemTool
   ].freeze
 
   INSTRUCTIONS = <<~TEXT
-    Read access to the user's personal media library from Lists: movies, TV
+    The user's personal media library from Lists: movies, TV
     shows, books, games, music and whatever other lists they keep. Each item
     has a status (todo = backlog/watchlist, doing = in progress, done =
     finished), an optional rating from 0 to 5, tags, personal notes, who
@@ -25,6 +28,13 @@ class McpController < ActionController::API
     Archived items were removed from their list, often because the user lost
     interest. Ground recommendations and answers about the user's taste or
     history in this data rather than guessing.
+
+    To add a title, look it up with search_catalog and pass the name and year
+    of the right result to add_item, which fills in cover, genres and
+    metadata from the catalog. Only add custom details by hand when the
+    catalog doesn't have the title. When a search returns several plausible
+    matches, ask the user which one they mean. Use update_item for status changes, ratings, notes and
+    recommendations; append_note keeps existing notes intact.
   TEXT
 
   before_action :authenticate

@@ -19,6 +19,9 @@ class Item < ApplicationRecord
   validates :name, presence: true
   validates :rating, inclusion: 0..5, allow_blank: true
 
+  # The journal date: when the item was finished for the first time.
+  before_save :set_first_done_at, if: -> { will_save_change_to_status? && done? }
+
   # @param list_ids [Array<Integer>]
   def self.in_lists(list_ids)
     where(list_id: list_ids)
@@ -174,6 +177,10 @@ class Item < ApplicationRecord
   end
 
   private
+
+  def set_first_done_at
+    self.first_done_at ||= Date.today
+  end
 
   def availability_cache_key
     "jellyseerr/availability/#{media_type}/#{tmdb_id}"
