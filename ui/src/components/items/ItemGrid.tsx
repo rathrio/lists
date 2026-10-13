@@ -19,8 +19,7 @@ interface ItemGroup {
 }
 
 type VirtualRow =
-  | { type: 'header'; label: string }
-  | { type: 'items'; items: Item[] };
+  { type: 'header'; label: string } | { type: 'items'; items: Item[] };
 
 function groupItemsByMonth(items: Item[]): ItemGroup[] {
   const groups = new Map<string, Item[]>();

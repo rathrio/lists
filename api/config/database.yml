@@ -10,6 +10,8 @@ default: &default
 development:
   <<: *default
   database: lists_development
+  # libpq's GSSAPI probe segfaults in forked processes (Solid Queue) on macOS
+  gssencmode: disable
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -17,6 +19,8 @@ development:
 test:
   <<: *default
   database: lists_test
+  # libpq's GSSAPI probe segfaults in forked processes (Solid Queue) on macOS
+  gssencmode: disable
 
 production:
   <<: *default
